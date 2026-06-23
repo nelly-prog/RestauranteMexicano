@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sabor Mexicano</title>
+
+<style>
+    *{
+        margin:0;
+        padding:0;
+        box-sizing:border-box;
+        font-family: Arial, sans-serif;
+    }
+
+    body{
+        background:#fff8f0;
+    }
+
+    /* Navbar */
+    header{
+        background:#006847;
+        padding:15px 50px;
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+    }
+
+    .logo{
+        display:flex;
+        align-items:center;
+        gap:10px;
+        color:white;
+        font-size:1.5rem;
+        font-weight:bold;
+    }
+
+    .logo img{
+        width:50px;
+        height:50px;
+        border-radius:50%;
+    }
+
+    nav ul{
+        list-style:none;
+        display:flex;
+        gap:25px;
+    }
+
+    nav a{
+        text-decoration:none;
+        color:white;
+        font-weight:bold;
+        transition:0.3s;
+    }
+
+    nav a:hover{
+        color:#ffd700;
+    }
+
+    /* Hero */
+    .hero{
+        height:90vh;
+        background:url('https://images.unsplash.com/photo-1613514785940-daed07799d9b')
+        center/cover no-repeat;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        text-align:center;
+        color:white;
+    }
+
+    .hero-content{
+        background:rgba(0,0,0,0.5);
+        padding:40px;
+        border-radius:15px;
+    }
+
+    .hero h1{
+        font-size:3rem;
+        margin-bottom:15px;
+    }
+
+    .hero p{
+        font-size:1.2rem;
+        margin-bottom:25px;
+    }
+
+    .btn{
+        display:inline-block;
+        background:#ce1126;
+        color:white;
+        padding:15px 30px;
+        text-decoration:none;
+        border-radius:8px;
+        font-weight:bold;
+        transition:0.3s;
+    }
+
+    .btn:hover{
+        background:#a50d1d;
+    }
+
+    @media(max-width:768px){
+        header{
+            flex-direction:column;
+            gap:15px;
+        }
+
+        nav ul{
+            flex-wrap:wrap;
+            justify-content:center;
+        }
+
+        .hero h1{
+            font-size:2rem;
+        }
+    }
+</style>
+</head>
+<body>
+
+<header>
+    <div class="logo">
+        <img src="img/logo.png.png" alt="Logo">
+        <span>Sabor Mexicano</span>
+    </div>
+
+    <nav>
+        <ul>
+            <li><a href="index.html">Inicio</a></li>
+            <li><a href="catalogo.html">Catálogo</a></li>
+            <li><a href="nosotros.html">Nosotros</a></li>
+            <li><a href="contacto.html">Contacto</a></li>
+            <li><a href="login.html">Iniciar Sesión</a></li>
+        </ul>
+    </nav>
+</header>
+
+<section class="hero">
+    <div class="hero-content">
+        <h1>Bienvenido a Sabor Mexicano</h1>
+        <p>Los mejores platillos tradicionales mexicanos.</p>
+        <a href="catalogo.html" class="btn">Ver Productos</a>
+    </div>
+</section>
+
+</body>
+</html>
