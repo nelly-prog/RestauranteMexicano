@@ -2,82 +2,42 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sabor Mexicano</title>
     <style>
-        * { margin:0; padding:0; box-sizing:border-box; font-family: 'Segoe UI', Arial, sans-serif; }
-        body { background:#fff8f0; color: #333; }
-
-        /* Header */
-        header { background:#006847; padding:20px 50px; display:flex; justify-content:space-between; align-items:center; color:white; }
-        .logo { font-size:1.6rem; font-weight:bold; }
+        * { margin:0; padding:0; box-sizing:border-box; font-family: 'Segoe UI', sans-serif; }
+        header { background:#006847; padding:15px 50px; display:flex; justify-content:space-between; align-items:center; color:white; }
+        .logo-img { height: 50px; }
         nav ul { list-style:none; display:flex; gap:25px; }
-        nav a { text-decoration:none; color:white; font-weight:bold; transition: 0.3s; }
-        nav a:hover { color:#ffd700; }
-
-        /* Redes Flotantes Laterales */
-        .redes-flotantes {
-            position: fixed;
-            right: 15px; /* Separado del borde derecho */
-            top: 50%;
-            transform: translateY(-50%);
-            display: flex;
-            flex-direction: column;
-            gap: 15px; /* Espacio entre los iconos */
-            z-index: 1000;
-        }
-        .redes-flotantes a {
-            display: block;
-            transition: 0.3s ease; /* Transición suave al pasar el mouse */
-        }
-        .redes-flotantes a:hover {
-            transform: scale(1.1); /* Agranda un poco el icono al pasar el mouse */
-        }
-        .redes-flotantes img {
-            width: 40px; /* Tamaño de los iconos */
-            height: 40px;
-            object-fit: contain; /* Asegura que la imagen se vea completa */
-        }
-
-        /* Hero */
-        .hero { height:80vh; background:linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1613514785940-daed07799d9b') center/cover; display:flex; justify-content:center; align-items:center; text-align:center; color:white; }
-        .hero-content h1 { font-size: 3rem; margin-bottom: 10px; }
-        .btn-principal { background:#ce1126; color:white; padding:15px 30px; text-decoration:none; border-radius:8px; display:inline-block; margin-top:20px; font-weight:bold; transition: 0.3s; }
-        .btn-principal:hover { background:#a50d1d; }
-
-        /* Secciones */
-        .seccion { padding: 60px 20px; max-width: 900px; margin: auto; }
-        h2 { text-align: center; margin-bottom: 30px; color: #006847; font-size: 2.2rem; }
+        nav a { text-decoration:none; color:white; font-weight:bold; }
         
-        /* Formulario y Contacto */
-        .formulario { display: flex; flex-direction: column; gap: 15px; margin-top: 20px; }
-        input, textarea { padding: 15px; border: 1px solid #ddd; border-radius: 8px; font-size: 1rem; }
-        .btn-enviar { background: #ce1126; color: white; padding: 15px; border: none; cursor: pointer; border-radius: 8px; font-weight: bold; font-size: 1rem; }
+        /* Hero (Donde va el botón) */
+        .hero { height:70vh; background:#fff8f0; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; }
+        .btn-ver-productos { padding:15px 30px; background:#ce1126; color:white; text-decoration:none; border-radius:8px; font-weight:bold; margin-top:20px; }
         
-        /* Mapa */
-        .mapa-img { width: 100%; height: auto; border-radius: 15px; margin-top: 25px; border: 4px solid #fff; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        /* Redes Flotantes */
+        .redes-flotantes { position: fixed; right: 20px; top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; gap: 15px; }
+        .redes-flotantes img { width: 40px; }
 
+        /* Estética secciones */
+        .seccion { padding: 60px 20px; max-width: 900px; margin: auto; text-align: center; }
+        .mapa-img { width: 100%; max-width: 600px; border-radius: 15px; margin-top: 20px; }
+        
         /* Modal */
-        #modal-exito { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); justify-content:center; align-items:center; z-index:2000; }
-        .modal-contenido { background:white; padding:50px; border-radius:20px; text-align:center; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+        #modal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); align-items:center; justify-content:center; z-index: 2000; }
+        .contenido-modal { background:white; padding:40px; border-radius:20px; text-align:center; }
     </style>
 </head>
 <body>
 
-<div class="redes-flotantes">
-    <a href="#" title="Síguenos en Facebook">
-        <img src="img/face.png" alt="Icono de Facebook">
-    </a>
-    <a href="#" title="Síguenos en Instagram">
-        <img src="img/insta.jpg" alt="Icono de Instagram">
-    </a>
-</div>
-
 <header>
-    <div class="logo">Sabor Mexicano</div>
+    <div style="display: flex; align-items: center; gap: 15px;">
+        <img src="img/logo.png.png" class="logo-img" alt="Logo">
+        <span style="font-size: 1.5rem; font-weight: bold; color: white;">Sabor Mexicano</span>
+    </div>
     <nav>
         <ul>
-            <li><a href="#">Inicio</a></li>
+            <li><a href="index.html">Inicio</a></li>
+            <li><a href="catalogo.html">Catálogo</a></li>
             <li><a href="#nosotros">Nosotros</a></li>
             <li><a href="#contacto">Contacto</a></li>
             <li><a href="login.html">Iniciar Sesión</a></li>
@@ -85,61 +45,44 @@
     </nav>
 </header>
 
-<section class="hero">
-    <div class="hero-content">
-        <h1>Bienvenido a Sabor Mexicano</h1>
-        <p>Los mejores platillos tradicionales mexicanos.</p>
-        <a href="catalogo.html" class="btn-principal">Ver Productos</a>
-    </div>
-</section>
-
-<section id="nosotros" class="seccion">
-    <h2>Sobre Nosotros</h2>
-    <p style="text-align: center; font-size: 1.2rem; line-height: 1.6; margin-bottom: 40px;">
-        Iniciamos en 2010 como un pequeño puesto familiar con la receta secreta de la abuela. 
-        Hoy, nos enorgullece llevar el auténtico sabor de México a cada mesa.
-    </p>
-
-    <div style="display: flex; gap: 20px; flex-wrap: wrap;">
-        <div style="flex: 1; background: #e0f2e9; padding: 25px; border-radius: 15px; border-left: 6px solid #006847;">
-            <h3 style="color: #006847; margin-bottom: 10px;">🎯 Nuestra Misión</h3>
-            <p>Ofrecer platillos mexicanos auténticos preparados con ingredientes frescos y de la más alta calidad.</p>
-        </div>
-        <div style="flex: 1; background: #fff0f0; padding: 25px; border-radius: 15px; border-left: 6px solid #ce1126;">
-            <h3 style="color: #ce1126; margin-bottom: 10px;">📍 Ubicación</h3>
-            <p>Av. Adolfo López Mateos #1801 Ote. Fracc. Bona Gens, Aguascalientes, Ags.</p>
-        </div>
-    </div>
-</section>
-
-<section id="contacto" class="seccion">
-    <h2>Contacto</h2>
-    <form id="form-contacto" class="formulario">
-        <input type="text" placeholder="Tu nombre" required>
-        <input type="email" placeholder="Tu correo" required>
-        <textarea placeholder="Tu mensaje" rows="4" required></textarea>
-        <button type="button" class="btn-enviar" onclick="abrirModal()">Enviar Mensaje</button>
-    </form>
-    
-    <div style="text-align: center; margin-top: 40px;">
-        <p style="margin-bottom: 10px;">También puedes seguirnos en:</p>
-        <a href="#">Facebook</a> | <a href="#">Instagram</a>
-    </div>
-</section>
-
-<div id="modal-exito">
-    <div class="modal-contenido">
-        <h2 style="color: #006847;">¡Mensaje Enviado!</h2>
-        <p>Gracias por contactarnos, te responderemos a la brevedad.</p>
-        <br>
-        <button class="btn-enviar" onclick="cerrarModal()">Aceptar</button>
-    </div>
+<div class="redes-flotantes">
+    <a href="#"><img src="img/face.png" alt="FB"></a>
+    <a href="#"><img src="img/insta.jpg" alt="IG"></a>
 </div>
 
-<script>
-    function abrirModal() { document.getElementById('modal-exito').style.display = 'flex'; }
-    function cerrarModal() { document.getElementById('modal-exito').style.display = 'none'; document.getElementById('form-contacto').reset(); }
-</script>
+<!-- Sección 1: Inicio con botón -->
+<section class="hero">
+    <h1>Bienvenido a Sabor Mexicano</h1>
+    <p>La tradición en tu mesa.</p>
+    <a href="catalogo.html" class="btn-ver-productos">Ver productos</a>
+</section>
+
+<!-- Sección 2: Nosotros -->
+<section id="nosotros" class="seccion">
+    <h2>Nosotros</h2>
+    <p>Iniciamos en 2010 como un pequeño puesto familiar con la receta secreta de la abuela. Hoy, nos enorgullece llevar el auténtico sabor de México a cada mesa.</p>
+    <p><strong>Misión:</strong> Ofrecer platillos auténticos con ingredientes frescos.</p>
+    <p><strong>Ubicación:</strong> Av. Adolfo López Mateos #1801.</p>
+    <img src="img/mapa.png" class="mapa-img" alt="Mapa">
+</section>
+
+<!-- Sección 3: Contacto -->
+<section id="contacto" class="seccion">
+    <h2>Contacto</h2>
+    <form id="form-contacto">
+        <input type="text" placeholder="Nombre" style="padding:10px; width:100%; margin-bottom:10px;" required>
+        <input type="email" placeholder="Correo" style="padding:10px; width:100%; margin-bottom:10px;" required>
+        <textarea placeholder="Mensaje" style="padding:10px; width:100%; height:100px; margin-bottom:10px;"></textarea>
+        <button type="button" onclick="document.getElementById('modal').style.display='flex'" style="padding:10px 20px; background:#ce1126; color:white; border:none; border-radius:5px; cursor:pointer;">Enviar</button>
+    </form>
+</section>
+
+<div id="modal">
+    <div class="contenido-modal">
+        <h2 style="color:#006847;">¡Mensaje enviado con éxito!</h2>
+        <button onclick="document.getElementById('modal').style.display='none'" style="padding:10px 20px; margin-top:20px;">Aceptar</button>
+    </div>
+</div>
 
 </body>
 </html>

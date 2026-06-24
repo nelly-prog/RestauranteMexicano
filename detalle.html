@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Detalle - Sabor Mexicano</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background: #fff8f0; padding: 40px; text-align: center; }
+        .detalle-container { background: white; max-width: 600px; margin: auto; padding: 30px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+        .img-detalle { width: 100%; height: 300px; object-fit: cover; border-radius: 15px; margin-bottom: 20px; }
+        .precio { font-size: 1.8rem; color: #006847; font-weight: bold; margin: 15px 0; }
+        .btn { display: inline-block; padding: 12px 25px; margin: 10px; text-decoration: none; border-radius: 8px; font-weight: bold; }
+        .btn-regresar { background: #666; color: white; }
+        .btn-carrito { background: #ce1126; color: white; }
+    </style>
+</head>
+<body>
+
+<div class="detalle-container" id="info-producto">
+    <img id="img-prod" src="" class="img-detalle" alt="Producto">
+    <h1 id="titulo-prod">Cargando...</h1>
+    <p id="precio-prod" class="precio"></p>
+    <p id="desc-prod" style="margin-bottom: 20px; color: #555;"></p>
+    
+    <div>
+        <a href="catalogo.html" class="btn btn-regresar">Regresar al catálogo</a>
+        <a href="login.html" class="btn btn-carrito">Agregar al carrito (Próximamente)</a>
+    </div>
+</div>
+
+<script>
+    const productos = {
+        'pozole': { img: 'img/pozole.jpg', titulo: 'Pozole Rojo', precio: '$135.00', desc: 'Tradicional caldo con granos de maíz y carne de cerdo.' },
+        'sopes': { img: 'img/Sopes.jpg', titulo: 'Sopes', precio: '$95.00', desc: 'Masa de maíz hecha a mano con frijoles y carne.' },
+        'tacos': { img: 'img/tacos.jpg', titulo: 'Tacos al Pastor', precio: '$120.00', desc: 'Carne marinada con piña, cebolla y cilantro.' },
+        'tamales': { img: 'img/tamales.jpg', titulo: 'Tamales', precio: '$85.00', desc: 'Suaves tamales rellenos de salsa verde o roja.' }
+    };
+
+    // Tomamos lo que viene después del #
+    const p = window.location.hash.substring(1); 
+
+    if (productos[p]) {
+        document.getElementById('img-prod').src = productos[p].img;
+        document.getElementById('titulo-prod').innerText = productos[p].titulo;
+        document.getElementById('precio-prod').innerText = productos[p].precio;
+        document.getElementById('desc-prod').innerText = productos[p].desc;
+    } else {
+        document.getElementById('titulo-prod').innerText = "Selecciona un producto desde el catálogo";
+    }
+</script>
+
+</body>
+</html>
