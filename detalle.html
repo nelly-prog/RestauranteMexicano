@@ -3,29 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <title>Detalle - Sabor Mexicano</title>
-    <style>
-        body { font-family: 'Segoe UI', sans-serif; background: #fff8f0; padding: 40px; text-align: center; }
-        .detalle-container { background: white; max-width: 600px; margin: auto; padding: 30px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
-        .img-detalle { width: 100%; height: 300px; object-fit: cover; border-radius: 15px; margin-bottom: 20px; }
-        .precio { font-size: 1.8rem; color: #006847; font-weight: bold; margin: 15px 0; }
-        .btn { display: inline-block; padding: 12px 25px; margin: 10px; text-decoration: none; border-radius: 8px; font-weight: bold; }
-        .btn-regresar { background: #666; color: white; }
-        .btn-carrito { background: #ce1126; color: white; }
-    </style>
+    <link rel="stylesheet" href="estilos.css">
 </head>
 <body>
 
-<div class="detalle-container" id="info-producto">
-    <img id="img-prod" src="" class="img-detalle" alt="Producto">
-    <h1 id="titulo-prod">Cargando...</h1>
-    <p id="precio-prod" class="precio"></p>
-    <p id="desc-prod" style="margin-bottom: 20px; color: #555;"></p>
-    
-    <div>
-        <a href="catalogo.html" class="btn btn-regresar">Regresar al catálogo</a>
-        <a href="login.html" class="btn btn-carrito">Agregar al carrito (Próximamente)</a>
+<header>
+    <div class="logo-contenedor">
+        <img src="img/logo.png.png" class="logo-img" alt="Logo">
+        <span style="font-size: 1.5rem; font-weight: bold;">Sabor Mexicano</span>
     </div>
-</div>
+    <nav>
+        <ul>
+            <li><a href="index.html">Inicio</a></li>
+            <li><a href="catalogo.html">Catálogo</a></li>
+            <li><a href="login.html">Iniciar Sesión</a></li>
+        </ul>
+    </nav>
+</header>
+
+<main class="seccion">
+    <div class="detalle-container" id="info-producto">
+        <img id="img-prod" src="" class="img-detalle" alt="Producto">
+        <h1 id="titulo-prod">Cargando...</h1>
+        <p id="precio-prod" class="precio"></p>
+        <p id="desc-prod" style="margin-bottom: 20px; color: #555;"></p>
+        
+        <div>
+            <a href="catalogo.html" class="btn btn-regresar">Regresar al catálogo</a>
+            <a href="login.html" class="btn btn-carrito">Agregar al carrito (Próximamente)</a>
+        </div>
+    </div>
+</main>
 
 <script>
     const productos = {
@@ -35,9 +43,7 @@
         'tamales': { img: 'img/tamales.jpg', titulo: 'Tamales', precio: '$85.00', desc: 'Suaves tamales rellenos de salsa verde o roja.' }
     };
 
-    // Tomamos lo que viene después del #
     const p = window.location.hash.substring(1); 
-
     if (productos[p]) {
         document.getElementById('img-prod').src = productos[p].img;
         document.getElementById('titulo-prod').innerText = productos[p].titulo;

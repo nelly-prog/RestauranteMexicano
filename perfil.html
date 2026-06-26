@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Mi Perfil - Sabor Mexicano</title>
+    <!-- Conectamos el archivo CSS unificado -->
+    <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+
+    <!-- Header unificado -->
+    <header>
+        <div class="logo-contenedor">
+            <img src="img/logo.png.png" class="logo-img" alt="Logo">
+            <span style="font-size: 1.5rem; font-weight: bold;">Sabor Mexicano</span>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="catalogo.html">Catálogo</a></li>
+                <li><a href="login.html">Cerrar Sesión</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Contenedor principal con clase "seccion" para mantener el diseño -->
+    <main class="seccion">
+        <h2 id="titulo-perfil">Bienvenido a tu perfil</h2>
+        <p style="margin: 20px 0; color: #555; font-size: 1.2rem;">Esta es tu zona de usuario. Aquí podrás gestionar tus datos y ver tus pedidos en el futuro.</p>
+        
+        <!-- Botón con la clase .btn-rojo (debe estar en tu estilos.css) -->
+        <a href="index.html" class="btn-rojo" style="display: inline-block; padding: 12px 25px; text-decoration: none; border-radius: 8px; font-weight: bold; margin-top: 15px;">Regresar al Inicio</a>
+    </main>
+
+    <script>
+        // Recupera el nombre guardado en registro.html y lo muestra en el título
+        const nombreUsuario = localStorage.getItem('usuarioNombre');
+        const titulo = document.getElementById('titulo-perfil');
+        
+        if (nombreUsuario) {
+            titulo.innerText = "Bienvenido, " + "NELLY";
+        }
+    </script>
+
+</body>
+</html>

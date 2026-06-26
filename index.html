@@ -3,36 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <title>Sabor Mexicano</title>
-    <style>
-        * { margin:0; padding:0; box-sizing:border-box; font-family: 'Segoe UI', sans-serif; }
-        header { background:#006847; padding:15px 50px; display:flex; justify-content:space-between; align-items:center; color:white; }
-        .logo-img { height: 50px; }
-        nav ul { list-style:none; display:flex; gap:25px; }
-        nav a { text-decoration:none; color:white; font-weight:bold; }
-        
-        /* Hero (Donde va el botón) */
-        .hero { height:70vh; background:#fff8f0; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; }
-        .btn-ver-productos { padding:15px 30px; background:#ce1126; color:white; text-decoration:none; border-radius:8px; font-weight:bold; margin-top:20px; }
-        
-        /* Redes Flotantes */
-        .redes-flotantes { position: fixed; right: 20px; top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; gap: 15px; }
-        .redes-flotantes img { width: 40px; }
-
-        /* Estética secciones */
-        .seccion { padding: 60px 20px; max-width: 900px; margin: auto; text-align: center; }
-        .mapa-img { width: 100%; max-width: 600px; border-radius: 15px; margin-top: 20px; }
-        
-        /* Modal */
-        #modal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); align-items:center; justify-content:center; z-index: 2000; }
-        .contenido-modal { background:white; padding:40px; border-radius:20px; text-align:center; }
-    </style>
+    <link rel="stylesheet" href="estilos.css">
 </head>
 <body>
 
 <header>
-    <div style="display: flex; align-items: center; gap: 15px;">
+    <div class="logo-contenedor">
         <img src="img/logo.png.png" class="logo-img" alt="Logo">
-        <span style="font-size: 1.5rem; font-weight: bold; color: white;">Sabor Mexicano</span>
+        <span>Sabor Mexicano</span>
     </div>
     <nav>
         <ul>
@@ -50,14 +28,12 @@
     <a href="#"><img src="img/insta.jpg" alt="IG"></a>
 </div>
 
-<!-- Sección 1: Inicio con botón -->
 <section class="hero">
     <h1>Bienvenido a Sabor Mexicano</h1>
     <p>La tradición en tu mesa.</p>
     <a href="catalogo.html" class="btn-ver-productos">Ver productos</a>
 </section>
 
-<!-- Sección 2: Nosotros -->
 <section id="nosotros" class="seccion">
     <h2>Nosotros</h2>
     <p>Iniciamos en 2010 como un pequeño puesto familiar con la receta secreta de la abuela. Hoy, nos enorgullece llevar el auténtico sabor de México a cada mesa.</p>
@@ -66,21 +42,20 @@
     <img src="img/mapa.png" class="mapa-img" alt="Mapa">
 </section>
 
-<!-- Sección 3: Contacto -->
 <section id="contacto" class="seccion">
     <h2>Contacto</h2>
     <form id="form-contacto">
-        <input type="text" placeholder="Nombre" style="padding:10px; width:100%; margin-bottom:10px;" required>
-        <input type="email" placeholder="Correo" style="padding:10px; width:100%; margin-bottom:10px;" required>
-        <textarea placeholder="Mensaje" style="padding:10px; width:100%; height:100px; margin-bottom:10px;"></textarea>
-        <button type="button" onclick="document.getElementById('modal').style.display='flex'" style="padding:10px 20px; background:#ce1126; color:white; border:none; border-radius:5px; cursor:pointer;">Enviar</button>
+        <input type="text" placeholder="Nombre" required>
+        <input type="email" placeholder="Correo" required>
+        <textarea placeholder="Mensaje"></textarea>
+        <button type="button" onclick="document.getElementById('modal').style.display='flex'">Enviar</button>
     </form>
 </section>
 
 <div id="modal">
     <div class="contenido-modal">
-        <h2 style="color:#006847;">¡Mensaje enviado con éxito!</h2>
-        <button onclick="document.getElementById('modal').style.display='none'" style="padding:10px 20px; margin-top:20px;">Aceptar</button>
+        <h2>¡Mensaje enviado con éxito!</h2>
+        <button onclick="document.getElementById('modal').style.display='none'">Aceptar</button>
     </div>
 </div>
 

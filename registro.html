@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Registro - Sabor Mexicano</title>
+    <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+
+<!-- Header (Debe ir fuera del main) -->
+<header>
+    <div class="logo-contenedor">
+        <img src="img/logo.png.png" class="logo-img" alt="Logo">
+        <span style="font-size: 1.5rem; font-weight: bold;">Sabor Mexicano</span>
+    </div>
+    <nav>
+        <ul>
+            <li><a href="index.html">Inicio</a></li>
+            <li><a href="catalogo.html">Catálogo</a></li>
+            <li><a href="login.html">Iniciar Sesión</a></li>
+            <li><a href="registro.html">Registrarse</a></li>
+        </ul>
+    </nav>
+</header>
+
+<main class="seccion">
+    <h2>Crear Cuenta</h2>
+    <form id="formRegistro">
+        <label>Nombre:</label>
+        <input type="text" required>
+        
+        <label>Correo:</label>
+        <input type="email" required>
+        
+        <label>Contraseña:</label>
+        <input type="password" required>
+        
+        <button type="submit" class="btn-rojo">Registrarme</button>
+    </form>
+</main>
+
+<!-- Modal de éxito (el mismo del login) -->
+<div id="modal-registro" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); align-items:center; justify-content:center; z-index:1000;">
+    <div style="background:white; padding:30px; border-radius:15px; text-align:center; box-shadow: 0 5px 15px rgba(0,0,0,0.3);">
+        <h3 style="color:#006847;">¡Registro exitoso!</h3>
+        <p>Tu cuenta ha sido creada correctamente.</p>
+        <button onclick="cerrarModal()" style="margin-top:15px; padding:10px 20px; background:#006847; color:white; border:none; border-radius:5px; cursor:pointer;">Aceptar</button>
+    </div>
+</div>
+
+<script>
+    document.getElementById('formRegistro').addEventListener('submit', function(e) {
+        e.preventDefault();
+        // Muestra el modal en lugar del alert
+        document.getElementById('modal-registro').style.display = 'flex';
+    });
+
+function cerrarModal() {
+    // Captura el nombre del formulario antes de redirigir
+    const nombre = document.querySelector('input[type="text"]').value;
+    localStorage.setItem('usuarioNombre', nombre);
+    
+    document.getElementById('modal-registro').style.display = 'none';
+    window.location.href = "perfil.html";
+}
+</script>
+
+</body>
+</html>

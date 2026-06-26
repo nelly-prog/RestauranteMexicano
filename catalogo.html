@@ -3,53 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <title>Catálogo - Sabor Mexicano</title>
-    <style>
-        * { font-family: 'Segoe UI', sans-serif; }
-        header { background:#006847; padding:20px; }
-        header a { color:white; text-decoration:none; font-weight:bold; }
-        .catalogo-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px; padding: 50px; }
-        .producto { border: 1px solid #ddd; padding: 15px; text-align: center; border-radius: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
-        .img-producto { width: 100%; height: 180px; object-fit: cover; border-radius: 10px; margin-bottom: 10px; }
-        h2 { text-align: center; margin-top: 30px; color: #006847; }
-    </style>
+    <link rel="stylesheet" href="estilos.css">
 </head>
 <body>
 
     <header>
-        <nav><ul><li><a href="index.html">← Volver al Inicio</a></li></ul></nav>
+        <div class="logo-contenedor">
+            <img src="img/logo.png.png" class="logo-img" alt="Logo">
+            <span style="font-size: 1.5rem; font-weight: bold;">Sabor Mexicano</span>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="catalogo.html">Catálogo</a></li>
+                <li><a href="login.html">Iniciar Sesión</a></li>
+                <li><a href="registro.html">Registrarse</a></li>
+            </ul>
+        </nav>
     </header>
     
-    <h2>Nuestro Catálogo</h2>
-    
-    <div class="catalogo-grid">
-        <div class="producto">
-            <img src="img/pozole.jpg" class="img-producto" alt="Pozole">
-            <h3>Pozole</h3>
-            <p>$135.00</p>
-            <a href="detalle.html#pozole">Ver detalle</a>
-        </div>
+    <main class="seccion">
+        <h2>Nuestro Catálogo</h2>
+        
+        <div class="catalogo-grid">
+            <div class="producto">
+                <img src="img/pozole.jpg" class="img-producto" alt="Pozole">
+                <h3>Pozole</h3>
+                <p>$135.00</p>
+                <a href="detalle.html#pozole">Ver detalle</a>
+            </div>
 
-        <div class="producto">
-            <img src="img/Sopes.jpg" class="img-producto" alt="Sopes">
-            <h3>Sopes</h3>
-            <p>$95.00</p>
-            <a href="detalle.html#sopes">Ver detalle</a>
-        </div>
+            <div class="producto">
+                <img src="img/Sopes.jpg" class="img-producto" alt="Sopes">
+                <h3>Sopes</h3>
+                <p>$95.00</p>
+                <a href="detalle.html#sopes">Ver detalle</a>
+            </div>
 
-        <div class="producto">
-            <img src="img/tacos.jpg" class="img-producto" alt="Tacos">
-            <h3>Tacos al Pastor</h3>
-            <p>$120.00</p>
-            <a href="detalle.html#tacos">Ver detalle</a>
-        </div>
+            <div class="producto">
+                <img src="img/tacos.jpg" class="img-producto" alt="Tacos">
+                <h3>Tacos al Pastor</h3>
+                <p>$120.00</p>
+                <a href="detalle.html#tacos">Ver detalle</a>
+            </div>
 
-        <div class="producto">
-            <img src="img/tamales.jpg" class="img-producto" alt="Tamales">
-            <h3>Tamales</h3>
-            <p>$85.00</p>
-            <a href="detalle.html#tamales">Ver detalle</a>
+            <div class="producto">
+                <img src="img/tamales.jpg" class="img-producto" alt="Tamales">
+                <h3>Tamales</h3>
+                <p>$85.00</p>
+                <a href="detalle.html#tamales">Ver detalle</a>
+            </div>
         </div>
-    </div>
+    </main>
 
 </body>
 </html>

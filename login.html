@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Iniciar Sesión - Sabor Mexicano</title>
+    <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+
+<header>
+    <div class="logo-contenedor">
+        <img src="img/logo.png.png" class="logo-img" alt="Logo">
+        <span style="font-size: 1.5rem; font-weight: bold;">Sabor Mexicano</span>
+    </div>
+    <nav>
+        <ul>
+            <li><a href="index.html">Inicio</a></li>
+            <li><a href="catalogo.html">Catálogo</a></li>
+            <li><a href="login.html">Iniciar Sesión</a></li>
+            <li><a href="registro.html">Registrarse</a></li>
+        </ul>
+    </nav>
+</header>
+
+<main class="seccion">
+    <h2>Iniciar Sesión</h2>
+    <form id="formLogin">
+        <label>Correo:</label>
+        <input type="email" required>
+        
+        <label>Contraseña:</label>
+        <input type="password" required>
+        
+        <button type="submit" class="btn-rojo">Entrar</button>
+
+        <div style="margin-top: 15px; text-align: center;">
+            <p><a href="#">¿Olvidaste tu contraseña?</a></p>
+            <p>¿No tienes cuenta? <a href="registro.html">Regístrate aquí</a></p>
+        </div>
+    </form>
+</main>
+
+<!-- Modal de bienvenida (estilizado) -->
+<div id="modal-mensaje" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); align-items:center; justify-content:center; z-index:1000;">
+    <div style="background:white; padding:30px; border-radius:15px; text-align:center; box-shadow: 0 5px 15px rgba(0,0,0,0.3);">
+        <h3 style="color:#006847;">¡Bienvenido de nuevo!</h3>
+        <p>Has iniciado sesión correctamente en Sabor Mexicano.</p>
+        <button onclick="cerrarModal()" style="margin-top:15px; padding:10px 20px; background:#006847; color:white; border:none; border-radius:5px; cursor:pointer;">Aceptar</button>
+    </div>
+</div>
+
+<script>
+    document.getElementById('formLogin').addEventListener('submit', function(e) {
+        e.preventDefault();
+        // Muestra el modal en lugar del alert
+        document.getElementById('modal-mensaje').style.display = 'flex';
+    });
+
+    function cerrarModal() {
+        document.getElementById('modal-mensaje').style.display = 'none';
+        window.location.href = "perfil.html";
+    }
+</script>
+
+</body>
+</html>
