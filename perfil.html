@@ -3,12 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <title>Mi Perfil - Sabor Mexicano</title>
-    <!-- Conectamos el archivo CSS unificado -->
     <link rel="stylesheet" href="estilos.css">
+    <style>
+        /* Estilos rápidos para el perfil */
+        .perfil-card { border: 1px solid #ddd; padding: 30px; border-radius: 12px; max-width: 600px; margin: 40px auto; background: #fff; text-align: center; }
+        .info-usuario { font-size: 1.2rem; color: #333; margin-top: 10px; }
+        .seccion-datos { margin-top: 30px; padding-top: 20px; border-top: 1px solid #eee; }
+    </style>
 </head>
 <body>
 
-    <!-- Header unificado -->
     <header>
         <div class="logo-contenedor">
             <img src="img/logo.png.png" class="logo-img" alt="Logo">
@@ -18,29 +22,51 @@
             <ul>
                 <li><a href="index.html">Inicio</a></li>
                 <li><a href="catalogo.html">Catálogo</a></li>
-                <li><a href="login.html">Cerrar Sesión</a></li>
+                <li><a href="login.html" onclick="cerrarSesion()">Cerrar Sesión</a></li>
             </ul>
         </nav>
     </header>
 
-    <!-- Contenedor principal con clase "seccion" para mantener el diseño -->
     <main class="seccion">
-        <h2 id="titulo-perfil">Bienvenido a tu perfil</h2>
-        <p style="margin: 20px 0; color: #555; font-size: 1.2rem;">Esta es tu zona de usuario. Aquí podrás gestionar tus datos y ver tus pedidos en el futuro.</p>
-        
-        <!-- Botón con la clase .btn-rojo (debe estar en tu estilos.css) -->
-        <a href="index.html" class="btn-rojo" style="display: inline-block; padding: 12px 25px; text-decoration: none; border-radius: 8px; font-weight: bold; margin-top: 15px;">Regresar al Inicio</a>
+        <div class="perfil-card">
+            <h2 id="titulo-perfil">Bienvenido a tu perfil</h2>
+            <p class="info-usuario">Hola, <span id="nombre-usuario-display">invitado</span>.</p>
+            <p style="color: #666;">Aquí podrás gestionar tus datos y ver tus pedidos en el futuro.</p>
+            
+            <div class="seccion-datos">
+                <h3>Mis datos</h3>
+                <p>Correo registrado: <span id="email-usuario-display">No disponible</span></p>
+            </div>
+
+            <a href="index.html" class="btn-rojo" style="display: inline-block; padding: 12px 25px; text-decoration: none; border-radius: 8px; font-weight: bold; margin-top: 20px; color: white; background-color: #d9534f;">Regresar al Inicio</a>
+        </div>
     </main>
 
     <script>
-        // Recupera el nombre guardado en registro.html y lo muestra en el título
-        const nombreUsuario = localStorage.getItem('usuarioNombre');
-        const titulo = document.getElementById('titulo-perfil');
+        // 1. Recuperar los datos del localStorage
+        const nombre = localStorage.getItem('usuarioNombre');
+        const email = localStorage.getItem('usuarioEmail');
         
-        if (nombreUsuario) {
-            titulo.innerText = "Bienvenido, " + "NELLY";
+        // 2. Actualizar el DOM
+        const titulo = document.getElementById('titulo-perfil');
+        const spanNombre = document.getElementById('nombre-usuario-display');
+        const spanEmail = document.getElementById('email-usuario-display');
+        
+        if (nombre) {
+            titulo.innerText = "¡Bienvenido de nuevo, " + nombre + "!";
+            spanNombre.innerText = nombre;
+        }
+        
+        if (email) {
+            spanEmail.innerText = email;
+        }
+
+        // 3. Función simple para cerrar sesión
+        function cerrarSesion() {
+            localStorage.removeItem('usuarioNombre');
+            localStorage.removeItem('usuarioEmail');
+            alert("Has cerrado sesión correctamente.");
         }
     </script>
-
 </body>
 </html>
