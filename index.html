@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Sabor Mexicano</title>
+    <title>Sabor Mexicano | Inicio</title>
     <link rel="stylesheet" href="estilos.css">
 </head>
 <body>
@@ -23,40 +23,53 @@
     </nav>
 </header>
 
-<div class="redes-flotantes">
-    <a href="#"><img src="img/face.png" alt="FB"></a>
-    <a href="#"><img src="img/insta.jpg" alt="IG"></a>
-</div>
+<main>
+    <section class="hero">
+        <h1>Bienvenido a Sabor Mexicano</h1>
+        <p>La tradición en tu mesa.</p>
+        <a href="catalogo.html" class="btn-ver-productos">Ver productos</a>
+    </section>
 
-<section class="hero">
-    <h1>Bienvenido a Sabor Mexicano</h1>
-    <p>La tradición en tu mesa.</p>
-    <a href="catalogo.html" class="btn-ver-productos">Ver productos</a>
-</section>
+    <section id="nosotros" class="seccion">
+        <h2>Nosotros</h2>
+        <p>Iniciamos en 2010 como un pequeño puesto familiar con la receta secreta de la abuela. Hoy, nos enorgullece llevar el auténtico sabor de México a cada mesa.</p>
+        <p><strong>Misión:</strong> Ofrecer platillos auténticos con ingredientes frescos.</p>
+        <p><strong>Ubicación:</strong> Av. Adolfo López Mateos #1801.</p>
+        <img src="img/mapa.png" class="mapa-img" alt="Mapa">
+    </section>
 
-<section id="nosotros" class="seccion">
-    <h2>Nosotros</h2>
-    <p>Iniciamos en 2010 como un pequeño puesto familiar con la receta secreta de la abuela. Hoy, nos enorgullece llevar el auténtico sabor de México a cada mesa.</p>
-    <p><strong>Misión:</strong> Ofrecer platillos auténticos con ingredientes frescos.</p>
-    <p><strong>Ubicación:</strong> Av. Adolfo López Mateos #1801.</p>
-    <img src="img/mapa.png" class="mapa-img" alt="Mapa">
-</section>
+    <section id="contacto" class="seccion">
+        <h2>Contacto</h2>
+        <form id="form-contacto">
+            <input type="text" placeholder="Nombre" required>
+            <input type="email" placeholder="Correo" required>
+            <textarea placeholder="Mensaje"></textarea>
+            <button type="button" class="btn-rojo" onclick="document.getElementById('modal').style.display='flex'">Enviar</button>
+        </form>
+    </section>
+</main>
 
-<section id="contacto" class="seccion">
-    <h2>Contacto</h2>
-    <form id="form-contacto">
-        <input type="text" placeholder="Nombre" required>
-        <input type="email" placeholder="Correo" required>
-        <textarea placeholder="Mensaje"></textarea>
-        <button type="button" onclick="document.getElementById('modal').style.display='flex'">Enviar</button>
-    </form>
-</section>
+<footer>
+    <p>&copy; 2026 Sabor Mexicano - Todos los derechos reservados.</p>
+    <p>Proyecto Integrador - Ingeniería en Software</p>
+</footer>
 
+<!-- Modal de contacto -->
 <div id="modal">
     <div class="contenido-modal">
         <h2>¡Mensaje enviado con éxito!</h2>
-        <button onclick="document.getElementById('modal').style.display='none'">Aceptar</button>
+        <button class="btn-rojo" onclick="document.getElementById('modal').style.display='none'">Aceptar</button>
     </div>
+</div>
+
+<!-- Redes Sociales Flotantes -->
+<div class="redes-flotantes">
+    <a href="https://facebook.com" target="_blank">
+        <img src="img/face.png" alt="Facebook">
+    </a>
+    <a href="https://instagram.com" target="_blank">
+        <img src="img/insta.jpg" alt="Instagram">
+    </a>
 </div>
 
 </body>

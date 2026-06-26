@@ -10,7 +10,7 @@
 <header>
     <div class="logo-contenedor">
         <img src="img/logo.png.png" class="logo-img" alt="Logo">
-        <span style="font-size: 1.5rem; font-weight: bold;">Sabor Mexicano</span>
+        <span>Sabor Mexicano</span>
     </div>
     <nav>
         <ul>
@@ -28,12 +28,27 @@
         <p id="precio-prod" class="precio"></p>
         <p id="desc-prod" style="margin-bottom: 20px; color: #555;"></p>
         
-        <div>
-            <a href="catalogo.html" class="btn btn-regresar">Regresar al catálogo</a>
-            <a href="login.html" class="btn btn-carrito">Agregar al carrito (Próximamente)</a>
+        <div style="display: flex; gap: 10px; justify-content: center;">
+            <a href="catalogo.html" class="btn-rojo" style="background: #666;">Regresar</a>
+            <!-- Aquí el bloque 2 nos permitirá agregar lógica real -->
+            <a href="login.html" class="btn-rojo">Agregar al carrito</a>
         </div>
     </div>
 </main>
+
+<footer>
+    <p>&copy; 2026 Sabor Mexicano - Todos los derechos reservados.</p>
+    <p>Proyecto Integrador - Ingeniería en Software</p>
+</footer>
+
+<div class="redes-flotantes">
+    <a href="https://facebook.com" target="_blank">
+        <img src="img/face.png" alt="Facebook">
+    </a>
+    <a href="https://instagram.com" target="_blank">
+        <img src="img/insta.jpg" alt="Instagram">
+    </a>
+</div>
 
 <script>
     const productos = {
@@ -50,7 +65,7 @@
         document.getElementById('precio-prod').innerText = productos[p].precio;
         document.getElementById('desc-prod').innerText = productos[p].desc;
     } else {
-        document.getElementById('titulo-prod').innerText = "Selecciona un producto desde el catálogo";
+        document.getElementById('titulo-prod').innerText = "Producto no encontrado";
     }
 </script>
 

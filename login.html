@@ -10,7 +10,7 @@
 <header>
     <div class="logo-contenedor">
         <img src="img/logo.png.png" class="logo-img" alt="Logo">
-        <span style="font-size: 1.5rem; font-weight: bold;">Sabor Mexicano</span>
+        <span>Sabor Mexicano</span>
     </div>
     <nav>
         <ul>
@@ -26,10 +26,10 @@
     <h2>Iniciar Sesión</h2>
     <form id="formLogin">
         <label>Correo:</label>
-        <input type="email" required>
+        <input type="email" id="loginEmail" required>
         
         <label>Contraseña:</label>
-        <input type="password" required>
+        <input type="password" id="loginPassword" required>
         
         <button type="submit" class="btn-rojo">Entrar</button>
 
@@ -40,19 +40,32 @@
     </form>
 </main>
 
-<!-- Modal de bienvenida (estilizado) -->
+<footer>
+    <p>&copy; 2026 Sabor Mexicano - Todos los derechos reservados.</p>
+    <p>Proyecto Integrador - Ingeniería en Software</p>
+</footer>
+
 <div id="modal-mensaje" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); align-items:center; justify-content:center; z-index:1000;">
-    <div style="background:white; padding:30px; border-radius:15px; text-align:center; box-shadow: 0 5px 15px rgba(0,0,0,0.3);">
+    <div class="contenido-modal">
         <h3 style="color:#006847;">¡Bienvenido de nuevo!</h3>
-        <p>Has iniciado sesión correctamente en Sabor Mexicano.</p>
-        <button onclick="cerrarModal()" style="margin-top:15px; padding:10px 20px; background:#006847; color:white; border:none; border-radius:5px; cursor:pointer;">Aceptar</button>
+        <p>Has iniciado sesión correctamente.</p>
+        <button class="btn-rojo" onclick="cerrarModal()">Aceptar</button>
     </div>
+</div>
+
+<div class="redes-flotantes">
+    <a href="https://facebook.com" target="_blank">
+        <img src="img/face.png" alt="Facebook">
+    </a>
+    <a href="https://instagram.com" target="_blank">
+        <img src="img/insta.jpg" alt="Instagram">
+    </a>
 </div>
 
 <script>
     document.getElementById('formLogin').addEventListener('submit', function(e) {
         e.preventDefault();
-        // Muestra el modal en lugar del alert
+        // Al iniciar sesión, podemos verificar si hay datos guardados
         document.getElementById('modal-mensaje').style.display = 'flex';
     });
 
