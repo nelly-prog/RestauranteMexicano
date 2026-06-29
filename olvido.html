@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Recuperar Contraseña - Sabor Mexicano</title>
+    <link rel="stylesheet" href="estilos.css">
+    <style>
+        /* Mantenemos el estilo de tus otras secciones */
+        .contenedor-central { max-width: 500px; margin: 50px auto; padding: 40px; background: #fff; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); text-align: center; }
+        .input-olvido { width: 100%; padding: 12px; margin: 15px 0; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; }
+    </style>
+</head>
+<body>
+
+<!-- Mantenemos el Header igual que en tus otras páginas -->
+<header>
+    <div class="logo-contenedor">
+        <img src="img/logo.png.png" class="logo-img" alt="Logo">
+        <span>Sabor Mexicano</span>
+    </div>
+    <nav>
+        <ul>
+            <li><a href="index.html">Inicio</a></li>
+            <li><a href="catalogo.html">Catálogo</a></li>
+            <li><a href="login.html">Iniciar Sesión</a></li>
+        </ul>
+    </nav>
+</header>
+
+<main class="seccion">
+    <div class="contenedor-central">
+        <!-- ÁREA DEL FORMULARIO -->
+        <div id="area-formulario">
+            <h2>¿Olvidaste tu contraseña?</h2>
+            <p>Introduce tu correo electrónico y te enviaremos instrucciones.</p>
+            <form id="formOlvido">
+                <input type="email" class="input-olvido" placeholder="correo@ejemplo.com" required>
+                <button type="button" class="btn-rojo" style="width: 100%;" onclick="enviarInstrucciones()">Enviar instrucciones</button>
+            </form>
+        </div>
+
+        <!-- ÁREA DEL MENSAJE (Oculto inicialmente) -->
+        <div id="mensaje-exito" style="display: none;">
+            <h2 style="color: #006847;">¡Correo enviado!</h2>
+            <p>Hemos enviado los pasos a seguir a tu cuenta. Revisa tu bandeja de entrada.</p>
+            <br>
+            <a href="login.html" class="btn-rojo">Volver a iniciar sesión</a>
+        </div>
+    </div>
+</main>
+
+<footer>
+    <p>&copy; 2026 Sabor Mexicano - Todos los derechos reservados.</p>
+    <p>e-business + e-commerce - Negocios Electrónicos I</p>
+</footer>
+
+<!-- Redes Flotantes -->
+<div class="redes-flotantes">
+    <a href="https://facebook.com" target="_blank"><img src="img/face.png" alt="Facebook"></a>
+    <a href="https://instagram.com" target="_blank"><img src="img/insta.jpg" alt="Instagram"></a>
+</div>
+
+<script>
+    function enviarInstrucciones() {
+        // Ocultamos el formulario y mostramos el éxito, manteniendo header/footer
+        document.getElementById('area-formulario').style.display = 'none';
+        document.getElementById('mensaje-exito').style.display = 'block';
+    }
+</script>
+</body>
+</html>

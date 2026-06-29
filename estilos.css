@@ -26,7 +26,7 @@ nav a { text-decoration: none; color: white !important; font-weight: 600; transi
 nav a:hover { opacity: 0.8; text-decoration: underline; }
 
 /* ==========================================================================
-   3. COMPONENTES REUTILIZABLES (Tarjetas, Botones, Tipografía)
+   3. COMPONENTES REUTILIZABLES
    ========================================================================== */
 .seccion { 
     padding: 40px 20px; 
@@ -41,7 +41,7 @@ h2 {
     border-left: 5px solid #D9534F; 
     padding-left: 15px;
     margin-bottom: 25px;
-    text-align: left; /* Alineamos a la izquierda para un look más formal */
+    text-align: left;
 }
 .btn-rojo, .btn-carrito, .btn-ver-productos { 
     background: #ce1126; 
@@ -58,73 +58,65 @@ h2 {
 .btn-rojo:hover, .btn-carrito:hover { background: #a30d1d; transform: translateY(-2px); }
 
 /* ==========================================================================
-   4. MÓDULO DE TIENDA (Catálogo y Detalle)
+   4. SECCIÓN HERO
    ========================================================================== */
-.catalogo-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 25px;
-    margin-top: 30px;
-}
-.producto {
-    background: white;
-    padding: 15px;
-    border-radius: 15px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+.hero {
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), 
+                url('img/fondo-comida.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    height: 60vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
     text-align: center;
-    transition: transform 0.3s;
+    padding: 20px;
 }
-.producto:hover { transform: scale(1.05); }
-.img-producto { width: 100%; height: 150px; object-fit: cover; border-radius: 10px; }
-.hero { height: 60vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
-.detalle-container { background: white; max-width: 600px; margin: 40px auto; padding: 30px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
-.img-detalle { width: 100%; border-radius: 15px; margin-bottom: 20px; }
-.precio { font-size: 1.8rem; color: #006847; font-weight: bold; margin: 15px 0; }
+.hero h1 { font-size: 3rem; margin-bottom: 10px; text-shadow: 2px 2px 4px rgba(0,0,0,0.5); }
+.hero p { font-size: 1.5rem; text-shadow: 1px 1px 2px rgba(0,0,0,0.5); }
 
 /* ==========================================================================
-   5. FORMULARIOS Y MODALES
+   5. MÓDULO DE TIENDA Y FORMULARIOS
    ========================================================================== */
-form { max-width: 450px; margin: 20px auto; text-align: left; }
-form label { display: block; margin-bottom: 8px; font-weight: 600; color: #444; }
-form input, form textarea { 
-    padding: 12px; width: 100%; margin-bottom: 20px; border: 1px solid #ddd; border-radius: 8px; background-color: #fafafa;
+/* CONTENEDOR PARA LIMITAR EL ANCHO */
+.catalogo-container { max-width: 1200px; margin: 40px auto; padding: 0 20px; }
+
+/* CUADRÍCULA CORREGIDA */
+.catalogo-grid { 
+    display: grid; 
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+    gap: 25px; 
+    margin-top: 30px; 
 }
+.producto { background: white; padding: 15px; border-radius: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); text-align: center; }
+
+/* IMÁGENES CONTROLADAS PARA QUE NO SE VEAN GIGANTES */
+.img-producto { 
+    width: 100%; 
+    height: 200px; 
+    object-fit: cover; 
+    border-radius: 10px; 
+    margin-bottom: 15px;
+}
+
+form { max-width: 450px; margin: 20px auto; text-align: left; }
+form input, form textarea { padding: 12px; width: 100%; margin-bottom: 20px; border: 1px solid #ddd; border-radius: 8px; background-color: #fafafa; }
 #modal, #modal-registro, #modal-mensaje { 
     display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); align-items:center; justify-content:center; z-index:2000; 
 }
 .contenido-modal { background:white; padding:40px; border-radius:20px; text-align:center; box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
 
 /* ==========================================================================
-   6. ELEMENTOS FLOTANTES Y PIE DE PÁGINA
+   6. REDES FLOTANTES Y PIE DE PÁGINA
    ========================================================================== */
 .redes-flotantes {
     position: fixed; right: 20px; top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; gap: 15px; z-index: 9999;
 }
-.redes-flotantes a { transition: transform 0.3s ease; }
-.redes-flotantes a:hover { transform: scale(1.2); }
-.redes-flotantes img { width: 40px; height: 40px; }
+.redes-flotantes a img { width: 45px; height: 45px; transition: transform 0.3s ease; }
+.redes-flotantes a img:hover { transform: scale(1.2); }
 footer {
     background: #222; color: white; text-align: center; padding: 20px; margin-top: 50px; font-size: 0.9rem;
-}
-
-/* --- Redes Sociales Flotantes --- */
-.redes-flotantes {
-    position: fixed; /* Esto hace que se mantengan fijas al hacer scroll */
-    right: 20px;     /* Separación desde la derecha */
-    top: 50%;        /* Centradas verticalmente */
-    transform: translateY(-50%);
-    display: flex;
-    flex-direction: column;
-    gap: 15px;       /* Espacio entre los iconos */
-    z-index: 9999;   /* Asegura que siempre estén sobre otros elementos */
-}
-
-.redes-flotantes a img {
-    width: 45px;     /* Tamaño fijo y profesional */
-    height: 45px;
-    transition: transform 0.3s ease; /* Efecto suave */
-}
-
-.redes-flotantes a img:hover {
-    transform: scale(1.2); /* Zoom al pasar el mouse */
 }

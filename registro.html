@@ -4,6 +4,22 @@
     <meta charset="UTF-8">
     <title>Registro - Sabor Mexicano</title>
     <link rel="stylesheet" href="estilos.css">
+    <style>
+        /* Estilo para que el formulario se vea centrado y elegante */
+        #formRegistro {
+            max-width: 400px;
+            margin: 20px auto;
+            padding: 25px;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        #formRegistro label { display: block; margin-top: 15px; font-weight: bold; }
+        #formRegistro input { width: 100%; padding: 10px; margin-top: 5px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; }
+        .contenido-modal { background: white; padding: 30px; border-radius: 15px; text-align: center; box-shadow: 0 5px 15px rgba(0,0,0,0.3); width: 80%; max-width: 350px; }
+        .redes-flotantes { position: fixed; bottom: 20px; right: 20px; display: flex; flex-direction: column; gap: 10px; z-index: 999; }
+        .redes-flotantes img { width: 40px; }
+    </style>
 </head>
 <body>
 
@@ -22,64 +38,59 @@
 </header>
 
 <main class="seccion">
-    <h2>Crear Cuenta</h2>
+    <h2 style="text-align: center;">Crear Cuenta</h2>
     
     <form id="formRegistro">
         <label>Nombre:</label>
-        <input type="text" id="nombreInput" required>
+        <input type="text" id="nombreInput" required placeholder="Tu nombre">
         
         <label>Correo:</label>
-        <input type="email" id="emailInput" required>
+        <input type="email" id="emailInput" required placeholder="tu@correo.com">
         
         <label>Contraseña:</label>
-        <input type="password" id="passwordInput" autocomplete="new-password" required>
+        <input type="password" id="passwordInput" required placeholder="••••••••">
         
-        <div style="margin: 15px 0; display: flex; align-items: center;">
-            <input type="checkbox" id="recordarPassword" name="recordar" checked>
-            <label for="recordarPassword" style="margin-left: 8px; font-size: 0.9rem; color: #555;">
-                Recordar mis datos en este equipo
-            </label>
+        <div style="margin: 15px 0;">
+            <input type="checkbox" id="recordarPassword" checked>
+            <label style="display:inline; font-size: 0.8rem;">Recordar mis datos</label>
         </div>
 
-        <button type="submit" class="btn-rojo">Registrarme</button>
+        <button type="submit" class="btn-rojo" style="width: 100%; margin-top: 10px;">Registrarme</button>
     </form>
 </main>
 
 <footer>
     <p>&copy; 2026 Sabor Mexicano - Todos los derechos reservados.</p>
-    <p>Proyecto Integrador - Ingeniería en Software</p>
+    <p>e-business + e-commerce - Negocios Electrónicos I</p>
 </footer>
 
 <div id="modal-registro" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); align-items:center; justify-content:center; z-index:1000;">
     <div class="contenido-modal">
-        <h3 style="color:#006847;">¡Registro exitoso!</h3>
-        <p>Tu cuenta ha sido creada correctamente.</p>
-        <button class="btn-rojo" onclick="guardarYRedirigir()">Aceptar</button>
+        <h3 style="color:#d32f2f;">¡Registro exitoso!</h3>
+        <p>Bienvenido a Sabor Mexicano.</p>
+        <button class="btn-rojo" onclick="guardarYRedirigir()" style="width: 100%;">Aceptar</button>
     </div>
 </div>
 
 <div class="redes-flotantes">
-    <a href="https://facebook.com" target="_blank">
-        <img src="img/face.png" alt="Facebook">
-    </a>
-    <a href="https://instagram.com" target="_blank">
-        <img src="img/insta.jpg" alt="Instagram">
-    </a>
+    <a href="https://facebook.com" target="_blank"><img src="img/face.png" alt="Facebook"></a>
+    <a href="https://instagram.com" target="_blank"><img src="img/insta.jpg" alt="Instagram"></a>
 </div>
 
 <script>
-    // Evento para mostrar mi modal al registrarse
+    // Evento para mostrar el modal
     document.getElementById('formRegistro').addEventListener('submit', function(e) {
         e.preventDefault();
         document.getElementById('modal-registro').style.display = 'flex';
     });
 
-    // Función para capturar los datos y mandarlos al perfil
+    // Guardar datos y redirigir
     function guardarYRedirigir() {
         const nombre = document.getElementById('nombreInput').value;
         const email = document.getElementById('emailInput').value;
         const recordar = document.getElementById('recordarPassword').checked;
         
+        // Guardamos los datos en localStorage para que el perfil los lea
         localStorage.setItem('usuarioNombre', nombre);
         localStorage.setItem('usuarioEmail', email);
         localStorage.setItem('recordarSesion', recordar);

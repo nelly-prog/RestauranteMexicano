@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Sabor Mexicano | Auténtica Tradición</title>
+    <link rel="stylesheet" href="estilos.css">
+    <style>
+        /* Estilos específicos de la Landing Page */
+        .hero { 
+            height: 85vh; 
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('img/fondo-comida.jpg'); 
+            background-size: cover; 
+            background-position: center;
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center; 
+            align-items: center; 
+            color: white; 
+            text-align: center; 
+        }
+        .hero h1 { font-size: 4rem; text-shadow: 2px 2px 10px rgba(0,0,0,0.5); }
+        .hero p { font-size: 1.5rem; margin-bottom: 20px; }
+        .btn-cta { background: #ce1126; color: white; padding: 20px 40px; text-decoration: none; border-radius: 50px; font-weight: bold; transition: 0.3s; }
+        .btn-cta:hover { transform: scale(1.1); background: #a30d1d; }
+        .seccion { padding: 60px 20px; text-align: center; max-width: 900px; margin: auto; }
+        .grid-beneficios { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; margin-top: 30px; }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="logo-contenedor">
+        <img src="img/logo.png.png" class="logo-img" alt="Logo">
+        <span>Sabor Mexicano</span>
+    </div>
+    <nav>
+        <ul>
+            <li><a href="index.html">Inicio</a></li>
+            <li><a href="catalogo.html">Catálogo</a></li>
+            <li><a href="login.html">Iniciar Sesión</a></li>
+        </ul>
+    </nav>
+</header>
+
+<section class="hero">
+    <h1>El auténtico sabor de México</h1>
+    <p>La receta secreta de la abuela, ahora en tu mesa.</p>
+    <a href="index.html" class="btn-cta">¡Haz tu pedido ahora!</a>
+</section>
+
+<section class="seccion">
+    <h2>¿Por qué elegirnos?</h2>
+    <div class="grid-beneficios">
+        <!-- Tarjeta 1 -->
+        <div class="producto">
+            <img src="img/frescos.jpg" class="img-producto" alt="Ingredientes Frescos">
+            <h3>🌱 Ingredientes Frescos</h3>
+            <p>Seleccionados cuidadosamente del campo a tu plato.</p>
+        </div>
+        <!-- Tarjeta 2 -->
+        <div class="producto">
+            <img src="img/tradicion.jpg" class="img-producto" alt="Tradición">
+            <h3>🥘 Tradición Familiar</h3>
+            <p>Recetas con más de 15 años de historia y amor.</p>
+        </div>
+        <!-- Tarjeta 3 -->
+        <div class="producto">
+            <img src="img/rapido.jpg" class="img-producto" alt="Servicio Rápido">
+            <h3>⚡ Servicio Rápido</h3>
+            <p>Entregas calientes y seguras en tiempo récord.</p>
+        </div>
+    </div>
+</section>
+
+<section class="seccion" style="background: #fcf9f2; border-radius: 20px;">
+    <h2>¿Listo para probar?</h2>
+    <p>No te quedes con el antojo de nuestros platillos estrella.</p>
+    <br>
+    <a href="catalogo.html" class="btn-rojo">Explora nuestro catálogo completo</a>
+</section>
+
+<footer>
+    <p>&copy; 2026 Sabor Mexicano - Todos los derechos reservados.</p>
+    <p>e-business + e-commerce - Negocios Electrónicos I</p>
+</footer>
+
+<div class="redes-flotantes">
+    <a href="https://facebook.com" target="_blank"><img src="img/face.png" alt="Facebook"></a>
+    <a href="https://instagram.com" target="_blank"><img src="img/insta.jpg" alt="Instagram"></a>
+</div>
+
+</body>
+</html>

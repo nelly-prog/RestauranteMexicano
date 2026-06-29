@@ -4,6 +4,19 @@
     <meta charset="UTF-8">
     <title>Mi Perfil - Sabor Mexicano</title>
     <link rel="stylesheet" href="estilos.css">
+    <style>
+        /* Estilos específicos para la estructura mejorada */
+        .contenedor-perfil { max-width: 800px; margin: 40px auto; padding: 20px; background: #fff; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        .info-usuario { text-align: center; margin-bottom: 30px; }
+        .lista-actividad { list-style: none; padding: 0; margin-top: 20px; }
+        .lista-actividad li { padding: 15px 0; border-bottom: 1px solid #eee; display: flex; align-items: center; gap: 10px; color: #555; }
+        .lista-actividad li:hover { color: #006847; cursor: pointer; }
+        
+        /* Estilos de Redes Flotantes */
+        .redes-flotantes { position: fixed; right: 20px; bottom: 20px; display: flex; flex-direction: column; gap: 10px; }
+        .redes-flotantes img { width: 45px; transition: 0.3s; }
+        .redes-flotantes img:hover { transform: scale(1.1); }
+    </style>
 </head>
 <body>
 
@@ -16,65 +29,72 @@
         <ul>
             <li><a href="index.html">Inicio</a></li>
             <li><a href="catalogo.html">Catálogo</a></li>
-            <li><a href="login.html" onclick="cerrarSesion()">Cerrar Sesión</a></li>
+            <li><a href="#" onclick="cerrarSesion(event)">Cerrar Sesión</a></li>
         </ul>
     </nav>
 </header>
 
 <main class="seccion">
-    <h2 id="titulo-perfil">Bienvenido a tu perfil</h2>
-    
-    <div style="max-width: 500px; margin: 20px auto; padding: 20px; border: 1px solid #eee; border-radius: 15px; background: #fafafa;">
-        <p class="info-usuario">Hola, <span id="nombre-usuario-display">invitado</span>.</p>
-        <p style="color: #666; margin-bottom: 20px;">Aquí podrás gestionar tus datos y ver tus pedidos en el futuro.</p>
-        
-        <div class="seccion-datos" style="text-align: left; border-top: 1px solid #ddd; padding-top: 15px;">
-            <h3>Mis datos</h3>
-            <p><strong>Correo registrado:</strong> <span id="email-usuario-display">No disponible</span></p>
+    <div class="contenedor-perfil">
+        <div class="info-usuario">
+            <h2 id="titulo-perfil">¡Bienvenido, Usuario!</h2>
+            <p><strong>Mis datos</strong></p>
+            <p>Nombre: <span id="nombre-usuario-display">Cargando...</span></p>
+            <p>Correo: <span id="email-usuario-display">Cargando...</span></p>
+            <button class="btn-editar">Editar perfil</button>
         </div>
 
-        <a href="index.html" class="btn-rojo" style="margin-top: 20px; display: block;">Regresar al Inicio</a>
+        <hr>
+
+        <h3>Mi actividad</h3>
+        <ul class="lista-actividad">
+            <li>📦 Mis compras <span>(próximamente)</span></li>
+            <li>❤️ Favoritos <span>(próximamente)</span></li>
+            <li>💬 Preguntas <span>(próximamente)</span></li>
+            <li>🕒 Historial <span>(próximamente)</span></li>
+        </ul>
+
+        <div style="text-align: center; margin-top: 30px;">
+            <a href="index.html" class="btn-rojo">Regresar al Inicio</a>
+        </div>
     </div>
 </main>
 
 <footer>
     <p>&copy; 2026 Sabor Mexicano - Todos los derechos reservados.</p>
-    <p>Proyecto Integrador - Ingeniería en Software</p>
+    <p>e-business + e-commerce - Negocios Electrónicos I</p>
 </footer>
 
 <div class="redes-flotantes">
-    <a href="https://facebook.com" target="_blank">
-        <img src="img/face.png" alt="Facebook">
-    </a>
-    <a href="https://instagram.com" target="_blank">
-        <img src="img/insta.jpg" alt="Instagram">
-    </a>
+    <a href="#"><img src="img/face.png" alt="Facebook"></a>
+    <a href="#"><img src="img/insta.jpg" alt="Instagram"></a>
+</div>
+
+<div id="modal-cierre" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; justify-content: center; align-items: center;">
+    <div style="background: white; padding: 30px; border-radius: 15px; text-align: center;">
+        <h3>Sesión cerrada</h3>
+        <p>Has cerrado sesión correctamente.</p>
+        <button onclick="window.location.href='index.html'" class="btn-rojo">Aceptar</button>
+    </div>
 </div>
 
 <script>
-    // Recuperar y mostrar datos
-    const nombre = localStorage.getItem('usuarioNombre');
-    const email = localStorage.getItem('usuarioEmail');
-    
-    const titulo = document.getElementById('titulo-perfil');
-    const spanNombre = document.getElementById('nombre-usuario-display');
-    const spanEmail = document.getElementById('email-usuario-display');
-    
-    if (nombre) {
-        titulo.innerText = "¡Bienvenido, " + nombre + "!";
-        spanNombre.innerText = nombre;
-    }
-    
-    if (email) {
-        spanEmail.innerText = email;
-    }
+    // Recuperar datos
+    window.onload = function() {
+        const nombre = localStorage.getItem('usuarioNombre');
+        const email = localStorage.getItem('usuarioEmail');
+        if(nombre) {
+            document.getElementById('titulo-perfil').innerText = "¡Bienvenido, " + nombre + "!";
+            document.getElementById('nombre-usuario-display').innerText = nombre;
+        }
+        if(email) document.getElementById('email-usuario-display').innerText = email;
+    };
 
-    // Función para cerrar sesión
-    function cerrarSesion() {
-        localStorage.removeItem('usuarioNombre');
-        localStorage.removeItem('usuarioEmail');
-        localStorage.removeItem('recordarSesion');
-        alert("Has cerrado sesión correctamente.");
+    // Función de cierre mejorada
+    function cerrarSesion(event) {
+        event.preventDefault();
+        localStorage.clear();
+        document.getElementById('modal-cierre').style.display = 'flex';
     }
 </script>
 

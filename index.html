@@ -4,6 +4,39 @@
     <meta charset="UTF-8">
     <title>Sabor Mexicano | Inicio</title>
     <link rel="stylesheet" href="estilos.css">
+    <style>
+        /* Estilo mejorado para la sección Hero con imagen de fondo */
+        .hero { 
+            text-align: center; 
+            padding: 150px 20px; 
+            /* Capa oscura (50%) + imagen de fondo */
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), 
+                        url('img/fondo-comida.jpg'); 
+            background-size: cover; 
+            background-position: center;
+            background-attachment: fixed;
+            color: white;
+        }
+        
+        .hero h1 { font-size: 3.5rem; margin-bottom: 10px; text-shadow: 2px 2px 8px rgba(0,0,0,0.5); }
+        .hero p { font-size: 1.5rem; text-shadow: 1px 1px 4px rgba(0,0,0,0.5); margin-bottom: 20px; }
+
+        .btn-ver-productos { 
+            display: inline-block; padding: 15px 35px; background: #d32f2f; color: white; 
+            text-decoration: none; border-radius: 50px; transition: 0.3s; font-weight: bold;
+        }
+        .btn-ver-productos:hover { transform: scale(1.05); background: #b71c1c; }
+        
+        /* Grid para Nosotros */
+        .grid-nosotros { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; max-width: 900px; margin: 40px auto; padding: 20px; background: #fff; border-radius: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .mapa-img { width: 100%; border-radius: 10px; }
+        
+        /* Formulario y Modal */
+        #form-contacto { max-width: 500px; margin: 20px auto; display: flex; flex-direction: column; gap: 10px; }
+        #form-contacto input, #form-contacto textarea { padding: 12px; border: 1px solid #ddd; border-radius: 8px; }
+        #modal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); align-items:center; justify-content:center; z-index:2000; }
+        .contenido-modal { background: white; padding: 30px; border-radius: 15px; text-align: center; }
+    </style>
 </head>
 <body>
 
@@ -31,45 +64,46 @@
     </section>
 
     <section id="nosotros" class="seccion">
-        <h2>Nosotros</h2>
-        <p>Iniciamos en 2010 como un pequeño puesto familiar con la receta secreta de la abuela. Hoy, nos enorgullece llevar el auténtico sabor de México a cada mesa.</p>
-        <p><strong>Misión:</strong> Ofrecer platillos auténticos con ingredientes frescos.</p>
-        <p><strong>Ubicación:</strong> Av. Adolfo López Mateos #1801.</p>
-        <img src="img/mapa.png" class="mapa-img" alt="Mapa">
+        <h2 style="text-align: center;">Nosotros</h2>
+        <div class="grid-nosotros">
+            <div class="info-texto">
+                <p>Iniciamos en 2010 como un pequeño puesto familiar con la receta secreta de la abuela. Hoy, nos enorgullece llevar el auténtico sabor de México a cada mesa.</p>
+                <p><strong>Misión:</strong> Ofrecer platillos auténticos con ingredientes frescos.</p>
+                <p><strong>Ubicación:</strong> Av. Adolfo López Mateos #1801.</p>
+            </div>
+            <div>
+                <img src="img/mapa.png" class="mapa-img" alt="Mapa">
+            </div>
+        </div>
     </section>
 
-    <section id="contacto" class="seccion">
-        <h2>Contacto</h2>
+    <section id="contacto" class="seccion" style="padding: 40px;">
+        <h2 style="text-align: center;">Contacto</h2>
         <form id="form-contacto">
             <input type="text" placeholder="Nombre" required>
             <input type="email" placeholder="Correo" required>
-            <textarea placeholder="Mensaje"></textarea>
-            <button type="button" class="btn-rojo" onclick="document.getElementById('modal').style.display='flex'">Enviar</button>
+            <textarea placeholder="Mensaje" rows="4"></textarea>
+            <button type="button" class="btn-rojo" onclick="document.getElementById('modal').style.display='flex'">Enviar mensaje</button>
         </form>
     </section>
 </main>
 
 <footer>
     <p>&copy; 2026 Sabor Mexicano - Todos los derechos reservados.</p>
-    <p>Proyecto Integrador - Ingeniería en Software</p>
+    <p>e-business + e-commerce - Negocios Electrónicos I</p>
 </footer>
 
-<!-- Modal de contacto -->
 <div id="modal">
     <div class="contenido-modal">
         <h2>¡Mensaje enviado con éxito!</h2>
+        <p>Nos pondremos en contacto contigo pronto.</p>
         <button class="btn-rojo" onclick="document.getElementById('modal').style.display='none'">Aceptar</button>
     </div>
 </div>
 
-<!-- Redes Sociales Flotantes -->
 <div class="redes-flotantes">
-    <a href="https://facebook.com" target="_blank">
-        <img src="img/face.png" alt="Facebook">
-    </a>
-    <a href="https://instagram.com" target="_blank">
-        <img src="img/insta.jpg" alt="Instagram">
-    </a>
+    <a href="https://facebook.com" target="_blank"><img src="img/face.png" alt="Facebook"></a>
+    <a href="https://instagram.com" target="_blank"><img src="img/insta.jpg" alt="Instagram"></a>
 </div>
 
 </body>
