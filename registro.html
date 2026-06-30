@@ -49,13 +49,8 @@
         
         <label>Contraseña:</label>
         <input type="password" id="passwordInput" required placeholder="••••••••">
-        
-        <div style="margin: 15px 0;">
-            <input type="checkbox" id="recordarPassword" checked>
-            <label style="display:inline; font-size: 0.8rem;">Recordar mis datos</label>
-        </div>
 
-        <button type="submit" class="btn-rojo" style="width: 100%; margin-top: 10px;">Registrarme</button>
+        <button type="submit" class="btn-rojo" style="width: 100%; margin-top: 20px;">Registrarme</button>
     </form>
 </main>
 
@@ -88,12 +83,12 @@
     function guardarYRedirigir() {
         const nombre = document.getElementById('nombreInput').value;
         const email = document.getElementById('emailInput').value;
-        const recordar = document.getElementById('recordarPassword').checked;
         
         // Guardamos los datos en localStorage para que el perfil los lea
         localStorage.setItem('usuarioNombre', nombre);
         localStorage.setItem('usuarioEmail', email);
-        localStorage.setItem('recordarSesion', recordar);
+        
+        // Nota: La propiedad 'recordarSesion' se manejará ahora desde el archivo login.html
         
         window.location.href = "perfil.html";
     }

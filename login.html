@@ -31,7 +31,12 @@
         <label>Contraseña:</label>
         <input type="password" id="loginPassword" required>
         
-        <button type="submit" class="btn-rojo">Entrar</button>
+        <div style="margin: 15px 0; display: flex; align-items: center; gap: 8px;">
+            <input type="checkbox" id="recordarSesion" checked style="width: auto; margin: 0;">
+            <label for="recordarSesion" style="display: inline; margin: 0; font-size: 0.9rem; font-weight: normal;">Recordar mis datos</label>
+        </div>
+        
+        <button type="submit" class="btn-rojo" style="width: 100%;">Entrar</button>
 
         <div style="margin-top: 15px; text-align: center;">
             <p><a href="olvido.html" style="font-size: 1.1rem; color: #2140dd;">¿Olvidaste tu contraseña?</a></p>
@@ -46,10 +51,10 @@
 </footer>
 
 <div id="modal-mensaje" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); align-items:center; justify-content:center; z-index:1000;">
-    <div class="contenido-modal">
+    <div class="contenido-modal" style="background: white; padding: 30px; border-radius: 15px; text-align: center; box-shadow: 0 5px 15px rgba(0,0,0,0.3); width: 80%; max-width: 350px;">
         <h3 style="color:#006847;">¡Bienvenido de nuevo!</h3>
         <p>Has iniciado sesión correctamente.</p>
-        <button class="btn-rojo" onclick="cerrarModal()">Aceptar</button>
+        <button class="btn-rojo" onclick="cerrarModal()" style="width: 100%;">Aceptar</button>
     </div>
 </div>
 
@@ -65,7 +70,15 @@
 <script>
     document.getElementById('formLogin').addEventListener('submit', function(e) {
         e.preventDefault();
-        // Al iniciar sesión, podemos verificar si hay datos guardados
+        
+        // Capturamos si el usuario quiere recordar su sesión
+        const recordar = document.getElementById('recordarSesion').checked;
+        localStorage.setItem('recordarSesion', recordar);
+        
+        // Aquí también podrías guardar temporalmente el correo si quisieras simular el login completo
+        const email = document.getElementById('loginEmail').value;
+        localStorage.setItem('usuarioEmail', email);
+
         document.getElementById('modal-mensaje').style.display = 'flex';
     });
 
