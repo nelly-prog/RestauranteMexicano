@@ -27,9 +27,111 @@
         }
         .btn-ver-productos:hover { transform: scale(1.05); background: #b71c1c; }
         
-        /* Grid para Nosotros */
-        .grid-nosotros { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; max-width: 900px; margin: 40px auto; padding: 20px; background: #fff; border-radius: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-        .mapa-img { width: 100%; border-radius: 10px; }
+        /* ==========================================================================
+           NUEVOS ESTILOS ESTÉTICOS PARA "NOSOTROS", "MISIÓN/VISIÓN" Y "UBICACIÓN"
+           ========================================================================== */
+        
+        .contenedor-bloques {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Bloque de Historia (Nosotros) */
+        .bloque-historia {
+            text-align: center;
+            max-width: 750px;
+            margin: 0 auto 50px auto;
+            padding: 30px;
+            background: #fff;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+        .bloque-historia p {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: #444;
+            font-style: italic;
+        }
+
+        /* Grid para Misión y Visión paralelas */
+        .grid-mision-vision {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .tarjeta-mv {
+            background: #fff;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s;
+        }
+        .tarjeta-mv:hover {
+            transform: translateY(-5px);
+        }
+
+        .mv-img-contenedor {
+            width: 100%;
+            height: 200px;
+            overflow: hidden;
+        }
+        .mv-img-contenedor img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .mv-texto {
+            padding: 25px;
+            text-align: center;
+        }
+        .mv-texto h3 {
+            color: #b71c1c;
+            font-size: 1.5rem;
+            margin-bottom: 12px;
+            font-family: 'Georgia', serif;
+        }
+        .mv-texto p {
+            color: #555;
+            line-height: 1.6;
+            font-size: 1.05rem;
+        }
+
+        /* Sección de Ubicación Completa abajo */
+        .bloque-ubicacion {
+            background: #fff;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            padding: 30px;
+            text-align: center;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .bloque-ubicacion h3 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 1.6rem;
+        }
+        .bloque-ubicacion p {
+            color: #666;
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+        .mapa-img-centrada {
+            width: 100%;
+            max-width: 700px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        .mapa-img-centrada:hover {
+            transform: scale(1.01);
+        }
         
         /* Formulario y Modal */
         #form-contacto { max-width: 500px; margin: 20px auto; display: flex; flex-direction: column; gap: 10px; }
@@ -63,17 +165,57 @@
         <a href="catalogo.html" class="btn-ver-productos">Ver productos</a>
     </section>
 
-    <section id="nosotros" class="seccion">
-        <h2 style="text-align: center;">Nosotros</h2>
-        <div class="grid-nosotros">
-            <div class="info-texto">
-                <p>Iniciamos en 2010 como un pequeño puesto familiar con la receta secreta de la abuela. Hoy, nos enorgullece llevar el auténtico sabor de México a cada mesa.</p>
-                <p><strong>Misión:</strong> Ofrecer platillos auténticos con ingredientes frescos.</p>
-                <p><strong>Ubicación:</strong> Av. Adolfo López Mateos #1801.</p>
+    <!-- SECCIÓN NOSOTROS TOTALMENTE RENOVADA -->
+    <section id="nosotros" class="seccion" style="background-color: #fdfbf7; padding: 60px 0;">
+        <h2 style="text-align: center; font-size: 2.5rem; margin-bottom: 40px; color: #222;">Nuestra Historia</h2>
+        
+        <div class="contenedor-bloques">
+            
+            <!-- 1. Historia / Nosotros Romántico -->
+            <div class="bloque-historia">
+                <p>
+                    "Nuestra aventura culinaria comenzó en el año 2010, cobijada por el calor de un pequeño puesto familiar y guiada por el amor impregnado en las recetas secretas de nuestra abuela. Con el paso de los años, ese sazón único se convirtió en nuestra misión de vida: honrar nuestras raíces y llevar la magia, el color y el auténtico corazón de México a cada una de las mesas que nos visitan."
+                </p>
             </div>
-            <div>
-                <img src="img/mapa.png" class="mapa-img" alt="Mapa">
+
+            <!-- 2. Tarjetas de Misión y Visión con opciones para imágenes -->
+            <div class="grid-mision-vision">
+                
+                <!-- Tarjeta Misión -->
+                <div class="tarjeta-mv">
+                    <div class="mv-img-contenedor">
+                        <!-- Puedes cambiar 'img/mision-foto.jpg' por cualquier foto de tus platillos o cocina -->
+                        <img src="img/pozole.jpg" alt="Nuestra Misión">
+                    </div>
+                    <div class="mv-texto">
+                        <h3>Nuestra Misión</h3>
+                        <p>Cautivar los paladares de nuestros invitados mediante platillos tradicionales extraordinarios, elaborados con el alma y con los ingredientes más frescos del campo, creando momentos de felicidad compartida en un ambiente cálido y familiar.</p>
+                    </div>
+                </div>
+
+                <!-- Tarjeta Visión -->
+                <div class="tarjeta-mv">
+                    <div class="mv-img-contenedor">
+                        <!-- Puedes cambiar 'img/vision-foto.jpg' por otra foto llamativa -->
+                        <img src="img/tacos.jpg" alt="Nuestra Visión">
+                    </div>
+                    <div class="mv-texto">
+                        <h3>Nuestra Visión</h3>
+                        <p>Consolidarnos como el rincón gastronómico mexicano por excelencia, reconocido por preservar el legado de nuestra cocina artesanal y expandir el aroma de nuestras tradiciones culinarias a nuevas generaciones de familias.</p>
+                    </div>
+                </div>
+
             </div>
+
+            <!-- 3. Ubicación Independiente Abajo con Texto e Imagen -->
+            <div class="bloque-ubicacion">
+                <h3>¿Dónde encontrarnos?</h3>
+                <p>📍 Te esperamos con los brazos abiertos en: <strong>Av. Adolfo López Mateos #1801</strong></p>
+                <div style="text-align: center;">
+                    <img src="img/mapa.png" class="mapa-img-centrada" alt="Ubicación de Sabor Mexicano">
+                </div>
+            </div>
+
         </div>
     </section>
 
