@@ -124,6 +124,7 @@
         }
         .mapa-img-centrada {
             width: 100%;
+            height: auto;
             max-width: 700px;
             border-radius: 10px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
@@ -154,6 +155,11 @@
             <li><a href="#nosotros">Nosotros</a></li>
             <li><a href="#contacto">Contacto</a></li>
             <li><a href="login.html">Iniciar Sesión</a></li>
+            <li class="cart-item-container">
+                <a href="carrito.html" class="cart-link" title="Ver carrito">
+                    🛒 <span id="cart-count" class="cart-badge">0</span>
+                </a>
+            </li>
         </ul>
     </nav>
 </header>
@@ -165,26 +171,21 @@
         <a href="catalogo.html" class="btn-ver-productos">Ver productos</a>
     </section>
 
-    <!-- SECCIÓN NOSOTROS TOTALMENTE RENOVADA -->
     <section id="nosotros" class="seccion" style="background-color: #fdfbf7; padding: 60px 0;">
         <h2 style="text-align: center; font-size: 2.5rem; margin-bottom: 40px; color: #222;">Nuestra Historia</h2>
         
         <div class="contenedor-bloques">
             
-            <!-- 1. Historia / Nosotros Romántico -->
             <div class="bloque-historia">
                 <p>
                     "Nuestra aventura culinaria comenzó en el año 2010, cobijada por el calor de un pequeño puesto familiar y guiada por el amor impregnado en las recetas secretas de nuestra abuela. Con el paso de los años, ese sazón único se convirtió en nuestra misión de vida: honrar nuestras raíces y llevar la magia, el color y el auténtico corazón de México a cada una de las mesas que nos visitan."
                 </p>
             </div>
 
-            <!-- 2. Tarjetas de Misión y Visión con opciones para imágenes -->
             <div class="grid-mision-vision">
                 
-                <!-- Tarjeta Misión -->
                 <div class="tarjeta-mv">
                     <div class="mv-img-contenedor">
-                        <!-- Puedes cambiar 'img/mision-foto.jpg' por cualquier foto de tus platillos o cocina -->
                         <img src="img/pozole.jpg" alt="Nuestra Misión">
                     </div>
                     <div class="mv-texto">
@@ -193,10 +194,8 @@
                     </div>
                 </div>
 
-                <!-- Tarjeta Visión -->
                 <div class="tarjeta-mv">
                     <div class="mv-img-contenedor">
-                        <!-- Puedes cambiar 'img/vision-foto.jpg' por otra foto llamativa -->
                         <img src="img/tacos.jpg" alt="Nuestra Visión">
                     </div>
                     <div class="mv-texto">
@@ -207,7 +206,6 @@
 
             </div>
 
-            <!-- 3. Ubicación Independiente Abajo con Texto e Imagen -->
             <div class="bloque-ubicacion">
                 <h3>¿Dónde encontrarnos?</h3>
                 <p>📍 Te esperamos con los brazos abiertos en: <strong>Av. Adolfo López Mateos #1801</strong></p>
@@ -247,6 +245,28 @@
     <a href="https://facebook.com" target="_blank"><img src="img/face.png" alt="Facebook"></a>
     <a href="https://instagram.com" target="_blank"><img src="img/insta.jpg" alt="Instagram"></a>
 </div>
+
+<script>
+    // Función encargada de leer el almacenamiento local en tiempo real y pintar el badge
+    function actualizarContadorVisual() {
+        const cantidadActual = parseInt(localStorage.getItem('cartCount')) || 0;
+        const contadorBadge = document.getElementById('cart-count');
+        if (contadorBadge) {
+            contadorBadge.textContent = cantidadActual;
+        }
+    }
+
+    // Función de actualización por si ejecutas adiciones en esta misma sección
+    function actualizarCarrito(cantidad) {
+        let cantidadActual = parseInt(localStorage.getItem('cartCount')) || 0;
+        cantidadActual += cantidad;
+        localStorage.setItem('cartCount', cantidadActual);
+        actualizarContadorVisual();
+    }
+
+    // Se asegura de actualizar el número tan pronto como renderice la estructura HTML
+    document.addEventListener('DOMContentLoaded', actualizarContadorVisual);
+</script>
 
 </body>
 </html>

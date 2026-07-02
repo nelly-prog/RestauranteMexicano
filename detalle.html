@@ -4,13 +4,14 @@
     <meta charset="UTF-8">
     <title>Detalle - Sabor Mexicano</title>
     <link rel="stylesheet" href="estilos.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <style>
         /* ==========================================================================
-           Estilos para controlar el tamaño de la imagen y diseño de la tarjeta
+           Estilos específicos para el diseño de la tarjeta de detalle
            ========================================================================== */
-        
         .detalle-container {
-            max-width: 600px; /* Limita el ancho de toda la tarjeta de detalle */
+            max-width: 650px; 
             margin: 0 auto;
             background: #fff;
             padding: 25px;
@@ -19,12 +20,12 @@
             text-align: center;
         }
 
-        /* ¡SOLUCIÓN AL TAMAÑO GIGANTE DE LA IMAGEN! */
+        /* Contenedor para controlar el tamaño de la foto */
         .img-detalle-contenedor {
             width: 100%;
-            max-width: 400px; /* Evita que la imagen crezca indefinidamente */
-            height: 280px;    /* Altura fija y proporcional para la vista de detalle */
-            margin: 0 auto 20px auto; /* Centra el contenedor y da espacio abajo */
+            max-width: 400px;
+            height: 280px;    
+            margin: 0 auto 20px auto; 
             overflow: hidden;
             border-radius: 8px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.15);
@@ -33,13 +34,13 @@
         .img-detalle {
             width: 100%;
             height: 100%;
-            object-fit: cover; /* Ajusta la imagen sin deformarla ni estirarla */
+            object-fit: cover; 
         }
 
         .precio {
-            font-size: 1.5rem;
+            font-size: 1.6rem;
             font-weight: bold;
-            color: #b32525; /* Color rojo institucional */
+            color: #ce1126; /* Rojo institucional */
             margin: 10px 0;
         }
 
@@ -47,6 +48,120 @@
             font-size: 1.8rem;
             color: #333;
             margin-top: 10px;
+        }
+
+        /* Selector de Cantidad */
+        .selector-cantidad {
+            display: inline-flex;
+            align-items: center;
+            border: 2px solid #ddd;
+            border-radius: 25px;
+            padding: 2px;
+            background: #f9f9f9;
+        }
+
+        .btn-cantidad {
+            background: none;
+            border: none;
+            width: 35px;
+            height: 35px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #555;
+            cursor: pointer;
+            border-radius: 50%;
+            transition: background 0.2s;
+        }
+
+        .btn-cantidad:hover {
+            background: #e0e0e0;
+        }
+
+        .input-cantidad {
+            width: 40px;
+            text-align: center;
+            border: none;
+            background: transparent;
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #333;
+            outline: none;
+        }
+
+        /* Quitar flechas del input number */
+        .input-cantidad::-webkit-inner-spin-button, 
+        .input-cantidad::-webkit-outer-spin-button { 
+            -webkit-appearance: none; 
+            margin: 0; 
+        }
+
+        /* Botón de Carrito con Ajuste de Icono */
+        .btn-carrito {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Sección de Productos Relacionados */
+        .relacionados-seccion {
+            max-width: 900px;
+            margin: 50px auto 0 auto;
+            text-align: left;
+        }
+
+        .relacionados-titulo {
+            font-size: 1.4rem;
+            color: #333;
+            margin-bottom: 20px;
+            border-left: 5px solid #ce1126;
+            padding-left: 10px;
+        }
+
+        .relacionados-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 20px;
+        }
+
+        .tarjeta-relacionado {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            transition: transform 0.3s, box-shadow 0.3s;
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .tarjeta-relacionado:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.12);
+        }
+
+        .tarjeta-relacionado img {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+        }
+
+        .tarjeta-relacionado-info {
+            padding: 12px;
+            text-align: center;
+        }
+
+        .tarjeta-relacionado-info h4 {
+            margin: 0 0 5px 0;
+            font-size: 1rem;
+            color: #333;
+        }
+
+        .tarjeta-relacionado-info p {
+            margin: 0;
+            color: #ce1126;
+            font-weight: bold;
+            font-size: 0.95rem;
         }
     </style>
 </head>
@@ -63,26 +178,48 @@
             <li><a href="catalogo.html">Catálogo</a></li>
             <li><a href="login.html">Iniciar Sesión</a></li>
             <li><a href="registro.html">Registrarse</a></li>
+            <!-- INTEGRACIÓN DEL ACCESO AL CARRITO CON CONTADOR INTEGRADO -->
+            <li class="cart-item-container">
+                <a href="carrito.html" class="cart-link" title="Ver carrito">
+                    🛒 <span id="cart-count" class="cart-badge">0</span>
+                </a>
+            </li>
         </ul>
     </nav>
 </header>
 
 <main class="seccion">
     <div class="detalle-container" id="info-producto">
-        <!-- Contenedor añadido para controlar las dimensiones físicas de la foto -->
         <div class="img-detalle-contenedor">
             <img id="img-prod" src="" class="img-detalle" alt="Producto">
         </div>
         
         <h1 id="titulo-prod">Cargando...</h1>
         <p id="precio-prod" class="precio"></p>
-        <p id="desc-prod" style="margin-bottom: 20px; color: #555; font-size: 1.1rem; line-height: 1.5;"></p>
+        <p id="desc-prod" style="margin-bottom: 25px; color: #555; font-size: 1.1rem; line-height: 1.5;"></p>
         
-        <div style="display: flex; gap: 10px; justify-content: center;">
-            <a href="catalogo.html" class="btn-rojo" style="background: #666;">Regresar</a>
-            <!-- Aquí el bloque 2 nos permitiría agregar lógica real -->
-            <a href="login.html" class="btn-rojo">Agregar al carrito</a>
+        <div style="display: flex; gap: 15px; justify-content: center; align-items: center; flex-wrap: wrap; margin-bottom: 25px;">
+            
+            <div class="selector-cantidad">
+                <button type="button" class="btn-cantidad" onclick="cambiarCantidad(-1)">-</button>
+                <input type="number" id="cantidad-prod" class="input-cantidad" value="1" min="1" max="10" readonly>
+                <button type="button" class="btn-cantidad" onclick="cambiarCantidad(1)">+</button>
+            </div>
+
+            <button class="btn-carrito" onclick="agregarAlCarrito()">
+                <i class="fa-solid fa-cart-shopping"></i>
+                <span>Agregar al carrito</span>
+            </button>
         </div>
+
+        <div>
+            <a href="catalogo.html" class="btn-rojo" style="background: #666;">Regresar al Catálogo</a>
+        </div>
+    </div>
+
+    <div class="relacionados-seccion">
+        <h3 class="relacionados-titulo">También te podría gustar...</h3>
+        <div class="relacionados-grid" id="contenedor-relacionados"></div>
     </div>
 </main>
 
@@ -100,36 +237,133 @@
     </a>
 </div>
 
+<div id="toast" class="notificacion-toast">
+    <i class="fa-solid fa-circle-check"></i>
+    <span id="toast-mensaje"></span>
+</div>
+
 <script>
-    // Objeto actualizado con los 8 platillos en total
+    // Base de datos de los 8 platillos institucionales
     const productos = {
-        'pozole': { img: 'img/pozole.jpg', titulo: 'Pozole Rojo', precio: '$135.00', desc: 'Tradicional caldo con granos de maíz cacahuazintle y carne de cerdo, acompañado de lechuga, rábanos y su toque de orégano.' },
-        'sopes': { img: 'img/Sopes.jpg', titulo: 'Sopes Tradicionales', precio: '$95.00', desc: 'Tres piezas de masa de maíz hechas a mano con base de frijoles refritos, carne a elegir, lechuga, crema y queso fresco.' },
-        'tacos': { img: 'img/tacos.jpg', titulo: 'Tacos al Pastor', precio: '$120.00', desc: 'Orden de 5 deliciosos tacos de carne de cerdo marinada al pastor con su clásica piña, cebolla, cilantro y tortillas recién hechas.' },
-        'tamales': { img: 'img/tamales.jpg', titulo: 'Tamales Caseros', precio: '$85.00', desc: 'Par de suaves tamales envueltos en hoja de maíz, rellenos de jugosa salsa verde con pollo o mole rojo tradicional.' },
-        
-        // NUEVOS PLATILLOS INTEGRADOS
-        'enchiladas': { img: 'img/enchiladas.png', titulo: 'Enchiladas Verdes', precio: '$115.00', desc: 'Cuatro tortillas dobladas rellenas de pollo deshebrado, bañadas en salsa verde bien sazonada, crema, queso y cebolla.' },
-        'nogada': { img: 'img/nogada.jpg', titulo: 'Chiles en Nogada', precio: '$180.00', desc: 'Exquisito chile poblano relleno de picadillo de carne con frutas selectas, bañado en nuestra famosa crema de nuez de castilla y granada.' },
-        'flautas': { img: 'img/flautas.jpg', titulo: 'Flautas de Pollo', precio: '$90.00', desc: 'Tres tacos dorados y crujientes rellenos de pechuga de pollo, cubiertos con abundante lechuga, jitomate, crema y queso cotija.' },
-        'quesadillas': { img: 'img/quesadillas.jpg', titulo: 'Quesadillas de Flor de Calabaza', precio: '$75.00', desc: 'Tres quesadillas de comal rellenas de queso Oaxaca derretido y flor de calabaza sazonada con epazote.' }
+        'pozole': { img: 'img/pozole.jpg', titulo: 'Pozole Rojo', precio: 135.00, desc: 'Tradicional caldo con granos de maíz cacahuazintle y carne de cerdo, acompañado de lechuga, rábanos y su toque de orégano.' },
+        'sopes': { img: 'img/Sopes.jpg', titulo: 'Sopes Tradicionales', precio: 95.00, desc: 'Tres piezas de masa de maíz hechas a mano con base de frijoles refritos, carne a elegir, lechuga, crema y queso fresco.' },
+        'tacos': { img: 'img/tacos.jpg', titulo: 'Tacos al Pastor', precio: 120.00, desc: 'Orden de 5 deliciosos tacos de carne de cerdo marinada al pastor con su clásica piña, cebolla, cilantro y tortillas recién hechas.' },
+        'tamales': { img: 'img/tamales.jpg', titulo: 'Tamales Caseros', precio: 85.00, desc: 'Par de suaves tamales envueltos en hoja de maíz, rellenos de jugosa salsa verde con pollo o mole rojo tradicional.' },
+        'enchiladas': { img: 'img/enchiladas.png', titulo: 'Enchiladas Verdes', precio: 115.00, desc: 'Cuatro tortillas dobladas rellenas de pollo deshebrado, bañadas en salsa verde bien sazonada, crema, queso y cebolla.' },
+        'nogada': { img: 'img/nogada.jpg', titulo: 'Chiles en Nogada', precio: 180.00, desc: 'Exquisito chile poblano relleno de picadillo de carne con frutas selectas, bañado en nuestra famosa crema de nuez de castilla y granada.' },
+        'flautas': { img: 'img/flautas.jpg', titulo: 'Flautas de Pollo', precio: 90.00, desc: 'Tres tacos dorados y crujientes rellenos de pechuga de pollo, cubiertos con abundante lechuga, jitomate, crema y queso cotija.' },
+        'quesadillas': { img: 'img/quesadillas.jpg', titulo: 'Quesadillas de Flor de Calabaza', precio: 75.00, desc: 'Tres quesadillas de comal rellenas de queso Oaxaca derretido y flor de calabaza sazonada con epazote.' }
     };
 
-    // Capturar el hash de la URL sin el símbolo '#'
+    // Capturar el hash de la URL sin el '#'
     const p = window.location.hash.substring(1); 
     
     if (productos[p]) {
+        // Renderizar los datos del platillo principal
         document.getElementById('img-prod').src = productos[p].img;
         document.getElementById('titulo-prod').innerText = productos[p].titulo;
-        document.getElementById('precio-prod').innerText = productos[p].precio;
+        document.getElementById('precio-prod').innerText = `$${productos[p].precio.toFixed(2)}`;
         document.getElementById('desc-prod').innerText = productos[p].desc;
+
+        // Cargar los 3 productos relacionados excluyendo el actual
+        const contenedorRelacionados = document.getElementById('contenedor-relacionados');
+        let contador = 0;
+
+        for (const llave in productos) {
+            if (llave !== p && contador < 3) {
+                const prodRel = productos[llave];
+                
+                const tarjetaHTML = `
+                    <a href="detalle.html#${llave}" class="tarjeta-relacionado" onclick="setTimeout(()=>location.reload(), 50)">
+                        <img src="${prodRel.img}" alt="${prodRel.titulo}">
+                        <div class="tarjeta-relacionado-info">
+                            <h4>${prodRel.titulo}</h4>
+                            <p>$${prodRel.precio.toFixed(2)}</p>
+                        </div>
+                    </a>
+                `;
+                contenedorRelacionados.innerHTML += tarjetaHTML;
+                contador++;
+            }
+        }
     } else {
+        // Control de errores si el producto no existe en la URL
         document.getElementById('titulo-prod').innerText = "Producto no encontrado";
         document.getElementById('desc-prod').innerText = "Lo sentimos, el platillo seleccionado no está registrado en nuestro menú.";
         document.getElementById('precio-prod').innerText = "";
-        // Ocultar el contenedor de la imagen si no existe el producto
-        document.querySelector('.img-detail-contenedor').style.display = 'none';
+        document.querySelector('.img-detalle-contenedor').style.display = 'none';
+        document.querySelector('.selector-cantidad').style.display = 'none';
+        document.querySelector('.btn-carrito').style.display = 'none';
     }
+
+    // Funcionalidad de los botones + y -
+    function cambiarCantidad(valor) {
+        const input = document.getElementById('cantidad-prod');
+        let cantidadActual = parseInt(input.value);
+        cantidadActual += valor;
+
+        if (cantidadActual >= 1 && cantidadActual <= 10) {
+            input.value = cantidadActual;
+        }
+    }
+
+    // FUNCIÓN CLAVE: Mantiene actualizado el indicador del carrito leyendo localStorage
+    function actualizarContadorVisual() {
+        let carrito = JSON.parse(localStorage.getItem('carritoApp')) || [];
+        // Sumar dinámicamente las cantidades de todos los objetos en el carrito
+        let totalItems = carrito.reduce((acumulador, item) => acumulador + item.cantidad, 0);
+        
+        const contadorBadge = document.getElementById('cart-count');
+        if (contadorBadge) {
+            contadorBadge.textContent = totalItems;
+        }
+        
+        // También guardamos el valor simple de conteo por si tu index.html u otras interfaces lo usan directamente
+        localStorage.setItem('cartCount', totalItems);
+    }
+
+    // Guardar datos en LocalStorage y lanzar alerta interna animada
+    function agregarAlCarrito() {
+        if (!productos[p]) return;
+
+        const cantidad = parseInt(document.getElementById('cantidad-prod').value);
+        let carrito = JSON.parse(localStorage.getItem('carritoApp')) || [];
+        const existeIndex = carrito.findIndex(item => item.id === p);
+
+        if (existeIndex !== -1) {
+            carrito[existeIndex].cantidad += cantidad;
+        } else {
+            carrito.push({
+                id: p,
+                titulo: productos[p].titulo,
+                precio: productos[p].precio,
+                img: productos[p].img,
+                cantidad: cantidad
+            });
+        }
+
+        localStorage.setItem('carritoApp', JSON.stringify(carrito));
+        
+        // Sincronizar el contador superior inmediatamente después de guardar
+        actualizarContadorVisual();
+
+        // CONTROL DEL MENSAJE INTERNO DEL SISTEMA (TOAST)
+        const toast = document.getElementById('toast');
+        const toastMensaje = document.getElementById('toast-mensaje');
+
+        toastMensaje.innerText = `¡Éxito! Se han agregado ${cantidad}x "${productos[p].titulo}" al carrito.`;
+        
+        // Muestra el Toast levantándolo desde abajo usando la clase CSS
+        toast.classList.add('mostrar');
+
+        // Lo esconde automáticamente tras 3.5 segundos
+        setTimeout(() => {
+            toast.classList.remove('mostrar');
+        }, 3500);
+    }
+
+    // Asegurar que el indicador muestre la cantidad real acumulada al cargar la interfaz
+    document.addEventListener('DOMContentLoaded', actualizarContadorVisual);
 </script>
 
 </body>

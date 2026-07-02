@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Mi Carrito - Sabor Mexicano</title>
+    <link rel="stylesheet" href="estilos.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .carrito-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .tabla-carrito {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        .tabla-carrito th, .tabla-carrito td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        .tabla-carrito th {
+            background-color: #f8f8f8;
+            color: #333;
+        }
+        .img-carrito {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+        .acciones-carrito {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .total-contenedor {
+            text-align: right;
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: #333;
+            margin-top: 10px;
+        }
+        .total-precio {
+            color: #ce1126;
+        }
+        .btn-eliminar {
+            background: none;
+            border: none;
+            color: #ce1126;
+            cursor: pointer;
+            font-size: 1.1rem;
+        }
+        .carrito-vacio {
+            text-align: center;
+            padding: 40px;
+            font-size: 1.2rem;
+            color: #777;
+        }
+        /* Estilos añadidos para el input de cantidad */
+        .input-cantidad {
+            width: 60px;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            text-align: center;
+            font-size: 1rem;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="logo-contenedor">
+        <img src="img/logo.png.png" class="logo-img" alt="Logo">
+        <span>Sabor Mexicano</span>
+    </div>
+    <nav>
+        <ul>
+            <li><a href="index.html">Inicio</a></li>
+            <li><a href="catalogo.html">Catálogo</a></li>
+            <li><a href="login.html">Iniciar Sesión</a></li>
+            <li><a href="registro.html">Registrarse</a></li>
+            <li class="cart-item-container">
+                <a href="carrito.html" class="cart-link" title="Ver carrito">
+                    🛒 <span id="cart-count" class="cart-badge">0</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+
+<main class="seccion">
+    <div class="carrito-container">
+        <h2>Tu Carrito de Compras</h2>
+        
+        <div id="contenido-carrito"></div>
+
+        <div class="total-contenedor" id="contenedor-total" style="display: none;">
+            Total a Pagar: <span id="total-pagar" class="total-precio">$0.00</span>
+        </div>
+
+        <div class="acciones-carrito">
+            <a href="catalogo.html" class="btn-rojo" style="background: #666;">Seguir Comprando</a>
+            <div id="botones-pago" style="display: none; gap: 10px;">
+                <button class="btn-rojo" style="background: #f0ad4e;" onclick="vaciarCarrito()">Vaciar Carrito</button>
+                <button class="btn-rojo" onclick="procesarPago()">Proceder al Pago</button>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer>
+    <p>&copy; 2026 Sabor Mexicano - Todos los derechos reservados.</p>
+    <p>e-business + e-commerce - Negocios Electrónicos I</p>
+</footer>
+
+<script>
+    // Cargar y mostrar los elementos del carrito al abrir la página
+    document.addEventListener('DOMContentLoaded', () => {
+        renderizarCarrito();
+    });
+
+    function renderizarCarrito() {
+        let carrito = JSON.parse(localStorage.getItem('carritoApp')) || [];
+        const contenedor = document.getElementById('contenido-carrito');
+        const contenedorTotal = document.getElementById('contenedor-total');
+        const botonesPago = document.getElementById('botones-pago');
+        const totalPagar = document.getElementById('total-pagar');
+
+        actualizarContadorMenu(carrito);
+
+        if (carrito.length === 0) {
+            contenedor.innerHTML = `
+                <div class="carrito-vacio">
+                    <p>Tu carrito está vacío. 🌮</p>
+                    <p style="font-size: 0.9rem; margin-top: 10px;">¡Explora nuestro catálogo y añade tus platillos favoritos!</p>
+                </div>
+            `;
+            contenedorTotal.style.display = 'none';
+            botonesPago.style.display = 'none';
+            return;
+        }
+
+        let tablaHTML = `
+            <table class="tabla-carrito">
+                <thead>
+                    <tr>
+                        <th>Platillo</th>
+                        <th>Nombre</th>
+                        <th>Precio</th>
+                        <th>Cantidad</th>
+                        <th>Subtotal</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+        `;
+
+        let total = 0;
+
+        carrito.forEach((item, index) => {
+            let subtotal = item.precio * item.cantidad;
+            total += subtotal;
+
+            tablaHTML += `
+                <tr>
+                    <td><img src="${item.img}" class="img-carrito" alt="${item.titulo}"></td>
+                    <td><strong style="color: #333;">${item.titulo}</strong></td>
+                    <td>$${item.precio.toFixed(2)}</td>
+                    <td>
+                        <input type="number" 
+                               class="input-cantidad" 
+                               value="${item.cantidad}" 
+                               min="1" 
+                               onchange="cambiarCantidad(${index}, this.value)">
+                    </td>
+                    <td>$${subtotal.toFixed(2)}</td>
+                    <td>
+                        <button class="btn-eliminar" onclick="eliminarProducto(${index})" title="Eliminar del carrito">
+                            <i class="fa-solid fa-trash-can"></i>
+                        </button>
+                    </td>
+                </tr>
+            `;
+        });
+
+        tablaHTML += `
+                </tbody>
+            </table>
+        `;
+
+        contenedor.innerHTML = tablaHTML;
+        totalPagar.innerText = `$${total.toFixed(2)}`;
+        
+        contenedorTotal.style.display = 'block';
+        botonesPago.style.display = 'flex';
+    }
+
+    // NUEVA FUNCIÓN: Permite actualizar el LocalStorage en tiempo real al cambiar el input numérico
+    function cambiarCantidad(index, nuevaCantidad) {
+        let carrito = JSON.parse(localStorage.getItem('carritoApp')) || [];
+        let cantidadNumerica = parseInt(nuevaCantidad);
+
+        // Validar que la cantidad ingresada sea un número válido y mayor a 0
+        if (isNaN(cantidadNumerica) || cantidadNumerica < 1) {
+            cantidadNumerica = 1;
+        }
+
+        // Modificar el elemento seleccionado del arreglo
+        carrito[index].cantidad = cantidadNumerica;
+
+        // Guardar cambios en LocalStorage y refrescar vista
+        localStorage.setItem('carritoApp', JSON.stringify(carrito));
+        renderizarCarrito();
+    }
+
+    function eliminarProducto(index) {
+        let carrito = JSON.parse(localStorage.getItem('carritoApp')) || [];
+        carrito.splice(index, 1);
+        
+        localStorage.setItem('carritoApp', JSON.stringify(carrito));
+        renderizarCarrito();
+    }
+
+    function vaciarCarrito() {
+        if (confirm('¿Estás seguro de que deseas vaciar todo tu carrito de compras?')) {
+            localStorage.removeItem('carritoApp');
+            localStorage.removeItem('cartCount');
+            renderizarCarrito();
+        }
+    }
+
+    function actualizarContadorMenu(carrito) {
+        let totalItems = carrito.reduce((acumulador, item) => acumulador + item.cantidad, 0);
+        const contadorBadge = document.getElementById('cart-count');
+        if (contadorBadge) {
+            contadorBadge.textContent = totalItems;
+        }
+        localStorage.setItem('cartCount', totalItems);
+    }
+
+    function procesarPago() {
+        alert('¡Gracias por tu simulación de compra! Redireccionando a la pasarela de pago...');
+    }
+</script>
+
+</body>
+</html>

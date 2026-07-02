@@ -7,7 +7,6 @@
     <style>
         /* ==========================================================================
            Estilos agregados/sugeridos para controlar el tamaño de imágenes y filtros
-           (Puedes moverlos a tu archivo estilos.css si lo prefieres)
            ========================================================================== */
         
         /* Contenedor de filtros */
@@ -137,6 +136,11 @@
                 <li><a href="catalogo.html">Catálogo</a></li>
                 <li><a href="login.html">Iniciar Sesión</a></li>
                 <li><a href="registro.html">Registrarse</a></li>
+                <li class="cart-item-container">
+                    <a href="carrito.html" class="cart-link" title="Ver carrito">
+                        🛒 <span id="cart-count" class="cart-badge">0</span>
+                    </a>
+                </li>
             </ul>
         </nav>
     </header>
@@ -144,7 +148,6 @@
     <main class="seccion">
         <h2>Nuestro Catálogo</h2>
         
-        <!-- BARRA DE BÚSQUEDA Y FILTROS -->
         <div class="filtros-contenedor">
             <input type="text" id="buscador" placeholder="Buscar platillo...">
             <select id="filtro-categoria">
@@ -155,10 +158,8 @@
             </select>
         </div>
 
-        <!-- CUADRÍCULA DE PRODUCTOS (MÍNIMO 8) -->
         <div class="catalogo-grid" id="lista-productos">
             
-            <!-- Producto 1: Pozole -->
             <div class="producto" data-nombre="pozole" data-categoria="platillos-fuertes">
                 <span class="etiqueta popular">Popular</span>
                 <div class="img-contenedor">
@@ -169,7 +170,6 @@
                 <a href="detalle.html#pozole" class="btn-rojo" style="padding: 5px 15px; font-size: 0.8rem;">Ver detalle</a>
             </div>
 
-            <!-- Producto 2: Sopes -->
             <div class="producto" data-nombre="sopes" data-categoria="antojitos">
                 <span class="etiqueta nuevo">Nuevo</span>
                 <div class="img-contenedor">
@@ -180,7 +180,6 @@
                 <a href="detalle.html#sopes" class="btn-rojo" style="padding: 5px 15px; font-size: 0.8rem;">Ver detalle</a>
             </div>
 
-            <!-- Producto 3: Tacos al Pastor -->
             <div class="producto" data-nombre="tacos al pastor" data-categoria="antojitos">
                 <span class="etiqueta vendido">El Más Vendido</span>
                 <div class="img-contenedor">
@@ -191,7 +190,6 @@
                 <a href="detalle.html#tacos" class="btn-rojo" style="padding: 5px 15px; font-size: 0.8rem;">Ver detalle</a>
             </div>
 
-            <!-- Producto 4: Tamales -->
             <div class="producto" data-nombre="tamales" data-categoria="antojitos">
                 <span class="etiqueta oferta">Oferta</span>
                 <div class="img-contenedor">
@@ -202,7 +200,6 @@
                 <a href="detalle.html#tamales" class="btn-rojo" style="padding: 5px 15px; font-size: 0.8rem;">Ver detalle</a>
             </div>
 
-            <!-- Producto 5: Enchiladas Verdes (NUEVO) -->
             <div class="producto" data-nombre="enchiladas verdes" data-categoria="platillos-fuertes">
                 <span class="etiqueta popular">Popular</span>
                 <div class="img-contenedor">
@@ -213,7 +210,6 @@
                 <a href="detalle.html#enchiladas" class="btn-rojo" style="padding: 5px 15px; font-size: 0.8rem;">Ver detalle</a>
             </div>
 
-            <!-- Producto 6: Chiles en Nogada (NUEVO) -->
             <div class="producto" data-nombre="chiles en nogada" data-categoria="especialidades">
                 <span class="etiqueta nuevo">Nuevo</span>
                 <div class="img-contenedor">
@@ -224,7 +220,6 @@
                 <a href="detalle.html#nogada" class="btn-rojo" style="padding: 5px 15px; font-size: 0.8rem;">Ver detalle</a>
             </div>
 
-            <!-- Producto 7: Flautas de Pollo (NUEVO) -->
             <div class="producto" data-nombre="flautas de pollo" data-categoria="antojitos">
                 <span class="etiqueta oferta">Oferta</span>
                 <div class="img-contenedor">
@@ -235,7 +230,6 @@
                 <a href="detalle.html#flautas" class="btn-rojo" style="padding: 5px 15px; font-size: 0.8rem;">Ver detalle</a>
             </div>
 
-            <!-- Producto 8: Quesadillas de Flor de Calabaza (NUEVO) -->
             <div class="producto" data-nombre="quesadillas de flor de calabaza" data-categoria="antojitos">
                 <div class="img-contenedor">
                     <img src="img/quesadillas.jpg" class="img-producto" alt="Quesadillas">
@@ -245,7 +239,6 @@
                 <a href="detalle.html#quesadillas" class="btn-rojo" style="padding: 5px 15px; font-size: 0.8rem;">Ver detalle</a>
             </div>
 
-            <!-- Mensaje oculto si nada coincide con la búsqueda -->
             <div id="no-resultados" class="no-resultados">
                 No se encontraron platillos que coincidan con tu búsqueda. 🌶️
             </div>
@@ -266,7 +259,6 @@
         </a>
     </div>
 
-    <!-- SCRIPT DE FILTRADO EN TIEMPO REAL -->
     <script>
         const buscador = document.getElementById('buscador');
         const filtroCategoria = document.getElementById('filtro-categoria');
@@ -282,9 +274,7 @@
                 const nombreProducto = producto.getAttribute('data-nombre');
                 const categoriaProducto = producto.getAttribute('data-categoria');
 
-                // Validar si coincide con el texto ingresado
                 const coincideTexto = nombreProducto.includes(textoBusqueda);
-                // Validar si coincide con la categoría del select
                 const coincideCategoria = (categoriaSeleccionada === 'todos' || categoriaProducto === categoriaSeleccionada);
 
                 if (coincideTexto && coincideCategoria) {
@@ -295,7 +285,6 @@
                 }
             });
 
-            // Mostrar u ocultar el mensaje de error si no hay productos
             if (contadorVisibles === 0) {
                 msgNoResultados.style.display = 'block';
             } else {
@@ -303,9 +292,21 @@
             }
         }
 
+        // FUNCIÓN CLAVE: Mantiene el número del carrito leyendo de localStorage
+        function actualizarContadorVisual() {
+            const cantidadActual = parseInt(localStorage.getItem('cartCount')) || 0;
+            const contadorBadge = document.getElementById('cart-count');
+            if (contadorBadge) {
+                contadorBadge.textContent = cantidadActual;
+            }
+        }
+
         // Escuchar los eventos del usuario
         buscador.addEventListener('input', filtrarProductos);
         filtroCategoria.addEventListener('change', filtrarProductos);
+        
+        // Carga la cantidad correcta al entrar al catálogo
+        document.addEventListener('DOMContentLoaded', actualizarContadorVisual);
     </script>
 </body>
 </html>

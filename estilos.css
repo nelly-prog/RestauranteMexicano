@@ -21,9 +21,39 @@ header {
 }
 .logo-contenedor { display: flex; align-items: center; gap: 15px; font-size: 1.5rem; font-weight: bold; }
 .logo-img { height: 50px; }
-nav ul { list-style: none; display: flex; gap: 25px; }
+nav ul { list-style: none; display: flex; gap: 25px; align-items: center; } /* Se agregó align-items para alinear el carrito */
 nav a { text-decoration: none; color: white !important; font-weight: 600; transition: opacity 0.3s; }
 nav a:hover { opacity: 0.8; text-decoration: underline; }
+
+/* --- NUEVOS ESTILOS INTEGRADOS PARA EL CARRITO --- */
+.cart-item-container {
+    position: relative;
+    display: inline-block;
+}
+.cart-link {
+    text-decoration: none;
+    font-size: 1.3rem;
+    display: flex;
+    align-items: center;
+    padding: 5px;
+}
+.cart-badge {
+    position: absolute;
+    top: -6px;
+    right: -10px;
+    background-color: #ce1126; /* Usamos el color rojo oficial de tus botones */
+    color: white !important;   /* Mantiene el texto blanco sobre el fondo rojo */
+    font-size: 0.75rem;
+    font-weight: bold;
+    border-radius: 50%;
+    padding: 2px 6px;
+    min-width: 18px;
+    height: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+}
 
 /* ==========================================================================
    3. COMPONENTES REUTILIZABLES
@@ -119,4 +149,35 @@ form input, form textarea { padding: 12px; width: 100%; margin-bottom: 20px; bor
 .redes-flotantes a img:hover { transform: scale(1.2); }
 footer {
     background: #222; color: white; text-align: center; padding: 20px; margin-top: 50px; font-size: 0.9rem;
+}
+
+/* ==========================================================================
+   7. NOTIFICACIÓN FLOTANTE (TOAST) INTERNA DEL SISTEMA
+   ========================================================================== */
+.notificacion-toast {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    background: #006847; /* Usamos tu color verde oficial de la cabecera */
+    color: white;
+    padding: 16px 28px;
+    border-radius: 12px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    z-index: 3000; /* Por encima de tus modales que tienen z-index 2000 */
+    transform: translateY(180%); /* Empieza oculta abajo de la pantalla */
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Esta clase la activará JavaScript para que suba */
+.notificacion-toast.mostrar {
+    transform: translateY(0);
+}
+
+.notificacion-toast i {
+    font-size: 1.3rem;
+    color: #ffc107; /* Un toque dorado/amarillo para resaltar el icono */
 }
