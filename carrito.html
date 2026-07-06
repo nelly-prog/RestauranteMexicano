@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="estilos.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        /* Estilos específicos exclusivos para la tabla del contenido del carrito */
         .carrito-container {
             max-width: 800px;
             margin: 0 auto;
@@ -44,13 +45,15 @@
         }
         .total-contenedor {
             text-align: right;
-            font-size: 1.4rem;
-            font-weight: bold;
+            font-size: 1.1rem;
             color: #333;
             margin-top: 10px;
+            line-height: 1.8;
         }
         .total-precio {
             color: #ce1126;
+            font-size: 1.4rem;
+            font-weight: bold;
         }
         .btn-eliminar {
             background: none;
@@ -65,7 +68,6 @@
             font-size: 1.2rem;
             color: #777;
         }
-        /* Estilos añadidos para el input de cantidad */
         .input-cantidad {
             width: 60px;
             padding: 5px;
@@ -98,6 +100,11 @@
     </nav>
 </header>
 
+<div class="redes-flotantes">
+    <a href="https://facebook.com" target="_blank" title="Facebook"><img src="img/face.png" alt="Facebook"></a>
+    <a href="https://instagram.com" target="_blank" title="Instagram"><img src="img/insta.jpg" alt="Instagram"></a>
+</div>
+
 <main class="seccion">
     <div class="carrito-container">
         <h2>Tu Carrito de Compras</h2>
@@ -105,11 +112,15 @@
         <div id="contenido-carrito"></div>
 
         <div class="total-contenedor" id="contenedor-total" style="display: none;">
-            Total a Pagar: <span id="total-pagar" class="total-precio">$0.00</span>
+            <div>Subtotal: <span id="desglose-subtotal" style="font-weight: normal;">$0.00</span></div>
+            <div>IVA (16%): <span id="desglose-iva" style="font-weight: normal;">$0.00</span></div>
+            <div style="margin-top: 5px; font-weight: bold;">
+                Total a Pagar: <span id="total-pagar" class="total-precio">$0.00</span>
+            </div>
         </div>
 
         <div class="acciones-carrito">
-            <a href="catalogo.html" class="btn-rojo" style="background: #666;">Seguir Comprando</a>
+            <a href="catalogo.html" class="btn-rojo" style="background: #666; text-decoration: none;">Seguir Comprando</a>
             <div id="botones-pago" style="display: none; gap: 10px;">
                 <button class="btn-rojo" style="background: #f0ad4e;" onclick="vaciarCarrito()">Vaciar Carrito</button>
                 <button class="btn-rojo" onclick="procesarPago()">Proceder al Pago</button>
@@ -120,11 +131,17 @@
 
 <footer>
     <p>&copy; 2026 Sabor Mexicano - Todos los derechos reservados.</p>
-    <p>e-business + e-commerce - Negocios Electrónicos I</p>
+    
+    <div style="margin: 8px 0; display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;">
+        <a href="terminos.html" style="color: #ccc; text-decoration: none; font-size: 0.85rem; transition: color 0.3s;">Términos del Servicio</a>
+        <span style="color: #666;">|</span>
+        <a href="politicas.html" style="color: #ccc; text-decoration: none; font-size: 0.85rem; transition: color 0.3s;">Política de Compraventa</a>
+    </div>
+
+    <p style="font-size: 0.8rem; opacity: 0.7; margin-top: 5px;">e-business + e-commerce - Negocios Electrónicos I</p>
 </footer>
 
 <script>
-    // Cargar y mostrar los elementos del carrito al abrir la página
     document.addEventListener('DOMContentLoaded', () => {
         renderizarCarrito();
     });
@@ -134,6 +151,10 @@
         const contenedor = document.getElementById('contenido-carrito');
         const contenedorTotal = document.getElementById('contenedor-total');
         const botonesPago = document.getElementById('botones-pago');
+        
+        // Elementos de desglose financiero
+        const desgloseSubtotal = document.getElementById('desglose-subtotal');
+        const desgloseIva = document.getElementById('desglose-iva');
         const totalPagar = document.getElementById('total-pagar');
 
         actualizarContadorMenu(carrito);
@@ -165,11 +186,11 @@
                 <tbody>
         `;
 
-        let total = 0;
+        let sumaProductos = 0;
 
         carrito.forEach((item, index) => {
-            let subtotal = item.precio * item.cantidad;
-            total += subtotal;
+            let subtotalItem = item.precio * item.cantidad;
+            sumaProductos += subtotalItem;
 
             tablaHTML += `
                 <tr>
@@ -183,7 +204,7 @@
                                min="1" 
                                onchange="cambiarCantidad(${index}, this.value)">
                     </td>
-                    <td>$${subtotal.toFixed(2)}</td>
+                    <td>$${subtotalItem.toFixed(2)}</td>
                     <td>
                         <button class="btn-eliminar" onclick="eliminarProducto(${index})" title="Eliminar del carrito">
                             <i class="fa-solid fa-trash-can"></i>
@@ -199,26 +220,29 @@
         `;
 
         contenedor.innerHTML = tablaHTML;
-        totalPagar.innerText = `$${total.toFixed(2)}`;
+        
+        // --- CÁLCULO FINANCIERO DEL DESGLOSE (Base 1.16) ---
+        let subtotalNeto = sumaProductos / 1.16;
+        let ivaCalculado = sumaProductos - subtotalNeto;
+
+        // Imprimir valores con dos decimales fijos
+        desgloseSubtotal.innerText = `$${subtotalNeto.toFixed(2)}`;
+        desgloseIva.innerText = `$${ivaCalculado.toFixed(2)}`;
+        totalPagar.innerText = `$${sumaProductos.toFixed(2)}`;
         
         contenedorTotal.style.display = 'block';
         botonesPago.style.display = 'flex';
     }
 
-    // NUEVA FUNCIÓN: Permite actualizar el LocalStorage en tiempo real al cambiar el input numérico
     function cambiarCantidad(index, nuevaCantidad) {
         let carrito = JSON.parse(localStorage.getItem('carritoApp')) || [];
         let cantidadNumerica = parseInt(nuevaCantidad);
 
-        // Validar que la cantidad ingresada sea un número válido y mayor a 0
         if (isNaN(cantidadNumerica) || cantidadNumerica < 1) {
-            cantidadNumerica = 1;
+            amount = 1;
         }
 
-        // Modificar el elemento seleccionado del arreglo
         carrito[index].cantidad = cantidadNumerica;
-
-        // Guardar cambios en LocalStorage y refrescar vista
         localStorage.setItem('carritoApp', JSON.stringify(carrito));
         renderizarCarrito();
     }
@@ -249,7 +273,7 @@
     }
 
     function procesarPago() {
-        alert('¡Gracias por tu simulación de compra! Redireccionando a la pasarela de pago...');
+        window.location.href = 'pago.html';
     }
 </script>
 

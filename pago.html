@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Resumen de Pago - Sabor Mexicano</title>
+    <link rel="stylesheet" href="estilos.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .pago-container {
+            max-width: 700px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 35px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .resumen-tabla {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        .resumen-tabla th, .resumen-tabla td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+        .resumen-tabla th {
+            background-color: #fcfcfc;
+            color: #555;
+            font-size: 0.95rem;
+        }
+        .politicas-bloque {
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 6px;
+            border-left: 4px solid #ce1126;
+            margin: 25px 0;
+        }
+        .politicas-label {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            color: #444;
+            user-select: none;
+        }
+        .politicas-label input {
+            margin-top: 3px;
+            transform: scale(1.2);
+            accent-color: #ce1126;
+        }
+        .total-pago {
+            text-align: right;
+            font-size: 1.1rem;
+            color: #333;
+            margin: 20px 0;
+            line-height: 1.8;
+        }
+        .total-pago span {
+            font-weight: normal;
+        }
+        .total-pago .monto-final {
+            color: #ce1126;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        .alerta-exito {
+            display: none;
+            background: #d4edda;
+            color: #155724;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #c3e6cb;
+            text-align: center;
+            margin-top: 20px;
+        }
+        .alerta-exito i {
+            font-size: 2.5rem;
+            color: #28a745;
+            margin-bottom: 10px;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="logo-contenedor">
+        <img src="img/logo.png.png" class="logo-img" alt="Logo">
+        <span>Sabor Mexicano</span>
+    </div>
+    <nav>
+        <ul>
+            <li><a href="index.html">Inicio</a></li>
+            <li><a href="catalogo.html">Catálogo</a></li>
+            <li><a href="login.html">Iniciar Sesión</a></li>
+            <li><a href="registro.html">Registrarse</a></li>
+            <li class="cart-item-container">
+                <a href="carrito.html" class="cart-link" title="Ver carrito">
+                    🛒 <span id="cart-count" class="cart-badge">0</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+
+<div class="redes-flotantes">
+    <a href="https://facebook.com" target="_blank" title="Facebook">
+        <img src="img/face.png" alt="Facebook">
+    </a>
+    <a href="https://instagram.com" target="_blank" title="Instagram">
+        <img src="img/insta.jpg" alt="Instagram">
+    </a>
+</div>
+
+<main class="seccion">
+    <div class="pago-container" id="formulario-pago-bloque">
+        <h2 style="border-bottom: 2px solid #eee; padding-bottom: 10px; color: #333;">
+            <i class="fa-solid fa-credit-card" style="color: #ce1126; margin-right: 8px;"></i> Finalizar Pedido
+        </h2>
+        
+        <p style="color: #666; margin-top: 10px;">Revisa el resumen de tus deliciosos platillos antes de confirmar la compra.</p>
+
+        <table class="resumen-tabla">
+            <thead>
+                <tr>
+                    <th>Platillo</th>
+                    <th style="text-align: center;">Cantidad</th>
+                    <th style="text-align: right;">Subtotal</th>
+                </tr>
+            </thead>
+            <tbody id="resumen-items">
+            </tbody>
+        </table>
+
+        <div class="total-pago">
+            <div>Subtotal: <span id="resumen-subtotal">$0.00</span></div>
+            <div>IVA (16%): <span id="resumen-iva">$0.00</span></div>
+            <div style="margin-top: 5px;">
+                Total a Pagar: <span id="resumen-total" class="monto-final">$0.00</span>
+            </div>
+        </div>
+
+        <div class="politicas-bloque">
+            <label class="politicas-label">
+                <input type="checkbox" id="check-politicas">
+                <span>
+                    He leído y acepto los <strong>Términos de Servicio</strong>, las <strong>Políticas de Compra-Venta</strong> y confirmo que mi orden de antojos es correcta.
+                </span>
+            </label>
+        </div>
+
+        <div class="acciones-carrito" style="margin-top: 10px; display: flex; justify-content: space-between;">
+            <a href="carrito.html" class="btn-rojo" style="background: #666; text-decoration: none; padding: 10px 20px; border-radius: 5px; color: white;">
+                Volver al Carrito
+            </a>
+            <button class="btn-rojo" onclick="confirmarPagoFinal()" style="padding: 10px 25px; font-weight: bold; font-size: 1rem;">
+                Confirmar y Pagar
+            </button>
+        </div>
+    </div>
+
+    <div class="pago-container alerta-exito" id="mensaje-exito-bloque">
+        <i class="fa-solid fa-circle-check"></i>
+        <h2 style="color: #155724; margin-bottom: 10px;">¡Pedido Recibido con Éxito!</h2>
+        <p style="margin-bottom: 20px;">Tu orden ha sido enviada directamente a la cocina de <strong>Sabor Mexicano</strong>. Tus platillos empezarán a prepararse de inmediato.</p>
+        <a href="catalogo.html" class="btn-rojo" style="text-decoration: none; padding: 10px 20px; border-radius: 5px; color: white; display: inline-block;">
+            Volver al Catálogo / Inicio
+        </a>
+    </div>
+</main>
+
+<footer>
+    <p>&copy; 2026 Sabor Mexicano - Todos los derechos reservados.</p>
+    
+    <div style="margin: 8px 0; display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;">
+        <a href="terminos.html" style="color: #ccc; text-decoration: none; font-size: 0.85rem; transition: color 0.3s;">Términos del Servicio</a>
+        <span style="color: #666;">|</span>
+        <a href="politicas.html" style="color: #ccc; text-decoration: none; font-size: 0.85rem; transition: color 0.3s;">Política de Compraventa</a>
+    </div>
+
+    <p style="font-size: 0.8rem; opacity: 0.7; margin-top: 5px;">e-business + e-commerce - Negocios Electrónicos I</p>
+</footer>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        cargarResumen();
+    });
+
+    function cargarResumen() {
+        let carrito = JSON.parse(localStorage.getItem('carritoApp')) || [];
+        const tbody = document.getElementById('resumen-items');
+        
+        // Elementos de cobro desglosado
+        const subtotalText = document.getElementById('resumen-subtotal');
+        const ivaText = document.getElementById('resumen-iva');
+        const totalText = document.getElementById('resumen-total');
+        const contadorBadge = document.getElementById('cart-count');
+        
+        let sumaProductos = 0;
+        let totalItems = 0;
+        let html = '';
+
+        if (carrito.length === 0) {
+            window.location.href = 'catalogo.html';
+            return;
+        }
+
+        carrito.forEach(item => {
+            let subtotalItem = item.precio * item.cantidad;
+            sumaProductos += subtotalItem;
+            totalItems += item.cantidad;
+
+            html += `
+                <tr>
+                    <td><strong>${item.titulo}</strong></td>
+                    <td style="text-align: center;">${item.cantidad}</td>
+                    <td style="text-align: right;">$${subtotalItem.toFixed(2)}</td>
+                </tr>
+            `;
+        });
+
+        tbody.innerHTML = html;
+
+        // Cálculo exacto del desglose financiero hacia atrás (base 1.16)
+        let subtotalNeto = sumaProductos / 1.16;
+        let ivaCalculado = sumaProductos - subtotalNeto;
+
+        // Inyección de valores en la vista
+        subtotalText.innerText = `$${subtotalNeto.toFixed(2)}`;
+        ivaText.innerText = `$${ivaCalculado.toFixed(2)}`;
+        totalText.innerText = `$${sumaProductos.toFixed(2)}`;
+
+        if (contadorBadge) {
+            contadorBadge.textContent = totalItems;
+        }
+    }
+
+    function confirmarPagoFinal() {
+        const checkbox = document.getElementById('check-politicas');
+
+        if (!checkbox.checked) {
+            alert('Por favor, debes aceptar las Políticas de Compra y Venta del restaurante para proceder.');
+            return;
+        }
+
+        document.getElementById('formulario-pago-bloque').style.display = 'none';
+        document.getElementById('mensaje-exito-bloque').style.display = 'block';
+
+        localStorage.removeItem('carritoApp');
+        localStorage.removeItem('cartCount');
+        const contadorBadge = document.getElementById('cart-count');
+        if (contadorBadge) contadorBadge.textContent = '0';
+    }
+</script>
+
+</body>
+</html>
