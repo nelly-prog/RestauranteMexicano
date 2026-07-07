@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Administración - Sabor Mexicano</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+    <style>
+        :root {
+            --bg-main: #f0f4f8;
+            --bg-sidebar: #ffffff;
+            --text-dark: #1e293b;
+            --text-muted: #64748b;
+            --white: #ffffff;
+            
+            /* Paleta Vibrante estilo SkillPath / Toque Mexicano Moderno */
+            --gradient-banner: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+            --card-pink: linear-gradient(135deg, #ec4899 0%, #be185d 100%);
+            --card-purple: linear-gradient(135deg, #a855f7 0%, #7e22ce 100%);
+            --card-blue: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            --card-teal: linear-gradient(135deg, #14b8a6 0%, #0f766e 100%);
+            --card-red: linear-gradient(135deg, #f43f5e 0%, #be123c 100%);
+            
+            --shadow-sm: 0 4px 6px -1px rgb(0 0 0 / 0.05);
+            --shadow-md: 0 10px 15px -3px rgb(0 0 0 / 0.08), 0 4px 6px -4px rgb(0 0 0 / 0.08);
+            --radius: 16px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-dark);
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* --- MENÚ LATERAL (Estilizado) --- */
+        .sidebar {
+            width: 260px;
+            background-color: var(--bg-sidebar);
+            border-right: 1px solid #e2e8f0;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            z-index: 10;
+        }
+
+        .brand {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: var(--text-dark);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            letter-spacing: -0.5px;
+        }
+
+        .brand span {
+            color: #7c3aed;
+        }
+
+        .menu-section-title {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            margin-bottom: 12px;
+            font-weight: 700;
+        }
+
+        .menu-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            margin-bottom: 24px;
+        }
+
+        .menu-item a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            border-radius: var(--radius);
+            transition: all 0.3s ease;
+        }
+
+        .menu-item a:hover {
+            background-color: #f1f5f9;
+            color: var(--text-dark);
+        }
+
+        .menu-item.active a {
+            background: linear-gradient(90deg, #7c3aed 0%, #4f46e5 100%);
+            color: var(--white);
+            box-shadow: 0 4px 12px rgb(124 58 237 / 0.25);
+        }
+
+        /* --- CONTENEDOR DERECHO (Navbar + Main) --- */
+        .content-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            width: calc(100% - 260px);
+        }
+
+        /* BARRA SUPERIOR (Navbar) */
+        .navbar {
+            height: 70px;
+            background-color: var(--white);
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 40px;
+        }
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+            background-color: #f1f5f9;
+            padding: 8px 16px;
+            border-radius: 20px;
+            width: 300px;
+            gap: 8px;
+        }
+
+        .search-bar input {
+            border: none;
+            background: none;
+            outline: none;
+            width: 100%;
+            font-size: 0.9rem;
+        }
+
+        .nav-profile {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .nav-icon-btn {
+            color: var(--text-muted);
+            cursor: pointer;
+            position: relative;
+        }
+
+        .nav-icon-btn .badge {
+            position: absolute;
+            top: -4px;
+            right: -4px;
+            background-color: #ef4444;
+            color: white;
+            font-size: 0.7rem;
+            padding: 2px 5px;
+            border-radius: 10px;
+            font-weight: bold;
+        }
+
+        .avatar {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background-color: #7c3aed;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            box-shadow: var(--shadow-sm);
+        }
+
+        /* --- CONTENIDO PRINCIPAL --- */
+        .main-content {
+            padding: 40px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+        }
+
+        /* BANNER DE BIENVENIDA (Estilo SkillPath) */
+        .welcome-banner {
+            background: var(--gradient-banner);
+            border-radius: var(--radius);
+            padding: 32px;
+            color: var(--white);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: var(--shadow-md);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .welcome-text h1 {
+            font-size: 1.8rem;
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+
+        .welcome-text p {
+            opacity: 0.9;
+            font-size: 1rem;
+        }
+
+        .banner-stats {
+            display: flex;
+            gap: 24px;
+        }
+
+        .banner-stat-item {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 12px 20px;
+            border-radius: var(--radius);
+            backdrop-filter: blur(4px);
+            text-align: center;
+        }
+
+        .banner-stat-item .num {
+            font-size: 1.4rem;
+            font-weight: 700;
+            display: block;
+        }
+
+        .banner-stat-item .lbl {
+            font-size: 0.75rem;
+            opacity: 0.8;
+            text-transform: uppercase;
+        }
+
+        /* --- TARJETAS VIBRANTES --- */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 24px;
+        }
+
+        .card {
+            padding: 24px;
+            border-radius: var(--radius);
+            color: var(--white);
+            box-shadow: var(--shadow-md);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 140px;
+            position: relative;
+            transition: transform 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+        }
+
+        .card-pink { background: var(--card-pink); }
+        .card-purple { background: var(--card-purple); }
+        .card-blue { background: var(--card-blue); }
+        .card-teal { background: var(--card-teal); }
+        .card-red { background: var(--card-red); }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .card-title {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            opacity: 0.9;
+            font-weight: 600;
+        }
+
+        .card-icon-box {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 8px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .card-value {
+            font-size: 2.2rem;
+            font-weight: 800;
+            line-height: 1;
+        }
+
+        /* --- SECCIÓN INFERIOR COMPARTIDA --- */
+        .dashboard-footer {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        .panel-box {
+            background-color: var(--white);
+            padding: 28px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-sm);
+            border: 1px solid #e2e8f0;
+        }
+
+        .panel-box h2 {
+            font-size: 1.2rem;
+            margin-bottom: 24px;
+            color: var(--text-dark);
+            font-weight: 700;
+        }
+
+        /* Acciones Rápidas Modernas */
+        .actions-list {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .action-btn {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            padding: 16px 20px;
+            background-color: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: var(--radius);
+            color: var(--text-dark);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .action-btn:hover {
+            background-color: #f1f5f9;
+            border-color: #cbd5e1;
+            transform: translateX(4px);
+        }
+
+        .action-content {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .action-btn .icon {
+            color: #7c3aed;
+        }
+
+        /* Actividad Reciente Estilizada */
+        .activity-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .activity-item {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .activity-icon-wrapper {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        .activity-details p {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .activity-details span {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        /* 🚀 AQUÍ ESTÁ AGREGADO EL NUEVO ESTILO PARA TU IMAGEN */
+        .banner-img {
+            position: absolute;
+            height: 110px;           
+            width: 180px;            
+            object-fit: cover;       
+            border-radius: 12px;     
+            bottom: 20px;            
+            right: 210px;            
+            pointer-events: none;    
+        }
+    </style>
+</head>
+<body>
+
+    <aside class="sidebar">
+        <div class="brand">
+            <i class="material-icons-round" style="color: #7c3aed;">restaurant</i>
+            Sabor<span>Mexicano</span>
+        </div>
+        <nav>
+            <div class="menu-section-title">Navegación</div>
+            <ul class="menu-list">
+                <li class="menu-item active">
+                    <a href="#"><i class="material-icons-round">dashboard</i>Dashboard</a>
+                </li>
+                <li class="menu-item">
+                    <a href="#"><i class="material-icons-round">restaurant_menu</i>Productos</a>
+                </li>
+                <li class="menu-item">
+                    <a href="#"><i class="material-icons-round">shopping_bag</i>Pedidos</a>
+                </li>
+            </ul>
+
+            <div class="menu-section-title">Gestión</div>
+            <ul class="menu-list">
+                <li class="menu-item">
+                    <a href="#"><i class="material-icons-round">local_offer</i>Promociones</a>
+                </li>
+                <li class="menu-item">
+                    <a href="#"><i class="material-icons-round">people</i>Clientes</a>
+                </li>
+                <li class="menu-item">
+                    <a href="#"><i class="material-icons-round">bar_chart</i>Reportes</a>
+                </li>
+            </ul>
+        </nav>
+    </aside>
+
+    <div class="content-container">
+        
+        <header class="navbar">
+            <div class="search-bar">
+                <i class="material-icons-round" style="color: var(--text-muted);">search</i>
+                <input type="text" placeholder="Buscar pedidos, clientes...">
+            </div>
+            <div class="nav-profile">
+                <div class="nav-icon-btn">
+                    <i class="material-icons-round">notifications</i>
+                    <span class="badge">3</span>
+                </div>
+                <div class="avatar">A</div> </div>
+        </header>
+
+        <main class="main-content">
+            
+<section class="welcome-banner">
+    <div class="welcome-text">
+        <h1>¡Hola de nuevo, Administrador! 👋</h1>
+        <p>Las actividades y el rendimiento de la cocina van sobre ruedas hoy ponte a chambear.</p>
+    </div>
+
+    <img src="img/chef.webp" alt="Chef Mexicano" class="banner-img">
+
+    <div class="banner-stats">
+        <div class="banner-stat-item">
+            <span class="num">12h</span>
+            <span class="lbl">Apertura</span>
+        </div>
+        <div class="banner-stat-item">
+            <span class="num">Activo</span>
+            <span class="lbl">Estado</span>
+        </div>
+    </div>
+</section>
+
+            <section class="cards-grid">
+                <div class="card card-pink">
+                    <div class="card-header">
+                        <span class="card-title">Productos Publicados</span>
+                        <div class="card-icon-box"><i class="material-icons-round">restaurant_menu</i></div>
+                    </div>
+                    <div class="card-value">12</div>
+                </div>
+
+                <div class="card card-purple">
+                    <div class="card-header">
+                        <span class="card-title">Pedidos del Día</span>
+                        <div class="card-icon-box"><i class="material-icons-round">delivery_dining</i></div>
+                    </div>
+                    <div class="card-value">5</div>
+                </div>
+
+                <div class="card card-blue">
+                    <div class="card-header">
+                        <span class="card-title">Ventas del Mes</span>
+                        <div class="card-icon-box"><i class="material-icons-round">payments</i></div>
+                    </div>
+                    <div class="card-value">$12,500</div>
+                </div>
+
+                <div class="card card-teal">
+                    <div class="card-header">
+                        <span class="card-title">Clientes Registrados</span>
+                        <div class="card-icon-box"><i class="material-icons-round">group</i></div>
+                    </div>
+                    <div class="card-value">38</div>
+                </div>
+
+                <div class="card card-red">
+                    <div class="card-header">
+                        <span class="card-title">Productos Agotados</span>
+                        <div class="card-icon-box"><i class="material-icons-round">gpp_maybe</i></div>
+                    </div>
+                    <div class="card-value">2</div>
+                </div>
+            </section>
+
+            <div class="dashboard-footer">
+                
+                <section class="panel-box">
+                    <h2>Acciones Rápidas</h2>
+                    <div class="actions-list">
+                        <button class="action-btn">
+                            <div class="action-content">
+                                <i class="material-icons-round icon">add_circle</i>
+                                <span>Agregar nuevo producto al menú</span>
+                            </div>
+                            <i class="material-icons-round" style="color: var(--text-muted);">chevron_right</i>
+                        </button>
+                        <button class="action-btn">
+                            <div class="action-content">
+                                <i class="material-icons-round icon">visibility</i>
+                                <span>Ver y gestionar pedidos actuales</span>
+                            </div>
+                            <i class="material-icons-round" style="color: var(--text-muted);">chevron_right</i>
+                        </button>
+                        <button class="action-btn">
+                            <div class="action-content">
+                                <i class="material-icons-round icon">auto_awesome</i>
+                                <span>Crear campaña o promoción masiva</span>
+                            </div>
+                            <i class="material-icons-round" style="color: var(--text-muted);">chevron_right</i>
+                        </button>
+                    </div>
+                </section>
+
+                <section class="panel-box">
+                    <h2>Actividad Reciente</h2>
+                    <div class="activity-list">
+                        <div class="activity-item">
+                            <div class="activity-icon-wrapper" style="background-color: #e0f2fe; color: #0369a1;">
+                                <i class="material-icons-round">shopping_basket</i>
+                            </div>
+                            <div class="activity-details">
+                                <p>Pedido #125 recibido</p>
+                                <span>Hace 5 min</span>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-icon-wrapper" style="background-color: #dcfce7; color: #15803d;">
+                                <i class="material-icons-round">person_add</i>
+                            </div>
+                            <div class="activity-details">
+                                <p>Nuevo cliente registrado</p>
+                                <span>Hace 25 min</span>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-icon-wrapper" style="background-color: #fef3c7; color: #b45309;">
+                                <i class="material-icons-round">edit</i>
+                            </div>
+                            <div class="activity-details">
+                                <p>Producto "Tacos al Pastor" modificado</p>
+                                <span>Hace 1 hora</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+        </main>
+    </div>
+
+</body>
+</html>
