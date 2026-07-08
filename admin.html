@@ -13,13 +13,14 @@
             --text-muted: #64748b;
             --white: #ffffff;
             
-            /* Paleta Vibrante estilo SkillPath / Toque Mexicano Moderno */
+            /* Paleta Vibrante */
             --gradient-banner: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
             --card-pink: linear-gradient(135deg, #ec4899 0%, #be185d 100%);
             --card-purple: linear-gradient(135deg, #a855f7 0%, #7e22ce 100%);
             --card-blue: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
             --card-teal: linear-gradient(135deg, #14b8a6 0%, #0f766e 100%);
             --card-red: linear-gradient(135deg, #f43f5e 0%, #be123c 100%);
+            --card-orange: linear-gradient(135deg, #f97316 0%, #c2410c 100%);
             
             --shadow-sm: 0 4px 6px -1px rgb(0 0 0 / 0.05);
             --shadow-md: 0 10px 15px -3px rgb(0 0 0 / 0.08), 0 4px 6px -4px rgb(0 0 0 / 0.08);
@@ -40,7 +41,7 @@
             min-height: 100vh;
         }
 
-        /* --- MENÚ LATERAL (Estilizado) --- */
+        /* --- MENÚ LATERAL --- */
         .sidebar {
             width: 260px;
             background-color: var(--bg-sidebar);
@@ -62,9 +63,7 @@
             letter-spacing: -0.5px;
         }
 
-        .brand span {
-            color: #7c3aed;
-        }
+        .brand span { color: #7c3aed; }
 
         .menu-section-title {
             font-size: 0.75rem;
@@ -73,6 +72,7 @@
             color: var(--text-muted);
             margin-bottom: 12px;
             font-weight: 700;
+            margin-top: 16px;
         }
 
         .menu-list {
@@ -80,7 +80,6 @@
             display: flex;
             flex-direction: column;
             gap: 6px;
-            margin-bottom: 24px;
         }
 
         .menu-item a {
@@ -94,6 +93,7 @@
             font-size: 0.95rem;
             border-radius: var(--radius);
             transition: all 0.3s ease;
+            cursor: pointer;
         }
 
         .menu-item a:hover {
@@ -107,7 +107,7 @@
             box-shadow: 0 4px 12px rgb(124 58 237 / 0.25);
         }
 
-        /* --- CONTENEDOR DERECHO (Navbar + Main) --- */
+        /* --- CONTENEDOR DERECHO --- */
         .content-container {
             flex: 1;
             display: flex;
@@ -115,7 +115,6 @@
             width: calc(100% - 260px);
         }
 
-        /* BARRA SUPERIOR (Navbar) */
         .navbar {
             height: 70px;
             background-color: var(--white);
@@ -154,6 +153,8 @@
             color: var(--text-muted);
             cursor: pointer;
             position: relative;
+            display: flex;
+            align-items: center;
         }
 
         .nav-icon-btn .badge {
@@ -190,7 +191,15 @@
             gap: 32px;
         }
 
-        /* BANNER DE BIENVENIDA (Estilo SkillPath) */
+        .view-section {
+            display: none;
+            flex-direction: column;
+            gap: 32px;
+        }
+
+        .view-section.active { display: flex; }
+
+        /* BANNER */
         .welcome-banner {
             background: var(--gradient-banner);
             border-radius: var(--radius);
@@ -204,22 +213,10 @@
             overflow: hidden;
         }
 
-        .welcome-text h1 {
-            font-size: 1.8rem;
-            margin-bottom: 8px;
-            font-weight: 700;
-        }
+        .welcome-text h1 { font-size: 1.8rem; margin-bottom: 8px; font-weight: 700; }
+        .welcome-text p { opacity: 0.9; font-size: 1rem; }
 
-        .welcome-text p {
-            opacity: 0.9;
-            font-size: 1rem;
-        }
-
-        .banner-stats {
-            display: flex;
-            gap: 24px;
-        }
-
+        .banner-stats { display: flex; gap: 24px; }
         .banner-stat-item {
             background: rgba(255, 255, 255, 0.15);
             padding: 12px 20px;
@@ -227,23 +224,13 @@
             backdrop-filter: blur(4px);
             text-align: center;
         }
+        .banner-stat-item .num { font-size: 1.4rem; font-weight: 700; display: block; }
+        .banner-stat-item .lbl { font-size: 0.75rem; opacity: 0.8; text-transform: uppercase; }
 
-        .banner-stat-item .num {
-            font-size: 1.4rem;
-            font-weight: 700;
-            display: block;
-        }
-
-        .banner-stat-item .lbl {
-            font-size: 0.75rem;
-            opacity: 0.8;
-            text-transform: uppercase;
-        }
-
-        /* --- TARJETAS VIBRANTES --- */
+        /* TARJETAS */
         .cards-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 24px;
         }
 
@@ -256,154 +243,186 @@
             flex-direction: column;
             justify-content: space-between;
             height: 140px;
-            position: relative;
             transition: transform 0.2s;
         }
-
-        .card:hover {
-            transform: translateY(-4px);
-        }
-
+        .card:hover { transform: translateY(-4px); }
         .card-pink { background: var(--card-pink); }
         .card-purple { background: var(--card-purple); }
         .card-blue { background: var(--card-blue); }
         .card-teal { background: var(--card-teal); }
         .card-red { background: var(--card-red); }
+        .card-orange { background: var(--card-orange); }
 
-        .card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-        }
+        .card-header { display: flex; justify-content: space-between; align-items: flex-start; }
+        .card-title { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px; opacity: 0.9; font-weight: 600; }
+        .card-icon-box { background: rgba(255, 255, 255, 0.2); padding: 8px; border-radius: 12px; display: flex; align-items: center; justify-content: center; }
+        .card-value { font-size: 2.2rem; font-weight: 800; line-height: 1; }
 
-        .card-title {
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            opacity: 0.9;
-            font-weight: 600;
-        }
-
-        .card-icon-box {
-            background: rgba(255, 255, 255, 0.2);
-            padding: 8px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .card-value {
-            font-size: 2.2rem;
-            font-weight: 800;
-            line-height: 1;
-        }
-
-        /* --- SECCIÓN INFERIOR COMPARTIDA --- */
-        .dashboard-footer {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 24px;
-        }
-
-        .panel-box {
+        /* SECCIONES COMPONENTES DE GESTIÓN */
+        .section-box {
             background-color: var(--white);
             padding: 28px;
             border-radius: var(--radius);
             box-shadow: var(--shadow-sm);
             border: 1px solid #e2e8f0;
-        }
-
-        .panel-box h2 {
-            font-size: 1.2rem;
-            margin-bottom: 24px;
-            color: var(--text-dark);
-            font-weight: 700;
-        }
-
-        /* Acciones Rápidas Modernas */
-        .actions-list {
-            display: flex;
-            flex-direction: column;
-            gap: 14px;
-        }
-
-        .action-btn {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            width: 100%;
-            padding: 16px 20px;
-            background-color: #f8fafc;
-            border: 1px solid #e2e8f0;
-            border-radius: var(--radius);
-            color: var(--text-dark);
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .action-btn:hover {
-            background-color: #f1f5f9;
-            border-color: #cbd5e1;
-            transform: translateX(4px);
-        }
-
-        .action-content {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-        }
-
-        .action-btn .icon {
-            color: #7c3aed;
-        }
-
-        /* Actividad Reciente Estilizada */
-        .activity-list {
             display: flex;
             flex-direction: column;
             gap: 20px;
+            width: 100%;
         }
 
-        .activity-item {
+        .section-box h2 { font-size: 1.4rem; color: var(--text-dark); font-weight: 700; }
+
+        .toolbar {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            align-items: center;
+            width: 100%;
+        }
+
+        .filter-input, .filter-select {
+            padding: 10px 16px;
+            border: 1px solid #cbd5e1;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            outline: none;
+            color: var(--text-dark);
+            background-color: #f8fafc;
+        }
+        .filter-input { flex: 1; min-width: 200px; }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #7c3aed 0%, #4f46e5 100%);
+            color: var(--white);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
             display: flex;
             align-items: center;
-            gap: 16px;
+            gap: 8px;
         }
 
-        .activity-icon-wrapper {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
+        .table-container { overflow-x: auto; border-radius: 12px; border: 1px solid #e2e8f0; }
+        .custom-table { width: 100%; border-collapse: collapse; text-align: left; font-size: 0.95rem; }
+        .custom-table th { background-color: #f8fafc; color: var(--text-muted); padding: 14px 16px; font-weight: 700; border-bottom: 2px solid #e2e8f0; text-transform: uppercase; font-size: 0.85rem;}
+        .custom-table td { padding: 14px 16px; border-bottom: 1px solid #e2e8f0; }
+        .custom-table tr:hover td { background-color: #f8fafc; }
+
+        .table-img { width: 48px; height: 48px; object-fit: cover; border-radius: 8px; }
+        
+        /* BADGES ESTADO */
+        .status-badge { padding: 6px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; display: inline-block; }
+        .status-badge.disponible, .status-badge.entregado, .status-badge.vip { background-color: #dcfce7; color: #166534; }
+        .status-badge.agotado, .status-badge.cancelado { background-color: #ffe4e6; color: #9f1239; }
+        .status-badge.pendiente { background-color: #fef3c7; color: #d97706; }
+        .status-badge.proceso, .status-badge.frecuente { background-color: #e0f2fe; color: #0369a1; }
+        .status-badge.regular { background-color: #f1f5f9; color: #475569; }
+
+        /* SELECT ESTADO EN PEDIDOS */
+        .status-select {
+            padding: 4px 8px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            border: 1px solid #cbd5e1;
+            outline: none;
+            cursor: pointer;
+            background-color: #ffffff;
+        }
+
+        .action-icons { display: flex; gap: 8px; }
+        .btn-icon { background: none; border: none; cursor: pointer; padding: 6px; border-radius: 8px; color: var(--text-muted); }
+        .btn-icon:hover { background-color: #f1f5f9; }
+        .btn-icon.delete:hover { color: #ef4444; }
+        .btn-icon.edit:hover { color: #eab308; }
+
+        /* PANALES DIVIDIDOS */
+        .dashboard-footer { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+        .panel-box { background-color: var(--white); padding: 28px; border-radius: var(--radius); box-shadow: var(--shadow-sm); border: 1px solid #e2e8f0; }
+        .panel-box h2 { font-size: 1.2rem; margin-bottom: 24px; font-weight: 700; }
+        .actions-list { display: flex; flex-direction: column; gap: 14px; }
+        .action-btn { display: flex; align-items: center; justify-content: space-between; width: 100%; padding: 16px 20px; background-color: #f8fafc; border: 1px solid #e2e8f0; border-radius: var(--radius); cursor: pointer; font-weight: 600; transition: transform 0.2s; }
+        .action-btn:hover { transform: translateX(4px); background-color: #f1f5f9; }
+        .action-content { display: flex; align-items: center; gap: 14px; }
+        .action-btn .icon { color: #7c3aed; display: flex; align-items: center; }
+        
+        .activity-list { display: flex; flex-direction: column; gap: 20px; }
+        .activity-item { display: flex; align-items: center; gap: 16px; }
+        .activity-icon-wrapper { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+        .activity-details p { font-size: 0.95rem; font-weight: 600; }
+        .activity-details span { font-size: 0.8rem; color: var(--text-muted); }
+
+        /* MODALES */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(30, 41, 59, 0.5);
+            backdrop-filter: blur(4px);
+            z-index: 100;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.2rem;
+            opacity: 0; pointer-events: none;
+            transition: opacity 0.2s ease;
         }
+        .modal-overlay.active { opacity: 1; pointer-events: auto; }
+        .modal-card { background-color: var(--white); width: 100%; max-width: 500px; border-radius: var(--radius); overflow: hidden; transform: translateY(-20px); transition: transform 0.2s ease; }
+        .modal-overlay.active .modal-card { transform: translateY(0); }
+        .modal-header { background: var(--gradient-banner); color: var(--white); padding: 20px 24px; display: flex; justify-content: space-between; align-items: center; }
+        .modal-header h3 { font-size: 1.2rem; font-weight: 700; }
+        .modal-close { cursor: pointer; }
+        .modal-body { padding: 24px; display: flex; flex-direction: column; gap: 16px; }
+        
+        .form-group { display: flex; flex-direction: column; gap: 6px; }
+        .form-group label { font-size: 0.85rem; font-weight: 700; }
+        .form-control { padding: 10px 14px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 0.95rem; outline: none; }
+        .modal-footer { padding: 16px 24px; border-top: 1px solid #e2e8f0; display: flex; justify-content: flex-end; gap: 12px; background-color: #f8fafc; }
+        
+        .btn-secondary { background-color: #e2e8f0; color: var(--text-dark); border: none; padding: 10px 20px; border-radius: 10px; font-weight: 600; cursor: pointer; }
+        .btn-danger { background-color: #ef4444; color: white; border: none; padding: 10px 20px; border-radius: 10px; font-weight: 600; cursor: pointer; }
 
-        .activity-details p {
+        .modal-confirm-body { padding: 32px 24px; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 16px; }
+        .warning-icon { font-size: 4rem; color: #ef4444; }
+        .modal-confirm-body h4 { font-size: 1.3rem; font-weight: 700; color: var(--text-dark); }
+        .modal-confirm-body p { color: var(--text-muted); font-size: 0.95rem; }
+
+        /* --- CONTENEDOR DE NOTIFICACIONES TOAST --- */
+        .toast-container {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            z-index: 9999;
+        }
+        .toast {
+            background-color: #1e293b;
+            color: #ffffff;
+            padding: 16px 20px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px -5px rgb(0 0 0 / 0.3);
+            display: flex;
+            align-items: center;
+            gap: 12px;
             font-size: 0.95rem;
             font-weight: 600;
-            color: var(--text-dark);
+            min-width: 280px;
+            transform: translateY(40px);
+            opacity: 0;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-
-        .activity-details span {
-            font-size: 0.8rem;
-            color: var(--text-muted);
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
         }
-
-        /* 🚀 AQUÍ ESTÁ AGREGADO EL NUEVO ESTILO PARA TU IMAGEN */
-        .banner-img {
-            position: absolute;
-            height: 110px;           
-            width: 180px;            
-            object-fit: cover;       
-            border-radius: 12px;     
-            bottom: 20px;            
-            right: 210px;            
-            pointer-events: none;    
-        }
+        .toast.success { border-left: 5px solid #10b981; }
+        .toast.success .toast-icon { color: #10b981; }
+        .toast.error { border-left: 5px solid #ef4444; }
+        .toast.error .toast-icon { color: #ef4444; }
     </style>
 </head>
 <body>
@@ -416,176 +435,525 @@
         <nav>
             <div class="menu-section-title">Navegación</div>
             <ul class="menu-list">
-                <li class="menu-item active">
-                    <a href="#"><i class="material-icons-round">dashboard</i>Dashboard</a>
+                <li class="menu-item active" data-target="vista-dashboard">
+                    <a><i class="material-icons-round">dashboard</i>Dashboard</a>
                 </li>
-                <li class="menu-item">
-                    <a href="#"><i class="material-icons-round">restaurant_menu</i>Productos</a>
+                <li class="menu-item" data-target="vista-productos">
+                    <a><i class="material-icons-round">restaurant_menu</i>Productos</a>
                 </li>
-                <li class="menu-item">
-                    <a href="#"><i class="material-icons-round">shopping_bag</i>Pedidos</a>
+                <li class="menu-item" data-target="vista-pedidos">
+                    <a><i class="material-icons-round">shopping_bag</i>Pedidos</a>
                 </li>
             </ul>
-
             <div class="menu-section-title">Gestión</div>
             <ul class="menu-list">
-                <li class="menu-item">
-                    <a href="#"><i class="material-icons-round">local_offer</i>Promociones</a>
+                <li class="menu-item" data-target="vista-promociones">
+                    <a><i class="material-icons-round">local_offer</i>Promociones</a>
                 </li>
-                <li class="menu-item">
-                    <a href="#"><i class="material-icons-round">people</i>Clientes</a>
+                <li class="menu-item" data-target="vista-clientes">
+                    <a><i class="material-icons-round">people</i>Clientes</a>
                 </li>
-                <li class="menu-item">
-                    <a href="#"><i class="material-icons-round">bar_chart</i>Reportes</a>
+                <li class="menu-item" data-target="vista-reportes">
+                    <a><i class="material-icons-round">bar_chart</i>Reportes</a>
                 </li>
             </ul>
         </nav>
     </aside>
 
     <div class="content-container">
-        
         <header class="navbar">
             <div class="search-bar">
                 <i class="material-icons-round" style="color: var(--text-muted);">search</i>
-                <input type="text" placeholder="Buscar pedidos, clientes...">
+                <input type="text" placeholder="Buscar registros...">
             </div>
             <div class="nav-profile">
                 <div class="nav-icon-btn">
                     <i class="material-icons-round">notifications</i>
                     <span class="badge">3</span>
                 </div>
-                <div class="avatar">A</div> </div>
+                <div class="avatar">A</div> 
+            </div>
         </header>
 
         <main class="main-content">
             
-<section class="welcome-banner">
-    <div class="welcome-text">
-        <h1>¡Hola de nuevo, Administrador! 👋</h1>
-        <p>Las actividades y el rendimiento de la cocina van sobre ruedas hoy ponte a chambear.</p>
-    </div>
-
-    <img src="img/chef.webp" alt="Chef Mexicano" class="banner-img">
-
-    <div class="banner-stats">
-        <div class="banner-stat-item">
-            <span class="num">12h</span>
-            <span class="lbl">Apertura</span>
-        </div>
-        <div class="banner-stat-item">
-            <span class="num">Activo</span>
-            <span class="lbl">Estado</span>
-        </div>
-    </div>
-</section>
-
-            <section class="cards-grid">
-                <div class="card card-pink">
-                    <div class="card-header">
-                        <span class="card-title">Productos Publicados</span>
-                        <div class="card-icon-box"><i class="material-icons-round">restaurant_menu</i></div>
+            <div id="vista-dashboard" class="view-section active">
+                <section class="welcome-banner">
+                    <div class="welcome-text">
+                        <h1>¡Hola de nuevo, Administrador! 👋</h1>
+                        <p>El rendimiento de la cocina va sobre ruedas hoy, revisa los pedidos activos.</p>
                     </div>
-                    <div class="card-value">12</div>
-                </div>
-
-                <div class="card card-purple">
-                    <div class="card-header">
-                        <span class="card-title">Pedidos del Día</span>
-                        <div class="card-icon-box"><i class="material-icons-round">delivery_dining</i></div>
-                    </div>
-                    <div class="card-value">5</div>
-                </div>
-
-                <div class="card card-blue">
-                    <div class="card-header">
-                        <span class="card-title">Ventas del Mes</span>
-                        <div class="card-icon-box"><i class="material-icons-round">payments</i></div>
-                    </div>
-                    <div class="card-value">$12,500</div>
-                </div>
-
-                <div class="card card-teal">
-                    <div class="card-header">
-                        <span class="card-title">Clientes Registrados</span>
-                        <div class="card-icon-box"><i class="material-icons-round">group</i></div>
-                    </div>
-                    <div class="card-value">38</div>
-                </div>
-
-                <div class="card card-red">
-                    <div class="card-header">
-                        <span class="card-title">Productos Agotados</span>
-                        <div class="card-icon-box"><i class="material-icons-round">gpp_maybe</i></div>
-                    </div>
-                    <div class="card-value">2</div>
-                </div>
-            </section>
-
-            <div class="dashboard-footer">
-                
-                <section class="panel-box">
-                    <h2>Acciones Rápidas</h2>
-                    <div class="actions-list">
-                        <button class="action-btn">
-                            <div class="action-content">
-                                <i class="material-icons-round icon">add_circle</i>
-                                <span>Agregar nuevo producto al menú</span>
-                            </div>
-                            <i class="material-icons-round" style="color: var(--text-muted);">chevron_right</i>
-                        </button>
-                        <button class="action-btn">
-                            <div class="action-content">
-                                <i class="material-icons-round icon">visibility</i>
-                                <span>Ver y gestionar pedidos actuales</span>
-                            </div>
-                            <i class="material-icons-round" style="color: var(--text-muted);">chevron_right</i>
-                        </button>
-                        <button class="action-btn">
-                            <div class="action-content">
-                                <i class="material-icons-round icon">auto_awesome</i>
-                                <span>Crear campaña o promoción masiva</span>
-                            </div>
-                            <i class="material-icons-round" style="color: var(--text-muted);">chevron_right</i>
-                        </button>
+                    <div class="banner-stats">
+                        <div class="banner-stat-item"><span class="num">12h</span><span class="lbl">Apertura</span></div>
+                        <div class="banner-stat-item"><span class="num">Activo</span><span class="lbl">Estado</span></div>
                     </div>
                 </section>
 
-                <section class="panel-box">
-                    <h2>Actividad Reciente</h2>
-                    <div class="activity-list">
-                        <div class="activity-item">
-                            <div class="activity-icon-wrapper" style="background-color: #e0f2fe; color: #0369a1;">
-                                <i class="material-icons-round">shopping_basket</i>
-                            </div>
-                            <div class="activity-details">
-                                <p>Pedido #125 recibido</p>
-                                <span>Hace 5 min</span>
-                            </div>
-                        </div>
-                        <div class="activity-item">
-                            <div class="activity-icon-wrapper" style="background-color: #dcfce7; color: #15803d;">
-                                <i class="material-icons-round">person_add</i>
-                            </div>
-                            <div class="activity-details">
-                                <p>Nuevo cliente registrado</p>
-                                <span>Hace 25 min</span>
-                            </div>
-                        </div>
-                        <div class="activity-item">
-                            <div class="activity-icon-wrapper" style="background-color: #fef3c7; color: #b45309;">
-                                <i class="material-icons-round">edit</i>
-                            </div>
-                            <div class="activity-details">
-                                <p>Producto "Tacos al Pastor" modificado</p>
-                                <span>Hace 1 hora</span>
-                            </div>
-                        </div>
-                    </div>
+                <section class="cards-grid">
+                    <div class="card card-pink"><div class="card-header"><span class="card-title">Productos Publicados</span><i class="material-icons-round card-icon-box">restaurant_menu</i></div><div class="card-value" id="dash-prod-count">12</div></div>
+                    <div class="card card-purple"><div class="card-header"><span class="card-title">Pedidos del Día</span><i class="material-icons-round card-icon-box">delivery_dining</i></div><div class="card-value" id="dash-pedidos-count">5</div></div>
+                    <div class="card card-blue"><div class="card-header"><span class="card-title">Ventas del Mes</span><i class="material-icons-round card-icon-box">payments</i></div><div class="card-value">$12,500</div></div>
+                    <div class="card card-teal"><div class="card-header"><span class="card-title">Clientes Registrados</span><i class="material-icons-round card-icon-box">people</i></div><div class="card-value" id="dash-clientes-count">38</div></div>
+                    <div class="card card-red"><div class="card-header"><span class="card-title">Productos Agotados</span><i class="material-icons-round card-icon-box">block</i></div><div class="card-value">2</div></div>
                 </section>
 
+                <div class="dashboard-footer">
+                    <section class="panel-box">
+                        <h2>Acciones Rápidas</h2>
+                        <div class="actions-list">
+                            <button class="action-btn" onclick="navegarA('vista-productos'); openModal('add');">
+                                <div class="action-content"><i class="material-icons-round icon">add_circle</i><span>Agregar producto</span></div>
+                                <i class="material-icons-round" style="color: var(--text-muted);">chevron_right</i>
+                            </button>
+                            <button class="action-btn" onclick="navegarA('vista-pedidos')">
+                                <div class="action-content"><i class="material-icons-round icon">visibility</i><span>Ver pedidos</span></div>
+                                <i class="material-icons-round" style="color: var(--text-muted);">chevron_right</i>
+                            </button>
+                            <button class="action-btn" onclick="navegarA('vista-promociones'); openPromoModal();">
+                                <div class="action-content"><i class="material-icons-round icon">local_offer</i><span>Crear promoción</span></div>
+                                <i class="material-icons-round" style="color: var(--text-muted);">chevron_right</i>
+                            </button>
+                        </div>
+                    </section>
+                    <section class="panel-box">
+                        <h2>Actividad Reciente</h2>
+                        <div class="activity-list">
+                            <div class="activity-item">
+                                <div class="activity-icon-wrapper" style="background-color: #e0f2fe; color: #0369a1;"><i class="material-icons-round">shopping_basket</i></div>
+                                <div class="activity-details"><p>"Pedido #125 recibido"</p><span>Hace unos instantes</span></div>
+                            </div>
+                            <div class="activity-item">
+                                <div class="activity-icon-wrapper" style="background-color: #dcfce7; color: #15803d;"><i class="material-icons-round">person_add</i></div>
+                                <div class="activity-details"><p>"Nuevo cliente registrado"</p><span>Hace 5 min</span></div>
+                            </div>
+                            <div class="activity-item">
+                                <div class="activity-icon-wrapper" style="background-color: #fef3c7; color: #b45309;"><i class="material-icons-round">edit</i></div>
+                                <div class="activity-details"><p>"Producto actualizado"</p><span>Hace 12 min</span></div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
             </div>
+
+            <div id="vista-productos" class="view-section">
+                <section class="section-box">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <h2>Gestión del Menú</h2>
+                        <button class="btn-primary" onclick="openModal('add')"><span class="material-icons-round">add</span> Nuevo Item</button>
+                    </div>
+                    <div class="toolbar">
+                        <input type="text" id="searchProduct" class="filter-input" placeholder="Buscar platillo..." oninput="filterProducts()">
+                        <select id="filterCategory" class="filter-select" onchange="filterProducts()">
+                            <option value="">Categorías</option>
+                            <option value="Platillos">Platillos</option>
+                            <option value="Bebidas">Bebidas</option>
+                        </select>
+                    </div>
+                    <div class="table-container">
+                        <table class="custom-table">
+                            <thead>
+                                <tr><th>Imagen</th><th>Nombre</th><th>Categoría</th><th>Precio</th><th>Stock</th><th>Estado</th><th>Acciones</th></tr>
+                            </thead>
+                            <tbody id="productsTableBody"></tbody>
+                        </table>
+                    </div>
+                </section>
+            </div>
+
+            <div id="vista-pedidos" class="view-section">
+                <section class="section-box">
+                    <h2>Comandas y Pedidos en Tiempo Real</h2>
+                    <div class="table-container">
+                        <table class="custom-table">
+                            <thead>
+                                <tr><th>ID Pedido</th><th>Mesa / Cliente</th><th>Detalle de Orden</th><th>Total</th><th>Estado / Actualizar</th></tr>
+                            </thead>
+                            <tbody id="pedidosTableBody"></tbody>
+                        </table>
+                    </div>
+                </section>
+            </div>
+
+            <div id="vista-promociones" class="view-section">
+                <section class="section-box">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <h2>Cupones y Descuentos Activos</h2>
+                        <button class="btn-primary" onclick="openPromoModal()"><span class="material-icons-round">add</span> Nueva Promoción</button>
+                    </div>
+                    <div class="cards-grid" id="promosGridContainer"></div>
+                </section>
+            </div>
+
+            <div id="vista-clientes" class="view-section">
+                <section class="section-box">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <h2>Registro de Comensales Frecuentes</h2>
+                        <button class="btn-primary" onclick="openClienteModal()"><span class="material-icons-round">person_add</span> Registrar Cliente</button>
+                    </div>
+                    <div class="table-container">
+                        <table class="custom-table">
+                            <thead>
+                                <tr><th>Cliente</th><th>Email / Contacto</th><th>Visitas al Mes</th><th>Puntos Acumulados</th><th>Estado</th></tr>
+                            </thead>
+                            <tbody id="clientesTableBody"></tbody>
+                        </table>
+                    </div>
+                </section>
+            </div>
+
+            <div id="vista-reportes" class="view-section">
+                <section class="section-box">
+                    <h2>Métricas Financieras Básicas</h2>
+                    <div class="cards-grid">
+                        <div class="card card-purple"><div class="card-header"><span class="card-title">Ganancia Neta Mes</span><i class="material-icons-round card-icon-box">trending_up</i></div><div class="card-value">$42,300</div></div>
+                        <div class="card card-blue"><div class="card-header"><span class="card-title">Ticket Promedio</span><i class="material-icons-round card-icon-box">receipt_long</i></div><div class="card-value">$185.50</div></div>
+                        <div class="card card-pink"><div class="card-header"><span class="card-title">Platillo Estrella</span><i class="material-icons-round card-icon-box">star</i></div><div class="card-value" style="font-size:1.4rem; font-weight:800; padding-top:10px;">Tacos al Pastor</div></div>
+                    </div>
+                </section>
+            </div>
+
         </main>
     </div>
 
+    <div class="toast-container" id="toastContainer"></div>
+
+    <div class="modal-overlay" id="productModal">
+        <div class="modal-card">
+            <div class="modal-header"><h3 id="modalTitle">Nuevo Producto</h3><span class="material-icons-round modal-close" onclick="closeModal()">close</span></div>
+            <form id="productForm" onsubmit="saveProduct(event)">
+                <input type="hidden" id="productId">
+                <div class="modal-body">
+                    <div class="form-group"><label>Nombre del producto</label><input type="text" id="pName" class="form-control" required></div>
+                    <div class="form-group"><label>Categoría</label><select id="pCategory" class="form-control" required><option value="Platillos">Platillos</option><option value="Bebidas">Bebidas</option></select></div>
+                    <div class="form-group"><label>Precio ($)</label><input type="number" id="pPrice" class="form-control" step="0.01" required></div>
+                    <div class="form-group"><label>Existencia</label><input type="number" id="pStock" class="form-control" required></div>
+                    <div class="form-group"><label>Estado</label><select id="pStatus" class="form-control"><option value="Disponible">Disponible</option><option value="Agotado">Agotado</option></select></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-secondary" onclick="closeModal()">Cancelar</button>
+                    <button type="submit" class="btn-primary">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="promoModal">
+        <div class="modal-card">
+            <div class="modal-header"><h3>Nueva Promoción</h3><span class="material-icons-round modal-close" onclick="closePromoModal()">close</span></div>
+            <form id="promoForm" onsubmit="savePromo(event)">
+                <div class="modal-body">
+                    <div class="form-group"><label>Código de Cupón</label><input type="text" id="promoCode" class="form-control" placeholder="Ej: PROMO50" required></div>
+                    <div class="form-group"><label>Título Descuento</label><input type="text" id="promoTitle" class="form-control" placeholder="Ej: 20% DE DESCUENTO" required></div>
+                    <div class="form-group"><label>Descripción / Condiciones</label><input type="text" id="promoDesc" class="form-control" placeholder="Ej: En consumos mayores a $300" required></div>
+                    <div class="form-group"><label>Color de Tarjeta</label><select id="promoColor" class="form-control"><option value="orange">Naranja</option><option value="teal">Verde Esmeralda</option><option value="blue">Azul Marino</option><option value="pink">Rosa Mexicano</option></select></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-secondary" onclick="closePromoModal()">Cancelar</button>
+                    <button type="submit" class="btn-primary">Publicar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="clienteModal">
+        <div class="modal-card">
+            <div class="modal-header"><h3>Registrar Nuevo Comensal</h3><span class="material-icons-round modal-close" onclick="closeClienteModal()">close</span></div>
+            <form id="clienteForm" onsubmit="saveCliente(event)">
+                <div class="modal-body">
+                    <div class="form-group"><label>Nombre Completo</label><input type="text" id="cName" class="form-control" required></div>
+                    <div class="form-group"><label>Correo Electrónico</label><input type="email" id="cEmail" class="form-control" required></div>
+                    <div class="form-group"><label>Visitas Iniciales</label><input type="number" id="cVisitas" class="form-control" value="1" required></div>
+                    <div class="form-group"><label>Puntos de Bienvenida</label><input type="number" id="cPuntos" class="form-control" value="10" required></div>
+                    <div class="form-group"><label>Nivel de Miembro</label><select id="cStatus" class="form-control"><option value="Regular">Regular</option><option value="Frecuente">Frecuente</option><option value="VIP">VIP</option></select></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-secondary" onclick="closeClienteModal()">Cancelar</button>
+                    <button type="submit" class="btn-primary">Registrar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="deleteConfirmModal">
+        <div class="modal-card" style="max-width: 400px;">
+            <div class="modal-confirm-body">
+                <span class="material-icons-round warning-icon">delete_forever</span>
+                <h4>¿Eliminar del menú?</h4>
+                <p>Esta acción removerá el platillo de la lista de la cocina de manera permanente.</p>
+            </div>
+            <div class="modal-footer" style="background-color: #fff1f2;">
+                <button type="button" class="btn-secondary" onclick="closeDeleteModal()">Cancelar</button>
+                <button type="button" class="btn-danger" id="confirmDeleteBtn">Eliminar definitivamente</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Data Store
+        let products = [
+            { id: 1, name: 'Tacos al Pastor (Orden)', category: 'Platillos', price: 95.00, stock: 12, status: 'Disponible', img: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=150' },
+            { id: 2, name: 'Enchiladas Verdes', category: 'Platillos', price: 120.00, stock: 5, status: 'Disponible', img: 'https://images.unsplash.com/photo-1551024601-bec78aea704b?w=150' },
+            { id: 3, name: 'Pozole Rojo Grande', category: 'Platillos', price: 110.00, stock: 0, status: 'Agotado', img: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=150' },
+            { id: 4, name: 'Agua de Horchata Litro', category: 'Bebidas', price: 40.00, stock: 25, status: 'Disponible', img: 'https://images.unsplash.com/photo-1551024601-bec78aea704b?w=150' }
+        ];
+
+        let pedidos = [
+            { id: 1024, cliente: 'Mesa 3 (Nelly)', detalle: '2x Tacos al Pastor, 1x Agua Horchata', total: 230.00, status: 'proceso' },
+            { id: 1023, cliente: 'Mesa 5', detalle: '1x Pozole Rojo Grande', total: 110.00, status: 'pendiente' },
+            { id: 1022, cliente: 'Para Llevar - Juan P.', detalle: '3x Enchiladas Verdes', total: 360.00, status: 'entregado' }
+        ];
+
+        let promociones = [
+            { id: 1, code: 'VIVAMEXICO', title: '15% DESCUENTO', desc: 'En todo el menú de platillos', color: 'orange' },
+            { id: 2, code: 'JUEVES2X1', title: '2X1 EN BEBIDAS', desc: 'Aplica en aguas frescas de litro', color: 'teal' }
+        ];
+
+        let clientes = [
+            { nombre: 'Nelly ICT', email: 'nelly.tics@tecnm.mx', visitas: 8, puntos: 160, status: 'vip' },
+            { nombre: 'Carlos Mendoza', email: 'carlos.m@gmail.com', visitas: 3, puntos: 45, status: 'frecuente' },
+            { nombre: 'Ana Maria Flores', email: 'ana.flores@outlook.com', visitas: 1, puntos: 10, status: 'regular' }
+        ];
+
+        let productToDeleteId = null;
+
+        // --- SISTEMA DE NOTIFICACIONES TOAST ---
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            
+            const icon = type === 'success' ? 'check_circle' : 'error';
+            
+            toast.innerHTML = `
+                <span class="material-icons-round toast-icon">${icon}</span>
+                <span>${message}</span>
+            `;
+            
+            container.appendChild(toast);
+            
+            // Forzar reflow para animación CSS
+            setTimeout(() => toast.classList.add('show'), 10);
+            
+            // Remover después de 3.5 segundos
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => toast.remove(), 300);
+            }, 3500);
+        }
+
+        // Cambios de Pestañas
+        const menuItems = document.querySelectorAll('.menu-item');
+        const sections = document.querySelectorAll('.view-section');
+
+        menuItems.forEach(item => {
+            item.addEventListener('click', () => {
+                document.querySelector('.menu-item.active').classList.remove('active');
+                item.classList.add('active');
+                const targetId = item.getAttribute('data-target');
+                sections.forEach(sec => sec.id === targetId ? sec.classList.add('active') : sec.classList.remove('active'));
+            });
+        });
+
+        function navegarA(idSeccion) {
+            const itemMenu = document.querySelector(`[data-target="${idSeccion}"]`);
+            if(itemMenu) itemMenu.click();
+        }
+
+        // Renderizadores iniciales
+        document.addEventListener("DOMContentLoaded", () => {
+            renderAll();
+        });
+
+        function renderAll() {
+            renderProductsTable(products);
+            renderPedidosTable();
+            renderPromos();
+            renderClientesTable();
+        }
+
+        // --- SECCIÓN PRODUCTOS ---
+        function renderProductsTable(data) {
+            const tbody = document.getElementById('productsTableBody');
+            tbody.innerHTML = '';
+            data.forEach(p => {
+                const badgeClass = p.status === 'Disponible' ? 'disponible' : 'agotado';
+                tbody.innerHTML += `
+                    <tr>
+                        <td><img src="${p.img}" class="table-img" alt="img"></td>
+                        <td><strong>${p.name}</strong></td><td>${p.category}</td>
+                        <td><strong>$${p.price.toFixed(2)}</strong></td><td>${p.stock} pz</td>
+                        <td><span class="status-badge ${badgeClass}">${p.status}</span></td>
+                        <td>
+                            <div class="action-icons">
+                                <button class="btn-icon edit" onclick="openModal('edit', ${p.id})"><span class="material-icons-round">edit</span></button>
+                                <button class="btn-icon delete" onclick="askDeleteProduct(${p.id})"><span class="material-icons-round">delete</span></button>
+                            </div>
+                        </td>
+                    </tr>`;
+            });
+        }
+
+        function filterProducts() {
+            const searchVal = document.getElementById('searchProduct').value.toLowerCase();
+            const catVal = document.getElementById('filterCategory').value;
+            const filtered = products.filter(p => p.name.toLowerCase().includes(searchVal) && (catVal === "" || p.category === catVal));
+            renderProductsTable(filtered);
+        }
+
+        function openModal(mode, id = null) {
+            document.getElementById('productForm').reset();
+            document.getElementById('productId').value = '';
+            document.getElementById('modalTitle').innerText = mode === 'edit' ? 'Editar Producto' : 'Nuevo Producto';
+            if(mode === 'edit') {
+                const p = products.find(prod => prod.id === id);
+                if(p) {
+                    document.getElementById('productId').value = p.id;
+                    document.getElementById('pName').value = p.name;
+                    document.getElementById('pCategory').value = p.category;
+                    document.getElementById('pPrice').value = p.price;
+                    document.getElementById('pStock').value = p.stock;
+                    document.getElementById('pStatus').value = p.status;
+                }
+            }
+            document.getElementById('productModal').classList.add('active');
+        }
+        function closeModal() { document.getElementById('productModal').classList.remove('active'); }
+
+        function saveProduct(e) {
+            e.preventDefault();
+            const id = document.getElementById('productId').value;
+            const name = document.getElementById('pName').value;
+            const category = document.getElementById('pCategory').value;
+            const price = parseFloat(document.getElementById('pPrice').value);
+            const stock = parseInt(document.getElementById('pStock').value);
+            const status = document.getElementById('pStatus').value;
+
+            if(id) {
+                const index = products.findIndex(p => p.id == id);
+                products[index] = { ...products[index], name, category, price, stock, status };
+                showToast(`Producto "${name}" actualizado con éxito.`);
+            } else {
+                const newId = products.length ? Math.max(...products.map(p => p.id)) + 1 : 1;
+                products.push({ id: newId, name, category, price, stock, status, img: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=150' });
+                showToast(`"${name}" ha sido añadido al menú.`);
+            }
+            closeModal();
+            renderProductsTable(products);
+        }
+
+        function askDeleteProduct(id) { productToDeleteId = id; document.getElementById('deleteConfirmModal').classList.add('active'); }
+        function closeDeleteModal() { document.getElementById('deleteConfirmModal').classList.remove('active'); productToDeleteId = null; }
+        document.getElementById('confirmDeleteBtn').addEventListener('click', () => {
+            if (productToDeleteId !== null) {
+                const p = products.find(prod => prod.id === productToDeleteId);
+                products = products.filter(p => p.id !== productToDeleteId);
+                renderProductsTable(products);
+                closeDeleteModal();
+                showToast(`Producto removido del menú correctamente.`, 'error');
+            }
+        });
+
+        // --- SECCIÓN PEDIDOS ---
+        function renderPedidosTable() {
+            const tbody = document.getElementById('pedidosTableBody');
+            tbody.innerHTML = '';
+            document.getElementById('dash-pedidos-count').innerText = pedidos.length;
+
+            pedidos.forEach(ped => {
+                tbody.innerHTML += `
+                    <tr>
+                        <td><strong>#${ped.id}</strong></td>
+                        <td>${ped.cliente}</td>
+                        <td>${ped.detalle}</td>
+                        <td><strong>$${ped.total.toFixed(2)}</strong></td>
+                        <td>
+                            <select class="status-select" onchange="updatePedidoStatus(${ped.id}, this.value)">
+                                <option value="pendiente" ${ped.status === 'pendiente' ? 'selected' : ''}>Pendiente</option>
+                                <option value="proceso" ${ped.status === 'proceso' ? 'selected' : ''}>En Cocina</option>
+                                <option value="entregado" ${ped.status === 'entregado' ? 'selected' : ''}>Entregado</option>
+                                <option value="cancelado" ${ped.status === 'cancelado' ? 'selected' : ''}>Cancelado</option>
+                            </select>
+                            <span class="status-badge ${ped.status}" style="margin-left: 8px;">
+                                ${ped.status === 'proceso' ? 'En Cocina' : ped.status.charAt(0).toUpperCase() + ped.status.slice(1)}
+                            </span>
+                        </td>
+                    </tr>`;
+            });
+        }
+
+        function updatePedidoStatus(id, newStatus) {
+            const index = pedidos.findIndex(p => p.id === id);
+            if(index !== -1) {
+                pedidos[index].status = newStatus;
+                renderPedidosTable();
+                showToast(`Pedido #${id} actualizado a "${newStatus}".`);
+            }
+        }
+
+        // --- SECCIÓN PROMOCIONES ---
+        function renderPromos() {
+            const container = document.getElementById('promosGridContainer');
+            container.innerHTML = '';
+            promociones.forEach(p => {
+                container.innerHTML += `
+                    <div class="card card-${p.color}">
+                        <div class="card-header"><span class="card-title">Código: ${p.code}</span><i class="material-icons-round card-icon-box">local_offer</i></div>
+                        <div>
+                            <h3 style="font-size:1.5rem;">${p.title}</h3>
+                            <p style="font-size:0.85rem; opacity:0.8;">${p.desc}</p>
+                        </div>
+                    </div>`;
+            });
+        }
+
+        function openPromoModal() { document.getElementById('promoForm').reset(); document.getElementById('promoModal').classList.add('active'); }
+        function closePromoModal() { document.getElementById('promoModal').classList.remove('active'); }
+        function savePromo(e) {
+            e.preventDefault();
+            const code = document.getElementById('promoCode').value.toUpperCase();
+            const title = document.getElementById('promoTitle').value;
+            const desc = document.getElementById('promoDesc').value;
+            const color = document.getElementById('promoColor').value;
+
+            promociones.push({ id: promociones.length + 1, code, title, desc, color });
+            closePromoModal();
+            renderPromos();
+            showToast(`Cupón [${code}] activado globalmente.`);
+        }
+
+        // --- SECCIÓN CLIENTES ---
+        function renderClientesTable() {
+            const tbody = document.getElementById('clientesTableBody');
+            tbody.innerHTML = '';
+            document.getElementById('dash-clientes-count').innerText = clientes.length;
+
+            clientes.forEach(c => {
+                tbody.innerHTML += `
+                    <tr>
+                        <td><strong>${c.nombre}</strong></td>
+                        <td>${c.email}</td>
+                        <td>${c.visitas} visitas</td>
+                        <td>${c.puntos} pts</td>
+                        <td><span class="status-badge ${c.status}">${c.status.toUpperCase()}</span></td>
+                    </tr>`;
+            });
+        }
+
+        function openClienteModal() { document.getElementById('clienteForm').reset(); document.getElementById('clienteModal').classList.add('active'); }
+        function closeClienteModal() { document.getElementById('clienteModal').classList.remove('active'); }
+        function saveCliente(e) {
+            e.preventDefault();
+            const nombre = document.getElementById('cName').value;
+            const email = document.getElementById('cEmail').value;
+            const visitas = parseInt(document.getElementById('cVisitas').value);
+            const puntos = parseInt(document.getElementById('cPuntos').value);
+            const status = document.getElementById('cStatus').value.toLowerCase();
+
+            clientes.push({ nombre, email, visitas, puntos, status });
+            closeClienteModal();
+            renderClientesTable();
+            showToast(`Cliente "${nombre}" registrado en el club.`);
+        }
+    </script>
 </body>
 </html>
