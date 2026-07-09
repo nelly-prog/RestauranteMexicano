@@ -141,6 +141,9 @@
     <p style="font-size: 0.8rem; opacity: 0.7; margin-top: 5px;">e-business + e-commerce - Negocios Electrónicos I</p>
 </footer>
 
+<!-- CDN de SweetAlert2 colocado estratégicamente para controlar las alertas -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 <script>
     document.addEventListener('DOMContentLoaded', () => {
         renderizarCarrito();
@@ -239,7 +242,7 @@
         let cantidadNumerica = parseInt(nuevaCantidad);
 
         if (isNaN(cantidadNumerica) || cantidadNumerica < 1) {
-            amount = 1;
+            cantidadNumerica = 1;
         }
 
         carrito[index].cantidad = cantidadNumerica;
@@ -247,20 +250,54 @@
         renderizarCarrito();
     }
 
+    // Alerta tipo Toast para eliminación individual de productos
     function eliminarProducto(index) {
         let carrito = JSON.parse(localStorage.getItem('carritoApp')) || [];
         carrito.splice(index, 1);
         
         localStorage.setItem('carritoApp', JSON.stringify(carrito));
         renderizarCarrito();
+
+        // Notificación elegante sin localhost
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 2000,
+            timerProgressBar: true
+        });
+
+        Toast.fire({
+            icon: 'success',
+            title: 'Producto quitado del carrito'
+        });
     }
 
+    // Modal interactivo moderno para vaciar el carrito por completo
     function vaciarCarrito() {
-        if (confirm('¿Estás seguro de que deseas vaciar todo tu carrito de compras?')) {
-            localStorage.removeItem('carritoApp');
-            localStorage.removeItem('cartCount');
-            renderizarCarrito();
-        }
+        Swal.fire({
+            title: '¿Vaciar carrito?',
+            text: "Se eliminarán todos los platillos seleccionados.",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#ce1126',
+            cancelButtonColor: '#666',
+            confirmButtonText: 'Sí, vaciar',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                localStorage.removeItem('carritoApp');
+                localStorage.removeItem('cartCount');
+                renderizarCarrito();
+                
+                Swal.fire({
+                    title: '¡Carrito Vacío!',
+                    text: 'Tu carrito ha sido limpiado correctamente.',
+                    icon: 'success',
+                    confirmButtonColor: '#00843D'
+                });
+            }
+        });
     }
 
     function actualizarContadorMenu(carrito) {

@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Panel de Administración - Sabor Mexicano</title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+    <!-- SweetAlert2 para alertas estéticas -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
         :root {
             --bg-main: #f0f4f8;
@@ -13,12 +16,11 @@
             --text-muted: #64748b;
             --white: #ffffff;
             
-            /* Paleta Vibrante */
             --gradient-banner: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
-            --card-pink: linear-gradient(135deg, #ec4899 0%, #be185d 100%);
-            --card-purple: linear-gradient(135deg, #a855f7 0%, #7e22ce 100%);
             --card-blue: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
-            --card-teal: linear-gradient(135deg, #14b8a6 0%, #0f766e 100%);
+            --card-purple: linear-gradient(135deg, #a855f7 0%, #7e22ce 100%);
+            --card-green: linear-gradient(135deg, #10b981 0%, #047857 100%);
+            --card-pink: linear-gradient(135deg, #ec4899 0%, #be185d 100%);
             --card-red: linear-gradient(135deg, #f43f5e 0%, #be123c 100%);
             --card-orange: linear-gradient(135deg, #f97316 0%, #c2410c 100%);
             
@@ -143,32 +145,6 @@
             font-size: 0.9rem;
         }
 
-        .nav-profile {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-        }
-
-        .nav-icon-btn {
-            color: var(--text-muted);
-            cursor: pointer;
-            position: relative;
-            display: flex;
-            align-items: center;
-        }
-
-        .nav-icon-btn .badge {
-            position: absolute;
-            top: -4px;
-            right: -4px;
-            background-color: #ef4444;
-            color: white;
-            font-size: 0.7rem;
-            padding: 2px 5px;
-            border-radius: 10px;
-            font-weight: bold;
-        }
-
         .avatar {
             width: 38px;
             height: 38px;
@@ -209,29 +185,16 @@
             justify-content: space-between;
             align-items: center;
             box-shadow: var(--shadow-md);
-            position: relative;
-            overflow: hidden;
         }
 
         .welcome-text h1 { font-size: 1.8rem; margin-bottom: 8px; font-weight: 700; }
         .welcome-text p { opacity: 0.9; font-size: 1rem; }
 
-        .banner-stats { display: flex; gap: 24px; }
-        .banner-stat-item {
-            background: rgba(255, 255, 255, 0.15);
-            padding: 12px 20px;
-            border-radius: var(--radius);
-            backdrop-filter: blur(4px);
-            text-align: center;
-        }
-        .banner-stat-item .num { font-size: 1.4rem; font-weight: 700; display: block; }
-        .banner-stat-item .lbl { font-size: 0.75rem; opacity: 0.8; text-transform: uppercase; }
-
-        /* TARJETAS */
+        /* TARJETAS DASHBOARD */
         .cards-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 24px;
+            gap: 20px;
         }
 
         .card {
@@ -246,19 +209,126 @@
             transition: transform 0.2s;
         }
         .card:hover { transform: translateY(-4px); }
-        .card-pink { background: var(--card-pink); }
-        .card-purple { background: var(--card-purple); }
         .card-blue { background: var(--card-blue); }
-        .card-teal { background: var(--card-teal); }
+        .card-purple { background: var(--card-purple); }
+        .card-green { background: var(--card-green); }
+        .card-pink { background: var(--card-pink); }
         .card-red { background: var(--card-red); }
-        .card-orange { background: var(--card-orange); }
 
-        .card-header { display: flex; justify-content: space-between; align-items: flex-start; }
+        .card-header { display: flex; justify-content: space-between; align-items: flex-start; width: 100%; }
         .card-title { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px; opacity: 0.9; font-weight: 600; }
         .card-icon-box { background: rgba(255, 255, 255, 0.2); padding: 8px; border-radius: 12px; display: flex; align-items: center; justify-content: center; }
         .card-value { font-size: 2.2rem; font-weight: 800; line-height: 1; }
 
-        /* SECCIONES COMPONENTES DE GESTIÓN */
+        /* DOS COLUMNAS DEL DASHBOARD */
+        .dashboard-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        @media (max-width: 900px) {
+            .dashboard-layout { grid-template-columns: 1fr; }
+        }
+
+        .quick-actions-box {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .btn-action-quick {
+            background-color: var(--white);
+            border: 1px solid #e2e8f0;
+            padding: 16px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: left;
+            color: var(--text-dark);
+        }
+
+        .btn-action-quick:hover {
+            background-color: #f8fafc;
+            transform: translateX(4px);
+            border-color: #7c3aed;
+        }
+
+        .btn-action-quick i {
+            background-color: #f1f5f9;
+            padding: 8px;
+            border-radius: 8px;
+            color: #7c3aed;
+        }
+
+        /* ACTIVIDAD RECIENTE */
+        .activity-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .activity-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 0;
+            border-bottom: 1px solid #f1f5f9;
+        }
+        .activity-item:last-child { border-bottom: none; }
+
+        .activity-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: #7c3aed;
+        }
+
+        .activity-details p { font-size: 0.95rem; font-weight: 600; }
+        .activity-details span { font-size: 0.8rem; color: var(--text-muted); }
+
+        /* VISTA DE REPORTES SIMULADOS */
+        .report-stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 24px;
+        }
+        @media (max-width: 850px) { .report-stats-grid { grid-template-columns: 1fr; } }
+
+        .progress-container { display: flex; flex-direction: column; gap: 14px; margin-top: 10px; }
+        .progress-bar-label { display: flex; justify-content: space-between; font-size: 0.9rem; font-weight: 600; }
+        .progress-bar-bg { width: 100%; height: 10px; background-color: #e2e8f0; border-radius: 5px; overflow: hidden; }
+        .progress-bar-fill { height: 100%; background: linear-gradient(90deg, #7c3aed, #4f46e5); border-radius: 5px; }
+
+        /* PROMOCIONES */
+        .promo-card {
+            padding: 24px;
+            border-radius: var(--radius);
+            color: var(--white);
+            box-shadow: var(--shadow-md);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 160px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .promo-top-actions { display: flex; justify-content: space-between; align-items: center; width: 100%; }
+        .promo-code-tag { font-size: 0.8rem; font-weight: 700; background-color: rgba(255, 255, 255, 0.2); padding: 4px 10px; border-radius: 6px; }
+        .promo-right-btns { display: flex; gap: 4px; }
+        .promo-delete-btn, .promo-edit-btn { background: none; border: none; color: white; cursor: pointer; padding: 4px; border-radius: 8px; display: flex; }
+        .promo-delete-btn:hover { background-color: rgba(239, 68, 68, 0.8); }
+        .promo-edit-btn:hover { background-color: rgba(234, 179, 8, 0.8); }
+        .promo-body h3 { font-size: 1.4rem; font-weight: 800; margin-bottom: 4px; }
+        .promo-body p { font-size: 0.85rem; opacity: 0.9; }
+
+        /* COMPONENTES DE GESTIÓN */
         .section-box {
             background-color: var(--white);
             padding: 28px;
@@ -272,14 +342,7 @@
         }
 
         .section-box h2 { font-size: 1.4rem; color: var(--text-dark); font-weight: 700; }
-
-        .toolbar {
-            display: flex;
-            gap: 12px;
-            flex-wrap: wrap;
-            align-items: center;
-            width: 100%;
-        }
+        .toolbar { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; width: 100%; }
 
         .filter-input, .filter-select {
             padding: 10px 16px;
@@ -311,17 +374,14 @@
         .custom-table td { padding: 14px 16px; border-bottom: 1px solid #e2e8f0; }
         .custom-table tr:hover td { background-color: #f8fafc; }
 
-        .table-img { width: 48px; height: 48px; object-fit: cover; border-radius: 8px; }
-        
         /* BADGES ESTADO */
         .status-badge { padding: 6px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; display: inline-block; }
-        .status-badge.disponible, .status-badge.entregado, .status-badge.vip { background-color: #dcfce7; color: #166534; }
-        .status-badge.agotado, .status-badge.cancelado { background-color: #ffe4e6; color: #9f1239; }
+        .status-badge.disponible, .status-badge.entregado, .status-badge.vip, .status-badge.activo { background-color: #dcfce7; color: #166534; }
+        .status-badge.agotado, .status-badge.cancelado, .status-badge.inactivo { background-color: #ffe4e6; color: #9f1239; }
         .status-badge.pendiente { background-color: #fef3c7; color: #d97706; }
         .status-badge.proceso, .status-badge.frecuente { background-color: #e0f2fe; color: #0369a1; }
         .status-badge.regular { background-color: #f1f5f9; color: #475569; }
 
-        /* SELECT ESTADO EN PEDIDOS */
         .status-select {
             padding: 4px 8px;
             border-radius: 8px;
@@ -330,30 +390,14 @@
             border: 1px solid #cbd5e1;
             outline: none;
             cursor: pointer;
-            background-color: #ffffff;
         }
 
-        .action-icons { display: flex; gap: 8px; }
-        .btn-icon { background: none; border: none; cursor: pointer; padding: 6px; border-radius: 8px; color: var(--text-muted); }
+        .action-icons { display: flex; gap: 4px; }
+        .btn-icon { background: none; border: none; cursor: pointer; padding: 6px; border-radius: 8px; color: var(--text-muted); display: inline-flex; align-items: center; justify-content: center; }
         .btn-icon:hover { background-color: #f1f5f9; }
         .btn-icon.delete:hover { color: #ef4444; }
         .btn-icon.edit:hover { color: #eab308; }
-
-        /* PANALES DIVIDIDOS */
-        .dashboard-footer { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
-        .panel-box { background-color: var(--white); padding: 28px; border-radius: var(--radius); box-shadow: var(--shadow-sm); border: 1px solid #e2e8f0; }
-        .panel-box h2 { font-size: 1.2rem; margin-bottom: 24px; font-weight: 700; }
-        .actions-list { display: flex; flex-direction: column; gap: 14px; }
-        .action-btn { display: flex; align-items: center; justify-content: space-between; width: 100%; padding: 16px 20px; background-color: #f8fafc; border: 1px solid #e2e8f0; border-radius: var(--radius); cursor: pointer; font-weight: 600; transition: transform 0.2s; }
-        .action-btn:hover { transform: translateX(4px); background-color: #f1f5f9; }
-        .action-content { display: flex; align-items: center; gap: 14px; }
-        .action-btn .icon { color: #7c3aed; display: flex; align-items: center; }
-        
-        .activity-list { display: flex; flex-direction: column; gap: 20px; }
-        .activity-item { display: flex; align-items: center; gap: 16px; }
-        .activity-icon-wrapper { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
-        .activity-details p { font-size: 0.95rem; font-weight: 600; }
-        .activity-details span { font-size: 0.8rem; color: var(--text-muted); }
+        .btn-icon.view:hover { color: #3b82f6; }
 
         /* MODALES */
         .modal-overlay {
@@ -374,55 +418,27 @@
         .modal-header { background: var(--gradient-banner); color: var(--white); padding: 20px 24px; display: flex; justify-content: space-between; align-items: center; }
         .modal-header h3 { font-size: 1.2rem; font-weight: 700; }
         .modal-close { cursor: pointer; }
-        .modal-body { padding: 24px; display: flex; flex-direction: column; gap: 16px; }
+        .modal-body { padding: 24px; display: flex; flex-direction: column; gap: 16px; max-height: 70vh; overflow-y: auto; }
         
         .form-group { display: flex; flex-direction: column; gap: 6px; }
         .form-group label { font-size: 0.85rem; font-weight: 700; }
         .form-control { padding: 10px 14px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 0.95rem; outline: none; }
         .modal-footer { padding: 16px 24px; border-top: 1px solid #e2e8f0; display: flex; justify-content: flex-end; gap: 12px; background-color: #f8fafc; }
         
-        .btn-secondary { background-color: #e2e8f0; color: var(--text-dark); border: none; padding: 10px 20px; border-radius: 10px; font-weight: 600; cursor: pointer; }
-        .btn-danger { background-color: #ef4444; color: white; border: none; padding: 10px 20px; border-radius: 10px; font-weight: 600; cursor: pointer; }
-
-        .modal-confirm-body { padding: 32px 24px; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 16px; }
-        .warning-icon { font-size: 4rem; color: #ef4444; }
-        .modal-confirm-body h4 { font-size: 1.3rem; font-weight: 700; color: var(--text-dark); }
-        .modal-confirm-body p { color: var(--text-muted); font-size: 0.95rem; }
-
-        /* --- CONTENEDOR DE NOTIFICACIONES TOAST --- */
-        .toast-container {
-            position: fixed;
-            bottom: 24px;
-            right: 24px;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            z-index: 9999;
-        }
-        .toast {
-            background-color: #1e293b;
-            color: #ffffff;
-            padding: 16px 20px;
-            border-radius: 12px;
-            box-shadow: 0 10px 25px -5px rgb(0 0 0 / 0.3);
+        .img-preview-box {
+            width: 100%;
+            height: 120px;
+            border: 2px dashed #cbd5e1;
+            border-radius: 8px;
             display: flex;
             align-items: center;
-            gap: 12px;
-            font-size: 0.95rem;
-            font-weight: 600;
-            min-width: 280px;
-            transform: translateY(40px);
-            opacity: 0;
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            justify-content: center;
+            background-color: #f8fafc;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            overflow: hidden;
         }
-        .toast.show {
-            transform: translateY(0);
-            opacity: 1;
-        }
-        .toast.success { border-left: 5px solid #10b981; }
-        .toast.success .toast-icon { color: #10b981; }
-        .toast.error { border-left: 5px solid #ef4444; }
-        .toast.error .toast-icon { color: #ef4444; }
+        .img-preview-box img { width: 100%; height: 100%; object-fit: cover; }
     </style>
 </head>
 <body>
@@ -435,25 +451,25 @@
         <nav>
             <div class="menu-section-title">Navegación</div>
             <ul class="menu-list">
-                <li class="menu-item active" data-target="vista-dashboard">
+                <li class="menu-item active" id="menu-dash" data-target="vista-dashboard">
                     <a><i class="material-icons-round">dashboard</i>Dashboard</a>
                 </li>
-                <li class="menu-item" data-target="vista-productos">
+                <li class="menu-item" id="menu-prod" data-target="vista-productos">
                     <a><i class="material-icons-round">restaurant_menu</i>Productos</a>
                 </li>
-                <li class="menu-item" data-target="vista-pedidos">
+                <li class="menu-item" id="menu-ped" data-target="vista-pedidos">
                     <a><i class="material-icons-round">shopping_bag</i>Pedidos</a>
                 </li>
             </ul>
             <div class="menu-section-title">Gestión</div>
             <ul class="menu-list">
-                <li class="menu-item" data-target="vista-promociones">
+                <li class="menu-item" id="menu-prom" data-target="vista-promociones">
                     <a><i class="material-icons-round">local_offer</i>Promociones</a>
                 </li>
-                <li class="menu-item" data-target="vista-clientes">
+                <li class="menu-item" id="menu-clie" data-target="vista-clientes">
                     <a><i class="material-icons-round">people</i>Clientes</a>
                 </li>
-                <li class="menu-item" data-target="vista-reportes">
+                <li class="menu-item" id="menu-repo" data-target="vista-reportes">
                     <a><i class="material-icons-round">bar_chart</i>Reportes</a>
                 </li>
             </ul>
@@ -464,95 +480,122 @@
         <header class="navbar">
             <div class="search-bar">
                 <i class="material-icons-round" style="color: var(--text-muted);">search</i>
-                <input type="text" placeholder="Buscar registros...">
+                <input type="text" id="globalSearchInput" placeholder="Buscar registros..." oninput="handleGlobalSearch()">
             </div>
             <div class="nav-profile">
-                <div class="nav-icon-btn">
-                    <i class="material-icons-round">notifications</i>
-                    <span class="badge">3</span>
-                </div>
                 <div class="avatar">A</div> 
             </div>
         </header>
 
         <main class="main-content">
             
+            <!-- VISTA PRINCIPAL: DASHBOARD -->
             <div id="vista-dashboard" class="view-section active">
                 <section class="welcome-banner">
                     <div class="welcome-text">
                         <h1>¡Hola de nuevo, Administrador! 👋</h1>
-                        <p>El rendimiento de la cocina va sobre ruedas hoy, revisa los pedidos activos.</p>
-                    </div>
-                    <div class="banner-stats">
-                        <div class="banner-stat-item"><span class="num">12h</span><span class="lbl">Apertura</span></div>
-                        <div class="banner-stat-item"><span class="num">Activo</span><span class="lbl">Estado</span></div>
+                        <p>El rendimiento de la cocina va sobre ruedas hoy, revisa los indicadores principales.</p>
                     </div>
                 </section>
+                
+                <!-- Resumen Visual (Tarjetas) -->
+                <div class="cards-grid">
+                    <div class="card card-blue">
+                        <div class="card-header"><span class="card-title">Productos Publicados</span><div class="card-icon-box"><i class="material-icons-round">restaurant_menu</i></div></div>
+                        <div class="card-value">12</div>
+                    </div>
+                    <div class="card card-purple">
+                        <div class="card-header"><span class="card-title">Pedidos del Día</span><div class="card-icon-box"><i class="material-icons-round">soup_kitchen</i></div></div>
+                        <div class="card-value">5</div>
+                    </div>
+                    <div class="card card-green">
+                        <div class="card-header"><span class="card-title">Ventas del Mes</span><div class="card-icon-box"><i class="material-icons-round">payments</i></div></div>
+                        <div class="card-value">$12,500</div>
+                    </div>
+                    <div class="card card-pink">
+                        <div class="card-header"><span class="card-title">Clientes Registrados</span><div class="card-icon-box"><i class="material-icons-round">stars</i></div></div>
+                        <div class="card-value">38</div>
+                    </div>
+                    <div class="card card-red">
+                        <div class="card-header"><span class="card-title">Productos Agotados</span><div class="card-icon-box"><i class="material-icons-round">block</i></div></div>
+                        <div class="card-value">2</div>
+                    </div>
+                </div>
 
-                <section class="cards-grid">
-                    <div class="card card-pink"><div class="card-header"><span class="card-title">Productos Publicados</span><i class="material-icons-round card-icon-box">restaurant_menu</i></div><div class="card-value" id="dash-prod-count">12</div></div>
-                    <div class="card card-purple"><div class="card-header"><span class="card-title">Pedidos del Día</span><i class="material-icons-round card-icon-box">delivery_dining</i></div><div class="card-value" id="dash-pedidos-count">5</div></div>
-                    <div class="card card-blue"><div class="card-header"><span class="card-title">Ventas del Mes</span><i class="material-icons-round card-icon-box">payments</i></div><div class="card-value">$12,500</div></div>
-                    <div class="card card-teal"><div class="card-header"><span class="card-title">Clientes Registrados</span><i class="material-icons-round card-icon-box">people</i></div><div class="card-value" id="dash-clientes-count">38</div></div>
-                    <div class="card card-red"><div class="card-header"><span class="card-title">Productos Agotados</span><i class="material-icons-round card-icon-box">block</i></div><div class="card-value">2</div></div>
-                </section>
-
-                <div class="dashboard-footer">
-                    <section class="panel-box">
-                        <h2>Acciones Rápidas</h2>
-                        <div class="actions-list">
-                            <button class="action-btn" onclick="navegarA('vista-productos'); openModal('add');">
-                                <div class="action-content"><i class="material-icons-round icon">add_circle</i><span>Agregar producto</span></div>
-                                <i class="material-icons-round" style="color: var(--text-muted);">chevron_right</i>
+                <div class="dashboard-layout">
+                    <!-- Acciones Rápidas -->
+                    <div class="section-box">
+                        <h2>Acciones rápidas</h2>
+                        <div class="quick-actions-box">
+                            <button class="btn-action-quick" onclick="quickActionTrigger('add-product')">
+                                <i class="material-icons-round">add_circle</i>
+                                <span>Agregar nuevo producto al menú</span>
                             </button>
-                            <button class="action-btn" onclick="navegarA('vista-pedidos')">
-                                <div class="action-content"><i class="material-icons-round icon">visibility</i><span>Ver pedidos</span></div>
-                                <i class="material-icons-round" style="color: var(--text-muted);">chevron_right</i>
+                            <button class="btn-action-quick" onclick="quickActionTrigger('view-orders')">
+                                <i class="material-icons-round">visibility</i>
+                                <span>Ver y gestionar comandas/pedidos</span>
                             </button>
-                            <button class="action-btn" onclick="navegarA('vista-promociones'); openPromoModal();">
-                                <div class="action-content"><i class="material-icons-round icon">local_offer</i><span>Crear promoción</span></div>
-                                <i class="material-icons-round" style="color: var(--text-muted);">chevron_right</i>
+                            <button class="btn-action-quick" onclick="quickActionTrigger('add-promo')">
+                                <i class="material-icons-round">local_offer</i>
+                                <span>Crear nueva campaña o promoción</span>
                             </button>
                         </div>
-                    </section>
-                    <section class="panel-box">
-                        <h2>Actividad Reciente</h2>
-                        <div class="activity-list">
-                            <div class="activity-item">
-                                <div class="activity-icon-wrapper" style="background-color: #e0f2fe; color: #0369a1;"><i class="material-icons-round">shopping_basket</i></div>
-                                <div class="activity-details"><p>"Pedido #125 recibido"</p><span>Hace unos instantes</span></div>
-                            </div>
-                            <div class="activity-item">
-                                <div class="activity-icon-wrapper" style="background-color: #dcfce7; color: #15803d;"><i class="material-icons-round">person_add</i></div>
-                                <div class="activity-details"><p>"Nuevo cliente registrado"</p><span>Hace 5 min</span></div>
-                            </div>
-                            <div class="activity-item">
-                                <div class="activity-icon-wrapper" style="background-color: #fef3c7; color: #b45309;"><i class="material-icons-round">edit</i></div>
-                                <div class="activity-details"><p>"Producto actualizado"</p><span>Hace 12 min</span></div>
-                            </div>
-                        </div>
-                    </section>
+                    </div>
+
+                    <!-- Actividad Reciente -->
+                    <div class="section-box">
+                        <h2>Actividad reciente</h2>
+                        <ul class="activity-list">
+                            <li class="activity-item">
+                                <div class="activity-dot"></div>
+                                <div class="activity-details">
+                                    <p>"Pedido #125 recibido"</p>
+                                    <span>Hace unos momentos</span>
+                                </div>
+                            </li>
+                            <li class="activity-item">
+                                <div class="activity-dot" style="background-color: #10b981;"></div>
+                                <div class="activity-details">
+                                    <p>"Nuevo cliente registrado"</p>
+                                    <span>Hace 15 minutos</span>
+                                </div>
+                            </li>
+                            <li class="activity-item">
+                                <div class="activity-dot" style="background-color: #f59e0b;"></div>
+                                <div class="activity-details">
+                                    <p>"Producto actualizado"</p>
+                                    <span>Hace 1 hora</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
 
+            <!-- VISTA PRODUCTOS (SIN VALIDACIONES) -->
             <div id="vista-productos" class="view-section">
                 <section class="section-box">
                     <div style="display: flex; justify-content: space-between; align-items: center;">
                         <h2>Gestión del Menú</h2>
-                        <button class="btn-primary" onclick="openModal('add')"><span class="material-icons-round">add</span> Nuevo Item</button>
+                        <button class="btn-primary" onclick="openProductModal()"><span class="material-icons-round">add</span> Agregar producto</button>
                     </div>
                     <div class="toolbar">
-                        <input type="text" id="searchProduct" class="filter-input" placeholder="Buscar platillo..." oninput="filterProducts()">
+                        <input type="text" id="searchProduct" class="filter-input" placeholder="Buscar producto..." oninput="filterProducts()">
                         <select id="filterCategory" class="filter-select" onchange="filterProducts()">
-                            <option value="">Categorías</option>
+                            <option value="">Todas las Categorías</option>
                             <option value="Platillos">Platillos</option>
                             <option value="Bebidas">Bebidas</option>
+                        </select>
+                        <select id="filterStatus" class="filter-select" onchange="filterProducts()">
+                            <option value="">Todos los Estados</option>
+                            <option value="Disponible">Disponible</option>
+                            <option value="Agotado">Agotado</option>
                         </select>
                     </div>
                     <div class="table-container">
                         <table class="custom-table">
                             <thead>
-                                <tr><th>Imagen</th><th>Nombre</th><th>Categoría</th><th>Precio</th><th>Stock</th><th>Estado</th><th>Acciones</th></tr>
+                                <tr><th>Imagen</th><th>Nombre</th><th>Categoría</th><th>Precio</th><th>Existencia</th><th>Estado</th><th>Acciones</th></tr>
                             </thead>
                             <tbody id="productsTableBody"></tbody>
                         </table>
@@ -560,11 +603,12 @@
                 </section>
             </div>
 
+            <!-- VISTA PEDIDOS -->
             <div id="vista-pedidos" class="view-section">
                 <section class="section-box">
                     <h2>Comandas y Pedidos en Tiempo Real</h2>
                     <div class="table-container">
-                        <table class="custom-table">
+                        <table class="custom-table" id="tablePedidos">
                             <thead>
                                 <tr><th>ID Pedido</th><th>Mesa / Cliente</th><th>Detalle de Orden</th><th>Total</th><th>Estado / Actualizar</th></tr>
                             </thead>
@@ -574,6 +618,7 @@
                 </section>
             </div>
 
+            <!-- VISTA PROMOCIONES -->
             <div id="vista-promociones" class="view-section">
                 <section class="section-box">
                     <div style="display: flex; justify-content: space-between; align-items: center;">
@@ -584,6 +629,7 @@
                 </section>
             </div>
 
+            <!-- VISTA CLIENTES -->
             <div id="vista-clientes" class="view-section">
                 <section class="section-box">
                     <div style="display: flex; justify-content: space-between; align-items: center;">
@@ -591,9 +637,9 @@
                         <button class="btn-primary" onclick="openClienteModal()"><span class="material-icons-round">person_add</span> Registrar Cliente</button>
                     </div>
                     <div class="table-container">
-                        <table class="custom-table">
+                        <table class="custom-table" id="tableClientes">
                             <thead>
-                                <tr><th>Cliente</th><th>Email / Contacto</th><th>Visitas al Mes</th><th>Puntos Acumulados</th><th>Estado</th></tr>
+                                <tr><th>Cliente</th><th>Email / Contacto</th><th>Visitas al Mes</th><th>Puntos Acumulados</th><th>Estado</th><th>Acciones</th></tr>
                             </thead>
                             <tbody id="clientesTableBody"></tbody>
                         </table>
@@ -601,13 +647,48 @@
                 </section>
             </div>
 
+            <!-- VISTA REPORTES (COMPLETO SIMULADO) -->
             <div id="vista-reportes" class="view-section">
                 <section class="section-box">
-                    <h2>Métricas Financieras Básicas</h2>
-                    <div class="cards-grid">
-                        <div class="card card-purple"><div class="card-header"><span class="card-title">Ganancia Neta Mes</span><i class="material-icons-round card-icon-box">trending_up</i></div><div class="card-value">$42,300</div></div>
-                        <div class="card card-blue"><div class="card-header"><span class="card-title">Ticket Promedio</span><i class="material-icons-round card-icon-box">receipt_long</i></div><div class="card-value">$185.50</div></div>
-                        <div class="card card-pink"><div class="card-header"><span class="card-title">Platillo Estrella</span><i class="material-icons-round card-icon-box">star</i></div><div class="card-value" style="font-size:1.4rem; font-weight:800; padding-top:10px;">Tacos al Pastor</div></div>
+                    <h2>Módulo Analítico e Informes de Rendimiento</h2>
+                    <p style="color: var(--text-muted); margin-bottom: 10px;">Estadísticas generales simuladas de ventas, inventario y satisfacción en el actual periodo mensual.</p>
+                    
+                    <div class="report-stats-grid">
+                        <!-- Columna de Métricas de Ventas -->
+                        <div class="section-box" style="padding: 20px; gap: 16px; background-color: #f8fafc;">
+                            <h3 style="font-size: 1.1rem; font-weight:700;">Top Categorías</h3>
+                            <div class="progress-container">
+                                <div>
+                                    <div class="progress-bar-label"><span>Tacos y Platillos</span><span>65%</span></div>
+                                    <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: 65%;"></div></div>
+                                </div>
+                                <div>
+                                    <div class="progress-bar-label"><span>Bebidas y Coctelería</span><span>25%</span></div>
+                                    <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: 25%; background: #a855f7;"></div></div>
+                                </div>
+                                <div>
+                                    <div class="progress-bar-label"><span>Postres tradicionales</span><span>10%</span></div>
+                                    <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: 10%; background: #ec4899;"></div></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Tabla de productos más vendidos -->
+                        <div class="section-box" style="padding: 20px; gap:12px;">
+                            <h3 style="font-size: 1.1rem; font-weight:700;">Productos con Mayor Demanda</h3>
+                            <div class="table-container">
+                                <table class="custom-table" style="font-size: 0.85rem;">
+                                    <thead>
+                                        <tr><th>Producto</th><th>Ventas totales</th><th>Ganancias</th></tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr><td><b>Tacos al Pastor</b></td><td>245 órdenes</td><td>$18,375.00</td></tr>
+                                        <tr><td><b>Enchiladas Verdes</b></td><td>189 órdenes</td><td>$22,680.00</td></tr>
+                                        <tr><td><b>Margaritas Clásicas</b></td><td>120 piezas</td><td>$10,800.00</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
                 </section>
             </div>
@@ -615,37 +696,48 @@
         </main>
     </div>
 
-    <div class="toast-container" id="toastContainer"></div>
-
+    <!-- MODAL PRODUCTOS CORREGIDO (SIN VALIDACIONES REQUIRED) -->
     <div class="modal-overlay" id="productModal">
         <div class="modal-card">
-            <div class="modal-header"><h3 id="modalTitle">Nuevo Producto</h3><span class="material-icons-round modal-close" onclick="closeModal()">close</span></div>
+            <div class="modal-header"><h3 id="modalTitle">Nuevo Producto</h3><span class="material-icons-round modal-close" onclick="closeProductModal()">close</span></div>
             <form id="productForm" onsubmit="saveProduct(event)">
                 <input type="hidden" id="productId">
                 <div class="modal-body">
-                    <div class="form-group"><label>Nombre del producto</label><input type="text" id="pName" class="form-control" required></div>
-                    <div class="form-group"><label>Categoría</label><select id="pCategory" class="form-control" required><option value="Platillos">Platillos</option><option value="Bebidas">Bebidas</option></select></div>
-                    <div class="form-group"><label>Precio ($)</label><input type="number" id="pPrice" class="form-control" step="0.01" required></div>
-                    <div class="form-group"><label>Existencia</label><input type="number" id="pStock" class="form-control" required></div>
-                    <div class="form-group"><label>Estado</label><select id="pStatus" class="form-control"><option value="Disponible">Disponible</option><option value="Agotado">Agotado</option></select></div>
+                    <div class="form-group"><label>Nombre del producto</label><input type="text" id="pName" class="form-control"></div>
+                    <div class="form-group"><label>Categoría</label><select id="pCategory" class="form-control"><option value="Platillos">Platillos</option><option value="Bebidas">Bebidas</option></select></div>
+                    <div class="form-group"><label>Precio ($)</label><input type="number" id="pPrice" class="form-control"></div>
+                    <div class="form-group"><label>Descripción</label><textarea id="pDesc" class="form-control" rows="2" placeholder="Detalles opcionales de preparación..."></textarea></div>
+                    <div class="form-group">
+                        <label>Imagen (Vista previa simulada)</label>
+                        <select id="pImgSelect" class="form-control" onchange="updateImgPreview(this.value)">
+                            <option value="dinner_dining">Icono: Platillo Caliente</option>
+                            <option value="local_bar">Icono: Bebida / Cóctel</option>
+                            <option value="bakery_dining">Icono: Postre / Pan</option>
+                        </select>
+                        <div class="img-preview-box" id="pImgPreview" style="margin-top: 8px;"><i class="material-icons-round" style="font-size:3rem">dinner_dining</i></div>
+                    </div>
+                    <div class="form-group"><label>Existencia (Simulada)</label><input type="number" id="pStock" class="form-control" value="10"></div>
+                    <div class="form-group"><label>Estado</label><select id="pStatus" class="form-control"><option value="Disponible">Activo / Disponible</option><option value="Agotado">Inactivo / Agotado</option></select></div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn-secondary" onclick="closeModal()">Cancelar</button>
+                    <button type="button" class="btn-secondary" onclick="closeProductModal()">Cancelar</button>
                     <button type="submit" class="btn-primary">Guardar</button>
                 </div>
             </form>
         </div>
     </div>
 
+    <!-- MODAL PROMOCIONES -->
     <div class="modal-overlay" id="promoModal">
         <div class="modal-card">
-            <div class="modal-header"><h3>Nueva Promoción</h3><span class="material-icons-round modal-close" onclick="closePromoModal()">close</span></div>
+            <div class="modal-header"><h3 id="promoModalTitle">Nueva Promoción</h3><span class="material-icons-round modal-close" onclick="closePromoModal()">close</span></div>
             <form id="promoForm" onsubmit="savePromo(event)">
+                <input type="hidden" id="promoId">
                 <div class="modal-body">
-                    <div class="form-group"><label>Código de Cupón</label><input type="text" id="promoCode" class="form-control" placeholder="Ej: PROMO50" required></div>
-                    <div class="form-group"><label>Título Descuento</label><input type="text" id="promoTitle" class="form-control" placeholder="Ej: 20% DE DESCUENTO" required></div>
-                    <div class="form-group"><label>Descripción / Condiciones</label><input type="text" id="promoDesc" class="form-control" placeholder="Ej: En consumos mayores a $300" required></div>
-                    <div class="form-group"><label>Color de Tarjeta</label><select id="promoColor" class="form-control"><option value="orange">Naranja</option><option value="teal">Verde Esmeralda</option><option value="blue">Azul Marino</option><option value="pink">Rosa Mexicano</option></select></div>
+                    <div class="form-group"><label>Código de Cupón</label><input type="text" id="promoCode" class="form-control"></div>
+                    <div class="form-group"><label>Título Descuento</label><input type="text" id="promoTitle" class="form-control"></div>
+                    <div class="form-group"><label>Descripción</label><input type="text" id="promoDesc" class="form-control"></div>
+                    <div class="form-group"><label>Color</label><select id="promoColor" class="form-control"><option value="orange">Naranja</option><option value="pink">Rosa</option><option value="blue">Azul</option></select></div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn-secondary" onclick="closePromoModal()">Cancelar</button>
@@ -655,305 +747,381 @@
         </div>
     </div>
 
+    <!-- MODAL CLIENTES -->
     <div class="modal-overlay" id="clienteModal">
         <div class="modal-card">
-            <div class="modal-header"><h3>Registrar Nuevo Comensal</h3><span class="material-icons-round modal-close" onclick="closeClienteModal()">close</span></div>
+            <div class="modal-header"><h3 id="clienteModalTitle">Registrar Cliente</h3><span class="material-icons-round modal-close" onclick="closeClienteModal()">close</span></div>
             <form id="clienteForm" onsubmit="saveCliente(event)">
+                <input type="hidden" id="clienteId">
                 <div class="modal-body">
-                    <div class="form-group"><label>Nombre Completo</label><input type="text" id="cName" class="form-control" required></div>
-                    <div class="form-group"><label>Correo Electrónico</label><input type="email" id="cEmail" class="form-control" required></div>
-                    <div class="form-group"><label>Visitas Iniciales</label><input type="number" id="cVisitas" class="form-control" value="1" required></div>
-                    <div class="form-group"><label>Puntos de Bienvenida</label><input type="number" id="cPuntos" class="form-control" value="10" required></div>
-                    <div class="form-group"><label>Nivel de Miembro</label><select id="cStatus" class="form-control"><option value="Regular">Regular</option><option value="Frecuente">Frecuente</option><option value="VIP">VIP</option></select></div>
+                    <div class="form-group"><label>Nombre del Comensal</label><input type="text" id="cName" class="form-control"></div>
+                    <div class="form-group"><label>Email</label><input type="text" id="cEmail" class="form-control"></div>
+                    <div class="form-group"><label>Visitas al Mes</label><input type="number" id="cVisits" class="form-control" value="1"></div>
+                    <div class="form-group"><label>Puntos</label><input type="number" id="cPoints" class="form-control" value="10"></div>
+                    <div class="form-group"><label>Estado</label><select id="cStatus" class="form-control"><option value="regular">Regular</option><option value="frecuente">Frecuente</option><option value="vip">VIP</option></select></div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn-secondary" onclick="closeClienteModal()">Cancelar</button>
-                    <button type="submit" class="btn-primary">Registrar</button>
+                    <button type="submit" class="btn-primary">Guardar</button>
                 </div>
             </form>
         </div>
     </div>
 
-    <div class="modal-overlay" id="deleteConfirmModal">
-        <div class="modal-card" style="max-width: 400px;">
-            <div class="modal-confirm-body">
-                <span class="material-icons-round warning-icon">delete_forever</span>
-                <h4>¿Eliminar del menú?</h4>
-                <p>Esta acción removerá el platillo de la lista de la cocina de manera permanente.</p>
-            </div>
-            <div class="modal-footer" style="background-color: #fff1f2;">
-                <button type="button" class="btn-secondary" onclick="closeDeleteModal()">Cancelar</button>
-                <button type="button" class="btn-danger" id="confirmDeleteBtn">Eliminar definitivamente</button>
-            </div>
-        </div>
-    </div>
-
     <script>
-        // Data Store
-        let products = [
-            { id: 1, name: 'Tacos al Pastor (Orden)', category: 'Platillos', price: 95.00, stock: 12, status: 'Disponible', img: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=150' },
-            { id: 2, name: 'Enchiladas Verdes', category: 'Platillos', price: 120.00, stock: 5, status: 'Disponible', img: 'https://images.unsplash.com/photo-1551024601-bec78aea704b?w=150' },
-            { id: 3, name: 'Pozole Rojo Grande', category: 'Platillos', price: 110.00, stock: 0, status: 'Agotado', img: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=150' },
-            { id: 4, name: 'Agua de Horchata Litro', category: 'Bebidas', price: 40.00, stock: 25, status: 'Disponible', img: 'https://images.unsplash.com/photo-1551024601-bec78aea704b?w=150' }
+        // --- BASE DE DATOS LOCAL SIMULADA ---
+        let baseProducts = [
+            { id: 1, name: 'Tacos al Pastor', category: 'Platillos', price: 75.00, stock: 150, status: 'Disponible', desc: 'Orden de 5 tacos con piña, cebolla y cilantro.', icon: 'dinner_dining' },
+            { id: 2, name: 'Margarita Clásica', category: 'Bebidas', price: 90.00, stock: 0, status: 'Agotado', desc: 'Tequila reposado, triple sec y jugo de limón fresco.', icon: 'local_bar' }
         ];
 
-        let pedidos = [
-            { id: 1024, cliente: 'Mesa 3 (Nelly)', detalle: '2x Tacos al Pastor, 1x Agua Horchata', total: 230.00, status: 'proceso' },
-            { id: 1023, cliente: 'Mesa 5', detalle: '1x Pozole Rojo Grande', total: 110.00, status: 'pendiente' },
-            { id: 1022, cliente: 'Para Llevar - Juan P.', detalle: '3x Enchiladas Verdes', total: 360.00, status: 'entregado' }
+        let basePedidos = [
+            { id: '#125', client: 'Mesa 4 / Juan P.', details: '3x Tacos al Pastor, 1x Margarita', total: '$315.00', status: 'proceso' },
+            { id: '#124', client: 'Para Llevar / Ana M.', details: '2x Enchiladas Verdes, 1x Horchata', total: '$210.00', status: 'pendiente' }
         ];
 
-        let promociones = [
-            { id: 1, code: 'VIVAMEXICO', title: '15% DESCUENTO', desc: 'En todo el menú de platillos', color: 'orange' },
-            { id: 2, code: 'JUEVES2X1', title: '2X1 EN BEBIDAS', desc: 'Aplica en aguas frescas de litro', color: 'teal' }
+        let basePromos = [
+            { id: '1', code: 'MEX10', title: '10% EN ANTOJITOS', desc: 'Lunes a Miércoles en sucursal', color: 'orange' },
+            { id: '2', code: 'TACOFREE', title: 'JUEVES EN COMPRA', desc: 'Compra 4 tacos y el 5to es gratis', color: 'pink' }
         ];
 
-        let clientes = [
-            { nombre: 'Nelly ICT', email: 'nelly.tics@tecnm.mx', visitas: 8, puntos: 160, status: 'vip' },
-            { nombre: 'Carlos Mendoza', email: 'carlos.m@gmail.com', visitas: 3, puntos: 45, status: 'frecuente' },
-            { nombre: 'Ana Maria Flores', email: 'ana.flores@outlook.com', visitas: 1, puntos: 10, status: 'regular' }
+        let baseClientes = [
+            { id: '1', name: 'Nelly', email: 'nelly@tics.com', visits: 12, points: 240, status: 'vip' },
+            { id: '2', name: 'Carlos Mendoza', email: 'carlos@mail.com', visits: 4, points: 40, status: 'frecuente' }
         ];
 
-        let productToDeleteId = null;
-
-        // --- SISTEMA DE NOTIFICACIONES TOAST ---
-        function showToast(message, type = 'success') {
-            const container = document.getElementById('toastContainer');
-            const toast = document.createElement('div');
-            toast.className = `toast ${type}`;
+        // --- MANEJO DE NAVEGACIÓN ---
+        function switchView(targetId, menuItemId) {
+            document.querySelectorAll('.menu-item').forEach(i => i.classList.remove('active'));
+            document.getElementById(menuItemId).classList.add('active');
             
-            const icon = type === 'success' ? 'check_circle' : 'error';
-            
-            toast.innerHTML = `
-                <span class="material-icons-round toast-icon">${icon}</span>
-                <span>${message}</span>
-            `;
-            
-            container.appendChild(toast);
-            
-            // Forzar reflow para animación CSS
-            setTimeout(() => toast.classList.add('show'), 10);
-            
-            // Remover después de 3.5 segundos
-            setTimeout(() => {
-                toast.classList.remove('show');
-                setTimeout(() => toast.remove(), 300);
-            }, 3500);
+            document.querySelectorAll('.view-section').forEach(section => {
+                section.classList.remove('active');
+                if(section.id === targetId) section.classList.add('active');
+            });
+            document.getElementById('globalSearchInput').value = '';
+            handleGlobalSearch();
         }
 
-        // Cambios de Pestañas
-        const menuItems = document.querySelectorAll('.menu-item');
-        const sections = document.querySelectorAll('.view-section');
-
-        menuItems.forEach(item => {
-            item.addEventListener('click', () => {
-                document.querySelector('.menu-item.active').classList.remove('active');
-                item.classList.add('active');
-                const targetId = item.getAttribute('data-target');
-                sections.forEach(sec => sec.id === targetId ? sec.classList.add('active') : sec.classList.remove('active'));
+        document.querySelectorAll('.menu-item').forEach(item => {
+            item.addEventListener('click', function() {
+                switchView(this.dataset.target, this.id);
             });
         });
 
-        function navegarA(idSeccion) {
-            const itemMenu = document.querySelector(`[data-target="${idSeccion}"]`);
-            if(itemMenu) itemMenu.click();
+        // --- ACCIONES RÁPIDAS DEL DASHBOARD ---
+        function quickActionTrigger(action) {
+            if (action === 'add-product') {
+                switchView('vista-productos', 'menu-prod');
+                openProductModal();
+            } else if (action === 'view-orders') {
+                switchView('vista-pedidos', 'menu-ped');
+            } else if (action === 'add-promo') {
+                switchView('vista-promociones', 'menu-prom');
+                openPromoModal();
+            }
         }
 
-        // Renderizadores iniciales
-        document.addEventListener("DOMContentLoaded", () => {
-            renderAll();
-        });
+        // --- VISTA PREVIA DEL ICONO/IMAGEN ---
+        function updateImgPreview(val) {
+            document.getElementById('pImgPreview').innerHTML = `<i class="material-icons-round" style="font-size:3rem">${val}</i>`;
+        }
 
+        // --- COMPONENTE DE RENDER GENERAL ---
         function renderAll() {
-            renderProductsTable(products);
-            renderPedidosTable();
-            renderPromos();
-            renderClientesTable();
+            filterProducts();
+            
+            // Pedidos ("Pendiente")
+            const pedidosBody = document.getElementById('pedidosTableBody');
+            pedidosBody.innerHTML = basePedidos.map(p => `
+                <tr>
+                    <td><b>${p.id}</b></td>
+                    <td>${p.client}</td>
+                    <td>${p.details}</td>
+                    <td>${p.total}</td>
+                    <td>
+                        <select class="status-select" onchange="changeOrderStatus('${p.id}', this.value)">
+                            <option value="pendiente" ${p.status==='pendiente'?'selected':''}>Pendiente</option>
+                            <option value="proceso" ${p.status==='proceso'?'selected':''}>En Cocina</option>
+                            <option value="entregado" ${p.status==='entregado'?'selected':''}>Entregado</option>
+                            <option value="cancelado" ${p.status==='cancelado'?'selected':''}>Cancelado</option>
+                        </select>
+                    </td>
+                </tr>
+            `).join('');
+
+            // Promociones
+            const promosContainer = document.getElementById('promosGridContainer');
+            promosContainer.innerHTML = basePromos.map(p => `
+                <div class="promo-card card-${p.color}">
+                    <div class="promo-top-actions">
+                        <span class="promo-code-tag">${p.code}</span>
+                        <div class="promo-right-btns">
+                            <button class="promo-edit-btn" onclick="editPromo('${p.id}')"><span class="material-icons-round" style="font-size:1.1rem">edit</span></button>
+                            <button class="promo-delete-btn" onclick="deletePromo('${p.id}')"><span class="material-icons-round" style="font-size:1.1rem">delete</span></button>
+                        </div>
+                    </div>
+                    <div class="promo-body">
+                        <h3>${p.title}</h3>
+                        <p>${p.desc}</p>
+                    </div>
+                </div>
+            `).join('');
+
+            // Clientes
+            const clientesBody = document.getElementById('clientesTableBody');
+            clientesBody.innerHTML = baseClientes.map(c => `
+                <tr>
+                    <td><b>${c.name}</b></td>
+                    <td>${c.email}</td>
+                    <td>${c.visits} visitas</td>
+                    <td>${c.points} pts</td>
+                    <td><span class="status-badge ${c.status}">${c.status.toUpperCase()}</span></td>
+                    <td>
+                        <div class="action-icons">
+                            <button class="btn-icon edit" onclick="editCliente('${c.id}')"><i class="material-icons-round">edit</i></button>
+                            <button class="btn-icon delete" onclick="deleteCliente('${c.id}')"><i class="material-icons-round">delete</i></button>
+                        </div>
+                    </td>
+                </tr>
+            `).join('');
         }
 
-        // --- SECCIÓN PRODUCTOS ---
-        function renderProductsTable(data) {
-            const tbody = document.getElementById('productsTableBody');
-            tbody.innerHTML = '';
-            data.forEach(p => {
-                const badgeClass = p.status === 'Disponible' ? 'disponible' : 'agotado';
-                tbody.innerHTML += `
-                    <tr>
-                        <td><img src="${p.img}" class="table-img" alt="img"></td>
-                        <td><strong>${p.name}</strong></td><td>${p.category}</td>
-                        <td><strong>$${p.price.toFixed(2)}</strong></td><td>${p.stock} pz</td>
-                        <td><span class="status-badge ${badgeClass}">${p.status}</span></td>
-                        <td>
-                            <div class="action-icons">
-                                <button class="btn-icon edit" onclick="openModal('edit', ${p.id})"><span class="material-icons-round">edit</span></button>
-                                <button class="btn-icon delete" onclick="askDeleteProduct(${p.id})"><span class="material-icons-round">delete</span></button>
-                            </div>
-                        </td>
-                    </tr>`;
-            });
+        // --- BUSCADOR GLOBAL ---
+        function handleGlobalSearch() {
+            let filter = document.getElementById('globalSearchInput').value.toLowerCase();
+            let activeView = document.querySelector('.view-section.active').id;
+
+            if (activeView === 'vista-pedidos') {
+                document.querySelectorAll('#tablePedidos tbody tr').forEach(row => {
+                    row.style.display = row.innerText.toLowerCase().includes(filter) ? '' : 'none';
+                });
+            } else if (activeView === 'vista-promociones') {
+                document.querySelectorAll('#promosGridContainer .promo-card').forEach(card => {
+                    card.style.display = card.innerText.toLowerCase().includes(filter) ? '' : 'none';
+                });
+            } else if (activeView === 'vista-clientes') {
+                document.querySelectorAll('#tableClientes tbody tr').forEach(row => {
+                    row.style.display = row.innerText.toLowerCase().includes(filter) ? '' : 'none';
+                });
+            }
         }
 
+        // --- CRUDS Y FILTROS DEL MENÚ PRODUCTOS ---
         function filterProducts() {
-            const searchVal = document.getElementById('searchProduct').value.toLowerCase();
-            const catVal = document.getElementById('filterCategory').value;
-            const filtered = products.filter(p => p.name.toLowerCase().includes(searchVal) && (catVal === "" || p.category === catVal));
-            renderProductsTable(filtered);
+            let nameQuery = document.getElementById('searchProduct').value.toLowerCase();
+            let categoryQuery = document.getElementById('filterCategory').value;
+            let statusQuery = document.getElementById('filterStatus').value;
+            const body = document.getElementById('productsTableBody');
+
+            let filtered = baseProducts.filter(p => {
+                let matchesName = p.name.toLowerCase().includes(nameQuery);
+                let matchesCat = categoryQuery === "" || p.category === categoryQuery;
+                let matchesStatus = statusQuery === "" || p.status === statusQuery;
+                return matchesName && matchesCat && matchesStatus;
+            });
+
+            body.innerHTML = filtered.map(p => `
+                <tr>
+                    <td><div style="background:#e2e8f0; width:44px; height:44px; border-radius:8px; display:flex; align-items:center; justify-content:center; color:#4f46e5;"><i class="material-icons-round">${p.icon || 'dinner_dining'}</i></div></td>
+                    <td><b>${p.name || 'Sin nombre'}</b></td>
+                    <td>${p.category}</td>
+                    <td>$${p.price ? parseFloat(p.price).toFixed(2) : '0.00'}</td>
+                    <td>${p.stock || 0} pz</td>
+                    <td><span class="status-badge ${p.status === 'Disponible' ? 'disponible' : 'agotado'}">${p.status === 'Disponible' ? 'Activo' : 'Inactivo'}</span></td>
+                    <td>
+                        <div class="action-icons">
+                            <button class="btn-icon view" title="Ver Detalle" onclick="viewProductDetail(${p.id})"><i class="material-icons-round">visibility</i></button>
+                            <button class="btn-icon edit" title="Editar" onclick="editProduct(${p.id})"><i class="material-icons-round">edit</i></button>
+                            <button class="btn-icon delete" title="Eliminar" onclick="deleteProduct(${p.id})"><i class="material-icons-round">delete</i></button>
+                        </div>
+                    </td>
+                </tr>
+            `).join('');
         }
 
-        function openModal(mode, id = null) {
+        function openProductModal() {
             document.getElementById('productForm').reset();
             document.getElementById('productId').value = '';
-            document.getElementById('modalTitle').innerText = mode === 'edit' ? 'Editar Producto' : 'Nuevo Producto';
-            if(mode === 'edit') {
-                const p = products.find(prod => prod.id === id);
-                if(p) {
-                    document.getElementById('productId').value = p.id;
-                    document.getElementById('pName').value = p.name;
-                    document.getElementById('pCategory').value = p.category;
-                    document.getElementById('pPrice').value = p.price;
-                    document.getElementById('pStock').value = p.stock;
-                    document.getElementById('pStatus').value = p.status;
-                }
-            }
+            document.getElementById('modalTitle').innerText = "Agregar Producto";
+            updateImgPreview('dinner_dining');
             document.getElementById('productModal').classList.add('active');
         }
-        function closeModal() { document.getElementById('productModal').classList.remove('active'); }
+        function closeProductModal() { document.getElementById('productModal').classList.remove('active'); }
 
-        function saveProduct(e) {
-            e.preventDefault();
-            const id = document.getElementById('productId').value;
-            const name = document.getElementById('pName').value;
-            const category = document.getElementById('pCategory').value;
-            const price = parseFloat(document.getElementById('pPrice').value);
-            const stock = parseInt(document.getElementById('pStock').value);
-            const status = document.getElementById('pStatus').value;
+        function saveProduct(event) {
+            event.preventDefault();
+            let id = document.getElementById('productId').value;
+            let name = document.getElementById('pName').value || 'Producto Nuevo';
+            let cat = document.getElementById('pCategory').value;
+            let price = parseFloat(document.getElementById('pPrice').value) || 0;
+            let desc = document.getElementById('pDesc').value;
+            let icon = document.getElementById('pImgSelect').value;
+            let stock = parseInt(document.getElementById('pStock').value) || 0;
+            let status = document.getElementById('pStatus').value;
 
-            if(id) {
-                const index = products.findIndex(p => p.id == id);
-                products[index] = { ...products[index], name, category, price, stock, status };
-                showToast(`Producto "${name}" actualizado con éxito.`);
+            if (id) {
+                let prod = baseProducts.find(p => p.id == id);
+                if(prod) { 
+                    prod.name = name; prod.category = cat; prod.price = price; 
+                    prod.desc = desc; prod.icon = icon; prod.stock = stock; prod.status = status; 
+                }
+                Swal.fire({ icon: 'success', title: 'Producto editado con éxito', showConfirmButton: false, timer: 1500 });
             } else {
-                const newId = products.length ? Math.max(...products.map(p => p.id)) + 1 : 1;
-                products.push({ id: newId, name, category, price, stock, status, img: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=150' });
-                showToast(`"${name}" ha sido añadido al menú.`);
+                baseProducts.push({ id: Date.now(), name, category: cat, price, stock, status, desc, icon });
+                Swal.fire({ icon: 'success', title: 'Producto agregado al menú', showConfirmButton: false, timer: 1500 });
             }
-            closeModal();
-            renderProductsTable(products);
+            closeProductModal();
+            renderAll();
         }
 
-        function askDeleteProduct(id) { productToDeleteId = id; document.getElementById('deleteConfirmModal').classList.add('active'); }
-        function closeDeleteModal() { document.getElementById('deleteConfirmModal').classList.remove('active'); productToDeleteId = null; }
-        document.getElementById('confirmDeleteBtn').addEventListener('click', () => {
-            if (productToDeleteId !== null) {
-                const p = products.find(prod => prod.id === productToDeleteId);
-                products = products.filter(p => p.id !== productToDeleteId);
-                renderProductsTable(products);
-                closeDeleteModal();
-                showToast(`Producto removido del menú correctamente.`, 'error');
-            }
-        });
-
-        // --- SECCIÓN PEDIDOS ---
-        function renderPedidosTable() {
-            const tbody = document.getElementById('pedidosTableBody');
-            tbody.innerHTML = '';
-            document.getElementById('dash-pedidos-count').innerText = pedidos.length;
-
-            pedidos.forEach(ped => {
-                tbody.innerHTML += `
-                    <tr>
-                        <td><strong>#${ped.id}</strong></td>
-                        <td>${ped.cliente}</td>
-                        <td>${ped.detalle}</td>
-                        <td><strong>$${ped.total.toFixed(2)}</strong></td>
-                        <td>
-                            <select class="status-select" onchange="updatePedidoStatus(${ped.id}, this.value)">
-                                <option value="pendiente" ${ped.status === 'pendiente' ? 'selected' : ''}>Pendiente</option>
-                                <option value="proceso" ${ped.status === 'proceso' ? 'selected' : ''}>En Cocina</option>
-                                <option value="entregado" ${ped.status === 'entregado' ? 'selected' : ''}>Entregado</option>
-                                <option value="cancelado" ${ped.status === 'cancelado' ? 'selected' : ''}>Cancelado</option>
-                            </select>
-                            <span class="status-badge ${ped.status}" style="margin-left: 8px;">
-                                ${ped.status === 'proceso' ? 'En Cocina' : ped.status.charAt(0).toUpperCase() + ped.status.slice(1)}
-                            </span>
-                        </td>
-                    </tr>`;
-            });
-        }
-
-        function updatePedidoStatus(id, newStatus) {
-            const index = pedidos.findIndex(p => p.id === id);
-            if(index !== -1) {
-                pedidos[index].status = newStatus;
-                renderPedidosTable();
-                showToast(`Pedido #${id} actualizado a "${newStatus}".`);
+        function editProduct(id) {
+            let prod = baseProducts.find(p => p.id == id);
+            if(prod) {
+                document.getElementById('productId').value = prod.id;
+                document.getElementById('pName').value = prod.name;
+                document.getElementById('pCategory').value = prod.category;
+                document.getElementById('pPrice').value = prod.price;
+                document.getElementById('pDesc').value = prod.desc || '';
+                document.getElementById('pImgSelect').value = prod.icon || 'dinner_dining';
+                document.getElementById('pStock').value = prod.stock;
+                document.getElementById('pStatus').value = prod.status;
+                document.getElementById('modalTitle').innerText = "Editar Producto";
+                updateImgPreview(prod.icon || 'dinner_dining');
+                document.getElementById('productModal').classList.add('active');
             }
         }
 
-        // --- SECCIÓN PROMOCIONES ---
-        function renderPromos() {
-            const container = document.getElementById('promosGridContainer');
-            container.innerHTML = '';
-            promociones.forEach(p => {
-                container.innerHTML += `
-                    <div class="card card-${p.color}">
-                        <div class="card-header"><span class="card-title">Código: ${p.code}</span><i class="material-icons-round card-icon-box">local_offer</i></div>
-                        <div>
-                            <h3 style="font-size:1.5rem;">${p.title}</h3>
-                            <p style="font-size:0.85rem; opacity:0.8;">${p.desc}</p>
+        function deleteProduct(id) {
+            baseProducts = baseProducts.filter(p => p.id != id);
+            renderAll();
+            Swal.fire({ icon: 'success', title: 'Producto eliminado', showConfirmButton: false, timer: 1500 });
+        }
+
+        function viewProductDetail(id) {
+            let prod = baseProducts.find(p => p.id == id);
+            if(prod) {
+                Swal.fire({
+                    title: `<strong>${prod.name}</strong>`,
+                    icon: 'info',
+                    html: `
+                        <div style="text-align: left; font-size: 0.95rem; display: flex; flex-direction: column; gap: 8px;">
+                            <p><b>Categoría:</b> ${prod.category}</p>
+                            <p><b>Precio:</b> $${parseFloat(prod.price).toFixed(2)}</p>
+                            <p><b>Existencia:</b> ${prod.stock} piezas</p>
+                            <p><b>Estado:</b> ${prod.status === 'Disponible' ? 'Activo' : 'Inactivo'}</p>
+                            <p><b>Descripción:</b> ${prod.desc || 'Sin descripción disponible.'}</p>
                         </div>
-                    </div>`;
-            });
+                    `,
+                    showCloseButton: true,
+                    confirmButtonText: 'Cerrar',
+                    confirmButtonColor: '#7c3aed'
+                });
+            }
         }
 
-        function openPromoModal() { document.getElementById('promoForm').reset(); document.getElementById('promoModal').classList.add('active'); }
+        // --- CAMBIAR ESTADO DE PEDIDOS ---
+        function changeOrderStatus(id, newStatus) {
+            let pedido = basePedidos.find(p => p.id === id);
+            if(pedido) {
+                pedido.status = newStatus;
+                let textMapping = { 'pendiente': 'Pendiente', 'proceso': 'En Cocina', 'entregado': 'Entregado', 'cancelado': 'Cancelado' };
+                Swal.fire({
+                    icon: 'info',
+                    title: `Pedido ${id} actualizado`,
+                    text: `El nuevo estado es: ${textMapping[newStatus]}`,
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+            }
+        }
+
+        // --- MÉTODOS AUXILIARES RESTO DE CRUDS ---
+        function openPromoModal() {
+            document.getElementById('promoForm').reset();
+            document.getElementById('promoId').value = '';
+            document.getElementById('promoModalTitle').innerText = "Nueva Promoción";
+            document.getElementById('promoModal').classList.add('active');
+        }
         function closePromoModal() { document.getElementById('promoModal').classList.remove('active'); }
-        function savePromo(e) {
-            e.preventDefault();
-            const code = document.getElementById('promoCode').value.toUpperCase();
-            const title = document.getElementById('promoTitle').value;
-            const desc = document.getElementById('promoDesc').value;
-            const color = document.getElementById('promoColor').value;
-
-            promociones.push({ id: promociones.length + 1, code, title, desc, color });
-            closePromoModal();
-            renderPromos();
-            showToast(`Cupón [${code}] activado globalmente.`);
+        function savePromo(event) {
+            event.preventDefault();
+            let id = document.getElementById('promoId').value;
+            let code = document.getElementById('promoCode').value;
+            let title = document.getElementById('promoTitle').value;
+            let desc = document.getElementById('promoDesc').value;
+            let color = document.getElementById('promoColor').value;
+            if(id) {
+                let p = basePromos.find(x => x.id === id);
+                if(p){ p.code=code; p.title=title; p.desc=desc; p.color=color; }
+                Swal.fire({ icon: 'success', title: 'Promoción editada', showConfirmButton: false, timer: 1500 });
+            } else {
+                basePromos.push({ id: String(Date.now()), code, title, desc, color });
+                Swal.fire({ icon: 'success', title: 'Promoción agregada', showConfirmButton: false, timer: 1500 });
+            }
+            closePromoModal(); renderAll();
+        }
+        function editPromo(id) {
+            let p = basePromos.find(x => x.id === id);
+            if(p) {
+                document.getElementById('promoId').value = p.id;
+                document.getElementById('promoCode').value = p.code;
+                document.getElementById('promoTitle').value = p.title;
+                document.getElementById('promoDesc').value = p.desc;
+                document.getElementById('promoColor').value = p.color;
+                document.getElementById('promoModalTitle').innerText = "Editar Promoción";
+                document.getElementById('promoModal').classList.add('active');
+            }
+        }
+        function deletePromo(id) {
+            basePromos = basePromos.filter(x => x.id !== id);
+            renderAll(); Swal.fire({ icon: 'success', title: 'Promoción eliminada', showConfirmButton: false, timer: 1500 });
         }
 
-        // --- SECCIÓN CLIENTES ---
-        function renderClientesTable() {
-            const tbody = document.getElementById('clientesTableBody');
-            tbody.innerHTML = '';
-            document.getElementById('dash-clientes-count').innerText = clientes.length;
-
-            clientes.forEach(c => {
-                tbody.innerHTML += `
-                    <tr>
-                        <td><strong>${c.nombre}</strong></td>
-                        <td>${c.email}</td>
-                        <td>${c.visitas} visitas</td>
-                        <td>${c.puntos} pts</td>
-                        <td><span class="status-badge ${c.status}">${c.status.toUpperCase()}</span></td>
-                    </tr>`;
-            });
+        function openClienteModal() {
+            document.getElementById('clienteForm').reset();
+            document.getElementById('clienteId').value = '';
+            document.getElementById('clienteModalTitle').innerText = "Registrar Cliente";
+            document.getElementById('clienteModal').classList.add('active');
         }
-
-        function openClienteModal() { document.getElementById('clienteForm').reset(); document.getElementById('clienteModal').classList.add('active'); }
         function closeClienteModal() { document.getElementById('clienteModal').classList.remove('active'); }
-        function saveCliente(e) {
-            e.preventDefault();
-            const nombre = document.getElementById('cName').value;
-            const email = document.getElementById('cEmail').value;
-            const visitas = parseInt(document.getElementById('cVisitas').value);
-            const puntos = parseInt(document.getElementById('cPuntos').value);
-            const status = document.getElementById('cStatus').value.toLowerCase();
-
-            clientes.push({ nombre, email, visitas, puntos, status });
-            closeClienteModal();
-            renderClientesTable();
-            showToast(`Cliente "${nombre}" registrado en el club.`);
+        function saveCliente(event) {
+            event.preventDefault();
+            let id = document.getElementById('clienteId').value;
+            let name = document.getElementById('cName').value;
+            let email = document.getElementById('cEmail').value;
+            let visits = parseInt(document.getElementById('cVisits').value) || 0;
+            let points = parseInt(document.getElementById('cPoints').value) || 0;
+            let status = document.getElementById('cStatus').value;
+            if(id) {
+                let c = baseClientes.find(x => x.id === id);
+                if(c){ c.name=name; c.email=email; c.visits=visits; c.points=points; c.status=status; }
+                Swal.fire({ icon: 'success', title: 'Cliente editado', showConfirmButton: false, timer: 1500 });
+            } else {
+                baseClientes.push({ id: String(Date.now()), name, email, visits, points, status });
+                Swal.fire({ icon: 'success', title: 'Cliente agregado', showConfirmButton: false, timer: 1500 });
+            }
+            closeClienteModal(); renderAll();
         }
+        function editCliente(id) {
+            let c = baseClientes.find(x => x.id === id);
+            if(c) {
+                document.getElementById('clienteId').value = c.id;
+                document.getElementById('cName').value = c.name;
+                document.getElementById('cEmail').value = c.email;
+                document.getElementById('cVisits').value = c.visits;
+                document.getElementById('cPoints').value = c.points;
+                document.getElementById('cStatus').value = c.status;
+                document.getElementById('clienteModalTitle').innerText = "Editar Cliente";
+                document.getElementById('clienteModal').classList.add('active');
+            }
+        }
+        function deleteCliente(id) {
+            baseClientes = baseClientes.filter(x => x.id !== id);
+            renderAll(); Swal.fire({ icon: 'success', title: 'Cliente eliminado', showConfirmButton: false, timer: 1500 });
+        }
+
+        window.onload = renderAll;
     </script>
 </body>
 </html>

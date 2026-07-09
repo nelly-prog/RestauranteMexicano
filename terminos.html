@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Sabor Mexicano | Términos del Servicio</title>
+    <link rel="stylesheet" href="estilos.css">
+    <style>
+        .contenido-legal {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 40px;
+            background: #fff;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            line-height: 1.8;
+            color: #333;
+        }
+        .contenido-legal h1 {
+            color: #b71c1c;
+            font-family: 'Georgia', serif;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #f4f4f4;
+            padding-bottom: 10px;
+        }
+        .contenido-legal h3 {
+            color: #222;
+            margin-top: 25px;
+            margin-bottom: 10px;
+        }
+        .contenido-legal p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+    </style>
+</head>
+<body style="background-color: #fdfbf7;">
+
+<header>
+    <div class="logo-contenedor">
+        <img src="img/logo.png.png" class="logo-img" alt="Logo">
+        <span>Sabor Mexicano</span>
+    </div>
+    <nav>
+        <ul>
+            <li><a href="index.html">Inicio</a></li>
+            <li><a href="catalogo.html">Catálogo</a></li>
+            <li><a href="index.html#nosotros">Nosotros</a></li>
+            <li><a href="index.html#contacto">Contacto</a></li>
+            <li><a href="login.html">Iniciar Sesión</a></li>
+            <li class="cart-item-container">
+                <a href="carrito.html" class="cart-link" title="Ver carrito">
+                    🛒 <span id="cart-count" class="cart-badge">0</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+
+<main>
+    <div class="contenido-legal">
+        <h1>Términos del Servicio</h1>
+        <p>Bienvenido a <strong>Sabor Mexicano</strong>. Al acceder y utilizar este sitio web, usted acepta cumplir y estar sujeto a los siguientes términos y condiciones de uso.</p>
+        
+        <h3>1. Propiedad Intelectual</h3>
+        <p>Todo el contenido de este sitio, incluyendo textos, logotipos, imágenes, menús gráficos y código fuente, es propiedad exclusiva de Sabor Mexicano y está protegido por las leyes de propiedad intelectual correspondientes. Queda prohibida su reproducción parcial o total sin autorización previa.</p>
+
+        <h3>2. Uso del Sitio Web</h3>
+        <p>El usuario se compromete a hacer un uso adecuado y lícito del sitio web. No se permite la introducción de virus informáticos, scripts maliciosos, alteración del sistema de pedidos en el almacenamiento local o cualquier acción que afecte el rendimiento o la seguridad de nuestra plataforma comercial.</p>
+
+        <h3>3. Modificaciones de los Términos</h3>
+        <p>Sabor Mexicano se reserva el derecho de modificar o actualizar estos Términos del Servicio en cualquier momento y sin previo aviso. Es responsabilidad del usuario revisar periódicamente esta sección para estar al tanto de los cambios.</p>
+    </div>
+</main>
+
+<footer>
+    <p>&copy; 2026 Sabor Mexicano - Todos los derechos reservados.</p>
+    <div style="margin: 8px 0; display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;">
+        <a href="terminos.html" style="color: #ccc; text-decoration: none; font-size: 0.85rem; transition: color 0.3s;">Términos del Servicio</a>
+        <span style="color: #666;">|</span>
+        <a href="politicas.html" style="color: #ccc; text-decoration: none; font-size: 0.85rem; transition: color 0.3s;">Política de Compraventa</a>
+    </div>
+    <p style="font-size: 0.8rem; opacity: 0.7; margin-top: 5px;">e-business + e-commerce - Negocios Electrónicos I</p>
+</footer>
+
+<script>
+    function actualizarContadorVisual() {
+        const cantidadActual = parseInt(localStorage.getItem('cartCount')) || 0;
+        const contadorBadge = document.getElementById('cart-count');
+        if (contadorBadge) { contadorBadge.textContent = cantidadActual; }
+    }
+    document.addEventListener('DOMContentLoaded', actualizarContadorVisual);
+</script>
+
+</body>
+</html>
