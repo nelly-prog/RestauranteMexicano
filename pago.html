@@ -81,6 +81,43 @@
             margin-bottom: 10px;
             display: block;
         }
+
+        /* Estilos para el módulo interactivo de cupones */
+        .cupon-pago-box {
+            margin: 20px 0; 
+            padding: 15px; 
+            background: #fff8e1; 
+            border: 1px solid #ffe082; 
+            border-radius: 8px; 
+            text-align: right;
+        }
+        .cupon-pago-input {
+            padding: 8px 12px; 
+            border: 1px solid #ffe082; 
+            border-radius: 4px; 
+            text-transform: uppercase;
+            font-weight: bold;
+            outline: none;
+        }
+        .cupon-pago-btn {
+            padding: 8px 15px; 
+            background: #2e7d32; 
+            color: white; 
+            border: none; 
+            border-radius: 4px; 
+            font-weight: bold; 
+            cursor: pointer; 
+            transition: background 0.2s;
+        }
+        .cupon-pago-btn:hover {
+            background: #1b5e20;
+        }
+        .feedback-cupon-pago {
+            font-size: 0.9rem; 
+            font-weight: bold; 
+            margin-top: 8px; 
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -134,6 +171,18 @@
             </tbody>
         </table>
 
+        <!-- ==========================================================================
+           NUEVO MÓDULO INTERACTIVO DE CUPÓN DE DESCUENTO
+           ========================================================================== -->
+        <div class="cupon-pago-box">
+            <span style="font-size: 0.95rem; color: #5d4037; margin-right: 10px;">¿Tienes un código de descuento?</span>
+            <div style="display: inline-flex; gap: 8px;">
+                <input type="text" id="input-cupon-pago" placeholder="Ej: DIEZ" class="cupon-pago-input">
+                <button type="button" onclick="aplicarCuponEnPago()" class="cupon-pago-btn">Aplicar</button>
+            </div>
+            <div id="feedback-cupon-pago" class="feedback-cupon-pago"></div>
+        </div>
+
         <div class="total-pago">
             <div>Subtotal: <span id="resumen-subtotal">$0.00</span></div>
             <div>IVA (16%): <span id="resumen-iva">$0.00</span></div>
@@ -184,6 +233,10 @@
 </footer>
 
 <script>
+    // Variables globales para persistir la suma de los productos y controlar el descuento
+    let sumaProductosOriginal = 0;
+    let descuentoYaAplicado = false;
+
     document.addEventListener('DOMContentLoaded', () => {
         cargarResumen();
     });
@@ -192,13 +245,11 @@
         let carrito = JSON.parse(localStorage.getItem('carritoApp')) || [];
         const tbody = document.getElementById('resumen-items');
         
-        // Elementos de cobro desglosado
         const subtotalText = document.getElementById('resumen-subtotal');
         const ivaText = document.getElementById('resumen-iva');
         const totalText = document.getElementById('resumen-total');
         const contadorBadge = document.getElementById('cart-count');
         
-        let sumaProductos = 0;
         let totalItems = 0;
         let html = '';
 
@@ -207,9 +258,11 @@
             return;
         }
 
+        sumaProductosOriginal = 0; // Reset inicial
+
         carrito.forEach(item => {
             let subtotalItem = item.precio * item.cantidad;
-            sumaProductos += subtotalItem;
+            sumaProductosOriginal += subtotalItem;
             totalItems += item.cantidad;
 
             html += `
@@ -223,17 +276,74 @@
 
         tbody.innerHTML = html;
 
-        // Cálculo exacto del desglose financiero hacia atrás (base 1.16)
-        let subtotalNeto = sumaProductos / 1.16;
-        let ivaCalculado = sumaProductos - subtotalNeto;
+        // Desglose financiero base
+        let subtotalNeto = sumaProductosOriginal / 1.16;
+        let ivaCalculado = sumaProductosOriginal - subtotalNeto;
 
-        // Inyección de valores en la vista
         subtotalText.innerText = `$${subtotalNeto.toFixed(2)}`;
         ivaText.innerText = `$${ivaCalculado.toFixed(2)}`;
-        totalText.innerText = `$${sumaProductos.toFixed(2)}`;
+        totalText.innerText = `$${sumaProductosOriginal.toFixed(2)}`;
 
         if (contadorBadge) {
             contadorBadge.textContent = totalItems;
+        }
+    }
+
+    // ==========================================================================
+    // LÓGICA DE PROCESAMIENTO Y RECALCULO DE CUPONES
+    // ==========================================================================
+    function aplicarCuponEnPago() {
+        const inputVal = document.getElementById('input-cupon-pago').value.trim().toUpperCase();
+        const feedback = document.getElementById('feedback-cupon-pago');
+        
+        const subtotalText = document.getElementById('resumen-subtotal');
+        const ivaText = document.getElementById('resumen-iva');
+        const totalText = document.getElementById('resumen-total');
+
+        const listaCupones = {
+            'MARTESMAGIC': { tipo: 'porcentaje', valor: 0.50, msg: '¡Código MartesMagic aplicado! 50% de descuento (Simulación 2x1 en tu orden).' },
+            'ARRIBA': { tipo: 'fijo', valor: 20.00, msg: '¡Código Arriba aplicado! Se dedujeron $20.00 MXN de tu combo.' },
+            'DIEZ': { tipo: 'porcentaje', valor: 0.10, msg: '¡Código Diez aplicado! 10% de descuento digital.' },
+            'SABOR10': { tipo: 'porcentaje', valor: 0.10, msg: '¡Código SABOR10 aplicado! 10% de descuento de temporada.' }
+        };
+
+        feedback.style.display = 'block';
+
+        if (descuentoYaAplicado) {
+            feedback.style.color = '#c62828';
+            feedback.innerHTML = '⚠️ Ya has aplicado un código de descuento para este pedido.';
+            return;
+        }
+
+        if (listaCupones[inputVal]) {
+            descuentoYaAplicado = true;
+            const cupon = listaCupones[inputVal];
+            let montoDescuento = 0;
+
+            if (cupon.tipo === 'porcentaje') {
+                montoDescuento = sumaProductosOriginal * cupon.valor;
+            } else if (cupon.tipo === 'fijo') {
+                montoDescuento = cupon.valor;
+            }
+
+            // Calculamos los nuevos montos finales partiendo de la rebaja directo sobre el total final con IVA
+            let nuevoTotalFinal = Math.max(0, sumaProductosOriginal - montoDescuento);
+            let nuevoSubtotalNeto = nuevoTotalFinal / 1.16;
+            let nuevoIvaCalculado = nuevoTotalFinal - nuevoSubtotalNeto;
+
+            // Renderizar los cambios dinámicamente en pantalla
+            subtotalText.innerText = `$${nuevoSubtotalNeto.toFixed(2)}`;
+            ivaText.innerText = `$${nuevoIvaCalculado.toFixed(2)}`;
+            totalText.innerText = `$${nuevoTotalFinal.toFixed(2)}`;
+
+            feedback.style.color = '#2e7d32';
+            feedback.innerHTML = `✅ ${cupon.msg} Descuento aplicado (simulado).`;
+        } else if (inputVal === '') {
+            feedback.style.color = '#ff8f00';
+            feedback.innerHTML = '⚠️ Por favor, escribe un código de cupón.';
+        } else {
+            feedback.style.color = '#c62828';
+            feedback.innerHTML = '❌ El código de descuento ingresado no es válido.';
         }
     }
 

@@ -251,17 +251,18 @@
 </div>
 
 <script>
-    // Base de datos de los 8 platillos institucionales
-    const productos = {
-        'pozole': { img: 'img/pozole.jpg', titulo: 'Pozole Rojo', precio: 135.00, desc: 'Tradicional caldo con granos de maíz cacahuazintle y carne de cerdo, acompañado de lechuga, rábanos y su toque de orégano.' },
-        'sopes': { img: 'img/Sopes.jpg', titulo: 'Sopes Tradicionales', precio: 95.00, desc: 'Tres piezas de masa de maíz hechas a mano con base de frijoles refritos, carne a elegir, lechuga, crema y queso fresco.' },
-        'tacos': { img: 'img/tacos.jpg', titulo: 'Tacos al Pastor', precio: 120.00, desc: 'Orden de 5 deliciosos tacos de carne de cerdo marinada al pastor con su clásica piña, cebolla, cilantro y tortillas recién hechas.' },
-        'tamales': { img: 'img/tamales.jpg', titulo: 'Tamales Caseros', precio: 85.00, desc: 'Par de suaves tamales envueltos en hoja de maíz, rellenos de jugosa salsa verde con pollo o mole rojo tradicional.' },
-        'enchiladas': { img: 'img/enchiladas.png', titulo: 'Enchiladas Verdes', precio: 115.00, desc: 'Cuatro tortillas dobladas rellenas de pollo deshebrado, bañadas en salsa verde bien sazonada, crema, queso y cebolla.' },
-        'nogada': { img: 'img/nogada.jpg', titulo: 'Chiles en Nogada', precio: 180.00, desc: 'Exquisito chile poblano relleno de picadillo de carne con frutas selectas, bañado en nuestra famosa crema de nuez de castilla y granada.' },
-        'flautas': { img: 'img/flautas.jpg', titulo: 'Flautas de Pollo', precio: 90.00, desc: 'Tres tacos dorados y crujientes rellenos de pechuga de pollo, cubiertos con abundante lechuga, jitomate, crema y queso cotija.' },
-        'quesadillas': { img: 'img/quesadillas.jpg', titulo: 'Quesadillas de Flor de Calabaza', precio: 75.00, desc: 'Tres quesadillas de comal rellenas de queso Oaxaca derretido y flor de calabaza sazonada con epazote.' }
-    };
+    // 
+const productos = {
+    'pozole': { img: 'img/pozole.jpg', titulo: 'Pozole Rojo', precio: 135.00, desc: 'Tradicional caldo con granos de maíz cacahuazintle y carne de cerdo, acompañado de lechuga, rábanos y su toque de orégano.' },
+    'sopes': { img: 'img/Sopes.jpg', titulo: 'Sopes Tradicionales', precio: 95.00, desc: 'Tres piezas de masa de maíz hechas a mano con base de frijoles refritos, carne a elegir, lechuga, crema y queso fresco.' },
+    'tacos': { img: 'img/tacos.jpg', titulo: 'Tacos al Pastor', precio: 120.00, desc: 'Orden de 5 deliciosos tacos de carne de cerdo marinada al pastor con su clásica piña, cebolla, cilantro y tortillas recién hechas.' },
+    'tamales': { img: 'img/tamales.jpg', titulo: 'Tamales Caseros', precio: 85.00, desc: 'Par de suaves tamales envueltos en hoja de maíz, rellenos de jugosa salsa verde con pollo o mole rojo tradicional.' },
+    'enchiladas': { img: 'img/enchiladas.png', titulo: 'Enchiladas Verdes', precio: 115.00, desc: 'Cuatro tortillas dobladas rellenas de pollo deshebrado, bañadas en salsa verde bien sazonada, crema, queso y cebolla.' },
+    'nogada': { img: 'img/nogada.jpg', titulo: 'Chiles en Nogada', precio: 180.00, desc: 'Exquisito chile poblano relleno de picadillo de carne con frutas selectas, bañado en nuestra famosa crema de nuez de castilla y granada.' },
+    'flautas': { img: 'img/flautas.jpg', titulo: 'Flautas de Pollo', precio: 90.00, desc: 'Tres tacos dorados y crujientes rellenos de pechuga de pollo, cubiertos con abundante lechuga, jitomate, crema y queso cotija.' },
+    'quesadillas': { img: 'img/quesadillas.jpg', titulo: 'Quesadillas de Flor de Calabaza', precio: 75.00, desc: 'Tres quesadillas de comal rellenas de queso Oaxaca derretido y flor de calabaza sazonada con epazote.' }, // <-- ¡Esta coma faltaba!
+    'horchata': { img: 'img/horchata.jpg', titulo: 'Agua de horchata', precio: 15.00, desc: 'Deliciosa y cremosa agua de horchata hecha de arroz, canela y leche.' }
+};
 
     // Capturar el hash de la URL sin el '#'
     const p = window.location.hash.substring(1); 

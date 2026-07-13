@@ -139,19 +139,126 @@
         #form-contacto input, #form-contacto textarea { padding: 12px; border: 1px solid #ddd; border-radius: 8px; }
         #modal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); align-items:center; justify-content:center; z-index:2000; }
         .contenido-modal { background: white; padding: 30px; border-radius: 15px; text-align: center; }
+
+        /* ==========================================================================
+           NUEVOS ESTILOS EXCLUSIVOS PARA EL BLOQUE 3 (MARKETING Y PROMOCIONES)
+           ========================================================================== */
+        .grid-promos {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        .tarjeta-promo {
+            background: #fff;
+            padding: 20px;
+            border-radius: 12px;
+            border: 2px dashed #d32f2f;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.04);
+        }
+        .tarjeta-promo h4 { color: #d32f2f; margin-bottom: 8px; font-size: 1.3rem; }
+        .tarjeta-promo p { color: #555; font-size: 0.95rem; line-height: 1.4; }
+
+        .cupon-contenedor {
+            background: #fff8e1;
+            border: 1px solid #ffe082;
+            border-radius: 12px;
+            padding: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .cupon-texto h4 { color: #ff8f00; margin-bottom: 5px; }
+        .cupon-texto p { color: #5d4037; font-size: 0.95rem; margin: 0; }
+        .cupon-codigo-visual {
+            background: #d32f2f;
+            color: #fff;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            display: inline-block;
+            margin-top: 5px;
+        }
+        .cupon-accion { display: flex; gap: 8px; align-items: center; width: 100%; max-width: 320px; }
+        .cupon-input {
+            flex: 1; padding: 10px 15px; border: 2px solid #ffe082; border-radius: 25px; outline: none; font-size: 1rem;
+        }
+        .btn-cupon {
+            padding: 10px 22px; background: #2e7d32; color: white; border: none; border-radius: 25px;
+            font-weight: bold; cursor: pointer; transition: 0.3s;
+        }
+        .btn-cupon:hover { background: #1b5e20; }
+        
+        .feedback-mensaje {
+            width: 100%; padding: 10px; border-radius: 8px; display: none; margin-top: 10px;
+            font-weight: bold; font-size: 0.95rem; text-align: center;
+        }
+        .feedback-success { background-color: #c8e6c9; color: #2e7d32; border: 1px solid #a5d6a7; }
+        .feedback-error { background-color: #ffcdd2; color: #c62828; border: 1px solid #ef9a9a; }
+
+        /* Landing/Escaparate de Campaña */
+        .banner-campana {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            background: #111;
+            color: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            margin-bottom: 40px;
+        }
+        @media(max-width: 768px) { .banner-campana { grid-template-columns: 1fr; } }
+        
+        .campana-img-side { width: 100%; height: 100%; min-height: 300px; object-fit: cover; }
+        .campana-info-side { padding: 40px; display: flex; flex-direction: column; justify-content: center; }
+        .tag-destacado {
+            background: #d32f2f; color: white; padding: 5px 12px; border-radius: 4px;
+            font-size: 0.8rem; font-weight: bold; text-transform: uppercase; align-self: flex-start; margin-bottom: 15px;
+        }
+        .campana-info-side h3 { font-size: 2rem; color: #ffb300; margin-bottom: 15px; }
+        .campana-info-side p { color: #ddd; font-size: 1.1rem; line-height: 1.5; margin-bottom: 20px; }
+        .campana-precio { font-size: 1.8rem; color: #4caf50; font-weight: bold; margin-bottom: 20px; }
+        .btn-cta {
+            background: #4caf50; color: white; border: none; padding: 15px 30px; font-size: 1.1rem;
+            font-weight: bold; border-radius: 50px; cursor: pointer; transition: 0.3s; text-align: center;
+        }
+        .btn-cta:hover { background: #388e3c; transform: translateY(-2px); }
+
+        .grid-testimonios {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+        .tarjeta-testimonio {
+            background: #fdfbf7; padding: 25px; border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.04); border-left: 4px solid #ffb300;
+        }
+        .tarjeta-testimonio p { font-style: italic; color: #555; margin-bottom: 12px; line-height: 1.5; }
+        .estrellas { color: #ffb300; margin-bottom: 5px; }
+        .autor-testimonio { font-weight: bold; color: #333; font-size: 0.9rem; }
     </style>
 </head>
 <body>
 
 <header>
     <div class="logo-contenedor">
-        <img src="img/logo.png.png" class="logo-img" alt="Logo">
+        <!-- ERROR CORREGIDO: De logo.png.png a logo.png -->
+        <img src="img/logo.png" class="logo-img" alt="Logo">
         <span>Sabor Mexicano</span>
     </div>
     <nav>
         <ul>
             <li><a href="index.html">Inicio</a></li>
             <li><a href="catalogo.html">Catálogo</a></li>
+            <!-- Agregamos los accesos directos de Marketing en el Nav -->
+            <li><a href="#promociones" style="color: #ffb300; font-weight: bold;">🔥 Promos</a></li>
+            <li><a href="#escaparate">Especial</a></li>
             <li><a href="#nosotros">Nosotros</a></li>
             <li><a href="#contacto">Contacto</a></li>
             <li><a href="login.html">Iniciar Sesión</a></li>
@@ -169,6 +276,94 @@
         <h1>Bienvenido a Sabor Mexicano</h1>
         <p>La tradición en tu mesa.</p>
         <a href="catalogo.html" class="btn-ver-productos">Ver productos</a>
+    </section>
+
+    <!-- ==========================================================================
+       NUEVA SECCIÓN: PANTALLA CON PROMOS ACTIVAS + CÓDIGO DE DESCUENTO (BLOQUE 3)
+       ========================================================================== -->
+    <section id="promociones" class="seccion" style="background-color: #fff; padding: 60px 0; border-bottom: 1px solid #eee;">
+        <div class="contenedor-bloques">
+            <h2 style="text-align: center; font-size: 2.3rem; margin-bottom: 10px; color: #222;">🌶️ Promociones Activas de Hoy</h2>
+            <p style="text-align: center; color: #666; margin-bottom: 40px;">Aprovecha nuestras ofertas exclusivas en línea y sucursal.</p>
+            
+            <!-- CÓDIGOS RESALTADOS CON LA CLASE .cupon-codigo-visual -->
+            <div class="grid-promos">
+                <div class="tarjeta-promo">
+                    <h4>Martes de 2x1</h4>
+                    <p>En todos nuestros tacos al pastor individuales. Válido únicamente consumiendo en sucursal.</p>
+                    <p>Con el Código: <br><span class="cupon-codigo-visual">MartesMagic</span></p>
+                </div>
+                <div class="tarjeta-promo">
+                    <h4>Combo Compadre</h4>
+                    <p>Llévate 3 Quesabirrias crujientes + 1 Consomé mediano caliente por solo $120 MXN.</p>
+                    <p>Con el Código: <br><span class="cupon-codigo-visual">Arriba</span></p>
+                </div>
+                <div class="tarjeta-promo">
+                    <h4>10% OFF Digital</h4>
+                    <p>Obtén un descuento inmediato en tu orden simulada ingresando nuestro código de cupón diario.</p>
+                    <p>Con el Código: <br><span class="cupon-codigo-visual">Diez</span></p>
+                </div>
+            </div>
+
+            <!-- Código de descuento visual interactivo -->
+            <div class="cupon-contenedor">
+                <div class="cupon-texto">
+                    <h4>¿Tienes un código promocional?</h4>
+                    <p>Usa el código visible de la temporada: <span class="cupon-codigo-visual">SABOR10</span></p>
+                </div>
+                <div class="cupon-accion">
+                    <input type="text" id="input-cupon" class="cupon-input" placeholder="Introduce el código">
+                    <button type="button" class="btn-cupon" onclick="procesarCuponVisual()">Aplicar</button>
+                </div>
+                <!-- Mensaje Dinámico de Descuento Aplicado (Simulado) -->
+                <div id="feedback-cupon" class="feedback-mensaje"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================================================
+       NUEVA SECCIÓN: ESCAPARATE DE MARKETING / LANDING DE CAMPAÑA (BLOQUE 3)
+       ========================================================================== -->
+    <section id="escaparate" class="seccion" style="background-color: #f7f7f7; padding: 60px 0;">
+        <div class="contenedor-bloques">
+            <h2 style="text-align: center; font-size: 2.3rem; margin-bottom: 40px; color: #222;">✨ Especial de la Semana</h2>
+            
+            <!-- Producto Destacado + Llamado a la Acción -->
+            <div class="banner-campana">
+                <div>
+                    <img src="img/tacos.jpg" alt="Megapack Taquero" class="campana-img-side">
+                </div>
+                <div class="campana-info-side">
+                    <span class="tag-destacado">🔥 El más vendido</span>
+                    <h3>El Megapack Taquero Familiar</h3>
+                    <p>Un festín tradicional directo a tu hogar. Incluye 20 tacos surtidos (Pastor, Suadero y Campechanos), 2 litros de nuestras emblemáticas aguas frescas naturales y un set de salsas artesanales.</p>
+                    <div class="campana-precio">$299.00 MXN</div>
+                    
+                    <!-- Botón de llamado a la acción (CTA) -->
+                    <button type="button" class="btn-cta" onclick="comprarEspecial()">🚀 ¡Comprar ahora!</button>
+                </div>
+            </div>
+
+            <!-- Reseñas/Testimonios (Simulados) -->
+            <h3 style="text-align: center; font-size: 1.6rem; color: #444; margin: 40px 0 20px 0;">Lo que opinan nuestros clientes habituales 💬</h3>
+            <div class="grid-testimonios">
+                <div class="tarjeta-testimonio">
+                    <div class="estrellas">⭐⭐⭐⭐⭐</div>
+                    <p>"El Megapack Taquero es una delicia absoluta. Las salsas pican en su punto exacto y la carne al pastor viene muy jugosa."</p>
+                    <div class="autor-testimonio">— Carlos Mendoza</div>
+                </div>
+                <div class="tarjeta-testimonio">
+                    <div class="estrellas">⭐⭐⭐⭐⭐</div>
+                    <p>"Pedimos el combo para la cena familiar del sábado y llegó volando. La horchata es completamente natural, 100% recomendado."</p>
+                    <div class="autor-testimonio">— Sofía Rodríguez</div>
+                </div>
+                <div class="tarjeta-testimonio">
+                    <div class="estrellas">⭐⭐⭐⭐⭐</div>
+                    <p>"Excelente relación calidad-precio. Un negocio que verdaderamente respeta y resalta el auténtico sabor casero de México."</p>
+                    <div class="autor-testimonio">— Alejandro Gómez</div>
+                </div>
+            </div>
+        </div>
     </section>
 
     <section id="nosotros" class="seccion" style="background-color: #fdfbf7; padding: 60px 0;">
@@ -231,7 +426,6 @@
 <footer>
     <p>&copy; 2026 Sabor Mexicano - Todos los derechos reservados.</p>
     
-    <!-- Enlaces legales integrados con estilos en línea sencillos para no alterar tu CSS global -->
     <div style="margin: 8px 0; display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;">
         <a href="terminos.html" style="color: #ccc; text-decoration: none; font-size: 0.85rem; transition: color 0.3s;">Términos del Servicio</a>
         <span style="color: #666;">|</span>
@@ -241,6 +435,7 @@
     <p style="font-size: 0.8rem; opacity: 0.7; margin-top: 5px;">e-business + e-commerce - Negocios Electrónicos I</p>
 </footer>
 
+<!-- Modales del sistema -->
 <div id="modal">
     <div class="contenido-modal">
         <h2>¡Mensaje enviado con éxito!</h2>
@@ -257,19 +452,59 @@
 <script>
     // Función encargada de leer el almacenamiento local en tiempo real y pintar el badge
     function actualizarContadorVisual() {
-        const cantidadActual = parseInt(localStorage.getItem('cartCount')) || 0;
+        const carrito = JSON.parse(localStorage.getItem('carritoApp')) || [];
+        const totalItems = carrito.reduce((suma, item) => suma + item.cantidad, 0);
+        
         const contadorBadge = document.getElementById('cart-count');
         if (contadorBadge) {
-            contadorBadge.textContent = cantidadActual;
+            contadorBadge.textContent = totalItems;
         }
     }
 
-    // Función de actualización por si ejecutas adiciones en esta misma sección
-    function actualizarCarrito(cantidad) {
-        let cantidadActual = parseInt(localStorage.getItem('cartCount')) || 0;
-        cantidadActual += cantidad;
-        localStorage.setItem('cartCount', cantidadActual);
+    // ==========================================================================
+    // NUEVA FUNCIÓN PARA AGREGAR EL ESPECIAL AL CARRITOPP Y REDIRIGIR
+    // ==========================================================================
+    function comprarEspecial() {
+        let carrito = JSON.parse(localStorage.getItem('carritoApp')) || [];
+
+        const paqueteEspecial = {
+            titulo: "El Megapack Taquero Familiar",
+            precio: 299.00,
+            cantidad: 1
+        };
+
+        const itemExistente = carrito.find(item => item.titulo === paqueteEspecial.titulo);
+
+        if (itemExistente) {
+            itemExistente.cantidad += 1;
+        } else {
+            carrito.push(paqueteEspecial);
+        }
+
+        localStorage.setItem('carritoApp', JSON.stringify(carrito));
         actualizarContadorVisual();
+        window.location.href = 'carrito.html';
+    }
+
+    // ==========================================================================
+    // FUNCIONES JAVASCRIPT DEL BLOQUE 3 (CONTROL TOTALMENTE DESDE EL FRONT)
+    // ==========================================================================
+    function procesarCuponVisual() {
+        const inputVal = document.getElementById('input-cupon').value.trim().toUpperCase();
+        const feedback = document.getElementById('feedback-cupon');
+        
+        feedback.style.display = 'block';
+        
+        if (inputVal === 'SABOR10') {
+            feedback.className = 'feedback-mensaje feedback-success';
+            feedback.innerHTML = '✅ Descuento aplicado (simulado)';
+        } else if (inputVal === '') {
+            feedback.className = 'feedback-mensaje feedback-error';
+            feedback.innerHTML = '⚠️ Por favor, escribe un código de descuento.';
+        } else {
+            feedback.className = 'feedback-mensaje feedback-error';
+            feedback.innerHTML = '❌ Código inválido. Intenta usando SABOR10';
+        }
     }
 
     // Se asegura de actualizar el número tan pronto como renderice la estructura HTML
