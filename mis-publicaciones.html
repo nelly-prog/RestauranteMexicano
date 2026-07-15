@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Mis Publicaciones - Sabor Mexicano</title>
+    <link rel="stylesheet" href="estilos.css">
+    <style>
+        .contenedor-publicaciones { max-width: 800px; margin: 40px auto; padding: 20px; background: #fff; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        .titulo-seccion { color: #006847; display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .btn-atras { color: #006847; text-decoration: none; font-weight: bold; }
+        
+        .grid-mis-productos { display: flex; flex-direction: column; gap: 15px; }
+        .tarjeta-publicacion { display: flex; gap: 20px; padding: 15px; border: 1px solid #eee; border-radius: 10px; align-items: center; background: #fafafa; }
+        .tarjeta-publicacion img { width: 100px; height: 100px; object-fit: cover; border-radius: 8px; }
+        .info-pub { flex-grow: 1; }
+        .info-pub h4 { margin: 0 0 5px 0; font-size: 1.2rem; color: #333; }
+        .info-pub p { margin: 0 0 5px 0; color: #666; font-size: 0.9rem; }
+        .info-pub .precio { font-weight: bold; color: #d32f2f; font-size: 1.1rem; }
+        
+        .acciones-pub { display: flex; flex-direction: column; gap: 10px; }
+        .btn-accion { padding: 8px 12px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; }
+        .btn-editar { background-color: #ffb300; color: #fff; }
+        .btn-eliminar { background-color: #d32f2f; color: #fff; }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="logo-contenedor">
+        <img src="img/logo.png.png" class="logo-img" alt="Logo">
+        <span>Sabor Mexicano</span>
+    </div>
+    <nav>
+        <ul>
+            <li><a href="index.html">Inicio</a></li>
+            <li><a href="catalogo.html">Catálogo</a></li>
+            <li><a href="perfil.html">Mi Perfil</a></li>
+        </ul>
+    </nav>
+</header>
+
+<main class="seccion">
+    <div class="contenedor-publicaciones">
+        <div class="titulo-seccion">
+            <h2>Mis Publicaciones Activas (C2C)</h2>
+            <a href="perfil.html" class="btn-atras">← Volver al Perfil</a>
+        </div>
+
+        <div id="listaPublicaciones" class="grid-mis-productos">
+            <!-- Dinámico -->
+            <p id="sinPubs" style="text-align: center; color: #999;">Aún no has publicado ningún producto.</p>
+        </div>
+    </div>
+</main>
+
+<!-- ... Tu estructura HTML de mis-publicaciones.html ... -->
+
+<script>
+    // Nombre de la clave unificada que usamos para los productos de los usuarios
+    const CLAVE_LOCAL = 'publicacionesComunidad';
+
+    // Función para renderizar dinámicamente las publicaciones en pantalla
+    function cargarMisPublicaciones() {
+        const listaContenedor = document.querySelector('.contenedor-perfil, .seccion, main'); // Ajusta al contenedor de tus tarjetas
+        if (!listaContenedor) return;
+
+        const publicaciones = JSON.parse(localStorage.getItem(CLAVE_LOCAL)) || [];
+        
+        // Buscamos o creamos el contenedor específico de la lista
+        let contenedorPublicaciones = document.getElementById('lista-mis-publicaciones');
+        if (!contenedorPublicaciones) {
+            contenedorPublicaciones = document.createElement('div');
+            contenedorPublicaciones.id = 'lista-mis-publicaciones';
+            // Insertar después del título principal
+            listaContenedor.appendChild(contenedorPublicaciones);
+        }
+
+        if (publicaciones.length === 0) {
+            contenedorPublicaciones.innerHTML = `
+                <div style="text-align: center; padding: 40px; color: #888;">
+                    <p style="font-size: 1.1rem;">No tienes publicaciones activas actualmente.</p>
+                </div>
+            `;
+            return;
+        }
+
+        contenedorPublicaciones.innerHTML = "";
+
+        publicaciones.forEach((pub, index) => {
+            const item = document.createElement('div');
+            // Usamos las clases visuales idénticas a tu diseño
+            item.style.background = '#fff';
+            item.style.border = '1px solid #eee';
+            item.style.borderRadius = '12px';
+            item.style.padding = '20px';
+            item.style.marginBottom = '15px';
+            item.style.display = 'flex';
+            item.style.alignItems = 'center';
+            item.style.justifyContent = 'space-between';
+            item.style.boxShadow = '0 2px 8px rgba(0,0,0,0.02)';
+
+            const rutaImg = pub.imagen || 'img/pozole.jpg';
+            const titulo = pub.titulo || 'Producto sin título';
+            const desc = pub.descripcion || 'Sin descripción';
+            const precio = parseFloat(pub.precio) || 0;
+
+            item.innerHTML = `
+                <div style="display: flex; align-items: center; gap: 20px;">
+                    <img src="${rutaImg}" alt="${titulo}" style="width: 80px; height: 80px; object-fit: cover; border-radius: 8px;" onerror="this.src='img/pozole.jpg'">
+                    <div>
+                        <h4 style="margin: 0 0 5px 0; font-size: 1.2rem; color: #333;">${titulo}</h4>
+                        <p style="margin: 0 0 8px 0; font-size: 0.9rem; color: #666;">${desc}</p>
+                        <span style="font-weight: bold; color: #d32f2f; font-size: 1.1rem;">$${precio.toFixed(2)} MXN</span>
+                    </div>
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 10px;">
+                    <button onclick="editarPublicacion(${index})" style="background: #ffa000; color: white; border: none; padding: 8px 15px; border-radius: 6px; cursor: pointer; font-weight: bold;">Editar</button>
+                    <button onclick="eliminarPublicacion(${index})" style="background: #d32f2f; color: white; border: none; padding: 8px 15px; border-radius: 6px; cursor: pointer; font-weight: bold;">Eliminar</button>
+                </div>
+            `;
+            contenedorPublicaciones.appendChild(item);
+        });
+    }
+
+    // Acción para eliminar un producto del localStorage
+    function eliminarPublicacion(index) {
+        if (confirm("¿Estás seguro de que deseas eliminar esta publicación del mercadito?")) {
+            let publicaciones = JSON.parse(localStorage.getItem(CLAVE_LOCAL)) || [];
+            publicaciones.splice(index, 1);
+            localStorage.setItem(CLAVE_LOCAL, JSON.stringify(publicaciones));
+            cargarMisPublicaciones();
+        }
+    }
+
+    // Acción para editar de forma interactiva (usando un prompt sencillo sin recargar páginas)
+    function editarPublicacion(index) {
+        let publicaciones = JSON.parse(localStorage.getItem(CLAVE_LOCAL)) || [];
+        const pub = publicaciones[index];
+
+        const nuevoTitulo = prompt("Editar nombre del producto:", pub.titulo);
+        if (nuevoTitulo === null) return; // Cancelado
+
+        const nuevaDesc = prompt("Editar descripción del producto:", pub.descripcion);
+        if (nuevaDesc === null) return;
+
+        const nuevoPrecio = prompt("Editar precio (solo números):", pub.precio);
+        if (nuevoPrecio === null) return;
+
+        if (nuevoTitulo.trim() !== "" && !isNaN(parseFloat(nuevoPrecio))) {
+            publicaciones[index] = {
+                ...pub,
+                titulo: nuevoTitulo.trim(),
+                descripcion: nuevaDesc.trim(),
+                precio: parseFloat(nuevoPrecio)
+            };
+            localStorage.setItem(CLAVE_LOCAL, JSON.stringify(publicaciones));
+            cargarMisPublicaciones();
+        } else {
+            alert("Datos inválidos. Por favor verifica los campos.");
+        }
+    }
+
+    // Arrancar la carga al iniciar la pantalla sin escribir nada en consola
+    document.addEventListener('DOMContentLoaded', cargarMisPublicaciones);
+</script>
+
+</body>
+</html>

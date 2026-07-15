@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Publicar Producto - Sabor Mexicano</title>
+    <link rel="stylesheet" href="estilos.css">
+    <style>
+        .contenedor-c2c { max-width: 500px; margin: 40px auto; padding: 30px; background: #fff; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); border-top: 5px solid #d32f2f; }
+        .contenedor-c2c h2 { color: #006847; text-align: center; margin-bottom: 20px; }
+        .form-grupo { margin-bottom: 15px; }
+        .form-grupo label { display: block; font-weight: bold; margin-bottom: 5px; color: #333; }
+        .form-grupo input, .form-grupo textarea { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; }
+        .form-grupo textarea { height: 80px; resize: none; }
+        .btn-atras { display: inline-block; margin-bottom: 15px; color: #006847; text-decoration: none; font-weight: bold; }
+
+        /* Modal de Éxito Personalizado (Adiós al alert de consola) */
+        .modal-exito {
+            display: none; 
+            position: fixed; 
+            top: 0; left: 0; 
+            width: 100%; height: 100%; 
+            background: rgba(0,0,0,0.5); 
+            z-index: 1000; 
+            justify-content: center; 
+            align-items: center;
+        }
+        .modal-contenido {
+            background: white; 
+            padding: 30px; 
+            border-radius: 15px; 
+            text-align: center;
+            max-width: 400px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+            animation: aparecer 0.3s ease-out;
+        }
+        @keyframes aparecer {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="logo-contenedor">
+        <img src="img/logo.png.png" class="logo-img" alt="Logo">
+        <span>Sabor Mexicano</span>
+    </div>
+    <nav>
+        <ul>
+            <li><a href="index.html">Inicio</a></li>
+            <li><a href="catalogo.html">Catálogo</a></li>
+            <li><a href="perfil.html">Mi Perfil</a></li>
+        </ul>
+    </nav>
+</header>
+
+<main class="seccion">
+    <div class="contenedor-c2c">
+        <a href="perfil.html" class="btn-atras">← Volver al Perfil</a>
+        <h2>Vender en Sabor Mexicano (C2C)</h2>
+        
+        <form id="formPublicar">
+            <div class="form-grupo">
+                <label>Nombre del Producto:</label>
+                <input type="text" id="prodNombre" required placeholder="Ej. Taza de Talavera">
+            </div>
+
+            <div class="form-grupo">
+                <label>Precio ($ MXN):</label>
+                <input type="number" id="prodPrecio" required min="1" step="0.01" placeholder="0.00">
+            </div>
+
+            <div class="form-grupo">
+                <label>Descripción:</label>
+                <textarea id="prodDescripcion" required placeholder="Taza de talavera tradicional..."></textarea>
+            </div>
+
+            <div class="form-grupo">
+                <label>Foto del Producto:</label>
+                <input type="file" id="prodFoto" accept="image/*" required>
+            </div>
+
+            <button type="submit" class="btn-rojo" style="width: 100%; margin-top: 10px;">PUBLICA TU PRODUCTO</button>
+        </form>
+    </div>
+</main>
+
+<!-- MODAL PERSONALIZADO DE ÉXITO -->
+<div id="modalPublicado" class="modal-exito">
+    <div class="modal-contenido">
+        <div style="font-size: 3rem; color: #006847; margin-bottom: 10px;">🎉</div>
+        <h3 style="color: #006847; margin-top: 0;">¡Publicado con éxito!</h3>
+        <p style="color: #555; margin-bottom: 20px;">Tu producto ya está visible para toda la comunidad en el Catálogo e Inicio.</p>
+        <button onclick="redirigir()" class="btn-rojo" style="padding: 10px 25px;">Ver mis publicaciones</button>
+    </div>
+</div>
+
+<script>
+    let imagenBase64 = "";
+
+    // Convertir imagen local a Base64 para guardarla de forma persistente y que se vea en Inicio
+    document.getElementById('prodFoto').addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                imagenBase64 = event.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+
+    document.getElementById('formPublicar').addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const nombre = document.getElementById('prodNombre').value;
+        const precio = parseFloat(document.getElementById('prodPrecio').value).toFixed(2);
+        const descripcion = document.getElementById('prodDescripcion').value;
+
+        // Si no subió foto, ponemos un placeholder
+        const fotoFinal = imagenBase64 || "img/comida-placeholder.png"; 
+
+        const nuevoProducto = {
+            id: 'c2c_' + Date.now(),
+            nombre: nombre,
+            precio: precio,
+            descripcion: descripcion,
+            imagen: fotoFinal,
+            vendedor: localStorage.getItem('usuarioNombre') || "nelly"
+        };
+
+        // Guardamos en el almacén global de publicaciones C2C
+        let publicaciones = JSON.parse(localStorage.getItem('publicacionesC2C')) || [];
+        publicaciones.unshift(nuevoProducto); // Agrega al principio para que salga primero
+        localStorage.setItem('publicacionesC2C', JSON.stringify(publicaciones));
+
+        // Mostrar nuestro modal en vez de alert
+        document.getElementById('modalPublicado').style.display = 'flex';
+    });
+
+    function redirigir() {
+        window.location.href = "mis-publicaciones.html";
+    }
+</script>
+
+</body>
+</html>

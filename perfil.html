@@ -2,109 +2,772 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Mi Perfil - Sabor Mexicano</title>
+    <title>Sabor Mexicano - Mi Perfil</title>
     <link rel="stylesheet" href="estilos.css">
     <style>
-        /* Estilos específicos para la estructura mejorada */
-        .contenedor-perfil { max-width: 800px; margin: 40px auto; padding: 20px; background: #fff; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
-        .info-usuario { text-align: center; margin-bottom: 30px; }
-        .lista-actividad { list-style: none; padding: 0; margin-top: 20px; }
-        .lista-actividad li { padding: 15px 0; border-bottom: 1px solid #eee; display: flex; align-items: center; gap: 10px; color: #555; }
-        .lista-actividad li:hover { color: #006847; cursor: pointer; }
-        
-        /* Estilos de Redes Flotantes */
-        .redes-flotantes { position: fixed; right: 20px; bottom: 20px; display: flex; flex-direction: column; gap: 10px; }
-        .redes-flotantes img { width: 45px; transition: 0.3s; }
-        .redes-flotantes img:hover { transform: scale(1.1); }
+        /* --- ESTILOS DE LA CABECERA COMPLETA --- */
+        header {
+            background-color: #006847;
+            padding: 15px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: white;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        .logo-contenedor {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .logo-img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid white;
+        }
+        .logo-contenedor span {
+            font-size: 1.6rem;
+            font-weight: bold;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        header nav ul {
+            list-style: none;
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            margin: 0;
+            padding: 0;
+        }
+        header nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+        header nav ul li a:hover, header nav ul li a.activo {
+            color: #ffca28;
+        }
+
+        /* --- REDES SOCIALES FLOTANTES --- */
+        .redes-flotantes {
+            position: fixed;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            z-index: 9999;
+        }
+        .redes-flotantes a img {
+            width: 45px;
+            height: 45px;
+            object-fit: cover;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            transition: transform 0.3s;
+        }
+        .redes-flotantes a img:hover {
+            transform: scale(1.15);
+        }
+
+        /* --- CONTENEDORES --- */
+        .contenedor-perfil {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 0 20px;
+            min-height: 70vh;
+        }
+
+        /* Formulario de Login */
+        .login-card {
+            max-width: 400px;
+            margin: 80px auto;
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border: 1px solid #eee;
+            text-align: center;
+        }
+        .form-grupo {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        .form-grupo label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 600;
+            color: #333;
+        }
+        .form-grupo input, .form-grupo select, .form-grupo textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            box-sizing: border-box;
+            font-family: inherit;
+        }
+
+        /* Panel de Control de Perfil */
+        .panel-usuario {
+            display: none;
+        }
+
+        /* Menú de pestañas internas del perfil */
+        .menu-perfil {
+            display: flex;
+            background: #f0ede5;
+            padding: 8px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            gap: 10px;
+            justify-content: center;
+        }
+        .btn-pestana {
+            background: none;
+            border: none;
+            padding: 12px 20px;
+            font-size: 0.95rem;
+            font-weight: bold;
+            color: #555;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: 0.3s;
+        }
+        .btn-pestana.activa {
+            background: #006847;
+            color: white;
+        }
+
+        .seccion-perfil {
+            display: none;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+            border: 1px solid #eee;
+        }
+        .seccion-perfil.activa {
+            display: block;
+        }
+
+        /* Botones de acción */
+        .btn-accion {
+            background-color: #006847;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .btn-accion:hover {
+            background-color: #004d34;
+        }
+        .btn-danger {
+            background-color: #d32f2f;
+            color: white;
+            border: none;
+            padding: 8px 14px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+        .btn-danger:hover {
+            background-color: #b71c1c;
+        }
+        .btn-editar {
+            background-color: #f57c00;
+            color: white;
+            border: none;
+            padding: 8px 14px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+        .btn-editar:hover {
+            background-color: #e65100;
+        }
+
+        /* Grid de Mis Publicaciones */
+        .grid-mis-publicaciones {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .tarjeta-mi-prod {
+            border: 1px solid #eee;
+            border-radius: 8px;
+            overflow: hidden;
+            background: #fff;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        .tarjeta-mi-prod img {
+            width: 100%;
+            height: 160px;
+            object-fit: cover;
+        }
+        .tarjeta-mi-prod-info {
+            padding: 15px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .controles-producto {
+            display: flex;
+            gap: 8px;
+            margin-top: auto;
+        }
+
+        /* Estilos Subasta */
+        .subasta-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+        @media(max-width: 768px) { .subasta-container { grid-template-columns: 1fr; } }
+
+        /* --- SISTEMA DE NOTIFICACIONES PERSONALIZADO (TOASTS) --- */
+        .toast-notificacion {
+            position: fixed;
+            bottom: -100px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #006847;
+            color: white;
+            padding: 15px 30px;
+            border-radius: 50px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+            font-weight: bold;
+            z-index: 10000;
+            transition: bottom 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s;
+            opacity: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .toast-notificacion.mostrar {
+            bottom: 40px;
+            opacity: 1;
+        }
+
+        /* --- MODALES PERSONALIZADOS (CONFIRMACIÓN Y EDICIÓN) --- */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6);
+            z-index: 99999;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(3px);
+        }
+        .modal-caja {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            max-width: 450px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            animation: aparecerModal 0.3s ease;
+        }
+        @keyframes aparecerModal {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+        .modal-botones {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        footer {
+            background-color: #222;
+            color: #ccc;
+            padding: 20px;
+            text-align: center;
+            margin-top: 60px;
+            border-top: 4px solid #006847;
+        }
     </style>
 </head>
 <body>
 
 <header>
     <div class="logo-contenedor">
-        <img src="img/logo.png.png" class="logo-img" alt="Logo">
+        <img src="img/logo.png.png" class="logo-img" alt="Logo" onerror="this.src='logo.png'">
         <span>Sabor Mexicano</span>
     </div>
     <nav>
         <ul>
             <li><a href="index.html">Inicio</a></li>
             <li><a href="catalogo.html">Catálogo</a></li>
-            <li><a href="#" onclick="cerrarSesion(event)">Cerrar Sesión</a></li>
+            <li><a href="comunidad.html">Comunidad</a></li>
+            <li><a href="promos.html">🔥 Promos</a></li>
+            <li><a href="especial.html">Especial</a></li>
+            <li><a href="mercadito.html">🏪 Mercadito</a></li>
+            <li><a href="nosotros.html">Nosotros</a></li>
+            <li><a href="contacto.html">Contacto</a></li>
+            <li><a href="perfil.html" class="activo" id="nav-perfil-texto">Iniciar Sesión</a></li>
         </ul>
     </nav>
 </header>
 
-<main class="seccion">
-    <div class="contenedor-perfil">
-        <div class="info-usuario">
-            <h2 id="titulo-perfil">¡Bienvenido, Usuario!</h2>
-            <p><strong>Mis datos</strong></p>
-            <p>Nombre: <span id="nombre-usuario-display">Cargando...</span></p>
-            <p>Correo: <span id="email-usuario-display">Cargando...</span></p>
-            <button class="btn-editar">Editar perfil</button>
-        </div>
+<!-- Redes Flotantes -->
+<div class="redes-flotantes">
+    <a href="https://facebook.com" target="_blank"><img src="img/face.png" alt="Facebook" onerror="this.src='face.png'"></a>
+    <a href="https://instagram.com" target="_blank"><img src="img/insta.jpg" alt="Instagram" onerror="this.src='insta.jpg'"></a>
+</div>
 
-        <hr>
+<main class="contenedor-perfil">
 
-        <h3>Mi actividad</h3>
-        <ul class="lista-actividad">
-            <li>📦 Mis compras <span>(próximamente)</span></li>
-            <li>❤️ Favoritos <span>(próximamente)</span></li>
-            <li>💬 Preguntas <span>(próximamente)</span></li>
-            <li>🕒 Historial <span>(próximamente)</span></li>
-        </ul>
-
-        <div style="text-align: center; margin-top: 30px;">
-            <a href="index.html" class="btn-rojo">Regresar al Inicio</a>
-        </div>
+    <!-- 1. ACCESO (LOGIN) -->
+    <div id="pantalla-login" class="login-card">
+        <h2 style="color: #006847; margin-top: 0;">Iniciar Sesión</h2>
+        <p style="color: #666; font-size: 0.9rem; margin-bottom: 25px;">Accede para publicar productos y participar en subastas.</p>
+        <form onsubmit="iniciarSesionSimulado(event)">
+            <div class="form-grupo">
+                <label for="usuario">Usuario / Correo</label>
+                <input type="text" id="usuario" value="Nelly_Tics" required>
+            </div>
+            <div class="form-grupo">
+                <label for="password">Contraseña</label>
+                <input type="password" id="password" value="123456" required>
+            </div>
+            <button type="submit" class="btn-accion" style="width: 100%;">Ingresar</button>
+        </form>
     </div>
+
+    <!-- 2. PANEL PRIVADO DEL USUARIO -->
+    <div id="panel-usuario" class="panel-usuario">
+        
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+            <div>
+                <h2 style="margin: 0; color: #006847;">Bienvenido, <span id="nombre-perfil-display">Usuario</span> 👋</h2>
+                <p style="margin: 5px 0 0 0; color: #666;">Gestiona tus ventas y subastas desde aquí.</p>
+            </div>
+            <button class="btn-danger" onclick="cerrarSesion()" style="padding: 10px 20px; border-radius: 8px;">Cerrar Sesión</button>
+        </div>
+
+        <!-- Menú de Pestañas -->
+        <div class="menu-perfil">
+            <button class="btn-pestana activa" onclick="irAPestana('publicar')">📤 Publica tu Producto</button>
+            <button class="btn-pestana" onclick="irAPestana('mis-publicaciones')">📦 Mis Publicaciones</button>
+            <button class="btn-pestana" onclick="irAPestana('subasta')">🔨 Subasta Simbólica</button>
+        </div>
+
+        <!-- PESTAÑA A: PUBLICAR PRODUCTO -->
+        <section id="sec-publicar" class="seccion-perfil activa">
+            <h3 style="color: #006847; margin-top: 0;">Publicar un nuevo producto en el Mercadito</h3>
+            <p style="color: #666; margin-bottom: 25px;">Sube una foto directamente desde tu computadora y llena los datos del producto.</p>
+            
+            <form id="form-publicar-c2c" onsubmit="publicarProductoC2C(event)" style="display: flex; flex-direction: column; gap: 15px; max-width: 600px;">
+                <div class="form-grupo">
+                    <label>Nombre del Producto</label>
+                    <input type="text" id="c2c-nombre" placeholder="Ej. Taza de talavera" required>
+                </div>
+                <div class="form-grupo">
+                    <label>Precio ($ MXN)</label>
+                    <input type="number" id="c2c-precio" placeholder="Ej. 140" required>
+                </div>
+                <div class="form-grupo">
+                    <label>Descripción del Producto</label>
+                    <textarea id="c2c-descripcion" rows="3" placeholder="Taza tradicional hecha a mano..." required></textarea>
+                </div>
+                <div class="form-grupo">
+                    <label>Imagen del Producto (Sube un archivo desde tu computadora 💻)</label>
+                    <input type="file" id="c2c-foto" accept="image/*" required>
+                </div>
+                <button type="submit" class="btn-accion">Publicar Producto</button>
+            </form>
+        </section>
+
+        <!-- PESTAÑA B: MIS PUBLICACIONES -->
+        <section id="sec-mis-publicaciones" class="seccion-perfil">
+            <h3 style="color: #006847; margin-top: 0;">Mis Publicaciones Activas</h3>
+            <p style="color: #666;">Productos que tienes ofertados actualmente en el Mercadito.</p>
+            
+            <div id="contenedor-mis-publicaciones" class="grid-mis-publicaciones"></div>
+        </section>
+
+        <!-- PESTAÑA C: SUBASTA -->
+        <section id="sec-subasta" class="seccion-perfil">
+            <h3 style="color: #006847; margin-top: 0; text-align: center;">🔨 Subasta de la Comunidad</h3>
+            <p style="text-align: center; color: #666; margin-bottom: 30px;">¡Oferta por piezas únicas en tiempo real!</p>
+            
+            <div class="subasta-container">
+                <div>
+                    <img src="img/fondo-comida.jpg" style="width: 100%; height: 280px; object-fit: cover; border-radius: 8px;" onerror="this.src='https://via.placeholder.com/400x280'">
+                </div>
+                <div style="display: flex; flex-direction: column; justify-content: center;">
+                    <h4 style="margin: 0; font-size: 1.5rem; color: #222;">Comal Tradicional de Piedra Volcánica</h4>
+                    <p style="color: #666; margin: 10px 0; line-height: 1.5;">Ideal para tatemar tus chiles y cocer tortillas a mano con el auténtico calor de la piedra curada.</p>
+                    <div style="font-size: 1.5rem; color: #d32f2f; font-weight: bold; margin: 10px 0;" id="subasta-reloj">⏱️ Tiempo restante: 04:59</div>
+                    <div style="font-size: 1.25rem; font-weight: bold; color: #006847; margin-bottom: 20px;">Oferta Líder: $<span id="monto-lider">380.00</span> MXN</div>
+                    
+                    <div style="display: flex; gap: 10px;">
+                        <input type="number" id="monto-oferta" placeholder="Monto a ofrecer" style="padding: 10px; width: 50%; border: 1px solid #ccc; border-radius: 6px;">
+                        <button class="btn-accion" onclick="registrarOferta()" style="background-color: #d32f2f;">🔨 Ofertar</button>
+                    </div>
+                </div>
+            </div>
+
+            <h4 style="margin-top: 30px; border-bottom: 1px solid #eee; padding-bottom: 8px;">Historial de Postores:</h4>
+            <ul id="historial-ofertas" style="list-style: none; padding: 0; background: #fafafa; padding: 15px; border-radius: 8px; border: 1px solid #eee;">
+                <li style="padding: 8px 0; border-bottom: 1px solid #eee;">👤 Carlos_99 ofertó $380.00 MXN</li>
+                <li style="padding: 8px 0; border-bottom: 1px solid #eee;">👤 Sofia_Tics ofertó $350.00 MXN</li>
+            </ul>
+        </section>
+
+    </div>
+
 </main>
 
-<footer>
-    <p>&copy; 2026 Sabor Mexicano - Todos los derechos reservados.</p>
-    
-    <!-- Enlaces legales integrados con estilos en línea sencillos para no alterar tu CSS global -->
-    <div style="margin: 8px 0; display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;">
-        <a href="terminos.html" style="color: #ccc; text-decoration: none; font-size: 0.85rem; transition: color 0.3s;">Términos del Servicio</a>
-        <span style="color: #666;">|</span>
-        <a href="politicas.html" style="color: #ccc; text-decoration: none; font-size: 0.85rem; transition: color 0.3s;">Política de Compraventa</a>
-    </div>
+<!-- TOAST PARA NOTIFICACIONES BONITAS -->
+<div id="custom-toast" class="toast-notificacion">
+    <span id="toast-icono">🎉</span> <span id="toast-mensaje">Operación exitosa</span>
+</div>
 
-    <p style="font-size: 0.8rem; opacity: 0.7; margin-top: 5px;">e-business + e-commerce - Negocios Electrónicos I</p>
+<!-- MODAL DE CONFIRMACIÓN DE ELIMINACIÓN -->
+<div id="modal-confirmar" class="modal-overlay">
+    <div class="modal-caja">
+        <h3 style="color: #d32f2f; margin-top: 0;">¿Estás seguro?</h3>
+        <p id="modal-confirmar-texto" style="color: #666; line-height: 1.4;">Esta acción no se puede deshacer y el producto desaparecerá del Mercadito.</p>
+        <div class="modal-botones">
+            <button class="btn-danger" id="btn-modal-aceptar">Sí, eliminar</button>
+            <button class="btn-accion" style="background-color: #777;" onclick="cerrarConfirmar()">Cancelar</button>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL DE EDICIÓN DE PRODUCTO -->
+<div id="modal-editar" class="modal-overlay">
+    <div class="modal-caja" style="max-width: 500px; text-align: left;">
+        <h3 style="color: #006847; margin-top:0; text-align: center;">✏️ Editar mi Producto</h3>
+        <form id="form-editar-c2c" onsubmit="guardarEdicionC2C(event)">
+            <input type="hidden" id="edit-id">
+            <div class="form-grupo">
+                <label>Nombre del Producto</label>
+                <input type="text" id="edit-nombre" required>
+            </div>
+            <div class="form-grupo">
+                <label>Precio ($ MXN)</label>
+                <input type="number" id="edit-precio" required>
+            </div>
+            <div class="form-grupo">
+                <label>Descripción</label>
+                <textarea id="edit-descripcion" rows="3" required></textarea>
+            </div>
+            <div class="form-grupo">
+                <label>Imagen (Opcional - Selecciona otra si quieres cambiarla)</label>
+                <input type="file" id="edit-foto" accept="image/*">
+            </div>
+            <div class="modal-botones">
+                <button type="submit" class="btn-accion">Guardar Cambios</button>
+                <button type="button" class="btn-danger" style="background-color: #777;" onclick="cerrarEditar()">Cancelar</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<footer>
+    <p>&copy; 2026 Sabor Mexicano - Panel del Desarrollador.</p>
 </footer>
 
-<div class="redes-flotantes">
-    <a href="#"><img src="img/face.png" alt="Facebook"></a>
-    <a href="#"><img src="img/insta.jpg" alt="Instagram"></a>
-</div>
-
-<div id="modal-cierre" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; justify-content: center; align-items: center;">
-    <div style="background: white; padding: 30px; border-radius: 15px; text-align: center;">
-        <h3>Sesión cerrada</h3>
-        <p>Has cerrado sesión correctamente.</p>
-        <button onclick="window.location.href='index.html'" class="btn-rojo">Aceptar</button>
-    </div>
-</div>
-
 <script>
-    // Recuperar datos
-    window.onload = function() {
-        const nombre = localStorage.getItem('usuarioNombre');
-        const email = localStorage.getItem('usuarioEmail');
-        if(nombre) {
-            document.getElementById('titulo-perfil').innerText = "¡Bienvenido, " + nombre + "!";
-            document.getElementById('nombre-usuario-display').innerText = nombre;
-        }
-        if(email) document.getElementById('email-usuario-display').innerText = email;
+// --- PERSISTENCIA ---
+const KEY_PRODUCTOS = "productos_mercadito";
+const KEY_SESION = "usuario_activo";
+
+// 1. Pega esta línea temporalmente para borrar los productos viejos:
+localStorage.removeItem(KEY_PRODUCTOS); 
+
+// 2. Tu código sigue normal abajo:
+const productosBase = []; 
+
+if (!localStorage.getItem(KEY_PRODUCTOS)) {
+    localStorage.setItem(KEY_PRODUCTOS, JSON.stringify(productosBase));
+}
+
+    // --- HERRAMIENTA DE NOTIFICACIONES (TOAST) ---
+    function mostrarToast(mensaje, icono = "🎉") {
+        const toast = document.getElementById('custom-toast');
+        document.getElementById('toast-icono').textContent = icono;
+        document.getElementById('toast-mensaje').textContent = mensaje;
+        
+        toast.classList.add('mostrar');
+        setTimeout(() => {
+            toast.classList.remove('mostrar');
+        }, 3000);
+    }
+
+    // Variables globales para callbacks de modales
+    let confirmacionCallback = null;
+
+    function abrirConfirmar(mensaje, callback) {
+        document.getElementById('modal-confirmar-texto').textContent = mensaje;
+        document.getElementById('modal-confirmar').style.display = 'flex';
+        confirmacionCallback = callback;
+    }
+
+    function cerrarConfirmar() {
+        document.getElementById('modal-confirmar').style.display = 'none';
+        confirmacionCallback = null;
+    }
+
+    document.getElementById('btn-modal-aceptar').onclick = function() {
+        if (confirmacionCallback) confirmacionCallback();
+        cerrarConfirmar();
     };
 
-    // Función de cierre mejorada
-    function cerrarSesion(event) {
-        event.preventDefault();
-        localStorage.clear();
-        document.getElementById('modal-cierre').style.display = 'flex';
-    }
-</script>
+    // --- FLUJO DE SESIÓN ---
+    function verificarSesion() {
+        const usuarioLogueado = localStorage.getItem(KEY_SESION);
+        const divLogin = document.getElementById('pantalla-login');
+        const divPanel = document.getElementById('panel-usuario');
+        const navTexto = document.getElementById('nav-perfil-texto');
 
+        if (usuarioLogueado) {
+            divLogin.style.display = 'none';
+            divPanel.style.display = 'block';
+            document.getElementById('nombre-perfil-display').textContent = usuarioLogueado;
+            navTexto.textContent = "Mi Perfil (" + usuarioLogueado + ")";
+            cargarMisPublicaciones();
+        } else {
+            divLogin.style.display = 'block';
+            divPanel.style.display = 'none';
+            navTexto.textContent = "Iniciar Sesión";
+        }
+    }
+
+    function iniciarSesionSimulado(event) {
+        event.preventDefault();
+        const usuario = document.getElementById('usuario').value.trim();
+        localStorage.setItem(KEY_SESION, usuario);
+        verificarSesion();
+        mostrarToast("¡Sesión iniciada con éxito!", "👋");
+    }
+
+    function cerrarSesion() {
+        localStorage.removeItem(KEY_SESION);
+        verificarSesion();
+        mostrarToast("Sesión cerrada.", "🚪");
+    }
+
+    // --- NAVEGACIÓN ---
+    function irAPestana(idPestana) {
+        document.querySelectorAll('.btn-pestana').forEach(btn => btn.classList.remove('activa'));
+        document.querySelectorAll('.seccion-perfil').forEach(sec => sec.classList.remove('activa'));
+
+        if (idPestana === 'publicar') {
+            document.querySelector('[onclick="irAPestana(\'publicar\')"]').classList.add('activa');
+            document.getElementById('sec-publicar').classList.add('activa');
+        } else if (idPestana === 'mis-publicaciones') {
+            document.querySelector('[onclick="irAPestana(\'mis-publicaciones\')"]').classList.add('activa');
+            document.getElementById('sec-mis-publicaciones').classList.add('activa');
+            cargarMisPublicaciones();
+        } else if (idPestana === 'subasta') {
+            document.querySelector('[onclick="irAPestana(\'subasta\')"]').classList.add('activa');
+            document.getElementById('sec-subasta').classList.add('activa');
+        }
+    }
+
+    // --- CREAR / PUBLICAR PRODUCTO CON FOTO REAL ---
+    function publicarProductoC2C(event) {
+        event.preventDefault();
+        const usuarioActivo = localStorage.getItem(KEY_SESION);
+        const nombre = document.getElementById('c2c-nombre').value;
+        const precio = parseFloat(document.getElementById('c2c-precio').value);
+        const descripcion = document.getElementById('c2c-descripcion').value;
+        const fotoInput = document.getElementById('c2c-foto');
+
+        if (fotoInput.files.length === 0) {
+            mostrarToast("Por favor, selecciona una imagen.", "⚠️");
+            return;
+        }
+
+        const archivo = fotoInput.files[0];
+        const lector = new FileReader();
+
+        lector.onload = function(e) {
+            const base64Imagen = e.target.result; // Contenido real del archivo cargado
+
+            const nuevosProductos = JSON.parse(localStorage.getItem(KEY_PRODUCTOS)) || [];
+            const nuevoProd = {
+                id: Date.now(),
+                nombre: nombre,
+                precio: precio,
+                descripcion: descripcion,
+                foto: base64Imagen, // Almacenamos el Base64
+                usuario: usuarioActivo
+            };
+
+            nuevosProductos.push(nuevoProd);
+            localStorage.setItem(KEY_PRODUCTOS, JSON.stringify(nuevosProductos));
+
+            mostrarToast("¡Producto publicado con éxito!", "🚀");
+            document.getElementById('form-publicar-c2c').reset();
+            irAPestana('mis-publicaciones');
+        };
+
+        lector.readAsDataURL(archivo); // Procesa la imagen del computador
+    }
+
+    // --- CARGAR MIS PUBLICACIONES ---
+    function cargarMisPublicaciones() {
+        const usuarioActivo = localStorage.getItem(KEY_SESION);
+        const contenedor = document.getElementById('contenedor-mis-publicaciones');
+        contenedor.innerHTML = "";
+
+        const todosLosProductos = JSON.parse(localStorage.getItem(KEY_PRODUCTOS)) || [];
+        const misProductos = todosLosProductos.filter(p => p.usuario === usuarioActivo);
+
+        if (misProductos.length === 0) {
+            contenedor.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: #777; margin: 30px 0;">No tienes publicaciones activas actualmente.</p>`;
+            return;
+        }
+
+        misProductos.forEach(p => {
+            const div = document.createElement('div');
+            div.className = 'tarjeta-mi-prod';
+            div.innerHTML = `
+                <img src="${p.foto}" alt="${p.nombre}" onerror="this.src='https://via.placeholder.com/250x150'">
+                <div class="tarjeta-mi-prod-info">
+                    <h4 style="margin: 0 0 5px 0; font-size:1.15rem;">${p.nombre}</h4>
+                    <span style="color: #006847; font-weight: bold; margin-bottom: 8px;">$${p.precio.toFixed(2)} MXN</span>
+                    <p style="font-size: 0.85rem; color: #666; margin: 0 0 15px 0; line-height: 1.3; flex-grow:1;">${p.descripcion}</p>
+                    <div class="controles-producto">
+                        <button class="btn-editar" onclick="abrirEditar(${p.id})">Editar</button>
+                        <button class="btn-danger" onclick="confirmarEliminar(${p.id})">Eliminar</button>
+                    </div>
+                </div>
+            `;
+            contenedor.appendChild(div);
+        });
+    }
+
+    function confirmarEliminar(id) {
+        abrirConfirmar("¿Seguro que quieres eliminar este producto? Desaparecerá inmediatamente del catálogo del Mercadito.", () => {
+            let todosLosProductos = JSON.parse(localStorage.getItem(KEY_PRODUCTOS)) || [];
+            todosLosProductos = todosLosProductos.filter(p => p.id !== id);
+            localStorage.setItem(KEY_PRODUCTOS, JSON.stringify(todosLosProductos));
+            cargarMisPublicaciones();
+            mostrarToast("Producto eliminado.", "🗑️");
+        });
+    }
+
+    // --- MODAL DE EDICIÓN: LOGICA ---
+    function abrirEditar(id) {
+        const todosLosProductos = JSON.parse(localStorage.getItem(KEY_PRODUCTOS)) || [];
+        const producto = todosLosProductos.find(p => p.id === id);
+
+        if (producto) {
+            document.getElementById('edit-id').value = producto.id;
+            document.getElementById('edit-nombre').value = producto.nombre;
+            document.getElementById('edit-precio').value = producto.precio;
+            document.getElementById('edit-descripcion').value = producto.descripcion;
+            document.getElementById('edit-foto').value = ""; // Resetea el input file
+            
+            document.getElementById('modal-editar').style.display = 'flex';
+        }
+    }
+
+    function cerrarEditar() {
+        document.getElementById('modal-editar').style.display = 'none';
+    }
+
+    function guardarEdicionC2C(event) {
+        event.preventDefault();
+        const id = parseInt(document.getElementById('edit-id').value);
+        const nombre = document.getElementById('edit-nombre').value;
+        const precio = parseFloat(document.getElementById('edit-precio').value);
+        const descripcion = document.getElementById('edit-descripcion').value;
+        const fotoInput = document.getElementById('edit-foto');
+
+        let todosLosProductos = JSON.parse(localStorage.getItem(KEY_PRODUCTOS)) || [];
+        const index = todosLosProductos.findIndex(p => p.id === id);
+
+        if (index !== -1) {
+            // Si el usuario subió una nueva foto durante la edición
+            if (fotoInput.files.length > 0) {
+                const archivo = fotoInput.files[0];
+                const lector = new FileReader();
+
+                lector.onload = function(e) {
+                    todosLosProductos[index].nombre = nombre;
+                    todosLosProductos[index].precio = precio;
+                    todosLosProductos[index].descripcion = descripcion;
+                    todosLosProductos[index].foto = e.target.result; // Guarda la nueva foto en Base64
+
+                    localStorage.setItem(KEY_PRODUCTOS, JSON.stringify(todosLosProductos));
+                    mostrarToast("¡Producto editado con éxito!", "✏️");
+                    cerrarEditar();
+                    cargarMisPublicaciones();
+                };
+                lector.readAsDataURL(archivo);
+            } else {
+                // Si mantiene la foto actual
+                todosLosProductos[index].nombre = nombre;
+                todosLosProductos[index].precio = precio;
+                todosLosProductos[index].descripcion = descripcion;
+
+                localStorage.setItem(KEY_PRODUCTOS, JSON.stringify(todosLosProductos));
+                mostrarToast("¡Producto editado con éxito!", "✏️");
+                cerrarEditar();
+                cargarMisPublicaciones();
+            }
+        }
+    }
+
+    // --- SUBASTA ---
+    function registrarOferta() {
+        const inputMonto = document.getElementById('monto-oferta');
+        const liderSpan = document.getElementById('monto-lider');
+        const historial = document.getElementById('historial-ofertas');
+        const usuarioActivo = localStorage.getItem(KEY_SESION);
+
+        const monto = parseFloat(inputMonto.value);
+        const actual = parseFloat(liderSpan.textContent);
+
+        if (!monto || monto <= actual) {
+            mostrarToast("Tu oferta debe ser mayor al monto actual.", "⚠️");
+            return;
+        }
+
+        liderSpan.textContent = monto.toFixed(2);
+
+        const li = document.createElement('li');
+        li.style.padding = "8px 0";
+        li.style.borderBottom = "1px solid #eee";
+        li.innerHTML = `👤 <strong>${usuarioActivo} (Tú)</strong> ofertó $${monto.toFixed(2)} MXN`;
+        historial.insertBefore(li, historial.firstChild);
+
+        mostrarToast("Oferta registrada correctamente.", "🔨");
+        inputMonto.value = "";
+    }
+
+    // Temporizador
+    let min = 4, seg = 59;
+    setInterval(() => {
+        if (seg === 0) {
+            if (min === 0) { min = 5; seg = 0; } else { min--; seg = 59; }
+        } else { seg--; }
+        document.getElementById('subasta-reloj').textContent = `⏱️ Tiempo restante: ${min.toString().padStart(2, '0')}:${seg.toString().padStart(2, '0')}`;
+    }, 1000);
+
+    document.addEventListener('DOMContentLoaded', verificarSesion);
+</script>
 </body>
 </html>

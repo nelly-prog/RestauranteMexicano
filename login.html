@@ -3,12 +3,96 @@
 <head>
     <meta charset="UTF-8">
     <title>Iniciar Sesión - Sabor Mexicano</title>
+    <!-- Mantenemos tu archivo estilos.css -->
     <link rel="stylesheet" href="estilos.css">
+    <style>
+        /* Estilos específicos para que el contenedor de login sea una tarjeta elegante, centrada e idéntica a registro */
+        .contenedor-tarjeta {
+            max-width: 500px;
+            margin: 50px auto;
+            padding: 30px;
+            background: #ffffff;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            border-top: 5px solid #006847; /* Borde verde característico */
+        }
+        
+        .contenedor-tarjeta h2 {
+            color: #006847;
+            text-align: center;
+            margin-bottom: 25px;
+            font-size: 1.8rem;
+        }
+
+        #formLogin {
+            max-width: 100%;
+            margin: 0;
+            padding: 0;
+            background: transparent;
+            box-shadow: none;
+            border-radius: 0;
+        }
+
+        #formLogin label { 
+            display: block; 
+            margin-top: 15px; 
+            font-weight: bold; 
+            color: #005F73;
+        }
+
+        #formLogin input[type="email"],
+        #formLogin input[type="password"] { 
+            display: block;
+            width: 100%; 
+            padding: 12px; 
+            margin-top: 5px; 
+            border: 1px solid #ccc; 
+            border-radius: 8px; 
+            box-sizing: border-box; 
+            background-color: #fafafa;
+            font-size: 1rem;
+        }
+
+        #formLogin input[type="email"]:focus,
+        #formLogin input[type="password"]:focus {
+            outline: none;
+            border-color: #006847;
+            background-color: #ffffff;
+        }
+
+        .contenido-modal { 
+            background: white; 
+            padding: 30px; 
+            border-radius: 15px; 
+            text-align: center; 
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3); 
+            width: 80%; 
+            max-width: 350px; 
+        }
+
+        .redes-flotantes { 
+            position: fixed; 
+            top: 50%; 
+            right: 20px; 
+            transform: translateY(-50%);
+            display: flex; 
+            flex-direction: column; 
+            gap: 15px; 
+            z-index: 999; 
+        }
+
+        .redes-flotantes img { 
+            width: 45px; 
+            height: 45px;
+        }
+    </style>
 </head>
 <body>
 
+<!-- HEADER CON MENÚ COMPLETO UNIFICADO -->
 <header>
     <div class="logo-contenedor">
+        <!-- Respetamos tu ruta exacta del logo -->
         <img src="img/logo.png.png" class="logo-img" alt="Logo">
         <span>Sabor Mexicano</span>
     </div>
@@ -16,39 +100,49 @@
         <ul>
             <li><a href="index.html">Inicio</a></li>
             <li><a href="catalogo.html">Catálogo</a></li>
-            <li><a href="login.html">Iniciar Sesión</a></li>
-            <li><a href="registro.html">Registrarse</a></li>
+            <li><a href="comunidad.html">Comunidad</a></li>
+            <li><a href="index.html#promociones" style="color: #ffb300; font-weight: bold;">🔥 Promos</a></li>
+            <li><a href="index.html#escaparate">Especial</a></li>
+            <li><a href="index.html#nosotros">Nosotros</a></li>
+            <li><a href="index.html#contacto">Contacto</a></li>
+            <li><a href="login.html" class="active">Iniciar Sesión</a></li>
+            <li class="cart-item-container">
+                <a href="carrito.html" class="cart-link" title="Ver carrito">
+                    🛒 <span id="cart-count" class="cart-badge">0</span>
+                </a>
+            </li>
         </ul>
     </nav>
 </header>
 
 <main class="seccion">
-    <h2>Iniciar Sesión</h2>
-    <form id="formLogin">
-        <label>Correo:</label>
-        <input type="email" id="loginEmail" required>
-        
-        <label>Contraseña:</label>
-        <input type="password" id="loginPassword" required>
-        
-        <div style="margin: 15px 0; display: flex; align-items: center; gap: 8px;">
-            <input type="checkbox" id="recordarSesion" checked style="width: auto; margin: 0;">
-            <label for="recordarSesion" style="display: inline; margin: 0; font-size: 0.9rem; font-weight: normal;">Recordar mis datos</label>
-        </div>
-        
-        <button type="submit" class="btn-rojo" style="width: 100%;">Entrar</button>
+    <div class="contenedor-tarjeta">
+        <h2>Iniciar Sesión</h2>
+        <form id="formLogin">
+            <label>Correo:</label>
+            <input type="email" id="loginEmail" required placeholder="tu@correo.com">
+            
+            <label>Contraseña:</label>
+            <input type="password" id="loginPassword" required placeholder="••••••••">
+            
+            <div style="margin: 15px 0; display: flex; align-items: center; gap: 8px;">
+                <input type="checkbox" id="recordarSesion" checked style="width: auto; margin: 0;">
+                <label for="recordarSesion" style="display: inline; margin: 0; font-size: 0.9rem; font-weight: normal; color: #555;">Recordar mis datos</label>
+            </div>
+            
+            <button type="submit" class="btn-rojo" style="width: 100%;">Entrar</button>
 
-        <div style="margin-top: 15px; text-align: center;">
-            <p><a href="olvido.html" style="font-size: 1.1rem; color: #2140dd;">¿Olvidaste tu contraseña?</a></p>
-            <p>¿No tienes cuenta? <a href="registro.html">Regístrate aquí</a></p>
-        </div>
-    </form>
+            <div style="margin-top: 20px; text-align: center; font-size: 0.95rem;">
+                <p style="margin-bottom: 8px;"><a href="olvido.html" style="color: #2140dd; text-decoration: none;">¿Olvidaste tu contraseña?</a></p>
+                <p style="color: #555;">¿No tienes cuenta? <a href="registro.html" style="color: #006847; font-weight: bold; text-decoration: none;">Regístrate aquí</a></p>
+            </div>
+        </form>
+    </div>
 </main>
 
 <footer>
     <p>&copy; 2026 Sabor Mexicano - Todos los derechos reservados.</p>
     
-    <!-- Enlaces legales integrados con estilos en línea sencillos para no alterar tu CSS global -->
     <div style="margin: 8px 0; display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;">
         <a href="terminos.html" style="color: #ccc; text-decoration: none; font-size: 0.85rem; transition: color 0.3s;">Términos del Servicio</a>
         <span style="color: #666;">|</span>
@@ -59,9 +153,9 @@
 </footer>
 
 <div id="modal-mensaje" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); align-items:center; justify-content:center; z-index:1000;">
-    <div class="contenido-modal" style="background: white; padding: 30px; border-radius: 15px; text-align: center; box-shadow: 0 5px 15px rgba(0,0,0,0.3); width: 80%; max-width: 350px;">
-        <h3 style="color:#006847;">¡Bienvenido de nuevo!</h3>
-        <p>Has iniciado sesión correctamente.</p>
+    <div class="contenido-modal">
+        <h3 style="color:#006847; margin-bottom: 10px;">¡Bienvenido de nuevo!</h3>
+        <p style="margin-bottom: 20px;">Has iniciado sesión correctamente.</p>
         <button class="btn-rojo" onclick="cerrarModal()" style="width: 100%;">Aceptar</button>
     </div>
 </div>
@@ -79,11 +173,9 @@
     document.getElementById('formLogin').addEventListener('submit', function(e) {
         e.preventDefault();
         
-        // Capturamos si el usuario quiere recordar su sesión
         const recordar = document.getElementById('recordarSesion').checked;
         localStorage.setItem('recordarSesion', recordar);
         
-        // Aquí también podrías guardar temporalmente el correo si quisieras simular el login completo
         const email = document.getElementById('loginEmail').value;
         localStorage.setItem('usuarioEmail', email);
 

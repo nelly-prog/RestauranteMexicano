@@ -18,14 +18,31 @@
             color: white;
         }
         
-        .hero h1 { font-size: 3.5rem; margin-bottom: 10px; text-shadow: 2px 2px 8px rgba(0,0,0,0.5); }
-        .hero p { font-size: 1.5rem; text-shadow: 1px 1px 4px rgba(0,0,0,0.5); margin-bottom: 20px; }
+        .hero h1 { 
+            font-size: 3.5rem; 
+            margin-bottom: 10px; 
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.5); 
+        }
+        .hero p { 
+            font-size: 1.5rem; 
+            text-shadow: 1px 1px 4px rgba(0,0,0,0.5); 
+            margin-bottom: 20px; 
+        }
 
         .btn-ver-productos { 
-            display: inline-block; padding: 15px 35px; background: #d32f2f; color: white; 
-            text-decoration: none; border-radius: 50px; transition: 0.3s; font-weight: bold;
+            display: inline-block; 
+            padding: 15px 35px; 
+            background: #d32f2f; 
+            color: white; 
+            text-decoration: none; 
+            border-radius: 50px; 
+            transition: 0.3s; 
+            font-weight: bold;
         }
-        .btn-ver-productos:hover { transform: scale(1.05); background: #b71c1c; }
+        .btn-ver-productos:hover { 
+            transform: scale(1.05); 
+            background: #b71c1c; 
+        }
         
         /* ==========================================================================
            NUEVOS ESTILOS ESTÉTICOS PARA "NOSOTROS", "MISIÓN/VISIÓN" Y "UBICACIÓN"
@@ -135,10 +152,36 @@
         }
         
         /* Formulario y Modal */
-        #form-contacto { max-width: 500px; margin: 20px auto; display: flex; flex-direction: column; gap: 10px; }
-        #form-contacto input, #form-contacto textarea { padding: 12px; border: 1px solid #ddd; border-radius: 8px; }
-        #modal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); align-items:center; justify-content:center; z-index:2000; }
-        .contenido-modal { background: white; padding: 30px; border-radius: 15px; text-align: center; }
+        #form-contacto { 
+            max-width: 500px; 
+            margin: 20px auto; 
+            display: flex; 
+            flex-direction: column; 
+            gap: 10px; 
+        }
+        #form-contacto input, #form-contacto textarea { 
+            padding: 12px; 
+            border: 1px solid #ddd; 
+            border-radius: 8px; 
+        }
+        #modal { 
+            display: none; 
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%; 
+            background: rgba(0,0,0,0.5); 
+            align-items: center; 
+            justify-content: center; 
+            z-index: 2000; 
+        }
+        .contenido-modal { 
+            background: white; 
+            padding: 30px; 
+            border-radius: 15px; 
+            text-align: center; 
+        }
 
         /* ==========================================================================
            NUEVOS ESTILOS EXCLUSIVOS PARA EL BLOQUE 3 (MARKETING Y PROMOCIONES)
@@ -157,8 +200,16 @@
             text-align: center;
             box-shadow: 0 4px 10px rgba(0,0,0,0.04);
         }
-        .tarjeta-promo h4 { color: #d32f2f; margin-bottom: 8px; font-size: 1.3rem; }
-        .tarjeta-promo p { color: #555; font-size: 0.95rem; line-height: 1.4; }
+        .tarjeta-promo h4 { 
+            color: #d32f2f; 
+            margin-bottom: 8px; 
+            font-size: 1.3rem; 
+        }
+        .tarjeta-promo p { 
+            color: #555; 
+            font-size: 0.95rem; 
+            line-height: 1.4; 
+        }
 
         .cupon-contenedor {
             background: #fff8e1;
@@ -173,8 +224,15 @@
             max-width: 800px;
             margin: 0 auto;
         }
-        .cupon-texto h4 { color: #ff8f00; margin-bottom: 5px; }
-        .cupon-texto p { color: #5d4037; font-size: 0.95rem; margin: 0; }
+        .cupon-texto h4 { 
+            color: #ff8f00; 
+            margin-bottom: 5px; 
+        }
+        .cupon-texto p { 
+            color: #5d4037; 
+            font-size: 0.95rem; 
+            margin: 0; 
+        }
         .cupon-codigo-visual {
             background: #d32f2f;
             color: #fff;
@@ -185,22 +243,55 @@
             display: inline-block;
             margin-top: 5px;
         }
-        .cupon-accion { display: flex; gap: 8px; align-items: center; width: 100%; max-width: 320px; }
+        .cupon-accion { 
+            display: flex; 
+            gap: 8px; 
+            align-items: center; 
+            width: 100%; 
+            max-width: 320px; 
+        }
         .cupon-input {
-            flex: 1; padding: 10px 15px; border: 2px solid #ffe082; border-radius: 25px; outline: none; font-size: 1rem;
+            flex: 1; 
+            padding: 10px 15px; 
+            border: 2px solid #ffe082; 
+            border-radius: 25px; 
+            outline: none; 
+            font-size: 1rem;
         }
         .btn-cupon {
-            padding: 10px 22px; background: #2e7d32; color: white; border: none; border-radius: 25px;
-            font-weight: bold; cursor: pointer; transition: 0.3s;
+            padding: 10px 22px; 
+            background: #2e7d32; 
+            color: white; 
+            border: none; 
+            border-radius: 25px;
+            font-weight: bold; 
+            cursor: pointer; 
+            transition: 0.3s;
         }
-        .btn-cupon:hover { background: #1b5e20; }
+        .btn-cupon:hover { 
+            background: #1b5e20; 
+        }
         
         .feedback-mensaje {
-            width: 100%; padding: 10px; border-radius: 8px; display: none; margin-top: 10px;
-            font-weight: bold; font-size: 0.95rem; text-align: center;
+            width: 100%; 
+            padding: 10px; 
+            border-radius: 8px; 
+            display: none; 
+            margin-top: 10px;
+            font-weight: bold; 
+            font-size: 0.95rem; 
+            text-align: center;
         }
-        .feedback-success { background-color: #c8e6c9; color: #2e7d32; border: 1px solid #a5d6a7; }
-        .feedback-error { background-color: #ffcdd2; color: #c62828; border: 1px solid #ef9a9a; }
+        .feedback-success { 
+            background-color: #c8e6c9; 
+            color: #2e7d32; 
+            border: 1px solid #a5d6a7; 
+        }
+        .feedback-error { 
+            background-color: #ffcdd2; 
+            color: #c62828; 
+            border: 1px solid #ef9a9a; 
+        }
 
         /* Landing/Escaparate de Campaña */
         .banner-campana {
@@ -213,22 +304,68 @@
             box-shadow: 0 8px 25px rgba(0,0,0,0.15);
             margin-bottom: 40px;
         }
-        @media(max-width: 768px) { .banner-campana { grid-template-columns: 1fr; } }
+        @media(max-width: 768px) { 
+            .banner-campana { 
+                grid-template-columns: 1fr; 
+            } 
+        }
         
-        .campana-img-side { width: 100%; height: 100%; min-height: 300px; object-fit: cover; }
-        .campana-info-side { padding: 40px; display: flex; flex-direction: column; justify-content: center; }
+        .campana-img-side { 
+            width: 100%; 
+            height: 100%; 
+            min-height: 300px; 
+            object-fit: cover; 
+        }
+        .campana-info-side { 
+            padding: 40px; 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center; 
+        }
         .tag-destacado {
-            background: #d32f2f; color: white; padding: 5px 12px; border-radius: 4px;
-            font-size: 0.8rem; font-weight: bold; text-transform: uppercase; align-self: flex-start; margin-bottom: 15px;
+            background: #d32f2f; 
+            color: white; 
+            padding: 5px 12px; 
+            border-radius: 4px;
+            font-size: 0.8rem; 
+            font-weight: bold; 
+            text-transform: uppercase; 
+            align-self: flex-start; 
+            margin-bottom: 15px;
         }
-        .campana-info-side h3 { font-size: 2rem; color: #ffb300; margin-bottom: 15px; }
-        .campana-info-side p { color: #ddd; font-size: 1.1rem; line-height: 1.5; margin-bottom: 20px; }
-        .campana-precio { font-size: 1.8rem; color: #4caf50; font-weight: bold; margin-bottom: 20px; }
+        .campana-info-side h3 { 
+            font-size: 2rem; 
+            color: #ffb300; 
+            margin-bottom: 15px; 
+        }
+        .campana-info-side p { 
+            color: #ddd; 
+            font-size: 1.1rem; 
+            line-height: 1.5; 
+            margin-bottom: 20px; 
+        }
+        .campana-precio { 
+            font-size: 1.8rem; 
+            color: #4caf50; 
+            font-weight: bold; 
+            margin-bottom: 20px; 
+        }
         .btn-cta {
-            background: #4caf50; color: white; border: none; padding: 15px 30px; font-size: 1.1rem;
-            font-weight: bold; border-radius: 50px; cursor: pointer; transition: 0.3s; text-align: center;
+            background: #4caf50; 
+            color: white; 
+            border: none; 
+            padding: 15px 30px; 
+            font-size: 1.1rem;
+            font-weight: bold; 
+            border-radius: 50px; 
+            cursor: pointer; 
+            transition: 0.3s; 
+            text-align: center;
         }
-        .btn-cta:hover { background: #388e3c; transform: translateY(-2px); }
+        .btn-cta:hover { 
+            background: #388e3c; 
+            transform: translateY(-2px); 
+        }
 
         .grid-testimonios {
             display: grid;
@@ -236,32 +373,130 @@
             gap: 25px;
         }
         .tarjeta-testimonio {
-            background: #fdfbf7; padding: 25px; border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.04); border-left: 4px solid #ffb300;
+            background: #fdfbf7; 
+            padding: 25px; 
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.04); 
+            border-left: 4px solid #ffb300;
         }
-        .tarjeta-testimonio p { font-style: italic; color: #555; margin-bottom: 12px; line-height: 1.5; }
-        .estrellas { color: #ffb300; margin-bottom: 5px; }
-        .autor-testimonio { font-weight: bold; color: #333; font-size: 0.9rem; }
+        .tarjeta-testimonio p { 
+            font-style: italic; 
+            color: #555; 
+            margin-bottom: 12px; 
+            line-height: 1.5; 
+        }
+        .estrellas { 
+            color: #ffb300; 
+            margin-bottom: 5px; 
+        }
+        .autor-testimonio { 
+            font-weight: bold; 
+            color: #333; 
+            font-size: 0.9rem; 
+        }
+
+        /* Estilos para el nuevo Mercadito de la Comunidad (C2C) */
+        .grid-comunidad-inicio {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+        .tarjeta-usuario {
+            background: white;
+            border-radius: 15px;
+            border: 1px solid #e0e0e0;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            transition: transform 0.3s;
+            display: flex;
+            flex-direction: column;
+        }
+        .tarjeta-usuario:hover {
+            transform: translateY(-5px);
+        }
+        .tarjeta-usuario-img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            background-color: #f5f5f5;
+        }
+        .tarjeta-usuario-cuerpo {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+        .tarjeta-usuario-vendedor {
+            font-size: 0.85rem;
+            color: #e53935;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+        .tarjeta-usuario-titulo {
+            font-size: 1.25rem;
+            color: #333;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        .tarjeta-usuario-desc {
+            font-size: 0.95rem;
+            color: #666;
+            line-height: 1.4;
+            margin-bottom: 15px;
+            flex-grow: 1;
+        }
+        .tarjeta-usuario-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid #f0f0f0;
+            padding-top: 15px;
+        }
+        .tarjeta-usuario-precio {
+            font-size: 1.2rem;
+            color: #2e7d32;
+            font-weight: bold;
+        }
+        .btn-comprar-usuario {
+            background: #2e7d32;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+        .btn-comprar-usuario:hover {
+            background: #1b5e20;
+        }
     </style>
 </head>
 <body>
 
 <header>
     <div class="logo-contenedor">
-        <!-- ERROR CORREGIDO: De logo.png.png a logo.png -->
-        <img src="img/logo.png" class="logo-img" alt="Logo">
+        <!-- Mantenemos la ruta exacta que te funciona en tu carpeta para el Logo -->
+        <img src="img/logo.png.png" class="logo-img" alt="Logo">
         <span>Sabor Mexicano</span>
     </div>
     <nav>
         <ul>
             <li><a href="index.html">Inicio</a></li>
             <li><a href="catalogo.html">Catálogo</a></li>
-            <!-- Agregamos los accesos directos de Marketing en el Nav -->
-            <li><a href="#promociones" style="color: #ffb300; font-weight: bold;">🔥 Promos</a></li>
-            <li><a href="#escaparate">Especial</a></li>
-            <li><a href="#nosotros">Nosotros</a></li>
-            <li><a href="#contacto">Contacto</a></li>
+            <li><a href="comunidad.html">Comunidad</a></li>
+            <!-- Accesos directos de la página de inicio -->
+            <li><a href="index.html#promociones" style="color: #ffb300; font-weight: bold;">🔥 Promos</a></li>
+            <li><a href="index.html#escaparate">Especial</a></li>
+            <!-- Busca esta línea en tus menús y cámbiala si tiene un '#' delante -->
+<li><a href="mercadito.html">🏪 Mercadito</a></li>
+            <li><a href="index.html#nosotros">Nosotros</a></li>
+            <li><a href="index.html#contacto">Contacto</a></li>
             <li><a href="login.html">Iniciar Sesión</a></li>
+            <!-- Icono del Carrito con su Badge -->
             <li class="cart-item-container">
                 <a href="carrito.html" class="cart-link" title="Ver carrito">
                     🛒 <span id="cart-count" class="cart-badge">0</span>
@@ -279,8 +514,8 @@
     </section>
 
     <!-- ==========================================================================
-       NUEVA SECCIÓN: PANTALLA CON PROMOS ACTIVAS + CÓDIGO DE DESCUENTO (BLOQUE 3)
-       ========================================================================== -->
+        PANTALLA CON PROMOS ACTIVAS + CÓDIGO DE DESCUENTO (BLOQUE 3)
+        ========================================================================== -->
     <section id="promociones" class="seccion" style="background-color: #fff; padding: 60px 0; border-bottom: 1px solid #eee;">
         <div class="contenedor-bloques">
             <h2 style="text-align: center; font-size: 2.3rem; margin-bottom: 10px; color: #222;">🌶️ Promociones Activas de Hoy</h2>
@@ -322,8 +557,8 @@
     </section>
 
     <!-- ==========================================================================
-       NUEVA SECCIÓN: ESCAPARATE DE MARKETING / LANDING DE CAMPAÑA (BLOQUE 3)
-       ========================================================================== -->
+        ESCAPARATE DE MARKETING / LANDING DE CAMPAÑA (BLOQUE 3)
+        ========================================================================== -->
     <section id="escaparate" class="seccion" style="background-color: #f7f7f7; padding: 60px 0;">
         <div class="contenedor-bloques">
             <h2 style="text-align: center; font-size: 2.3rem; margin-bottom: 40px; color: #222;">✨ Especial de la Semana</h2>
@@ -507,8 +742,87 @@
         }
     }
 
-    // Se asegura de actualizar el número tan pronto como renderice la estructura HTML
-    document.addEventListener('DOMContentLoaded', actualizarContadorVisual);
+    // ==========================================================================
+    // FUNCIÓN PARA RENDERIZAR LAS PUBLICACIONES C2C (PRODUCTOS DE USUARIOS)
+    // ==========================================================================
+    function cargarProductosComunidad() {
+        const contenedor = document.getElementById('contenedor-publicaciones-comunidad');
+        if (!contenedor) return;
+
+        // Leemos las publicaciones de otros usuarios guardadas en el localStorage
+        // NOTA: Ajusta la clave 'publicacionesComunidad' si en tu archivo 'comunidad.html' usas otra.
+        const publicaciones = JSON.parse(localStorage.getItem('publicacionesComunidad')) || [];
+
+        if (publicaciones.length === 0) {
+            contenedor.innerHTML = `
+                <div style="grid-column: 1 / -1; text-align: center; padding: 40px; color: #888;">
+                    <p style="font-size: 1.2rem;">Aún no hay productos publicados por la comunidad.</p>
+                    <a href="comunidad.html" style="color: #e53935; font-weight: bold; text-decoration: none;">¡Sé el primero en vender algo!</a>
+                </div>
+            `;
+            return;
+        }
+
+        contenedor.innerHTML = ""; // Limpiamos contenedor
+
+        publicaciones.forEach((pub, index) => {
+            // Creamos la estructura visual para cada producto publicado por un usuario
+            const tarjeta = document.createElement('div');
+            tarjeta.className = 'tarjeta-usuario';
+
+            // Usamos una imagen de repuesto si el usuario no cargó ninguna o es simulada
+            const rutaImagen = pub.imagen || 'img/pozole.jpg'; 
+            const nombreVendedor = pub.usuario || pub.vendedor || 'Usuario Anónimo';
+            const tituloProd = pub.titulo || pub.nombreProducto || 'Producto de la Comunidad';
+            const descProd = pub.descripcion || pub.comentario || 'Sin descripción disponible.';
+            const precioProd = parseFloat(pub.precio) || 0;
+
+            tarjeta.innerHTML = `
+                <img src="${rutaImagen}" alt="${tituloProd}" class="tarjeta-usuario-img" onerror="this.src='img/pozole.jpg'">
+                <div class="tarjeta-usuario-cuerpo">
+                    <span class="tarjeta-usuario-vendedor">Vendedor: ${nombreVendedor}</span>
+                    <h3 class="tarjeta-usuario-titulo">${tituloProd}</h3>
+                    <p class="tarjeta-usuario-desc">${descProd}</p>
+                    <div class="tarjeta-usuario-footer">
+                        <span class="tarjeta-usuario-precio">$${precioProd.toFixed(2)} MXN</span>
+                        <button type="button" class="btn-comprar-usuario" onclick="comprarProductoComunidad('${tituloProd}', ${precioProd})">
+                            🛒 Comprar
+                        </button>
+                    </div>
+                </div>
+            `;
+            contenedor.appendChild(tarjeta);
+        });
+    }
+
+    // Agregar el producto comprado a carritoApp
+    function comprarProductoComunidad(titulo, precio) {
+        let carrito = JSON.parse(localStorage.getItem('carritoApp')) || [];
+
+        const itemComunidad = {
+            titulo: `${titulo} (C2C)`,
+            precio: precio,
+            cantidad: 1
+        };
+
+        const itemExistente = carrito.find(item => item.titulo === itemComunidad.titulo);
+
+        if (itemExistente) {
+            itemExistente.cantidad += 1;
+        } else {
+            carrito.push(itemComunidad);
+        }
+
+        localStorage.setItem('carritoApp', JSON.stringify(carrito));
+        actualizarContadorVisual();
+        window.location.href = 'carrito.html';
+    }
+
+    // Se asegura de actualizar el número y renderizar los productos al cargar la página
+    document.addEventListener('DOMContentLoaded', () => {
+        actualizarContadorVisual();
+        cargarProductosComunidad();
+    });
 </script>
 
 </body>

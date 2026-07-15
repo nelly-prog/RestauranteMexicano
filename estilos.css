@@ -1,15 +1,34 @@
 /* ==========================================================================
-   1. CONFIGURACIÓN GLOBAL Y RESET
+   1. VARIABLES Y RESET
    ========================================================================== */
-* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-body { background-color: #fcf9f2; color: #333; line-height: 1.6; }
+:root {
+    --primary-color: #006847;    /* Verde Mexicano */
+    --secondary-color: #005F73;  /* Azul Talavera */
+    --accent-color: #ffb300;     /* Amarillo Oro */
+    --btn-danger-color: #ce1126; /* Rojo Botones */
+    --bg-color: #fcf9f2;         /* Crema Cálido de fondo */
+    --text-color: #333333;
+}
+
+* { 
+    margin: 0; 
+    padding: 0; 
+    box-sizing: border-box; 
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+}
+
+body { 
+    background-color: var(--bg-color); 
+    color: var(--text-color); 
+    line-height: 1.6; 
+}
 
 /* ==========================================================================
-   2. NAVEGACIÓN Y CABECERA
+   2. CABECERA GLOBAL (Asegura alineación perfecta en Inicio, Catálogo, etc.)
    ========================================================================== */
 header { 
-    background: #006847; 
-    padding: 15px 50px; 
+    background: var(--primary-color); 
+    padding: 15px 30px; 
     display: flex; 
     justify-content: space-between; 
     align-items: center; 
@@ -18,166 +37,247 @@ header {
     position: sticky; 
     top: 0;
     z-index: 1000;
+    flex-wrap: wrap; /* Evita que se desborde en pantallas medianas */
 }
-.logo-contenedor { display: flex; align-items: center; gap: 15px; font-size: 1.5rem; font-weight: bold; }
-.logo-img { height: 50px; }
-nav ul { list-style: none; display: flex; gap: 25px; align-items: center; } /* Se agregó align-items para alinear el carrito */
-nav a { text-decoration: none; color: white !important; font-weight: 600; transition: opacity 0.3s; }
-nav a:hover { opacity: 0.8; text-decoration: underline; }
 
-/* --- NUEVOS ESTILOS INTEGRADOS PARA EL CARRITO --- */
+.logo-contenedor { 
+    display: flex; 
+    align-items: center; 
+    gap: 12px; 
+    font-size: 1.4rem; 
+    font-weight: bold; 
+}
+
+.logo-img { 
+    height: 45px; 
+    width: auto;
+    object-fit: contain;
+}
+
+nav ul { 
+    list-style: none; 
+    display: flex; 
+    gap: 15px; 
+    align-items: center; 
+    flex-wrap: wrap;
+}
+
+nav a { 
+    text-decoration: none; 
+    color: white !important; 
+    font-weight: 600; 
+    font-size: 0.95rem;
+    transition: color 0.3s; 
+    padding: 5px 8px;
+}
+
+nav a:hover, nav a.active { 
+    color: var(--accent-color) !important;
+}
+
+/* Badge del Carrito */
 .cart-item-container {
-    position: relative;
-    display: inline-block;
+    display: flex;
+    align-items: center;
 }
 .cart-link {
-    text-decoration: none;
-    font-size: 1.3rem;
     display: flex;
     align-items: center;
-    padding: 5px;
+    gap: 5px;
+    font-size: 1.1rem;
 }
 .cart-badge {
-    position: absolute;
-    top: -6px;
-    right: -10px;
-    background-color: #ce1126; /* Usamos el color rojo oficial de tus botones */
-    color: white !important;   /* Mantiene el texto blanco sobre el fondo rojo */
+    background: var(--btn-danger-color);
+    color: white;
     font-size: 0.75rem;
-    font-weight: bold;
-    border-radius: 50%;
     padding: 2px 6px;
-    min-width: 18px;
-    height: 18px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+    border-radius: 50%;
+    font-weight: bold;
 }
 
 /* ==========================================================================
-   3. COMPONENTES REUTILIZABLES
+   3. SUB-MENÚ DE COMUNIDAD (C2C, Subastas, etc.)
    ========================================================================== */
-.seccion { 
-    padding: 40px 20px; 
-    max-width: 900px; 
-    margin: 40px auto; 
-    text-align: center; 
-    background: white; 
-    border-radius: 20px; 
-    box-shadow: 0 4px 20px rgba(0,0,0,0.05); 
+.sub-nav-comunidad {
+    background: #eae3d2;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 30px;
+    border-radius: 8px;
 }
-h2 {
-    border-left: 5px solid #D9534F; 
-    padding-left: 15px;
-    margin-bottom: 25px;
-    text-align: left;
+
+.sub-nav-comunidad a {
+    text-decoration: none;
+    color: #555;
+    font-weight: bold;
+    font-size: 0.95rem;
+    padding: 6px 12px;
+    border-radius: 5px;
+    transition: all 0.3s;
 }
-.btn-rojo, .btn-carrito, .btn-ver-productos { 
-    background: #ce1126; 
-    color: white; 
+
+.sub-nav-comunidad a.activo, .sub-nav-comunidad a:hover {
+    background: var(--primary-color);
+    color: white !important;
+}
+
+/* ==========================================================================
+   4. TARJETAS Y CONTENEDORES
+   ========================================================================== */
+.seccion-comunidad {
+    max-width: 800px;
+    margin: 30px auto;
+    padding: 0 20px;
+}
+
+.tarjeta-comunidad {
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    margin-bottom: 30px;
+    border-top: 5px solid var(--primary-color);
+}
+
+.tarjeta-comunidad h2, .tarjeta-comunidad h3 {
+    color: var(--primary-color);
+    margin-bottom: 20px;
+}
+
+/* Formulario */
+.form-comunidad label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 6px;
+    color: var(--secondary-color);
+}
+
+.form-comunidad input, .form-comunidad textarea, .form-comunidad select {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 1rem;
+    background: #fafafa;
+}
+
+.form-comunidad input:focus, .form-comunidad textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    background: #fff;
+}
+
+/* Opiniones de la comunidad */
+.opinion-card {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    margin-bottom: 15px;
+    border-left: 5px solid var(--accent-color);
+    transition: transform 0.2s;
+}
+
+.opinion-card:hover {
+    transform: translateY(-2px);
+}
+
+.opinion-cabecera {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.opinion-usuario {
+    font-weight: bold;
+    color: var(--secondary-color);
+}
+
+.opinion-estrellas {
+    color: var(--accent-color);
+    font-size: 1.1rem;
+}
+
+.opinion-texto {
+    font-style: italic;
+    color: #555;
+    margin-bottom: 8px;
+}
+
+.opinion-fecha {
+    font-size: 0.8rem;
+    color: #999;
+}
+
+/* ==========================================================================
+   5. BOTONES, MODAL Y PIE DE PÁGINA
+   ========================================================================== */
+.btn-rojo { 
+    background: var(--btn-danger-color); 
+    color: white !important; 
     border: none; 
     padding: 12px 25px; 
     border-radius: 8px; 
     cursor: pointer; 
     font-weight: bold; 
-    transition: transform 0.2s, background 0.3s;
-    display: inline-block;
-    text-decoration: none;
+    transition: background 0.3s;
+    font-size: 1rem;
 }
-.btn-rojo:hover, .btn-carrito:hover { background: #a30d1d; transform: translateY(-2px); }
 
-/* ==========================================================================
-   4. SECCIÓN HERO
-   ========================================================================== */
-.hero {
-    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), 
-                url('img/fondo-comida.jpg');
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
-    height: 60vh;
+.btn-rojo:hover { 
+    background: #a30d1d; 
+}
+
+/* Redes Flotantes */
+.redes-flotantes {
+    position: fixed; 
+    right: 20px; 
+    top: 50%; 
+    transform: translateY(-50%); 
+    display: flex; 
+    flex-direction: column; 
+    gap: 15px; 
+    z-index: 9999;
+}
+
+.redes-flotantes a img { 
+    width: 45px; 
+    height: 45px; 
+}
+
+footer {
+    background: #222; 
+    color: white; 
+    text-align: center; 
+    padding: 20px; 
+    margin-top: 50px; 
+    font-size: 0.9rem;
+}
+
+/* --- REDES SOCIALES FLOTANTES --- */
+.redes-flotantes {
+    position: fixed;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    color: white;
-    text-align: center;
-    padding: 20px;
-}
-.hero h1 { font-size: 3rem; margin-bottom: 10px; text-shadow: 2px 2px 4px rgba(0,0,0,0.5); }
-.hero p { font-size: 1.5rem; text-shadow: 1px 1px 2px rgba(0,0,0,0.5); }
-
-/* ==========================================================================
-   5. MÓDULO DE TIENDA Y FORMULARIOS
-   ========================================================================== */
-/* CONTENEDOR PARA LIMITAR EL ANCHO */
-.catalogo-container { max-width: 1200px; margin: 40px auto; padding: 0 20px; }
-
-/* CUADRÍCULA CORREGIDA */
-.catalogo-grid { 
-    display: grid; 
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
-    gap: 25px; 
-    margin-top: 30px; 
-}
-.producto { background: white; padding: 15px; border-radius: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); text-align: center; }
-
-/* IMÁGENES CONTROLADAS PARA QUE NO SE VEAN GIGANTES */
-.img-producto { 
-    width: 100%; 
-    height: 200px; 
-    object-fit: cover; 
-    border-radius: 10px; 
-    margin-bottom: 15px;
-}
-
-form { max-width: 450px; margin: 20px auto; text-align: left; }
-form input, form textarea { padding: 12px; width: 100%; margin-bottom: 20px; border: 1px solid #ddd; border-radius: 8px; background-color: #fafafa; }
-#modal, #modal-registro, #modal-mensaje { 
-    display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); align-items:center; justify-content:center; z-index:2000; 
-}
-.contenido-modal { background:white; padding:40px; border-radius:20px; text-align:center; box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
-
-/* ==========================================================================
-   6. REDES FLOTANTES Y PIE DE PÁGINA
-   ========================================================================== */
-.redes-flotantes {
-    position: fixed; right: 20px; top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; gap: 15px; z-index: 9999;
-}
-.redes-flotantes a img { width: 45px; height: 45px; transition: transform 0.3s ease; }
-.redes-flotantes a img:hover { transform: scale(1.2); }
-footer {
-    background: #222; color: white; text-align: center; padding: 20px; margin-top: 50px; font-size: 0.9rem;
-}
-
-/* ==========================================================================
-   7. NOTIFICACIÓN FLOTANTE (TOAST) INTERNA DEL SISTEMA
-   ========================================================================== */
-.notificacion-toast {
-    position: fixed;
-    bottom: 25px;
-    right: 25px;
-    background: #006847; /* Usamos tu color verde oficial de la cabecera */
-    color: white;
-    padding: 16px 28px;
-    border-radius: 12px;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.2);
-    font-weight: 600;
-    display: flex;
-    align-items: center;
     gap: 12px;
-    z-index: 3000; /* Por encima de tus modales que tienen z-index 2000 */
-    transform: translateY(180%); /* Empieza oculta abajo de la pantalla */
-    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    z-index: 9999;
 }
-
-/* Esta clase la activará JavaScript para que suba */
-.notificacion-toast.mostrar {
-    transform: translateY(0);
+.redes-flotantes a img {
+    width: 45px;      /* Tamaño uniforme */
+    height: 45px;     /* Alto uniforme */
+    object-fit: cover; /* Evita que la imagen se estire o se vea rara */
+    border-radius: 8px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
 }
-
-.notificacion-toast i {
-    font-size: 1.3rem;
-    color: #ffc107; /* Un toque dorado/amarillo para resaltar el icono */
+.redes-flotantes a img:hover {
+    transform: scale(1.15);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.3);
 }

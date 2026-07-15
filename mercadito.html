@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Sabor Mexicano - Mercadito</title>
+    <link rel="stylesheet" href="estilos.css">
+    <style>
+        /* Estructura Header idéntica */
+        header {
+            background-color: #006847;
+            padding: 15px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: white;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        .logo-contenedor {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .logo-img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid white;
+        }
+        .logo-contenedor span {
+            font-size: 1.6rem;
+            font-weight: bold;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        header nav ul {
+            list-style: none;
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            margin: 0;
+            padding: 0;
+        }
+        header nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+        header nav ul li a:hover, header nav ul li a.activo {
+            color: #ffca28;
+        }
+
+        /* Redes Flotantes */
+        .redes-flotantes {
+            position: fixed;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            z-index: 9999;
+        }
+        .redes-flotantes a img {
+            width: 45px;
+            height: 45px;
+            object-fit: cover;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        .contenedor-mercadito {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+            min-height: 75vh;
+        }
+
+        .grid-productos {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .tarjeta-producto {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            border: 1px solid #f0f0f0;
+            transition: transform 0.3s, box-shadow 0.3s;
+            display: flex;
+            flex-direction: column;
+        }
+        .tarjeta-producto:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+        .producto-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        .producto-info {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+        .producto-nombre {
+            font-size: 1.3rem;
+            color: #222;
+            margin: 0 0 10px 0;
+            font-weight: bold;
+        }
+        .producto-descripcion {
+            color: #666;
+            font-size: 0.9rem;
+            line-height: 1.4;
+            margin: 0 0 15px 0;
+            flex-grow: 1;
+        }
+        .producto-precio-fila {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: auto;
+        }
+        .producto-precio {
+            font-size: 1.3rem;
+            color: #006847;
+            font-weight: bold;
+        }
+        .btn-comprar {
+            background-color: #006847;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        .btn-comprar:hover {
+            background-color: #004d34;
+        }
+
+        footer {
+            background-color: #222;
+            color: #ccc;
+            padding: 20px;
+            text-align: center;
+            margin-top: 60px;
+            border-top: 4px solid #006847;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="logo-contenedor">
+        <img src="img/logo.png.png" class="logo-img" alt="Logo" onerror="this.src='logo.png'">
+        <span>Sabor Mexicano</span>
+    </div>
+    <nav>
+        <ul>
+            <li><a href="index.html">Inicio</a></li>
+            <li><a href="catalogo.html">Catálogo</a></li>
+            <li><a href="comunidad.html">Comunidad</a></li>
+            <li><a href="promos.html">🔥 Promos</a></li>
+            <li><a href="especial.html">Especial</a></li>
+            <li><a href="mercadito.html" class="activo">🏪 Mercadito</a></li>
+            <li><a href="nosotros.html">Nosotros</a></li>
+            <li><a href="contacto.html">Contacto</a></li>
+            <li><a href="perfil.html" id="nav-perfil-texto">Iniciar Sesión</a></li>
+        </ul>
+    </nav>
+</header>
+
+<div class="redes-flotantes">
+    <a href="https://facebook.com" target="_blank"><img src="img/face.png" alt="Facebook" onerror="this.src='face.png'"></a>
+    <a href="https://instagram.com" target="_blank"><img src="img/insta.jpg" alt="Instagram" onerror="this.src='insta.jpg'"></a>
+</div>
+
+<main class="contenedor-mercadito">
+    <h1 style="text-align: center; color: #006847; font-size: 2.5rem; margin-bottom: 10px;">🏪 El Mercadito de Sabor Mexicano</h1>
+    <p style="text-align: center; color: #666; margin-bottom: 40px;">Compra productos de otros usuarios de nuestra comunidad.</p>
+
+    <!-- La lista de productos se creará de forma inteligente aquí -->
+    <div id="lista-productos-mercadito" class="grid-productos"></div>
+</main>
+
+<footer>
+    <p>&copy; 2026 Sabor Mexicano - Todos los derechos reservados.</p>
+</footer>
+
+<script>
+    // Al cargar el mercadito, lee la base de datos de localStorage
+    function cargarProductosMercadito() {
+        const grid = document.getElementById('lista-productos-mercadito');
+        const productos = JSON.parse(localStorage.getItem("productos_mercadito")) || [];
+        
+        grid.innerHTML = "";
+
+        if (productos.length === 0) {
+            grid.innerHTML = "<p>No hay productos disponibles por ahora.</p>";
+            return;
+        }
+
+        productos.forEach(p => {
+            const divCard = document.createElement('div');
+            divCard.className = "tarjeta-producto";
+            
+            // Añade una etiqueta si fue publicado por un usuario
+            const tagUsuario = p.usuario && p.usuario !== "Sistema" 
+                ? `<span style="font-size:0.75rem; background:#fff3cd; color:#856404; padding:2px 6px; border-radius:4px; margin-bottom:5px; width:fit-content;">Vendedor: ${p.usuario}</span>`
+                : "";
+
+            divCard.innerHTML = `
+                <img src="${p.foto}" class="producto-img" alt="${p.nombre}" onerror="this.src='https://via.placeholder.com/300x200'">
+                <div class="producto-info">
+                    ${tagUsuario}
+                    <h3 class="producto-nombre">${p.nombre}</h3>
+                    <p class="producto-descripcion">${p.descripcion}</p>
+                    <div class="producto-precio-fila">
+                        <span class="producto-precio">$${parseFloat(p.precio).toFixed(2)} MXN</span>
+                        <button class="btn-comprar" onclick="alert('¡Producto agregado al carrito!')">Agregar 🛒</button>
+                    </div>
+                </div>
+            `;
+            grid.appendChild(divCard);
+        });
+
+        // Actualizar etiqueta del nav
+        const usuarioLogueado = localStorage.getItem("usuario_activo");
+        if (usuarioLogueado) {
+            document.getElementById('nav-perfil-texto').textContent = "Mi Perfil (" + usuarioLogueado + ")";
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', cargarProductosMercadito);
+</script>
+</body>
+</html>
