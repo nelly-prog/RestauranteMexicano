@@ -126,6 +126,7 @@
             margin-bottom: 30px;
             gap: 10px;
             justify-content: center;
+            flex-wrap: wrap;
         }
         .btn-pestana {
             background: none;
@@ -261,7 +262,7 @@
             opacity: 1;
         }
 
-        /* --- MODALES PERSONALIZADOS (CONFIRMACIÓN Y EDICIÓN) --- */
+        /* --- MODALES PERSONALIZADOS --- */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -293,13 +294,18 @@
             margin-top: 25px;
         }
 
+        /* --- ESTILO PIE DE PÁGINA --- */
         footer {
             background-color: #222;
             color: #ccc;
-            padding: 20px;
+            padding: 25px 20px;
             text-align: center;
             margin-top: 60px;
             border-top: 4px solid #006847;
+            font-family: inherit;
+        }
+        footer a:hover {
+            color: #ffca28 !important;
         }
     </style>
 </head>
@@ -307,7 +313,7 @@
 
 <header>
     <div class="logo-contenedor">
-        <img src="img/logo.png.png" class="logo-img" alt="Logo" onerror="this.src='logo.png'">
+        <img src="img/logo.png.png" class="logo-img" alt="Logo">
         <span>Sabor Mexicano</span>
     </div>
     <nav>
@@ -315,12 +321,17 @@
             <li><a href="index.html">Inicio</a></li>
             <li><a href="catalogo.html">Catálogo</a></li>
             <li><a href="comunidad.html">Comunidad</a></li>
-            <li><a href="promos.html">🔥 Promos</a></li>
-            <li><a href="especial.html">Especial</a></li>
+            <li><a href="index.html#promociones" style="color: #ffb300; font-weight: bold;">🔥 Promos</a></li>
+            <li><a href="index.html#escaparate">Especial</a></li>
             <li><a href="mercadito.html">🏪 Mercadito</a></li>
-            <li><a href="nosotros.html">Nosotros</a></li>
-            <li><a href="contacto.html">Contacto</a></li>
-            <li><a href="perfil.html" class="activo" id="nav-perfil-texto">Iniciar Sesión</a></li>
+            <li><a href="index.html#nosotros">Nosotros</a></li>
+            <li><a href="index.html#contacto">Contacto</a></li>
+            <li><a href="login.html" id="nav-perfil-texto">Iniciar Sesión</a></li>
+            <li class="cart-item-container">
+                <a href="carrito.html" class="cart-link" title="Ver carrito">
+                    🛒 <span id="cart-count" class="cart-badge">0</span>
+                </a>
+            </li>
         </ul>
     </nav>
 </header>
@@ -356,20 +367,83 @@
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
             <div>
                 <h2 style="margin: 0; color: #006847;">Bienvenido, <span id="nombre-perfil-display">Usuario</span> 👋</h2>
-                <p style="margin: 5px 0 0 0; color: #666;">Gestiona tus ventas y subastas desde aquí.</p>
+                <p style="margin: 5px 0 0 0; color: #666;">Gestiona tu cuenta, tus ventas y tus compras desde aquí.</p>
             </div>
             <button class="btn-danger" onclick="cerrarSesion()" style="padding: 10px 20px; border-radius: 8px;">Cerrar Sesión</button>
         </div>
 
         <!-- Menú de Pestañas -->
         <div class="menu-perfil">
-            <button class="btn-pestana activa" onclick="irAPestana('publicar')">📤 Publica tu Producto</button>
+            <button class="btn-pestana activa" onclick="irAPestana('mi-perfil')">👤 Mi Perfil</button>
+            <button class="btn-pestana" onclick="irAPestana('publicar')">📤 Publica tu Producto</button>
             <button class="btn-pestana" onclick="irAPestana('mis-publicaciones')">📦 Mis Publicaciones</button>
             <button class="btn-pestana" onclick="irAPestana('subasta')">🔨 Subasta Simbólica</button>
         </div>
 
+        <!-- PESTAÑA PRINCIPAL: MI PERFIL -->
+        <section id="sec-mi-perfil" class="seccion-perfil activa">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; align-items: start;">
+                
+                <!-- Sección: Mis Datos -->
+                <div style="background: #fafafa; padding: 25px; border-radius: 12px; border: 1px solid #eee;">
+                    <h3 style="color: #006847; margin-top: 0; border-bottom: 2px solid #006847; padding-bottom: 10px;">📋 Mis Datos</h3>
+                    
+                    <div id="datos-vista">
+                        <p style="font-size: 1.05rem; margin: 12px 0;"><strong>Usuario:</strong> <span id="perfil-usuario-texto">Nelly_Tics</span></p>
+                        <p style="font-size: 1.05rem; margin: 12px 0;"><strong>Correo Electrónico:</strong> <span id="perfil-correo-texto">nelly_tics@sabormexicano.com</span></p>
+                        <p style="font-size: 1.05rem; margin: 12px 0;"><strong>Teléfono:</strong> <span id="perfil-telefono-texto">555-019-2834</span></p>
+                        <button class="btn-editar" onclick="mostrarFormEditarPerfil()" style="margin-top: 15px; width: 100%;">✏️ Editar Datos del Perfil</button>
+                    </div>
+
+                    <!-- Formulario dinámico para Editar Perfil -->
+                    <div id="datos-edicion" style="display: none;">
+                        <form onsubmit="guardarDatosPerfil(event)">
+                            <div class="form-grupo">
+                                <label>Nuevo Usuario</label>
+                                <input type="text" id="edit-perfil-usuario" required>
+                            </div>
+                            <div class="form-grupo">
+                                <label>Correo Electrónico</label>
+                                <input type="email" id="edit-perfil-correo" required>
+                            </div>
+                            <div class="form-grupo">
+                                <label>Teléfono</label>
+                                <input type="text" id="edit-perfil-telefono" required>
+                            </div>
+                            <div style="display: flex; gap: 10px; margin-top: 15px;">
+                                <button type="submit" class="btn-accion" style="flex: 1;">Guardar Cambios</button>
+                                <button type="button" class="btn-danger" style="background-color: #777; flex: 1;" onclick="cancelarEditarPerfil()">Cancelar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Sección: Mis Compras -->
+                <div style="background: #fafafa; padding: 25px; border-radius: 12px; border: 1px solid #eee;">
+                    <h3 style="color: #006847; margin-top: 0; border-bottom: 2px solid #006847; padding-bottom: 10px;">🛍️ Mis Compras</h3>
+                    <ul id="lista-compras" style="list-style: none; padding: 0; margin: 0;">
+                        <li style="padding: 12px; background: white; border: 1px solid #e0e0e0; border-radius: 8px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center;">
+                            <div>
+                                <strong style="color: #333;">Mole Poblano Artesanal (Frasco 1kg)</strong>
+                                <div style="font-size: 0.8rem; color: #777; margin-top: 4px;">Fecha: 14/07/2026</div>
+                            </div>
+                            <span style="font-weight: bold; color: #006847;">$240.00 MXN</span>
+                        </li>
+                        <li style="padding: 12px; background: white; border: 1px solid #e0e0e0; border-radius: 8px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center;">
+                            <div>
+                                <strong style="color: #333;">Taza de Talavera Poblana Negra</strong>
+                                <div style="font-size: 0.8rem; color: #777; margin-top: 4px;">Fecha: 08/07/2026</div>
+                            </div>
+                            <span style="font-weight: bold; color: #006847;">$180.00 MXN</span>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+        </section>
+
         <!-- PESTAÑA A: PUBLICAR PRODUCTO -->
-        <section id="sec-publicar" class="seccion-perfil activa">
+        <section id="sec-publicar" class="seccion-perfil">
             <h3 style="color: #006847; margin-top: 0;">Publicar un nuevo producto en el Mercadito</h3>
             <p style="color: #666; margin-bottom: 25px;">Sube una foto directamente desde tu computadora y llena los datos del producto.</p>
             
@@ -482,24 +556,29 @@
     </div>
 </div>
 
+<!-- PIE DE PÁGINA ACTUALIZADO -->
 <footer>
-    <p>&copy; 2026 Sabor Mexicano - Panel del Desarrollador.</p>
+    <p>&copy; 2026 Sabor Mexicano - Todos los derechos reservados.</p>
+    
+    <div style="margin: 8px 0; display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;">
+        <a href="terminos.html" style="color: #ccc; text-decoration: none; font-size: 0.85rem; transition: color 0.3s;">Términos del Servicio</a>
+        <span style="color: #666;">|</span>
+        <a href="politicas.html" style="color: #ccc; text-decoration: none; font-size: 0.85rem; transition: color 0.3s;">Política de Compraventa</a>
+    </div>
+
+    <p style="font-size: 0.8rem; opacity: 0.7; margin-top: 5px;">e-business + e-commerce - Negocios Electrónicos I</p>
 </footer>
 
 <script>
-// --- PERSISTENCIA ---
-const KEY_PRODUCTOS = "productos_mercadito";
-const KEY_SESION = "usuario_activo";
+    // --- PERSISTENCIA ---
+    const KEY_PRODUCTOS = "productos_mercadito";
+    const KEY_SESION = "usuario_activo";
 
-// 1. Pega esta línea temporalmente para borrar los productos viejos:
-localStorage.removeItem(KEY_PRODUCTOS); 
+    const productosBase = []; 
 
-// 2. Tu código sigue normal abajo:
-const productosBase = []; 
-
-if (!localStorage.getItem(KEY_PRODUCTOS)) {
-    localStorage.setItem(KEY_PRODUCTOS, JSON.stringify(productosBase));
-}
+    if (!localStorage.getItem(KEY_PRODUCTOS)) {
+        localStorage.setItem(KEY_PRODUCTOS, JSON.stringify(productosBase));
+    }
 
     // --- HERRAMIENTA DE NOTIFICACIONES (TOAST) ---
     function mostrarToast(mensaje, icono = "🎉") {
@@ -543,12 +622,15 @@ if (!localStorage.getItem(KEY_PRODUCTOS)) {
             divLogin.style.display = 'none';
             divPanel.style.display = 'block';
             document.getElementById('nombre-perfil-display').textContent = usuarioLogueado;
-            navTexto.textContent = "Mi Perfil (" + usuarioLogueado + ")";
+            if (navTexto) navTexto.textContent = "Mi Perfil (" + usuarioLogueado + ")";
+            
+            cargarDatosPerfil();
             cargarMisPublicaciones();
+            irAPestana('mi-perfil');
         } else {
             divLogin.style.display = 'block';
             divPanel.style.display = 'none';
-            navTexto.textContent = "Iniciar Sesión";
+            if (navTexto) navTexto.textContent = "Iniciar Sesión";
         }
     }
 
@@ -566,25 +648,89 @@ if (!localStorage.getItem(KEY_PRODUCTOS)) {
         mostrarToast("Sesión cerrada.", "🚪");
     }
 
+    // --- GESTIÓN INTERNA DE DATOS DE PERFIL ---
+    function cargarDatosPerfil() {
+        const usuarioActivo = localStorage.getItem(KEY_SESION);
+        if (!usuarioActivo) return;
+
+        const KEY_DATOS_PERFIL = "perfil_datos_" + usuarioActivo;
+        let datos = JSON.parse(localStorage.getItem(KEY_DATOS_PERFIL));
+
+        if (!datos) {
+            datos = {
+                usuario: usuarioActivo,
+                correo: usuarioActivo.toLowerCase() + "@sabormexicano.com",
+                telefono: "555-019-2834"
+            };
+            localStorage.setItem(KEY_DATOS_PERFIL, JSON.stringify(datos));
+        }
+
+        document.getElementById('perfil-usuario-texto').textContent = datos.usuario;
+        document.getElementById('perfil-correo-texto').textContent = datos.correo;
+        document.getElementById('perfil-telefono-texto').textContent = datos.telefono;
+    }
+
+    function mostrarFormEditarPerfil() {
+        const usuarioActivo = localStorage.getItem(KEY_SESION);
+        const KEY_DATOS_PERFIL = "perfil_datos_" + usuarioActivo;
+        const datos = JSON.parse(localStorage.getItem(KEY_DATOS_PERFIL));
+
+        document.getElementById('edit-perfil-usuario').value = datos.usuario;
+        document.getElementById('edit-perfil-correo').value = datos.correo;
+        document.getElementById('edit-perfil-telefono').value = datos.telefono;
+
+        document.getElementById('datos-vista').style.display = 'none';
+        document.getElementById('datos-edicion').style.display = 'block';
+    }
+
+    function cancelarEditarPerfil() {
+        document.getElementById('datos-vista').style.display = 'block';
+        document.getElementById('datos-edicion').style.display = 'none';
+    }
+
+    function guardarDatosPerfil(event) {
+        event.preventDefault();
+        const usuarioActivoAnterior = localStorage.getItem(KEY_SESION);
+        const nuevoUsuario = document.getElementById('edit-perfil-usuario').value.trim();
+        const nuevoCorreo = document.getElementById('edit-perfil-correo').value.trim();
+        const nuevoTelefono = document.getElementById('edit-perfil-telefono').value.trim();
+
+        if (!nuevoUsuario) return;
+
+        localStorage.removeItem("perfil_datos_" + usuarioActivoAnterior);
+
+        localStorage.setItem(KEY_SESION, nuevoUsuario);
+        const nuevosDatos = {
+            usuario: nuevoUsuario,
+            correo: nuevoCorreo,
+            telefono: nuevoTelefono
+        };
+        localStorage.setItem("perfil_datos_" + nuevoUsuario, JSON.stringify(nuevosDatos));
+
+        let todosLosProductos = JSON.parse(localStorage.getItem(KEY_PRODUCTOS)) || [];
+        todosLosProductos.forEach(p => {
+            if (p.usuario === usuarioActivoAnterior) p.usuario = nuevoUsuario;
+        });
+        localStorage.setItem(KEY_PRODUCTOS, JSON.stringify(todosLosProductos));
+
+        verificarSesion();
+        cancelarEditarPerfil();
+        mostrarToast("¡Perfil actualizado con éxito!", "👤");
+    }
+
     // --- NAVEGACIÓN ---
     function irAPestana(idPestana) {
         document.querySelectorAll('.btn-pestana').forEach(btn => btn.classList.remove('activa'));
         document.querySelectorAll('.seccion-perfil').forEach(sec => sec.classList.remove('activa'));
 
-        if (idPestana === 'publicar') {
-            document.querySelector('[onclick="irAPestana(\'publicar\')"]').classList.add('activa');
-            document.getElementById('sec-publicar').classList.add('activa');
-        } else if (idPestana === 'mis-publicaciones') {
-            document.querySelector('[onclick="irAPestana(\'mis-publicaciones\')"]').classList.add('activa');
-            document.getElementById('sec-mis-publicaciones').classList.add('activa');
-            cargarMisPublicaciones();
-        } else if (idPestana === 'subasta') {
-            document.querySelector('[onclick="irAPestana(\'subasta\')"]').classList.add('activa');
-            document.getElementById('sec-subasta').classList.add('activa');
-        }
+        const botonActivo = document.querySelector(`[onclick="irAPestana('${idPestana}')"]`);
+        if (botonActivo) botonActivo.classList.add('activa');
+
+        const seccionActiva = document.getElementById(`sec-${idPestana}`);
+        if (seccionActiva) seccionActiva.classList.add('activa');
     }
 
-    // --- CREAR / PUBLICAR PRODUCTO CON FOTO REAL ---
+    // --- CREAR / PUBLICAR PRODUCTO ---
     function publicarProductoC2C(event) {
         event.preventDefault();
         const usuarioActivo = localStorage.getItem(KEY_SESION);
@@ -602,7 +748,7 @@ if (!localStorage.getItem(KEY_PRODUCTOS)) {
         const lector = new FileReader();
 
         lector.onload = function(e) {
-            const base64Imagen = e.target.result; // Contenido real del archivo cargado
+            const base64Imagen = e.target.result;
 
             const nuevosProductos = JSON.parse(localStorage.getItem(KEY_PRODUCTOS)) || [];
             const nuevoProd = {
@@ -610,7 +756,7 @@ if (!localStorage.getItem(KEY_PRODUCTOS)) {
                 nombre: nombre,
                 precio: precio,
                 descripcion: descripcion,
-                foto: base64Imagen, // Almacenamos el Base64
+                foto: base64Imagen,
                 usuario: usuarioActivo
             };
 
@@ -622,7 +768,7 @@ if (!localStorage.getItem(KEY_PRODUCTOS)) {
             irAPestana('mis-publicaciones');
         };
 
-        lector.readAsDataURL(archivo); // Procesa la imagen del computador
+        lector.readAsDataURL(archivo);
     }
 
     // --- CARGAR MIS PUBLICACIONES ---
@@ -668,7 +814,7 @@ if (!localStorage.getItem(KEY_PRODUCTOS)) {
         });
     }
 
-    // --- MODAL DE EDICIÓN: LOGICA ---
+    // --- MODAL DE EDICIÓN ---
     function abrirEditar(id) {
         const todosLosProductos = JSON.parse(localStorage.getItem(KEY_PRODUCTOS)) || [];
         const producto = todosLosProductos.find(p => p.id === id);
@@ -678,7 +824,7 @@ if (!localStorage.getItem(KEY_PRODUCTOS)) {
             document.getElementById('edit-nombre').value = producto.nombre;
             document.getElementById('edit-precio').value = producto.precio;
             document.getElementById('edit-descripcion').value = producto.descripcion;
-            document.getElementById('edit-foto').value = ""; // Resetea el input file
+            document.getElementById('edit-foto').value = "";
             
             document.getElementById('modal-editar').style.display = 'flex';
         }
@@ -700,7 +846,6 @@ if (!localStorage.getItem(KEY_PRODUCTOS)) {
         const index = todosLosProductos.findIndex(p => p.id === id);
 
         if (index !== -1) {
-            // Si el usuario subió una nueva foto durante la edición
             if (fotoInput.files.length > 0) {
                 const archivo = fotoInput.files[0];
                 const lector = new FileReader();
@@ -709,7 +854,7 @@ if (!localStorage.getItem(KEY_PRODUCTOS)) {
                     todosLosProductos[index].nombre = nombre;
                     todosLosProductos[index].precio = precio;
                     todosLosProductos[index].descripcion = descripcion;
-                    todosLosProductos[index].foto = e.target.result; // Guarda la nueva foto en Base64
+                    todosLosProductos[index].foto = e.target.result;
 
                     localStorage.setItem(KEY_PRODUCTOS, JSON.stringify(todosLosProductos));
                     mostrarToast("¡Producto editado con éxito!", "✏️");
@@ -718,7 +863,6 @@ if (!localStorage.getItem(KEY_PRODUCTOS)) {
                 };
                 lector.readAsDataURL(archivo);
             } else {
-                // Si mantiene la foto actual
                 todosLosProductos[index].nombre = nombre;
                 todosLosProductos[index].precio = precio;
                 todosLosProductos[index].descripcion = descripcion;

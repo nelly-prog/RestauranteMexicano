@@ -6,10 +6,22 @@
     <link rel="stylesheet" href="estilos.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        /* Corrección para empujar el footer al fondo de la pantalla */
+        html, body {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        main {
+            flex: 1; /* Esto empuja el footer hacia abajo */
+        }
+
         /* Estilos específicos exclusivos para la tabla del contenido del carrito */
         .carrito-container {
             max-width: 800px;
-            margin: 0 auto;
+            margin: 40px auto;
             background: #fff;
             padding: 30px;
             border-radius: 10px;
@@ -34,6 +46,8 @@
             height: 60px;
             object-fit: cover;
             border-radius: 5px;
+            background-color: #e0e0e0; /* Fondo alternativo elegante */
+            display: inline-block;
         }
         .acciones-carrito {
             display: flex;
@@ -89,8 +103,13 @@
         <ul>
             <li><a href="index.html">Inicio</a></li>
             <li><a href="catalogo.html">Catálogo</a></li>
+            <li><a href="comunidad.html">Comunidad</a></li>
+            <li><a href="index.html#promociones" style="color: #ffb300; font-weight: bold;">🔥 Promos</a></li>
+            <li><a href="index.html#escaparate">Especial</a></li>
+            <li><a href="mercadito.html">🏪 Mercadito</a></li>
+            <li><a href="index.html#nosotros">Nosotros</a></li>
+            <li><a href="index.html#contacto">Contacto</a></li>
             <li><a href="login.html">Iniciar Sesión</a></li>
-            <li><a href="registro.html">Registrarse</a></li>
             <li class="cart-item-container">
                 <a href="carrito.html" class="cart-link" title="Ver carrito">
                     🛒 <span id="cart-count" class="cart-badge">0</span>
@@ -195,10 +214,18 @@
             let subtotalItem = item.precio * item.cantidad;
             sumaProductos += subtotalItem;
 
+            // CONTROL DE CONSISTENCIA: Si viene de catálogo usa item.titulo, si viene de mercadito usa item.nombre
+            let nombreMostrar = item.titulo || item.nombre || "Artículo sin nombre";
+            
+            // Si viene de catálogo usa item.img, si viene de mercadito usa item.foto (o vacío si no tiene)
+            let imagenMostrar = item.img || item.foto || "";
+
             tablaHTML += `
                 <tr>
-                    <td><img src="${item.img}" class="img-carrito" alt="${item.titulo}"></td>
-                    <td><strong style="color: #333;">${item.titulo}</strong></td>
+                    <td>
+                        <img src="${imagenMostrar}" class="img-carrito" alt="${nombreMostrar}" onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'60\' height=\'60\' viewBox=\'0 0 60 60\'><rect width=\'100%\' height=\'100%\' fill=\'%23e0e0e0\'/><text x=\'50%\' y=\'55%\' font-size=\'20\' text-anchor=\'middle\' dy=\'.3em\'>🛍️</text></svg>';">
+                    </td>
+                    <td><strong style="color: #333;">${nombreMostrar}</strong></td>
                     <td>$${item.precio.toFixed(2)}</td>
                     <td>
                         <input type="number" 
