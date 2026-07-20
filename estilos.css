@@ -24,8 +24,21 @@ body {
 }
 
 /* ==========================================================================
-   2. CABECERA GLOBAL (Asegura alineación perfecta en Inicio, Catálogo, etc.)
+   2. BANNER GLOBAL Y CABECERA (Header)
    ========================================================================== */
+.banner-contenido {
+    background: var(--btn-danger-color); 
+    color: white; 
+    text-align: center; 
+    padding: 8px; 
+    font-size: 0.9rem; 
+    font-weight: bold;
+}
+
+.cupon-resaltado {
+    color: var(--accent-color);
+}
+
 header { 
     background: var(--primary-color); 
     padding: 15px 30px; 
@@ -37,7 +50,7 @@ header {
     position: sticky; 
     top: 0;
     z-index: 1000;
-    flex-wrap: wrap; /* Evita que se desborde en pantallas medianas */
+    flex-wrap: wrap;
 }
 
 .logo-contenedor { 
@@ -52,6 +65,9 @@ header {
     height: 45px; 
     width: auto;
     object-fit: contain;
+    background-color: white;
+    border-radius: 50%;
+    padding: 2px;
 }
 
 nav ul { 
@@ -80,12 +96,15 @@ nav a:hover, nav a.active {
     display: flex;
     align-items: center;
 }
+
 .cart-link {
     display: flex;
     align-items: center;
     gap: 5px;
     font-size: 1.1rem;
+    text-decoration: none;
 }
+
 .cart-badge {
     background: var(--btn-danger-color);
     color: white;
@@ -96,7 +115,7 @@ nav a:hover, nav a.active {
 }
 
 /* ==========================================================================
-   3. SUB-MENÚ DE COMUNIDAD (C2C, Subastas, etc.)
+   3. SUB-MENÚ DE COMUNIDAD (Estructura interna opcional)
    ========================================================================== */
 .sub-nav-comunidad {
     background: #eae3d2;
@@ -124,12 +143,13 @@ nav a:hover, nav a.active {
 }
 
 /* ==========================================================================
-   4. TARJETAS Y CONTENEDORES
+   4. TARJETAS Y SECCIONES (Modificado para aprovechar toda la pantalla)
    ========================================================================== */
 .seccion-comunidad {
-    max-width: 800px;
+    width: 100%;
+    max-width: 1400px; /* Al cambiar de 800px a 1400px se expande en toda la pantalla */
     margin: 30px auto;
-    padding: 0 20px;
+    padding: 0 40px;   /* Un margen sutil a los lados para que no toque los bordes del monitor */
 }
 
 .tarjeta-comunidad {
@@ -146,7 +166,7 @@ nav a:hover, nav a.active {
     margin-bottom: 20px;
 }
 
-/* Formulario */
+/* Formularios uniformes */
 .form-comunidad label {
     display: block;
     font-weight: bold;
@@ -170,7 +190,7 @@ nav a:hover, nav a.active {
     background: #fff;
 }
 
-/* Opiniones de la comunidad */
+/* Opiniones / Comentarios */
 .opinion-card {
     background: white;
     padding: 20px;
@@ -214,7 +234,7 @@ nav a:hover, nav a.active {
 }
 
 /* ==========================================================================
-   5. BOTONES, MODAL Y PIE DE PÁGINA
+   5. BOTONES, INTERFAZ FLOTANTE Y FOOTER
    ========================================================================== */
 .btn-rojo { 
     background: var(--btn-danger-color); 
@@ -232,33 +252,7 @@ nav a:hover, nav a.active {
     background: #a30d1d; 
 }
 
-/* Redes Flotantes */
-.redes-flotantes {
-    position: fixed; 
-    right: 20px; 
-    top: 50%; 
-    transform: translateY(-50%); 
-    display: flex; 
-    flex-direction: column; 
-    gap: 15px; 
-    z-index: 9999;
-}
-
-.redes-flotantes a img { 
-    width: 45px; 
-    height: 45px; 
-}
-
-footer {
-    background: #222; 
-    color: white; 
-    text-align: center; 
-    padding: 20px; 
-    margin-top: 50px; 
-    font-size: 0.9rem;
-}
-
-/* --- REDES SOCIALES FLOTANTES --- */
+/* Redes Sociales Flotantes */
 .redes-flotantes {
     position: fixed;
     right: 20px;
@@ -269,15 +263,142 @@ footer {
     gap: 12px;
     z-index: 9999;
 }
+
 .redes-flotantes a img {
-    width: 45px;      /* Tamaño uniforme */
-    height: 45px;     /* Alto uniforme */
-    object-fit: cover; /* Evita que la imagen se estire o se vea rara */
+    width: 45px;
+    height: 45px;
+    object-fit: cover;
     border-radius: 8px;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     box-shadow: 0 4px 8px rgba(0,0,0,0.2);
 }
+
 .redes-flotantes a img:hover {
     transform: scale(1.15);
     box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+}
+
+/* Pie de página (Estilo Oscuro Institucional) */
+footer {
+    background: #1d1e22; 
+    color: white; 
+    text-align: center; 
+    padding: 30px 20px; 
+    margin-top: 50px; 
+    font-size: 0.95rem;
+}
+
+.footer-enlaces {
+    margin: 10px 0; 
+    display: flex; 
+    justify-content: center; 
+    gap: 15px; 
+    flex-wrap: wrap;
+}
+
+.footer-enlaces a {
+    color: #adb5bd; 
+    text-decoration: none; 
+    font-size: 0.85rem; 
+    transition: color 0.2s;
+}
+
+.footer-enlaces a:hover {
+    color: #ffffff;
+}
+
+.footer-creditos {
+    font-size: 0.8rem; 
+    color: #6c757d; 
+    margin-top: 8px; 
+    letter-spacing: 0.5px;
+}
+
+/* ==========================================================================
+   6. RESPONSIVIDAD (Media Query)
+   ========================================================================== */
+@media (max-width: 650px) {
+    header {
+        flex-direction: column;
+        gap: 12px;
+        text-align: center;
+        padding: 15px;
+    }
+    nav ul {
+        justify-content: center;
+        gap: 10px;
+    }
+    .redes-flotantes {
+        right: 10px;
+    }
+}
+
+/* ==========================================================================
+   7. MODALES Y NOTIFICACIONES
+   ========================================================================== */
+.modal-overlay {
+    display: none; 
+    position: fixed; 
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6); /* Fondo oscuro semitransparente */
+    justify-content: center; 
+    align-items: center;
+    z-index: 2000; /* Por encima del header */
+    backdrop-filter: blur(3px); /* Efecto cristal */
+}
+
+.modal-caja {
+    background: white; 
+    padding: 30px; 
+    border-radius: 15px;
+    max-width: 450px; 
+    width: 90%;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+    text-align: center;
+    border-top: 6px solid var(--primary-color);
+}
+
+.modal-caja h2 {
+    color: var(--primary-color);
+    margin-bottom: 15px;
+}
+
+.modal-caja p {
+    margin-bottom: 25px;
+    color: var(--text-color);
+}
+
+.btn-grupo {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.toast-notificacion {
+    position: fixed; 
+    bottom: 30px; 
+    right: 30px;
+    background: var(--primary-color); 
+    color: white; 
+    padding: 15px 25px;
+    border-radius: 8px; 
+    display: none; 
+    z-index: 3000;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    font-weight: bold;
+    animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+    from { transform: translateX(100%); }
+    to { transform: translateX(0); }
+}
+
+.toast-notificacion.mostrar { 
+    display: flex; 
+    align-items: center; 
+    gap: 10px; 
 }

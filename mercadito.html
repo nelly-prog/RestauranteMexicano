@@ -2,393 +2,103 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sabor Mexicano | Mercadito</title>
     <link rel="stylesheet" href="estilos.css">
+    <script src="componentes.js" defer></script>
     <style>
-        /* Estilos específicos para la sección del Mercadito */
-        .seccion-mercadito {
-            padding: 50px 20px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .titulo-mercadito {
-            text-align: center;
-            color: #b71c1c;
-            font-size: 2.8rem;
-            margin-bottom: 10px;
-            font-family: 'Georgia', serif;
-        }
-
-        .subtitulo-mercadito {
-            text-align: center;
-            color: #666;
-            margin-bottom: 40px;
-            font-size: 1.2rem;
-        }
-
-        /* Grid de Productos */
-        .grid-mercadito {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 30px;
-        }
-
-        /* Tarjeta de Producto Individual */
-        .tarjeta-producto {
-            background: white;
-            border-radius: 15px;
-            border: 1px solid #e0e0e0;
-            overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            transition: transform 0.3s, box-shadow 0.3s;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-
-        .tarjeta-producto:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
-        }
-
-        .imagen-contenedor {
-            position: relative;
-            width: 100%;
-            height: 200px;
-            background: #e0e0e0; /* Fondo gris para cuando no cargue la foto */
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-        }
-
-        .imagen-contenedor img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            position: absolute;
-            top: 0;
-            left: 0;
-            z-index: 2;
-        }
-
-        /* Marcador de posición que se ve de fondo si la foto no carga */
-        .placeholder-text {
-            color: #757575;
-            font-size: 1rem;
-            font-weight: bold;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 5px;
-            z-index: 1;
-        }
-
-        .tag-vendedor {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            background: rgba(211, 47, 47, 0.9);
-            color: white;
-            padding: 5px 10px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: bold;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-            z-index: 10;
-        }
-
-        .info-producto {
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            flex-grow: 1;
-        }
-
-        .info-producto h3 {
-            font-size: 1.3rem;
-            color: #333;
-            margin: 0 0 10px 0;
-            font-weight: bold;
-        }
-
-        .info-producto p {
-            font-size: 0.95rem;
-            color: #666;
-            line-height: 1.5;
-            margin: 0 0 20px 0;
-            flex-grow: 1;
-        }
-
-        .compra-fila {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-top: 1px solid #f0f0f0;
-            padding-top: 15px;
-        }
-
-        .precio-producto {
-            font-size: 1.3rem;
-            color: #2e7d32;
-            font-weight: bold;
-        }
-
-        .btn-agregar {
-            background: #2e7d32;
-            color: white;
-            border: none;
-            padding: 10px 18px;
-            border-radius: 25px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-
-        .btn-agregar:hover {
-            background: #1b5e20;
-        }
-
-        /* Notificación Flotante (Toast) */
-        .toast {
-            visibility: hidden;
-            min-width: 280px;
-            background-color: #333;
-            color: #fff;
-            text-align: center;
-            border-radius: 8px;
-            padding: 16px;
-            position: fixed;
-            z-index: 3000;
-            left: 50%;
-            bottom: 30px;
-            transform: translateX(-50%);
-            font-size: 1rem;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            opacity: 0;
-            transition: opacity 0.5s, visibility 0.5s;
-        }
-
-        .toast.mostrar {
-            visibility: visible;
-            opacity: 1;
-        }
+        html, body { height: 100%; margin: 0; }
+        body { display: flex; flex-direction: column; }
+        main { flex: 1 0 auto; padding: 50px 20px; max-width: 1200px; margin: 0 auto; }
+        .titulo-mercadito { text-align: center; color: #b71c1c; font-size: 2.8rem; margin-bottom: 10px; font-family: 'Georgia', serif; }
+        .subtitulo-mercadito { text-align: center; color: #666; margin-bottom: 40px; font-size: 1.2rem; }
+        .grid-mercadito { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 30px; }
+        .tarjeta-producto { background: white; border-radius: 15px; border: 1px solid #e0e0e0; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.05); transition: transform 0.3s; display: flex; flex-direction: column; }
+        .tarjeta-producto:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(0,0,0,0.1); }
+        .imagen-contenedor { position: relative; width: 100%; height: 200px; background: #e0e0e0; display: flex; align-items: center; justify-content: center; }
+        .imagen-contenedor img { width: 100%; height: 100%; object-fit: cover; position: absolute; z-index: 2; }
+        .tag-vendedor { position: absolute; top: 10px; left: 10px; background: rgba(211, 47, 47, 0.9); color: white; padding: 5px 10px; border-radius: 20px; font-size: 0.8rem; font-weight: bold; z-index: 10; }
+        .info-producto { padding: 20px; display: flex; flex-direction: column; flex-grow: 1; }
+        .precio-producto { font-size: 1.3rem; color: #2e7d32; font-weight: bold; }
+        .btn-agregar { background: #2e7d32; color: white; border: none; padding: 10px 18px; border-radius: 25px; cursor: pointer; }
+        .toast { visibility: hidden; min-width: 280px; background-color: #333; color: #fff; text-align: center; border-radius: 8px; padding: 16px; position: fixed; z-index: 3000; left: 50%; bottom: 30px; transform: translateX(-50%); opacity: 0; transition: opacity 0.5s; }
+        .toast.mostrar { visibility: visible; opacity: 1; }
     </style>
 </head>
 <body>
 
-<header>
-    <div class="logo-contenedor">
-        <img src="img/logo.png.png" class="logo-img" alt="Logo">
-        <span>Sabor Mexicano</span>
-    </div>
-    <nav>
-        <ul>
-            <li><a href="index.html">Inicio</a></li>
-            <li><a href="catalogo.html">Catálogo</a></li>
-            <li><a href="comunidad.html">Comunidad</a></li>
-            <li><a href="index.html#promociones" style="color: #ffb300; font-weight: bold;">🔥 Promos</a></li>
-            <li><a href="index.html#escaparate">Especial</a></li>
-            <li><a href="mercadito.html" style="border-bottom: 2px solid white;">🏪 Mercadito</a></li>
-            <li><a href="index.html#nosotros">Nosotros</a></li>
-            <li><a href="index.html#contacto">Contacto</a></li>
-            <li><a href="login.html" id="nav-perfil-texto">Iniciar Sesión</a></li>
-            
-            <li class="cart-item-container">
-                <a href="carrito.html" class="cart-link" title="Ver carrito">
-                    🛒 <span id="cart-count" class="cart-badge">0</span>
-                </a>
-            </li>
-        </ul>
-    </nav>
-</header>
+    <div id="banner-global"></div>
+<header id="header-container"></header>
 
-<main class="seccion-mercadito">
-    <h1 class="titulo-mercadito">🏪 Mercadito de la Comunidad</h1>
-    <p class="subtitulo-mercadito" id="subtitulo-dinamico">Artículos tradicionales y delicias locales publicadas por nuestros usuarios. ¡Compra local!</p>
+    <main class="seccion-mercadito">
+        <h1 class="titulo-mercadito">🏪 Mercadito de la Comunidad</h1>
+        <p class="subtitulo-mercadito" id="subtitulo-dinamico">Cargando...</p>
+        <div id="contenedor-productos" class="grid-mercadito"></div>
+    </main>
 
-    <!-- Contenedor donde se insertarán las tarjetas mediante JS -->
-    <div id="contenedor-productos" class="grid-mercadito"></div>
-</main>
+<footer id="footer-container"></footer>
+    <div id="toast-mercadito" class="toast">¡Agregado al carrito con éxito! 🛒</div>
 
-<footer>
-    <p>&copy; 2026 Sabor Mexicano - Todos los derechos reservados.</p>
-    <div style="margin: 8px 0; display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;">
-        <a href="terminos.html" style="color: #ccc; text-decoration: none; font-size: 0.85rem;">Términos del Servicio</a>
-        <span style="color: #666;">|</span>
-        <a href="politicas.html" style="color: #ccc; text-decoration: none; font-size: 0.85rem;">Política de Compraventa</a>
-    </div>
-    <p style="font-size: 0.8rem; opacity: 0.7; margin-top: 5px;">e-business + e-commerce - Negocios Electrónicos I</p>
-</footer>
+    <script>
+        const KEY_PRODUCTOS = "productos_mercadito";
+        const KEY_SESION = "usuario_activo";
 
-<!-- Alerta de Añadido Exitosamente -->
-<div id="toast-mercadito" class="toast">¡Agregado al carrito con éxito! 🛒</div>
+        const productosPredefinidos = [
+            { id: 101, nombre: "Taza de Talavera", precio: 100.00, descripcion: "Taza tradicional pintada a mano.", foto: "img/taza.webp", usuario: "kbezuko" },
+            { id: 102, nombre: "Salsa Macha", precio: 85.00, descripcion: "Salsa artesanal de chile.", foto: "img/salsa.webp", usuario: "renegul" }
+        ];
 
-<script>
-    const KEY_PRODUCTOS = "productos_mercadito";
-    const KEY_SESION = "usuario_activo";
-
-    // --- PRODUCTOS PRECARGADOS ---
-    const productosPredefinidos = [
-        {
-            id: 101,
-            nombre: "Taza de Talavera",
-            precio: 100.00,
-            descripcion: "Taza tradicional mexicana pintada y decorada a mano por artesanos poblanos.",
-            foto: "img/taza.webp", 
-            usuario: "kbezuko"
-        },
-        {
-            id: 102,
-            nombre: "Salsa Macha con Arándano",
-            precio: 85.00,
-            descripcion: "Salsa macha artesanal a base de chile de árbol, semillas de girasol, ajonjolí y arándano deshidratado.",
-            foto: "img/salsa.webp",
-            usuario: "renegul"
-        },
-        {
-            id: 103,
-            nombre: "Tortillero de Palma Multicolor",
-            precio: 120.00,
-            descripcion: "Tortillero artesanal tejido a mano en palma 100% natural, ideal para mantener tus tortillas calientes.",
-            foto: "img/tortillero.webp",
-            usuario: "imep3"
-        },
-        {
-            id: 104,
-            nombre: "Cantarito de Barro Curado",
-            precio: 75.00,
-            descripcion: "Cantarito artesanal de barro vidriado libre de plomo, ideal para preparar refrescantes bebidas tradicionales.",
-            foto: "img/cantarito.webp",
-            usuario: "Chris_Chan"
+        function renderizarProductos(lista) {
+            const contenedor = document.getElementById('contenedor-productos');
+            if (!contenedor) return;
+            contenedor.innerHTML = lista.map(prod => `
+                <div class="tarjeta-producto">
+                    <div class="imagen-contenedor">
+                        <img src="${prod.foto}" alt="${prod.nombre}" onerror="this.style.display='none'">
+                        <span class="tag-vendedor">Vendedor: ${prod.usuario}</span>
+                    </div>
+                    <div class="info-producto">
+                        <h3>${prod.nombre}</h3>
+                        <p>${prod.descripcion}</p>
+                        <div class="compra-fila" style="display:flex; justify-content:space-between; align-items:center;">
+                            <span class="precio-producto">$${Number(prod.precio).toFixed(2)}</span>
+                            <button class="btn-agregar" onclick="agregarAlCarrito(${prod.id}, '${prod.nombre.replace(/'/g, "\\'")}', ${prod.precio}, '${prod.foto}')">Agregar 🛒</button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
         }
-    ];
 
-    // Carga los productos dependiendo del estado de la sesión
-    function inicializarMercadito() {
-        const usuarioActivo = localStorage.getItem(KEY_SESION);
-        const subtitulo = document.getElementById('subtitulo-dinamico');
-        
-        let productosAMostrar = [];
-
-        if (usuarioActivo) {
-            // SI HAY SESIÓN: Mostramos predefinidos + los agregados en localStorage
+        function inicializarMercadito() {
+            const usuarioActivo = localStorage.getItem(KEY_SESION);
+            const subtitulo = document.getElementById('subtitulo-dinamico');
+            
             let productosGuardados = JSON.parse(localStorage.getItem(KEY_PRODUCTOS)) || [];
+            let productosAMostrar = productosGuardados.length > 0 ? productosGuardados : productosPredefinidos;
             
-            // Si el localStorage está vacío o tiene menos productos que el mínimo, lo rellenamos
-            if (productosGuardados.length < productosPredefinidos.length) {
-                localStorage.setItem(KEY_PRODUCTOS, JSON.stringify(productosPredefinidos));
-                productosAMostrar = productosPredefinidos;
-            } else {
-                productosAMostrar = productosGuardados;
-            }
-            if (subtitulo) {
-                subtitulo.textContent = `¡Hola, ${usuarioActivo}! Explora los artículos tradicionales de la comunidad.`;
-            }
-        } else {
-            // SI NO HAY SESIÓN: Únicamente mostramos los predefinidos (ocultamos los subidos)
-            productosAMostrar = productosPredefinidos;
-            if (subtitulo) {
-                subtitulo.textContent = "Inicia sesión para poder publicar tus propios productos en la comunidad.";
-            }
+            subtitulo.textContent = usuarioActivo 
+                ? `¡Hola, ${usuarioActivo}! Explora los artículos de la comunidad.` 
+                : "Inicia sesión para publicar tus productos.";
+            
+            renderizarProductos(productosAMostrar);
         }
-        
-        renderizarProductos(productosAMostrar);
-    }
 
-    // Renderiza las tarjetas de producto en el HTML
-    function renderizarProductos(lista) {
-        const contenedor = document.getElementById('contenedor-productos');
-        if (!contenedor) return;
-        
-        contenedor.innerHTML = "";
-
-        lista.forEach(prod => {
-            const card = document.createElement('div');
-            card.className = 'tarjeta-producto';
-
-            // Nota la magia: 'onerror="this.style.display=\'none\'"'
-            // Si la imagen no se encuentra en tu carpeta local, se oculta limpia y silenciosamente
-            card.innerHTML = `
-                <div class="imagen-contenedor">
-                    <div class="placeholder-text">
-                        <span>🛍️</span>
-                        <span>Sin Imagen</span>
-                    </div>
-                    <img src="${prod.foto}" alt="${prod.nombre}" onerror="this.style.display='none'">
-                    <span class="tag-vendedor">Vendedor: ${prod.usuario}</span>
-                </div>
-                <div class="info-producto">
-                    <h3>${prod.nombre}</h3>
-                    <p>${prod.descripcion}</p>
-                    <div class="compra-fila">
-                        <span class="precio-producto">$${prod.precio.toFixed(2)} MXN</span>
-                        <button class="btn-agregar" onclick="agregarAlCarrito(${prod.id}, '${prod.nombre.replace(/'/g, "\\'")}', ${prod.precio}, '${prod.foto}')">
-    Agregar 🛒
-</button>
-                    </div>
-                </div>
-            `;
-            contenedor.appendChild(card);
-        });
-    }
-
-// Agrega el producto al carrito de compras incluyendo la foto
-function agregarAlCarrito(id, nombre, precio, foto) {
-    let carrito = JSON.parse(localStorage.getItem("carritoApp")) || [];
-    
-    const index = carrito.findIndex(item => item.id === id || item.nombre === nombre);
-    if (index !== -1) {
-        carrito[index].cantidad += 1;
-    } else {
-        // Guardamos también la foto
-        carrito.push({ id, nombre, precio, foto, cantidad: 1 });
-    }
-    
-    localStorage.setItem("carritoApp", JSON.stringify(carrito));
-    actualizarContadorVisual();
-    mostrarNotificacion();
-}
-
-    // Actualiza dinámicamente el badge rojo del header
-    function actualizarContadorVisual() {
-        const carrito = JSON.parse(localStorage.getItem('carritoApp')) || [];
-        const totalItems = carrito.reduce((suma, item) => suma + item.cantidad, 0);
-        
-        const contadorBadge = document.getElementById('cart-count');
-        if (contadorBadge) {
-            contadorBadge.textContent = totalItems;
-        }
-    }
-
-    // Muestra el mensaje flotante (Toast) temporalmente
-    function mostrarNotificacion() {
-        const toast = document.getElementById('toast-mercadito');
-        if (toast) {
+        function agregarAlCarrito(id, nombre, precio, foto) {
+            let carrito = JSON.parse(localStorage.getItem("carritoApp")) || [];
+            carrito.push({ id, nombre, precio, foto, cantidad: 1 });
+            localStorage.setItem("carritoApp", JSON.stringify(carrito));
+            
+            if (typeof actualizarContadorVisual === 'function') actualizarContadorVisual();
+            
+            const toast = document.getElementById('toast-mercadito');
             toast.classList.add('mostrar');
-            setTimeout(() => {
-                toast.classList.remove('mostrar');
-            }, 2500);
+            setTimeout(() => toast.classList.remove('mostrar'), 2500);
         }
-    }
 
-    // Verifica si hay sesión iniciada para cambiar el texto del botón del menú
-    function verificarSesion() {
-        const usuarioActivo = localStorage.getItem(KEY_SESION);
-        const navTexto = document.getElementById('nav-perfil-texto');
-        if (usuarioActivo && navTexto) {
-            navTexto.textContent = "Mi Perfil (" + usuarioActivo + ")";
-            navTexto.href = "perfil.html";
-        }
-    }
-
-    // Arranca los procesos al cargar la ventana
-    document.addEventListener('DOMContentLoaded', () => {
-        inicializarMercadito();
-        verificarSesion();
-        actualizarContadorVisual();
-    });
-</script>
+        // CORRECCIÓN: Damos un breve margen de tiempo para asegurar que componentes.js inyecte el header/footer antes de cargar
+        document.addEventListener('DOMContentLoaded', () => {
+            setTimeout(inicializarMercadito, 150);
+        });
+    </script>
 </body>
 </html>

@@ -81,8 +81,6 @@
             margin-bottom: 10px;
             display: block;
         }
-
-        /* Estilos para el módulo interactivo de cupones */
         .cupon-pago-box {
             margin: 20px 0; 
             padding: 15px; 
@@ -124,7 +122,6 @@
 
 <header>
     <div class="logo-contenedor">
-        <!-- Mantenemos la ruta exacta que te funciona en tu carpeta para el Logo -->
         <img src="img/logo.png.png" class="logo-img" alt="Logo">
         <span>Sabor Mexicano</span>
     </div>
@@ -133,15 +130,12 @@
             <li><a href="index.html">Inicio</a></li>
             <li><a href="catalogo.html">Catálogo</a></li>
             <li><a href="comunidad.html">Comunidad</a></li>
-            <!-- Accesos directos de la página de inicio -->
             <li><a href="index.html#promociones" style="color: #ffb300; font-weight: bold;">🔥 Promos</a></li>
             <li><a href="index.html#escaparate">Especial</a></li>
-            <!-- Busca esta línea en tus menús y cámbiala si tiene un '#' delante -->
-<li><a href="mercadito.html">🏪 Mercadito</a></li>
+            <li><a href="mercadito.html">🏪 Mercadito</a></li>
             <li><a href="index.html#nosotros">Nosotros</a></li>
             <li><a href="index.html#contacto">Contacto</a></li>
             <li><a href="login.html">Iniciar Sesión</a></li>
-            <!-- Icono del Carrito con su Badge -->
             <li class="cart-item-container">
                 <a href="carrito.html" class="cart-link" title="Ver carrito">
                     🛒 <span id="cart-count" class="cart-badge">0</span>
@@ -150,15 +144,6 @@
         </ul>
     </nav>
 </header>
-
-<div class="redes-flotantes">
-    <a href="https://facebook.com" target="_blank" title="Facebook">
-        <img src="img/face.png" alt="Facebook">
-    </a>
-    <a href="https://instagram.com" target="_blank" title="Instagram">
-        <img src="img/insta.jpg" alt="Instagram">
-    </a>
-</div>
 
 <main class="seccion">
     <div class="pago-container" id="formulario-pago-bloque">
@@ -176,13 +161,9 @@
                     <th style="text-align: right;">Subtotal</th>
                 </tr>
             </thead>
-            <tbody id="resumen-items">
-            </tbody>
+            <tbody id="resumen-items"></tbody>
         </table>
 
-        <!-- ==========================================================================
-           NUEVO MÓDULO INTERACTIVO DE CUPÓN DE DESCUENTO
-           ========================================================================== -->
         <div class="cupon-pago-box">
             <span style="font-size: 0.95rem; color: #5d4037; margin-right: 10px;">¿Tienes un código de descuento?</span>
             <div style="display: inline-flex; gap: 8px;">
@@ -203,16 +184,17 @@
         <div class="politicas-bloque">
             <label class="politicas-label">
                 <input type="checkbox" id="check-politicas">
-                <span>
-                    He leído y acepto los <strong>Términos de Servicio</strong>, las <strong>Políticas de Compra-Venta</strong> y confirmo que mi orden de antojos es correcta.
-                </span>
+                <span>He leído y acepto los <strong>Términos de Servicio</strong>, las <strong>Políticas de Compra-Venta</strong> y confirmo que mi orden de antojos es correcta.</span>
             </label>
         </div>
 
+        <!-- Mensaje de error visual -->
+        <div id="error-politicas" style="color: #ce1126; font-weight: bold; margin-bottom: 15px; display: none; text-align: center;">
+            ⚠️ Por favor, acepta los términos y condiciones para proceder.
+        </div>
+
         <div class="acciones-carrito" style="margin-top: 10px; display: flex; justify-content: space-between;">
-            <a href="carrito.html" class="btn-rojo" style="background: #666; text-decoration: none; padding: 10px 20px; border-radius: 5px; color: white;">
-                Volver al Carrito
-            </a>
+            <a href="carrito.html" class="btn-rojo" style="background: #666; text-decoration: none; padding: 10px 20px; border-radius: 5px; color: white;">Volver al Carrito</a>
             <button class="btn-rojo" onclick="confirmarPagoFinal()" style="padding: 10px 25px; font-weight: bold; font-size: 1rem;">
                 Confirmar y Pagar
             </button>
@@ -229,20 +211,7 @@
     </div>
 </main>
 
-<footer>
-    <p>&copy; 2026 Sabor Mexicano - Todos los derechos reservados.</p>
-    
-    <div style="margin: 8px 0; display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;">
-        <a href="terminos.html" style="color: #ccc; text-decoration: none; font-size: 0.85rem; transition: color 0.3s;">Términos del Servicio</a>
-        <span style="color: #666;">|</span>
-        <a href="politicas.html" style="color: #ccc; text-decoration: none; font-size: 0.85rem; transition: color 0.3s;">Política de Compraventa</a>
-    </div>
-
-    <p style="font-size: 0.8rem; opacity: 0.7; margin-top: 5px;">e-business + e-commerce - Negocios Electrónicos I</p>
-</footer>
-
 <script>
-    // Variables globales para persistir la suma de los productos y controlar el descuento
     let sumaProductosOriginal = 0;
     let descuentoYaAplicado = false;
 
@@ -253,7 +222,6 @@
     function cargarResumen() {
         let carrito = JSON.parse(localStorage.getItem('carritoApp')) || [];
         const tbody = document.getElementById('resumen-items');
-        
         const subtotalText = document.getElementById('resumen-subtotal');
         const ivaText = document.getElementById('resumen-iva');
         const totalText = document.getElementById('resumen-total');
@@ -267,25 +235,15 @@
             return;
         }
 
-        sumaProductosOriginal = 0; // Reset inicial
-
+        sumaProductosOriginal = 0;
         carrito.forEach(item => {
             let subtotalItem = item.precio * item.cantidad;
             sumaProductosOriginal += subtotalItem;
             totalItems += item.cantidad;
-
-            html += `
-                <tr>
-                    <td><strong>${item.titulo}</strong></td>
-                    <td style="text-align: center;">${item.cantidad}</td>
-                    <td style="text-align: right;">$${subtotalItem.toFixed(2)}</td>
-                </tr>
-            `;
+            html += `<tr><td><strong>${item.titulo}</strong></td><td style="text-align: center;">${item.cantidad}</td><td style="text-align: right;">$${subtotalItem.toFixed(2)}</td></tr>`;
         });
 
         tbody.innerHTML = html;
-
-        // Desglose financiero base
         let subtotalNeto = sumaProductosOriginal / 1.16;
         let ivaCalculado = sumaProductosOriginal - subtotalNeto;
 
@@ -293,82 +251,67 @@
         ivaText.innerText = `$${ivaCalculado.toFixed(2)}`;
         totalText.innerText = `$${sumaProductosOriginal.toFixed(2)}`;
 
-        if (contadorBadge) {
-            contadorBadge.textContent = totalItems;
-        }
+        if (contadorBadge) contadorBadge.textContent = totalItems;
     }
 
-    // ==========================================================================
-    // LÓGICA DE PROCESAMIENTO Y RECALCULO DE CUPONES
-    // ==========================================================================
     function aplicarCuponEnPago() {
         const inputVal = document.getElementById('input-cupon-pago').value.trim().toUpperCase();
         const feedback = document.getElementById('feedback-cupon-pago');
-        
         const subtotalText = document.getElementById('resumen-subtotal');
         const ivaText = document.getElementById('resumen-iva');
         const totalText = document.getElementById('resumen-total');
 
         const listaCupones = {
-            'MARTESMAGIC': { tipo: 'porcentaje', valor: 0.50, msg: '¡Código MartesMagic aplicado! 50% de descuento (Simulación 2x1 en tu orden).' },
-            'ARRIBA': { tipo: 'fijo', valor: 20.00, msg: '¡Código Arriba aplicado! Se dedujeron $20.00 MXN de tu combo.' },
-            'DIEZ': { tipo: 'porcentaje', valor: 0.10, msg: '¡Código Diez aplicado! 10% de descuento digital.' },
-            'SABOR10': { tipo: 'porcentaje', valor: 0.10, msg: '¡Código SABOR10 aplicado! 10% de descuento de temporada.' }
+            'MARTESMAGIC': { tipo: 'porcentaje', valor: 0.50, msg: '¡Código MartesMagic aplicado!' },
+            'ARRIBA': { tipo: 'fijo', valor: 20.00, msg: '¡Código Arriba aplicado!' },
+            'DIEZ': { tipo: 'porcentaje', valor: 0.10, msg: '¡Código Diez aplicado!' },
+            'SABOR10': { tipo: 'porcentaje', valor: 0.10, msg: '¡Código SABOR10 aplicado!' }
         };
 
         feedback.style.display = 'block';
 
         if (descuentoYaAplicado) {
             feedback.style.color = '#c62828';
-            feedback.innerHTML = '⚠️ Ya has aplicado un código de descuento para este pedido.';
+            feedback.innerHTML = '⚠️ Ya has aplicado un código de descuento.';
             return;
         }
 
         if (listaCupones[inputVal]) {
             descuentoYaAplicado = true;
             const cupon = listaCupones[inputVal];
-            let montoDescuento = 0;
-
-            if (cupon.tipo === 'porcentaje') {
-                montoDescuento = sumaProductosOriginal * cupon.valor;
-            } else if (cupon.tipo === 'fijo') {
-                montoDescuento = cupon.valor;
-            }
-
-            // Calculamos los nuevos montos finales partiendo de la rebaja directo sobre el total final con IVA
+            let montoDescuento = (cupon.tipo === 'porcentaje') ? (sumaProductosOriginal * cupon.valor) : cupon.valor;
             let nuevoTotalFinal = Math.max(0, sumaProductosOriginal - montoDescuento);
             let nuevoSubtotalNeto = nuevoTotalFinal / 1.16;
             let nuevoIvaCalculado = nuevoTotalFinal - nuevoSubtotalNeto;
 
-            // Renderizar los cambios dinámicamente en pantalla
             subtotalText.innerText = `$${nuevoSubtotalNeto.toFixed(2)}`;
             ivaText.innerText = `$${nuevoIvaCalculado.toFixed(2)}`;
             totalText.innerText = `$${nuevoTotalFinal.toFixed(2)}`;
 
             feedback.style.color = '#2e7d32';
-            feedback.innerHTML = `✅ ${cupon.msg} Descuento aplicado (simulado).`;
-        } else if (inputVal === '') {
-            feedback.style.color = '#ff8f00';
-            feedback.innerHTML = '⚠️ Por favor, escribe un código de cupón.';
+            feedback.innerHTML = `✅ ${cupon.msg} Descuento aplicado.`;
         } else {
             feedback.style.color = '#c62828';
-            feedback.innerHTML = '❌ El código de descuento ingresado no es válido.';
+            feedback.innerHTML = '❌ Código no válido.';
         }
     }
 
     function confirmarPagoFinal() {
         const checkbox = document.getElementById('check-politicas');
+        const mensajeError = document.getElementById('error-politicas');
+        const formulario = document.getElementById('formulario-pago-bloque');
+        const exito = document.getElementById('mensaje-exito-bloque');
 
         if (!checkbox.checked) {
-            alert('Por favor, debes aceptar las Políticas de Compra y Venta del restaurante para proceder.');
+            mensajeError.style.display = 'block';
             return;
         }
 
-        document.getElementById('formulario-pago-bloque').style.display = 'none';
-        document.getElementById('mensaje-exito-bloque').style.display = 'block';
+        mensajeError.style.display = 'none';
+        if(formulario) formulario.style.display = 'none';
+        if(exito) exito.style.display = 'block';
 
         localStorage.removeItem('carritoApp');
-        localStorage.removeItem('cartCount');
         const contadorBadge = document.getElementById('cart-count');
         if (contadorBadge) contadorBadge.textContent = '0';
     }

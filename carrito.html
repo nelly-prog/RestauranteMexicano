@@ -6,334 +6,133 @@
     <link rel="stylesheet" href="estilos.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* Corrección para empujar el footer al fondo de la pantalla */
-        html, body {
-            height: 100%;
-            margin: 0;
-            display: flex;
-            flex-direction: column;
-        }
-
-        main {
-            flex: 1; /* Esto empuja el footer hacia abajo */
-        }
-
-        /* Estilos específicos exclusivos para la tabla del contenido del carrito */
-        .carrito-container {
-            max-width: 800px;
-            margin: 40px auto;
-            background: #fff;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-        }
-        .tabla-carrito {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 20px;
-        }
-        .tabla-carrito th, .tabla-carrito td {
-            padding: 12px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-        }
-        .tabla-carrito th {
-            background-color: #f8f8f8;
-            color: #333;
-        }
-        .img-carrito {
-            width: 60px;
-            height: 60px;
-            object-fit: cover;
-            border-radius: 5px;
-            background-color: #e0e0e0; /* Fondo alternativo elegante */
-            display: inline-block;
-        }
-        .acciones-carrito {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 15px;
-            margin-top: 20px;
-        }
-        .total-contenedor {
-            text-align: right;
-            font-size: 1.1rem;
-            color: #333;
-            margin-top: 10px;
-            line-height: 1.8;
-        }
-        .total-precio {
-            color: #ce1126;
-            font-size: 1.4rem;
-            font-weight: bold;
-        }
-        .btn-eliminar {
-            background: none;
-            border: none;
-            color: #ce1126;
-            cursor: pointer;
-            font-size: 1.1rem;
-        }
-        .carrito-vacio {
-            text-align: center;
-            padding: 40px;
-            font-size: 1.2rem;
-            color: #777;
-        }
-        .input-cantidad {
-            width: 60px;
-            padding: 5px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            text-align: center;
-            font-size: 1rem;
-        }
+        html, body { height: 100%; margin: 0; display: flex; flex-direction: column; }
+        main { flex: 1; }
+        .carrito-container { max-width: 800px; margin: 40px auto; background: #fff; padding: 30px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        .tabla-carrito { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+        .tabla-carrito th, .tabla-carrito td { padding: 12px; text-align: left; border-bottom: 1px solid #ddd; }
+        .tabla-carrito th { background-color: #f8f8f8; color: #333; }
+        .img-carrito { width: 60px; height: 60px; object-fit: cover; border-radius: 5px; background-color: #e0e0e0; display: inline-block; }
+        .acciones-carrito { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; margin-top: 20px; }
+        .total-contenedor { text-align: right; font-size: 1.1rem; color: #333; margin-top: 10px; line-height: 1.8; }
+        .total-precio { color: #ce1126; font-size: 1.4rem; font-weight: bold; }
+        .btn-eliminar { background: none; border: none; color: #ce1126; cursor: pointer; font-size: 1.1rem; }
+        .carrito-vacio { text-align: center; padding: 40px; font-size: 1.2rem; color: #777; }
+        .input-cantidad { width: 60px; padding: 5px; border: 1px solid #ccc; border-radius: 5px; text-align: center; }
     </style>
 </head>
 <body>
 
-<header>
-    <div class="logo-contenedor">
-        <img src="img/logo.png.png" class="logo-img" alt="Logo">
-        <span>Sabor Mexicano</span>
-    </div>
-    <nav>
-        <ul>
-            <li><a href="index.html">Inicio</a></li>
-            <li><a href="catalogo.html">Catálogo</a></li>
-            <li><a href="comunidad.html">Comunidad</a></li>
-            <li><a href="index.html#promociones" style="color: #ffb300; font-weight: bold;">🔥 Promos</a></li>
-            <li><a href="index.html#escaparate">Especial</a></li>
-            <li><a href="mercadito.html">🏪 Mercadito</a></li>
-            <li><a href="index.html#nosotros">Nosotros</a></li>
-            <li><a href="index.html#contacto">Contacto</a></li>
-            <li><a href="login.html">Iniciar Sesión</a></li>
-            <li class="cart-item-container">
-                <a href="carrito.html" class="cart-link" title="Ver carrito">
-                    🛒 <span id="cart-count" class="cart-badge">0</span>
-                </a>
-            </li>
-        </ul>
-    </nav>
-</header>
-
-<div class="redes-flotantes">
-    <a href="https://facebook.com" target="_blank" title="Facebook"><img src="img/face.png" alt="Facebook"></a>
-    <a href="https://instagram.com" target="_blank" title="Instagram"><img src="img/insta.jpg" alt="Instagram"></a>
-</div>
+    <div id="banner-global"></div>
+    <header></header>
 
 <main class="seccion">
     <div class="carrito-container">
         <h2>Tu Carrito de Compras</h2>
-        
         <div id="contenido-carrito"></div>
 
         <div class="total-contenedor" id="contenedor-total" style="display: none;">
-            <div>Subtotal: <span id="desglose-subtotal" style="font-weight: normal;">$0.00</span></div>
-            <div>IVA (16%): <span id="desglose-iva" style="font-weight: normal;">$0.00</span></div>
+            <div>Subtotal: <span id="desglose-subtotal">$0.00</span></div>
+            <div>IVA (16%): <span id="desglose-iva">$0.00</span></div>
             <div style="margin-top: 5px; font-weight: bold;">
                 Total a Pagar: <span id="total-pagar" class="total-precio">$0.00</span>
             </div>
         </div>
 
         <div class="acciones-carrito">
-            <a href="catalogo.html" class="btn-rojo" style="background: #666; text-decoration: none;">Seguir Comprando</a>
+            <a href="catalogo.html" style="background: #666; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">Seguir Comprando</a>
             <div id="botones-pago" style="display: none; gap: 10px;">
-                <button class="btn-rojo" style="background: #f0ad4e;" onclick="vaciarCarrito()">Vaciar Carrito</button>
-                <button class="btn-rojo" onclick="procesarPago()">Proceder al Pago</button>
+                <button style="background: #f0ad4e; border: none; padding: 10px 20px; cursor: pointer; border-radius: 5px;" onclick="vaciarCarrito()">Vaciar Carrito</button>
+                <button style="background: #00843D; color: white; border: none; padding: 10px 20px; cursor: pointer; border-radius: 5px;" onclick="procesarPago()">Proceder al Pago</button>
             </div>
         </div>
     </div>
 </main>
 
-<footer>
-    <p>&copy; 2026 Sabor Mexicano - Todos los derechos reservados.</p>
-    
-    <div style="margin: 8px 0; display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;">
-        <a href="terminos.html" style="color: #ccc; text-decoration: none; font-size: 0.85rem; transition: color 0.3s;">Términos del Servicio</a>
-        <span style="color: #666;">|</span>
-        <a href="politicas.html" style="color: #ccc; text-decoration: none; font-size: 0.85rem; transition: color 0.3s;">Política de Compraventa</a>
-    </div>
-
-    <p style="font-size: 0.8rem; opacity: 0.7; margin-top: 5px;">e-business + e-commerce - Negocios Electrónicos I</p>
-</footer>
-
-<!-- CDN de SweetAlert2 colocado estratégicamente para controlar las alertas -->
+<footer></footer>
+<script src="componentes.js"></script> 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        renderizarCarrito();
-    });
+    document.addEventListener('DOMContentLoaded', renderizarCarrito);
 
     function renderizarCarrito() {
         let carrito = JSON.parse(localStorage.getItem('carritoApp')) || [];
         const contenedor = document.getElementById('contenido-carrito');
         const contenedorTotal = document.getElementById('contenedor-total');
         const botonesPago = document.getElementById('botones-pago');
-        
-        // Elementos de desglose financiero
-        const desgloseSubtotal = document.getElementById('desglose-subtotal');
-        const desgloseIva = document.getElementById('desglose-iva');
-        const totalPagar = document.getElementById('total-pagar');
-
-        actualizarContadorMenu(carrito);
 
         if (carrito.length === 0) {
-            contenedor.innerHTML = `
-                <div class="carrito-vacio">
-                    <p>Tu carrito está vacío. 🌮</p>
-                    <p style="font-size: 0.9rem; margin-top: 10px;">¡Explora nuestro catálogo y añade tus platillos favoritos!</p>
-                </div>
-            `;
+            contenedor.innerHTML = '<div class="carrito-vacio">Tu carrito está vacío. ¡Ve a disfrutar de nuestros platillos!</div>';
             contenedorTotal.style.display = 'none';
             botonesPago.style.display = 'none';
+            actualizarContadorMenu(carrito);
             return;
         }
 
-        let tablaHTML = `
-            <table class="tabla-carrito">
-                <thead>
-                    <tr>
-                        <th>Platillo</th>
-                        <th>Nombre</th>
-                        <th>Precio</th>
-                        <th>Cantidad</th>
-                        <th>Subtotal</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-        `;
-
         let sumaProductos = 0;
+        let tablaHTML = `<table class="tabla-carrito"><thead><tr><th>Platillo</th><th>Nombre</th><th>Precio</th><th>Cantidad</th><th>Subtotal</th><th></th></tr></thead><tbody>`;
 
         carrito.forEach((item, index) => {
-            let subtotalItem = item.precio * item.cantidad;
+            let precio = parseFloat(item.precio) || 0;
+            let cantidad = parseInt(item.cantidad) || 1;
+            let subtotalItem = precio * cantidad;
             sumaProductos += subtotalItem;
-
-            // CONTROL DE CONSISTENCIA: Si viene de catálogo usa item.titulo, si viene de mercadito usa item.nombre
-            let nombreMostrar = item.titulo || item.nombre || "Artículo sin nombre";
             
-            // Si viene de catálogo usa item.img, si viene de mercadito usa item.foto (o vacío si no tiene)
+            let nombreMostrar = item.titulo || item.nombre || "Producto";
             let imagenMostrar = item.img || item.foto || "";
 
-            tablaHTML += `
-                <tr>
-                    <td>
-                        <img src="${imagenMostrar}" class="img-carrito" alt="${nombreMostrar}" onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'60\' height=\'60\' viewBox=\'0 0 60 60\'><rect width=\'100%\' height=\'100%\' fill=\'%23e0e0e0\'/><text x=\'50%\' y=\'55%\' font-size=\'20\' text-anchor=\'middle\' dy=\'.3em\'>🛍️</text></svg>';">
-                    </td>
-                    <td><strong style="color: #333;">${nombreMostrar}</strong></td>
-                    <td>$${item.precio.toFixed(2)}</td>
-                    <td>
-                        <input type="number" 
-                               class="input-cantidad" 
-                               value="${item.cantidad}" 
-                               min="1" 
-                               onchange="cambiarCantidad(${index}, this.value)">
-                    </td>
-                    <td>$${subtotalItem.toFixed(2)}</td>
-                    <td>
-                        <button class="btn-eliminar" onclick="eliminarProducto(${index})" title="Eliminar del carrito">
-                            <i class="fa-solid fa-trash-can"></i>
-                        </button>
-                    </td>
-                </tr>
-            `;
+            tablaHTML += `<tr>
+                <td><img src="${imagenMostrar}" class="img-carrito" onerror="this.src='img/logo.png.png'"></td>
+                <td><strong>${nombreMostrar}</strong></td>
+                <td>$${precio.toFixed(2)}</td>
+                <td><input type="number" class="input-cantidad" value="${cantidad}" min="1" onchange="cambiarCantidad(${index}, this.value)"></td>
+                <td>$${subtotalItem.toFixed(2)}</td>
+                <td><button class="btn-eliminar" onclick="eliminarProducto(${index})"><i class="fa-solid fa-trash-can"></i></button></td>
+            </tr>`;
         });
 
-        tablaHTML += `
-                </tbody>
-            </table>
-        `;
-
+        tablaHTML += `</tbody></table>`;
         contenedor.innerHTML = tablaHTML;
-        
-        // --- CÁLCULO FINANCIERO DEL DESGLOSE (Base 1.16) ---
+
         let subtotalNeto = sumaProductos / 1.16;
         let ivaCalculado = sumaProductos - subtotalNeto;
 
-        // Imprimir valores con dos decimales fijos
-        desgloseSubtotal.innerText = `$${subtotalNeto.toFixed(2)}`;
-        desgloseIva.innerText = `$${ivaCalculado.toFixed(2)}`;
-        totalPagar.innerText = `$${sumaProductos.toFixed(2)}`;
+        document.getElementById('desglose-subtotal').innerText = `$${subtotalNeto.toFixed(2)}`;
+        document.getElementById('desglose-iva').innerText = `$${ivaCalculado.toFixed(2)}`;
+        document.getElementById('total-pagar').innerText = `$${sumaProductos.toFixed(2)}`;
         
         contenedorTotal.style.display = 'block';
         botonesPago.style.display = 'flex';
+        actualizarContadorMenu(carrito);
     }
 
     function cambiarCantidad(index, nuevaCantidad) {
         let carrito = JSON.parse(localStorage.getItem('carritoApp')) || [];
-        let cantidadNumerica = parseInt(nuevaCantidad);
-
-        if (isNaN(cantidadNumerica) || cantidadNumerica < 1) {
-            cantidadNumerica = 1;
-        }
-
-        carrito[index].cantidad = cantidadNumerica;
+        carrito[index].cantidad = parseInt(nuevaCantidad) || 1;
         localStorage.setItem('carritoApp', JSON.stringify(carrito));
         renderizarCarrito();
     }
 
-    // Alerta tipo Toast para eliminación individual de productos
     function eliminarProducto(index) {
         let carrito = JSON.parse(localStorage.getItem('carritoApp')) || [];
         carrito.splice(index, 1);
-        
         localStorage.setItem('carritoApp', JSON.stringify(carrito));
         renderizarCarrito();
-
-        // Notificación elegante sin localhost
-        const Toast = Swal.mixin({
-            toast: true,
-            position: 'top-end',
-            showConfirmButton: false,
-            timer: 2000,
-            timerProgressBar: true
-        });
-
-        Toast.fire({
-            icon: 'success',
-            title: 'Producto quitado del carrito'
-        });
+        Swal.fire({ toast: true, position: 'top-end', icon: 'success', title: 'Producto eliminado', showConfirmButton: false, timer: 2000 });
     }
 
-    // Modal interactivo moderno para vaciar el carrito por completo
     function vaciarCarrito() {
-        Swal.fire({
-            title: '¿Vaciar carrito?',
-            text: "Se eliminarán todos los platillos seleccionados.",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#ce1126',
-            cancelButtonColor: '#666',
-            confirmButtonText: 'Sí, vaciar',
-            cancelButtonText: 'Cancelar'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                localStorage.removeItem('carritoApp');
-                localStorage.removeItem('cartCount');
-                renderizarCarrito();
-                
-                Swal.fire({
-                    title: '¡Carrito Vacío!',
-                    text: 'Tu carrito ha sido limpiado correctamente.',
-                    icon: 'success',
-                    confirmButtonColor: '#00843D'
-                });
-            }
-        });
+        localStorage.removeItem('carritoApp');
+        renderizarCarrito();
     }
 
     function actualizarContadorMenu(carrito) {
-        let totalItems = carrito.reduce((acumulador, item) => acumulador + item.cantidad, 0);
-        const contadorBadge = document.getElementById('cart-count');
-        if (contadorBadge) {
-            contadorBadge.textContent = totalItems;
+        const contador = document.getElementById('cart-count');
+        if (contador) {
+            let totalItems = carrito.reduce((acc, item) => acc + (parseInt(item.cantidad) || 1), 0);
+            contador.textContent = totalItems;
         }
-        localStorage.setItem('cartCount', totalItems);
     }
 
     function procesarPago() {

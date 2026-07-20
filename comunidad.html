@@ -5,558 +5,137 @@
     <title>Sabor Mexicano - Comunidad</title>
     <link rel="stylesheet" href="estilos.css">
     <style>
-        /* --- ESTILOS DE LA CABECERA COMPLETA (Calco exacto de tu index.html) --- */
-        header {
-            background-color: #006847; /* Verde bandera original */
-            padding: 15px 40px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            color: white;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-        }
-        .logo-contenedor {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-        .logo-img {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 2px solid white;
-        }
-        .logo-contenedor span {
-            font-size: 1.6rem;
-            font-weight: bold;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        
-        /* Menú de navegación principal completo */
-        header nav ul {
-            list-style: none;
-            display: flex;
-            align-items: center;
-            gap: 18px; /* Ajuste para que quepan todas tus opciones cómodamente */
-            margin: 0;
-            padding: 0;
-        }
-        header nav ul li a {
-            color: white;
-            text-decoration: none;
-            font-size: 0.95rem;
-            font-weight: 600;
-            transition: color 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-        header nav ul li a:hover, 
-        header nav ul li a.activo {
-            color: #ffca28; /* Resaltado amarillo/dorado */
-        }
-
-        /* Carrito rojo estilo tu captura */
-        .carrito-badge {
-            background-color: #e53935;
-            color: white;
-            border-radius: 50%;
-            padding: 2px 6px;
-            font-size: 0.8rem;
-            font-weight: bold;
-            margin-left: 4px;
-        }
-
-        /* --- REDES SOCIALES FLOTANTES EN EL LATERAL DERECHO (Calco de tu index.html) --- */
-        .redes-flotantes {
-            position: fixed;
-            right: 20px;
-            top: 50%;
-            transform: translateY(-50%);
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            z-index: 9999;
-        }
-        .redes-flotantes a img {
-            width: 40px;
-            height: 40px;
-            border-radius: 8px;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-        }
-        .redes-flotantes a img:hover {
-            transform: scale(1.15);
-            box-shadow: 0 6px 12px rgba(0,0,0,0.3);
-        }
-
-        /* --- CONTENEDOR GENERAL --- */
-        .contenedor-comunidad { 
-            max-width: 1000px; 
-            margin: 40px auto; 
-            padding: 0 20px; 
-            min-height: 75vh;
-        }
-        
-        /* Pestañas internas */
-        .pestanas-comunidad {
-            display: flex;
-            background: #f0ede5;
-            padding: 8px;
-            border-radius: 12px;
-            margin: 0 auto 30px auto;
-            max-width: 600px;
-            justify-content: center;
-            gap: 15px;
-        }
-        .btn-pestana {
-            background: none;
-            border: none;
-            padding: 12px 24px;
-            font-size: 1rem;
-            font-weight: bold;
-            color: #555;
-            cursor: pointer;
-            border-radius: 8px;
-            transition: 0.3s;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .btn-pestana.activa {
-            background: #006847;
-            color: white;
-        }
-
-        /* Secciones de Contenido */
-        .seccion-contenido {
-            display: none;
-            background: white;
-            padding: 40px;
-            border-radius: 15px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-            border: 1px solid #f0f0f0;
-        }
+        body { margin: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f7f8fa; }
+        .contenedor-comunidad { width: 100%; max-width: 1400px; margin: 30px auto; padding: 0 20px; box-sizing: border-box; min-height: 70vh; }
+        .pestanas-comunidad { display: flex; background: #f0ede5; padding: 6px; border-radius: 8px; margin: 0 auto 30px auto; max-width: 500px; justify-content: center; gap: 10px; }
+        .btn-pestana { background: none; border: none; padding: 10px 20px; font-size: 0.95rem; font-weight: bold; color: #555; cursor: pointer; border-radius: 6px; transition: 0.3s; }
+        .btn-pestana.activa { background: #006847; color: white; }
+        .seccion-contenido { display: none; width: 100%; box-sizing: border-box; }
         .seccion-contenido.activa { display: block; }
-
-        /* Tarjeta de Formulario de Comentarios */
-        .formulario-comentario-card {
-            background: #fdfdfd;
-            border: 1px solid #e9e9e9;
-            padding: 30px;
-            border-radius: 12px;
-            margin-bottom: 35px;
-        }
-        .form-comentarios {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-        .form-comentarios input, .form-comentarios textarea {
-            padding: 12px 15px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            font-size: 1rem;
-            transition: 0.3s;
-            background: #fff;
-            width: 100%;
-            box-sizing: border-box;
-        }
-        .form-comentarios input:focus, .form-comentarios textarea:focus {
-            border-color: #006847;
-            outline: none;
-            box-shadow: 0 0 5px rgba(0,104,71,0.2);
-        }
-
-        /* Selector de Estrellas Interactivo */
-        .selector-estrellas {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            font-size: 1.7rem;
-        }
-        .estrella-voto {
-            cursor: pointer;
-            color: #ccc;
-            transition: color 0.2s, transform 0.1s;
-        }
-        .estrella-voto:hover {
-            transform: scale(1.15);
-        }
-        .estrella-voto.activa {
-            color: #ffca28;
-        }
-
-        /* Comentarios */
-        .comentario-item {
-            display: flex;
-            gap: 20px;
-            background: #ffffff;
-            border: 1px solid #f0f0f0;
-            padding: 20px;
-            border-radius: 12px;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
-            transition: transform 0.2s;
-        }
-        .comentario-item:hover {
-            transform: translateY(-2px);
-        }
-        .comentario-avatar {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: #e8f5e9;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            color: #006847;
-            font-size: 1.2rem;
-            border: 2px solid #006847;
-            flex-shrink: 0;
-        }
-        .comentario-contenido {
-            flex-grow: 1;
-        }
-        .comentario-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 8px;
-        }
-        .comentario-autor {
-            font-size: 1.1rem;
-            font-weight: bold;
-            color: #333;
-        }
-        .comentario-estrellas {
-            color: #ffca28;
-            font-size: 1.1rem;
-            letter-spacing: 2px;
-        }
-        .comentario-texto {
-            margin: 0;
-            color: #555;
-            line-height: 1.5;
-            font-size: 0.98rem;
-        }
-
+        /* Muro Facebook */
+        .muro-facebook-container { max-width: 750px; margin: 0 auto; }
+        .crear-publicacion-card { background: white; border: 1px solid #e4e6eb; border-radius: 8px; padding: 16px; box-shadow: 0 1px 2px rgba(0,0,0,0.1); margin-bottom: 20px; }
+        .crear-header { display: flex; gap: 12px; margin-bottom: 12px; }
+        .avatar-fijo { width: 40px; height: 40px; border-radius: 50%; background: #006847; color: white; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 1.1rem; }
+        .input-simulado-fb { width: 100%; border: 1px solid #ccd0d5; border-radius: 20px; padding: 10px 16px; font-size: 0.95rem; outline: none; background-color: #f0f2f5; }
+        .crear-footer { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #f2f3f5; padding-top: 12px; margin-top: 12px; }
+        .input-nombre-fb { border: 1px solid #ccd0d5; border-radius: 6px; padding: 6px 12px; font-size: 0.85rem; width: 180px; }
+        /* Mensaje éxito */
+        #mensaje-exito { display: none; background: #d4edda; color: #155724; padding: 10px; border-radius: 6px; text-align: center; margin-top: 10px; font-weight: bold; border: 1px solid #c3e6cb; }
+        .fb-post { background: white; border: 1px solid #e4e6eb; border-radius: 8px; padding: 14px; box-shadow: 0 1px 2px rgba(0,0,0,0.1); margin-bottom: 16px; }
+        .fb-post-header { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+        .fb-autor-info { display: flex; flex-direction: column; }
+        .fb-nombre { font-weight: 600; color: #050505; text-decoration: none; font-size: 0.95rem; }
+        .fb-tiempo { font-size: 0.75rem; color: #65676b; }
+        .fb-texto { font-size: 0.95rem; color: #050505; line-height: 1.4; margin: 0 0 12px 0; white-space: pre-wrap; }
+        .fb-contador-reacciones { display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid #e4e6eb; font-size: 0.85rem; color: #65676b; margin-bottom: 8px; }
+        .fb-acciones-bar { display: flex; border-bottom: 1px solid #e4e6eb; padding-bottom: 4px; margin-bottom: 10px; }
+        .fb-btn-accion { flex: 1; background: none; border: none; padding: 8px; font-size: 0.9rem; color: #65676b; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; }
+        .fb-btn-accion.like-activo { color: #1877f2; }
         /* Subasta */
-        .contenedor-subasta {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
-            background: #fafafa;
-            padding: 30px;
-            border-radius: 12px;
-            border: 1px solid #e0e0e0;
-        }
-        @media(max-width: 768px) { .contenedor-subasta { grid-template-columns: 1fr; } }
+        .contenedor-subasta { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; background: white; padding: 35px; border-radius: 12px; border: 1px solid #e4e6eb; }
         .subasta-info { display: flex; flex-direction: column; justify-content: center; }
         .temporizador { font-size: 1.6rem; color: #d32f2f; font-weight: bold; margin: 12px 0; }
-        .lista-ofertas { list-style: none; padding: 0; margin-top: 15px; background: #fff; border-radius: 8px; padding: 15px; border: 1px solid #eee; }
-        .lista-ofertas li { padding: 10px 0; border-bottom: 1px solid #f5f5f5; font-size: 0.95rem; }
-
-        .btn-verde-accion {
-            background-color: #006847;
-            color: white;
-            border: none;
-            padding: 12px 28px;
-            border-radius: 8px;
-            font-size: 1rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-        .btn-verde-accion:hover {
-            background-color: #004d34;
-        }
-
-        footer {
-            background-color: #222;
-            color: #ccc;
-            padding: 20px;
-            text-align: center;
-            margin-top: 60px;
-            border-top: 4px solid #006847;
-        }
+        .btn-verde-accion { background-color: #006847; color: white; border: none; padding: 10px 24px; border-radius: 20px; font-weight: bold; cursor: pointer; }
     </style>
 </head>
 <body>
 
-<!-- Cabecera Verde de la Aplicación (Menú Completo) -->
-<header>
-    <div class="logo-contenedor">
-        <!-- Mantenemos la ruta exacta que te funciona en tu carpeta para el Logo -->
-        <img src="img/logo.png.png" class="logo-img" alt="Logo">
-        <span>Sabor Mexicano</span>
-    </div>
-    <nav>
-        <ul>
-            <li><a href="index.html">Inicio</a></li>
-            <li><a href="catalogo.html">Catálogo</a></li>
-            <li><a href="comunidad.html">Comunidad</a></li>
-            <!-- Accesos directos de la página de inicio -->
-            <li><a href="index.html#promociones" style="color: #ffb300; font-weight: bold;">🔥 Promos</a></li>
-            <li><a href="index.html#escaparate">Especial</a></li>
-            <!-- Busca esta línea en tus menús y cámbiala si tiene un '#' delante -->
-<li><a href="mercadito.html">🏪 Mercadito</a></li>
-            <li><a href="index.html#nosotros">Nosotros</a></li>
-            <li><a href="index.html#contacto">Contacto</a></li>
-            <li><a href="login.html">Iniciar Sesión</a></li>
-            <!-- Icono del Carrito con su Badge -->
-            <li class="cart-item-container">
-                <a href="carrito.html" class="cart-link" title="Ver carrito">
-                    🛒 <span id="cart-count" class="cart-badge">0</span>
-                </a>
-            </li>
-        </ul>
-    </nav>
-</header>
+    <div id="banner-global"></div>
+    <header></header>
 
-<!-- Redes Sociales Flotantes Fijas a la Derecha (Con tus archivos reales) -->
-<div class="redes-flotantes">
-    <a href="https://facebook.com" target="_blank" title="Síguenos en Facebook">
-        <img src="img/face.png" alt="Facebook" onerror="this.src='face.png'">
-    </a>
-    <a href="https://instagram.com" target="_blank" title="Síguenos en Instagram">
-        <img src="img/insta.jpg" alt="Instagram" onerror="this.src='insta.jpg'">
-    </a>
-</div>
-
-<!-- Cuerpo del Sitio -->
 <main class="contenedor-comunidad">
-
-    <!-- Menú de navegación interna de la sección -->
     <div class="pestanas-comunidad">
-        <button class="btn-pestana activa" onclick="cambiarPestana('comentarios')">💬 Comentarios de la Comunidad</button>
-        <button class="btn-pestana" onclick="cambiarPestana('subasta')">🔨 Subasta de la Comunidad</button>
+        <button class="btn-pestana activa" onclick="cambiarPestana('comentarios')">💬 Muro de la Comunidad</button>
+        <button class="btn-pestana" onclick="cambiarPestana('subasta')">🔨 Subasta Activa</button>
     </div>
 
-    <!-- SECCIÓN: COMUNIDAD / COMENTARIOS -->
     <section id="sec-comentarios" class="seccion-contenido activa">
-        <h2 style="color: #006847; text-align: center; margin-bottom: 8px; font-size: 2.2rem;">💬 Reseñas y Experiencias</h2>
-        <p style="text-align: center; color: #666; margin-bottom: 35px;">¡Déjanos tu calificación y comentario para seguir trayéndote el mejor sazón!</p>
-        
-        <div class="formulario-comentario-card">
-            <h3 style="margin-top: 0; margin-bottom: 15px; color: #333; font-size: 1.25rem;">Escribe tu opinión</h3>
-            <form class="form-comentarios" onsubmit="guardarComentarioSimulado(event)">
-                
-                <div style="display: flex; gap: 20px; align-items: center; flex-wrap: wrap;">
-                    <div style="flex: 2; min-width: 250px;">
-                        <input type="text" id="foro-nombre" placeholder="Tu nombre o apodo" required>
+        <div class="muro-facebook-container">
+            <div class="crear-publicacion-card">
+                <form onsubmit="crearPostPrincipal(event)">
+                    <div class="crear-header">
+                        <div class="avatar-fijo">U</div>
+                        <input type="text" id="fb-input-texto" class="input-simulado-fb" placeholder="¿Qué estás pensando sobre nuestro menú o servicio?" required>
                     </div>
-                    
-                    <!-- Estrellas Interactivas -->
-                    <div style="display: flex; align-items: center; gap: 15px; min-width: 200px;">
-                        <span style="font-size: 0.95rem; color: #555; font-weight: bold;">Tu Calificación:</span>
-                        <div class="selector-estrellas" id="estrellas-selector">
-                            <span class="estrella-voto" onclick="votarEstrellas(1)">★</span>
-                            <span class="estrella-voto" onclick="votarEstrellas(2)">★</span>
-                            <span class="estrella-voto" onclick="votarEstrellas(3)">★</span>
-                            <span class="estrella-voto" onclick="votarEstrellas(4)">★</span>
-                            <span class="estrella-voto" onclick="votarEstrellas(5)">★</span>
-                        </div>
+                    <div class="crear-footer">
+                        <input type="text" id="fb-input-nombre" class="input-nombre-fb" placeholder="Tu Nombre o Usuario" required>
+                        <button type="submit" class="btn-verde-accion">Publicar</button>
                     </div>
-                </div>
-                
-                <textarea id="foro-comentario" placeholder="¿Qué tal estuvo tu platillo o tu experiencia de compra en el mercadito?" rows="3" required></textarea>
-                
-                <div style="text-align: right;">
-                    <button type="submit" class="btn-verde-accion">Publicar Comentario</button>
-                </div>
-            </form>
-        </div>
-
-        <div class="lista-comentarios">
-            <h3 style="color: #333; border-bottom: 2px solid #006847; padding-bottom: 10px; margin-bottom: 25px; font-size: 1.4rem;">Comentarios Recientes</h3>
-            <div id="contenedor-comentarios">
-                <!-- Se cargan vía JavaScript -->
+                    <div id="mensaje-exito">¡Publicado con éxito! 🎉</div>
+                </form>
             </div>
+            <div id="muro-posts-feed"></div>
         </div>
     </section>
 
-    <!-- SECCIÓN: SUBASTA SIMULADA -->
     <section id="sec-subasta" class="seccion-contenido">
-        <h2 style="color: #006847; text-align: center; margin-bottom: 8px; font-size: 2.2rem;">🔨 Subasta Activa</h2>
-        <p style="text-align: center; color: #666; margin-bottom: 35px;">Únete a las ofertas comunitarias por piezas únicas de nuestra cocina y decoración.</p>
-        
         <div class="contenedor-subasta">
-            <div>
-                <img src="img/pozole.jpg" alt="Pozolera de Barro" style="width: 100%; border-radius: 8px; height: 250px; object-fit: cover;" onerror="this.src='https://via.placeholder.com/400x250'">
-            </div>
+            <div><img src="img/pozole.jpg" alt="Pozolera" style="width: 100%; border-radius: 8px;"></div>
             <div class="subasta-info">
-                <h3 style="margin: 0; font-size: 1.45rem; color: #222;">Pozolera de Barro Tradicional</h3>
-                <p style="color: #666; margin: 10px 0; font-size: 0.98rem; line-height: 1.5;">Artesanía de barro curada a mano de Santa María Atzompa, ideal para conservar caliente tu pozole o guisos tradicionales.</p>
-                <div class="temporizador">⏱️ Cierra en: <span id="tiempo-reloj">02:45</span></div>
-                <div style="font-size: 1.2rem; font-weight: bold; margin-bottom: 20px; color: #2e7d32;">Oferta actual: $<span id="oferta-maxima">450.00</span> MXN</div>
-                
-                <div style="display: flex; gap: 12px; max-width: 350px;">
-                    <input type="number" id="monto-oferta" placeholder="Monto ($ MXN)" style="padding: 11px; width: 50%; border: 1px solid #ccc; border-radius: 8px; font-size: 1rem;">
-                    <button class="btn-verde-accion" onclick="registrarOferta()" style="background-color: #d32f2f; flex-grow: 1;">🔨 Ofertar</button>
-                </div>
+                <h3>Pozolera de Barro Tradicional</h3>
+                <div class="temporizador">⏱️ Cierra en: <span id="tiempo-reloj">00:49</span></div>
+                <div style="font-weight: bold;">Oferta actual: $<span id="oferta-maxima">450.00</span></div>
+                <button class="btn-verde-accion" onclick="alert('Oferta registrada')">🔨 Ofertar</button>
             </div>
         </div>
-
-        <h4 style="margin-top: 40px; color: #333; font-size: 1.2rem; border-bottom: 1px solid #eee; padding-bottom: 8px;">Historial de ofertas:</h4>
-        <ul id="lista-historial-ofertas" class="lista-ofertas">
-            <li>👤 Juan_Perez ofertó $450.00 MXN</li>
-            <li>👤 Maria_gomez ofertó $420.00 MXN</li>
-            <li>👤 Carlos_32 ofertó $390.00 MXN</li>
-        </ul>
     </section>
-
 </main>
 
-<!-- Pie de Página -->
-<footer>
-    <p style="margin: 0; font-size: 0.9rem;">&copy; 2026 Sabor Mexicano - Todos los derechos reservados.</p>
-</footer>
+<footer></footer>
 
 <script>
-    const CLAVE_COMENTARIOS = 'comentariosComunidad';
-    let valorCalificacionVoto = 5; 
+    const CLAVE_MURO = 'fbMuroComunidad';
+    let posts = JSON.parse(localStorage.getItem(CLAVE_MURO)) || [{ id: 1, autor: "Karly Cast", tiempo: "15 h", texto: "¡Las mejores sin duda!", likes: 12, liked: false }];
 
-    const comentariosPorDefecto = [
-        { autor: "Sonia_M", estrellas: 5, texto: "¡La barbacoa de los domingos es simplemente espectacular! El envío llegó súper rápido y calientito." },
-        { autor: "Gael_Rios", estrellas: 4, texto: "Excelente servicio al cliente. Las salsas machas que vende Doña Flor en el mercadito pican delicioso." },
-        { autor: "Ximena_10", estrellas: 5, texto: "Compré una vajilla de barro curada y el empaque venía muy protegido. Me encantó la comunidad." }
-    ];
+    function renderizarMuro() {
+        const feed = document.getElementById('muro-posts-feed');
+        feed.innerHTML = "";
+        posts.forEach((post, index) => {
+            const div = document.createElement('div');
+            div.className = 'fb-post';
+            div.innerHTML = `
+                <div class="fb-post-header">
+                    <div class="avatar-fijo">${post.autor.charAt(0).toUpperCase()}</div>
+                    <div class="fb-autor-info"><span class="fb-nombre">${post.autor}</span><span class="fb-tiempo">${post.tiempo}</span></div>
+                </div>
+                <p class="fb-texto">${post.texto}</p>
+                <div class="fb-contador-reacciones"><span>👍 ${post.likes} personas</span></div>
+                <div class="fb-acciones-bar">
+                    <button class="fb-btn-accion ${post.liked ? 'like-activo' : ''}" onclick="darLikePost(${index})">👍 Me gusta</button>
+                </div>
+            `;
+            feed.appendChild(div);
+        });
+    }
+
+    function darLikePost(index) {
+        posts[index].liked = !posts[index].liked;
+        posts[index].likes += posts[index].liked ? 1 : -1;
+        localStorage.setItem(CLAVE_MURO, JSON.stringify(posts));
+        renderizarMuro();
+    }
+
+    function crearPostPrincipal(event) {
+        event.preventDefault();
+        posts.unshift({ id: Date.now(), autor: document.getElementById('fb-input-nombre').value, tiempo: "Justo ahora", texto: document.getElementById('fb-input-texto').value, likes: 0, liked: false });
+        localStorage.setItem(CLAVE_MURO, JSON.stringify(posts));
+        event.target.reset();
+        renderizarMuro();
+        const msg = document.getElementById('mensaje-exito');
+        msg.style.display = 'block';
+        setTimeout(() => msg.style.display = 'none', 3000);
+    }
 
     function cambiarPestana(idPestana) {
         document.querySelectorAll('.btn-pestana').forEach(btn => btn.classList.remove('activa'));
         document.querySelectorAll('.seccion-contenido').forEach(sec => sec.classList.remove('activa'));
-
-        if (idPestana === 'comentarios') {
-            document.querySelector('[onclick="cambiarPestana(\'comentarios\')"]').classList.add('activa');
-            document.getElementById('sec-comentarios').classList.add('activa');
-            cargarComentarios();
-        } else if (idPestana === 'subasta') {
-            document.querySelector('[onclick="cambiarPestana(\'subasta\')"]').classList.add('activa');
-            document.getElementById('sec-subasta').classList.add('activa');
-        }
+        document.querySelector(`[onclick="cambiarPestana('${idPestana}')"]`).classList.add('activa');
+        document.getElementById(`sec-${idPestana}`).classList.add('activa');
     }
 
-    function votarEstrellas(voto) {
-        valorCalificacionVoto = voto;
-        const estrellas = document.querySelectorAll('#estrellas-selector .estrella-voto');
-        estrellas.forEach((est, index) => {
-            if (index < voto) {
-                est.classList.add('activa');
-            } else {
-                est.classList.remove('activa');
-            }
-        });
-    }
-
-    function generarEstrellasHTML(cantidad) {
-        let cadena = "";
-        for (let i = 0; i < 5; i++) {
-            cadena += (i < cantidad) ? "★" : "☆";
-        }
-        return cadena;
-    }
-
-    function cargarComentarios() {
-        const contenedor = document.getElementById('contenedor-comentarios');
-        if (!contenedor) return;
-
-        let comentarios = JSON.parse(localStorage.getItem(CLAVE_COMENTARIOS));
-        if (!comentarios) {
-            comentarios = comentariosPorDefecto;
-            localStorage.setItem(CLAVE_COMENTARIOS, JSON.stringify(comentarios));
-        }
-
-        contenedor.innerHTML = "";
-        comentarios.forEach(com => {
-            const inicial = com.autor.charAt(0).toUpperCase();
-            const estrellasSimbolo = generarEstrellasHTML(com.estrellas || 5);
-            
-            const div = document.createElement('div');
-            div.className = 'comentario-item';
-            div.innerHTML = `
-                <div class="comentario-avatar">${inicial}</div>
-                <div class="comentario-contenido">
-                    <div class="comentario-header">
-                        <span class="comentario-autor">👤 ${com.autor}</span>
-                        <span class="comentario-estrellas">${estrellasSimbolo}</span>
-                    </div>
-                    <p class="comentario-texto">${com.texto}</p>
-                </div>
-            `;
-            contenedor.appendChild(div);
-        });
-    }
-
-    function guardarComentarioSimulado(event) {
-        event.preventDefault();
-        const autor = document.getElementById('foro-nombre').value.trim();
-        const texto = document.getElementById('foro-comentario').value.trim();
-
-        const comentarios = JSON.parse(localStorage.getItem(CLAVE_COMENTARIOS)) || [];
-        comentarios.unshift({ 
-            autor: autor, 
-            estrellas: valorCalificacionVoto, 
-            texto: texto 
-        });
-        
-        localStorage.setItem(CLAVE_COMENTARIOS, JSON.stringify(comentarios));
-
-        event.target.reset();
-        votarEstrellas(5); 
-        cargarComentarios();
-    }
-
-    // Subasta
-    function registrarOferta() {
-        const inputMonto = document.getElementById('monto-oferta');
-        const ofertaActualSpan = document.getElementById('oferta-maxima');
-        const listaOfertas = document.getElementById('lista-historial-ofertas');
-
-        const monto = parseFloat(inputMonto.value);
-        const actual = parseFloat(ofertaActualSpan.textContent);
-
-        if (!monto || monto <= actual) {
-            alert("Por favor ingresa un monto mayor a la oferta actual.");
-            return;
-        }
-
-        ofertaActualSpan.textContent = monto.toFixed(2);
-        
-        const nuevaLi = document.createElement('li');
-        nuevaLi.innerHTML = `👤 <strong>Tú (Oferta registrada)</strong> ofertaste $${monto.toFixed(2)} MXN`;
-        listaOfertas.insertBefore(nuevaLi, listaOfertas.firstChild);
-        
-        alert("Oferta registrada (simulado)");
-        inputMonto.value = "";
-    }
-
-    // Temporizador
-    let minutos = 2;
-    let segundos = 45;
-    setInterval(() => {
-        if (segundos === 0) {
-            if (minutos === 0) {
-                minutos = 5; 
-                segundos = 0;
-            } else {
-                minutos--;
-                segundos = 59;
-            }
-        } else {
-            segundos--;
-        }
-        document.getElementById('tiempo-reloj').textContent = 
-            `${minutos.toString().padStart(2, '0')}:${segundos.toString().padStart(2, '0')}`;
-    }, 1000);
-
-    document.addEventListener('DOMContentLoaded', () => {
-        votarEstrellas(5); 
-        cargarComentarios();
-    });
+    document.addEventListener('DOMContentLoaded', renderizarMuro);
 </script>
-
+<script src="componentes.js"></script>
 </body>
 </html>

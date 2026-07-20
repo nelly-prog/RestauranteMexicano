@@ -2,11 +2,12 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Catálogo - Sabor Mexicano</title>
     <link rel="stylesheet" href="estilos.css">
     <style>
         /* ==========================================================================
-           Estilos agregados/sugeridos para controlar el tamaño de imágenes y filtros
+           Estilos específicos para controlar el tamaño de imágenes y filtros
            ========================================================================== */
         
         /* Contenedor de filtros */
@@ -21,14 +22,16 @@
         .filtros-contenedor input, .filtros-contenedor select {
             padding: 10px 15px;
             border: 2px solid #ccc;
-            border-radius: 5px;
+            border-radius: 8px;
             font-size: 1rem;
             min-width: 200px;
+            background: #fafafa;
         }
 
         .filtros-contenedor input:focus, .filtros-contenedor select:focus {
-            border-color: #b32525; /* Color rojo institucional */
+            border-color: var(--btn-danger-color); /* Usamos el color rojo institucional de tus variables */
             outline: none;
+            background: #fff;
         }
 
         /* Ajustes de la cuadrícula (Grid) */
@@ -41,7 +44,7 @@
 
         /* Tarjeta de Producto */
         .producto {
-            position: relative; /* Necesario para posicionar las etiquetas */
+            position: relative; 
             background-color: #fff;
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
@@ -59,10 +62,10 @@
             transform: translateY(-5px);
         }
 
-        /* ¡SOLUCIÓN AL TAMAÑO DE LAS IMÁGENES! */
+        /* Solución para homogeneizar el tamaño de las imágenes */
         .img-contenedor {
             width: 100%;
-            height: 180px; /* Altura fija para que todas las tarjetas sean uniformes */
+            height: 180px; 
             overflow: hidden;
             background-color: #f5f5f5;
         }
@@ -70,15 +73,15 @@
         .img-producto {
             width: 100%;
             height: 100%;
-            object-fit: cover; /* Recorta y ajusta la imagen de forma proporcional sin deformarla */
+            object-fit: cover; 
             transition: transform 0.3s ease;
         }
 
         .producto:hover .img-producto {
-            transform: scale(1.05); /* Efecto sutil de zoom al pasar el mouse */
+            transform: scale(1.05); 
         }
 
-        /* Etiquetas visuales (Badges) */
+        /* Etiquetas de Badges Visuales */
         .etiqueta {
             position: absolute;
             top: 10px;
@@ -93,26 +96,26 @@
             box-shadow: 0 2px 4px rgba(0,0,0,0.2);
         }
 
-        .etiqueta.nuevo { background-color: #28a745; }      /* Verde */
-        .etiqueta.oferta { background-color: #dc3545; }     /* Rojo */
-        .etiqueta.popular { background-color: #ffc107; color: #000; } /* Amarillo */
-        .etiqueta.vendido { background-color: #17a2b8; }    /* Azul/Cian */
+        .etiqueta.nuevo { background-color: #28a745; }      
+        .etiqueta.oferta { background-color: var(--btn-danger-color); } 
+        .etiqueta.popular { background-color: var(--accent-color); color: #000; } 
+        .etiqueta.vendido { background-color: #17a2b8; }    
 
-        /* Ajustes de texto dentro de la tarjeta */
+        /* Ajustes de texto interno de las tarjetas */
         .producto h3 {
             margin: 12px 10px 5px 10px;
             font-size: 1.2rem;
-            color: #333;
+            color: var(--text-color);
         }
 
         .producto p {
             font-size: 1.1rem;
             font-weight: bold;
-            color: #b32525;
+            color: var(--btn-danger-color);
             margin-bottom: 10px;
         }
 
-        /* Mensaje de no resultados */
+        /* Mensaje si la búsqueda queda vacía */
         .no-resultados {
             grid-column: 1 / -1;
             text-align: center;
@@ -125,167 +128,130 @@
 </head>
 <body>
 
-<header>
-    <div class="logo-contenedor">
-        <!-- Mantenemos la ruta exacta que te funciona en tu carpeta para el Logo -->
-        <img src="img/logo.png.png" class="logo-img" alt="Logo">
-        <span>Sabor Mexicano</span>
-    </div>
-    <nav>
-        <ul>
-            <li><a href="index.html">Inicio</a></li>
-            <li><a href="catalogo.html">Catálogo</a></li>
-            <li><a href="comunidad.html">Comunidad</a></li>
-            <!-- Accesos directos de la página de inicio -->
-            <li><a href="index.html#promociones" style="color: #ffb300; font-weight: bold;">🔥 Promos</a></li>
-            <li><a href="index.html#escaparate">Especial</a></li>
-            <!-- Busca esta línea en tus menús y cámbiala si tiene un '#' delante -->
-<li><a href="mercadito.html">🏪 Mercadito</a></li>
-            <li><a href="index.html#nosotros">Nosotros</a></li>
-            <li><a href="index.html#contacto">Contacto</a></li>
-            <li><a href="login.html">Iniciar Sesión</a></li>
-            <!-- Icono del Carrito con su Badge -->
-            <li class="cart-item-container">
-                <a href="carrito.html" class="cart-link" title="Ver carrito">
-                    🛒 <span id="cart-count" class="cart-badge">0</span>
-                </a>
-            </li>
-        </ul>
-    </nav>
-</header>
-    
-    <main class="seccion">
-        <h2>Nuestro Catálogo</h2>
-        
-        <div class="filtros-contenedor">
-            <input type="text" id="buscador" placeholder="Buscar platillo...">
-            <select id="filtro-categoria">
-                <option value="todos">Todas las categorías</option>
-                <option value="platillos-fuertes">Platillos Fuertes</option>
-                <option value="antojitos">Antojitos Mexicanos</option>
-                <option value="especialidades">Especialidades del Mes</option>
-                <option value="Bebidas">Bebidas</option>
-            </select>
-        </div>
+    <!-- Banner promocional superior -->
+    <div id="banner-global"></div>
 
-        <div class="catalogo-grid" id="lista-productos">
+    <!-- Encabezado inyectado por componentes.js -->
+    <header></header>
+
+
+    <main class="seccion seccion-comunidad">
+        <div class="tarjeta-comunidad">
+            <h2>Nuestro Catálogo</h2>
             
-            <div class="producto" data-nombre="pozole" data-categoria="platillos-fuertes">
-                <span class="etiqueta popular">Popular</span>
-                <div class="img-contenedor">
-                    <img src="img/pozole.jpg" class="img-producto" alt="Pozole">
-                </div>
-                <h3>Pozole</h3>
-                <p>$135.00</p>
-                <a href="detalle.html#pozole" class="btn-rojo" style="padding: 5px 15px; font-size: 0.8rem;">Ver detalle</a>
+            <div class="filtros-contenedor">
+                <input type="text" id="buscador" placeholder="Buscar platillo...">
+                <select id="filtro-categoria">
+                    <option value="todos">Todas las categorías</option>
+                    <option value="platillos-fuertes">Platillos Fuertes</option>
+                    <option value="antojitos">Antojitos Mexicanos</option>
+                    <option value="especialidades">Especialidades del Mes</option>
+                    <option value="Bebidas">Bebidas</option>
+                </select>
             </div>
 
-            <div class="producto" data-nombre="sopes" data-categoria="antojitos">
-                <span class="etiqueta nuevo">Nuevo</span>
-                <div class="img-contenedor">
-                    <img src="img/Sopes.jpg" class="img-producto" alt="Sopes">
+            <div class="catalogo-grid" id="lista-productos">
+                
+                <div class="producto" data-nombre="pozole" data-categoria="platillos-fuertes">
+                    <span class="etiqueta popular">Popular</span>
+                    <div class="img-contenedor">
+                        <img src="img/pozole.jpg" class="img-producto" alt="Pozole">
+                    </div>
+                    <h3>Pozole</h3>
+                    <p>$135.00</p>
+                    <a href="detalle.html#pozole" class="btn-rojo" style="padding: 5px 15px; font-size: 0.8rem;">Ver detalle</a>
                 </div>
-                <h3>Sopes</h3>
-                <p>$95.00</p>
-                <a href="detalle.html#sopes" class="btn-rojo" style="padding: 5px 15px; font-size: 0.8rem;">Ver detalle</a>
-            </div>
 
-            <div class="producto" data-nombre="tacos al pastor" data-categoria="antojitos">
-                <span class="etiqueta vendido">El Más Vendido</span>
-                <div class="img-contenedor">
-                    <img src="img/tacos.jpg" class="img-producto" alt="Tacos">
+                <div class="producto" data-nombre="sopes" data-categoria="antojitos">
+                    <span class="etiqueta nuevo">Nuevo</span>
+                    <div class="img-contenedor">
+                        <img src="img/Sopes.jpg" class="img-producto" alt="Sopes">
+                    </div>
+                    <h3>Sopes</h3>
+                    <p>$95.00</p>
+                    <a href="detalle.html#sopes" class="btn-rojo" style="padding: 5px 15px; font-size: 0.8rem;">Ver detalle</a>
                 </div>
-                <h3>Tacos al Pastor</h3>
-                <p>$120.00</p>
-                <a href="detalle.html#tacos" class="btn-rojo" style="padding: 5px 15px; font-size: 0.8rem;">Ver detalle</a>
-            </div>
 
-            <div class="producto" data-nombre="tamales" data-categoria="antojitos">
-                <span class="etiqueta oferta">Oferta</span>
-                <div class="img-contenedor">
-                    <img src="img/tamales.jpg" class="img-producto" alt="Tamales">
+                <div class="producto" data-nombre="tacos al pastor" data-categoria="antojitos">
+                    <span class="etiqueta vendido">El Más Vendido</span>
+                    <div class="img-contenedor">
+                        <img src="img/tacos.jpg" class="img-producto" alt="Tacos">
+                    </div>
+                    <h3>Tacos al Pastor</h3>
+                    <p>$120.00</p>
+                    <a href="detalle.html#tacos" class="btn-rojo" style="padding: 5px 15px; font-size: 0.8rem;">Ver detalle</a>
                 </div>
-                <h3>Tamales</h3>
-                <p>$85.00</p>
-                <a href="detalle.html#tamales" class="btn-rojo" style="padding: 5px 15px; font-size: 0.8rem;">Ver detalle</a>
-            </div>
 
-            <div class="producto" data-nombre="enchiladas verdes" data-categoria="platillos-fuertes">
-                <span class="etiqueta popular">Popular</span>
-                <div class="img-contenedor">
-                    <img src="img/enchiladas.png" class="img-producto" alt="Enchiladas Verdes">
+                <div class="producto" data-nombre="tamales" data-categoria="antojitos">
+                    <span class="etiqueta oferta">Oferta</span>
+                    <div class="img-contenedor">
+                        <img src="img/tamales.jpg" class="img-producto" alt="Tamales">
+                    </div>
+                    <h3>Tamales</h3>
+                    <p>$85.00</p>
+                    <a href="detalle.html#tamales" class="btn-rojo" style="padding: 5px 15px; font-size: 0.8rem;">Ver detalle</a>
                 </div>
-                <h3>Enchiladas Verdes</h3>
-                <p>$115.00</p>
-                <a href="detalle.html#enchiladas" class="btn-rojo" style="padding: 5px 15px; font-size: 0.8rem;">Ver detalle</a>
-            </div>
 
-            <div class="producto" data-nombre="chiles en nogada" data-categoria="especialidades">
-                <span class="etiqueta nuevo">Nuevo</span>
-                <div class="img-contenedor">
-                    <img src="img/nogada.jpg" class="img-producto" alt="Chiles en Nogada">
+                <div class="producto" data-nombre="enchiladas verdes" data-categoria="platillos-fuertes">
+                    <span class="etiqueta popular">Popular</span>
+                    <div class="img-contenedor">
+                        <img src="img/enchiladas.png" class="img-producto" alt="Enchiladas Verdes">
+                    </div>
+                    <h3>Enchiladas Verdes</h3>
+                    <p>$115.00</p>
+                    <a href="detalle.html#enchiladas" class="btn-rojo" style="padding: 5px 15px; font-size: 0.8rem;">Ver detalle</a>
                 </div>
-                <h3>Chiles en Nogada</h3>
-                <p>$180.00</p>
-                <a href="detalle.html#nogada" class="btn-rojo" style="padding: 5px 15px; font-size: 0.8rem;">Ver detalle</a>
-            </div>
 
-            <div class="producto" data-nombre="flautas de pollo" data-categoria="antojitos">
-                <span class="etiqueta oferta">Oferta</span>
-                <div class="img-contenedor">
-                    <img src="img/flautas.jpg" class="img-producto" alt="Flautas de Pollo">
+                <div class="producto" data-nombre="chiles en nogada" data-categoria="especialidades">
+                    <span class="etiqueta nuevo">Nuevo</span>
+                    <div class="img-contenedor">
+                        <img src="img/nogada.jpg" class="img-producto" alt="Chiles en Nogada">
+                    </div>
+                    <h3>Chiles en Nogada</h3>
+                    <p>$180.00</p>
+                    <a href="detalle.html#nogada" class="btn-rojo" style="padding: 5px 15px; font-size: 0.8rem;">Ver detalle</a>
                 </div>
-                <h3>Flautas de Pollo</h3>
-                <p>$90.00</p>
-                <a href="detalle.html#flautas" class="btn-rojo" style="padding: 5px 15px; font-size: 0.8rem;">Ver detalle</a>
-            </div>
 
-            <div class="producto" data-nombre="quesadillas de flor de calabaza" data-categoria="antojitos">
-                <div class="img-contenedor">
-                    <img src="img/quesadillas.jpg" class="img-producto" alt="Quesadillas">
+                <div class="producto" data-nombre="flautas de pollo" data-categoria="antojitos">
+                    <span class="etiqueta oferta">Oferta</span>
+                    <div class="img-contenedor">
+                        <img src="img/flautas.jpg" class="img-producto" alt="Flautas de Pollo">
+                    </div>
+                    <h3>Flautas de Pollo</h3>
+                    <p>$90.00</p>
+                    <a href="detalle.html#flautas" class="btn-rojo" style="padding: 5px 15px; font-size: 0.8rem;">Ver detalle</a>
                 </div>
-                <h3>Quesadillas de Flor</h3>
-                <p>$75.00</p>
-                <a href="detalle.html#quesadillas" class="btn-rojo" style="padding: 5px 15px; font-size: 0.8rem;">Ver detalle</a>
-            </div>
 
-            <div class="producto" data-nombre="Agua de horchata" data-categoria="Bebidas">
-                <div class="img-contenedor">
-                    <img src="img/horchata.jpg" class="img-producto" alt="Horchata">
+                <div class="producto" data-nombre="quesadillas de flor de calabaza" data-categoria="antojitos">
+                    <div class="img-contenedor">
+                        <img src="img/quesadillas.jpg" class="img-producto" alt="Quesadillas">
+                    </div>
+                    <h3>Quesadillas de Flor</h3>
+                    <p>$75.00</p>
+                    <a href="detalle.html#quesadillas" class="btn-rojo" style="padding: 5px 15px; font-size: 0.8rem;">Ver detalle</a>
                 </div>
-                <h3>Agua de horchata</h3>
-                <p>$15.00</p>
-                <a href="detalle.html#horchata" class="btn-rojo" style="padding: 5px 15px; font-size: 0.8rem;">Ver detalle</a>
-            </div>
 
-            <div id="no-resultados" class="no-resultados">
-                No se encontraron platillos que coincidan con tu búsqueda. 🌶️
+                <div class="producto" data-nombre="agua de horchata" data-categoria="Bebidas">
+                    <div class="img-contenedor">
+                        <img src="img/horchata.jpg" class="img-producto" alt="Horchata">
+                    </div>
+                    <h3>Agua de horchata</h3>
+                    <p>$15.00</p>
+                    <a href="detalle.html#horchata" class="btn-rojo" style="padding: 5px 15px; font-size: 0.8rem;">Ver detalle</a>
+                </div>
+
+                <div id="no-resultados" class="no-resultados">
+                    No se encontraron platillos que coincidan con tu búsqueda. 🌶️
+                </div>
             </div>
         </div>
     </main>
 
-<footer>
-    <p>&copy; 2026 Sabor Mexicano - Todos los derechos reservados.</p>
-    
-    <!-- Enlaces legales integrados con estilos en línea sencillos para no alterar tu CSS global -->
-    <div style="margin: 8px 0; display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;">
-        <a href="terminos.html" style="color: #ccc; text-decoration: none; font-size: 0.85rem; transition: color 0.3s;">Términos del Servicio</a>
-        <span style="color: #666;">|</span>
-        <a href="politicas.html" style="color: #ccc; text-decoration: none; font-size: 0.85rem; transition: color 0.3s;">Política de Compraventa</a>
-    </div>
+    <!-- El footer y las redes flotantes laterales se pintan solos mediante componentes.js -->
+    <footer></footer>
 
-    <p style="font-size: 0.8rem; opacity: 0.7; margin-top: 5px;">e-business + e-commerce - Negocios Electrónicos I</p>
-</footer>
-
-    <div class="redes-flotantes">
-        <a href="https://facebook.com" target="_blank">
-            <img src="img/face.png" alt="Facebook">
-        </a>
-        <a href="https://instagram.com" target="_blank">
-            <img src="img/insta.jpg" alt="Instagram">
-        </a>
-    </div>
-
+    <!-- Scripts de Control -->
+    <script src="componentes.js"></script>
     <script>
         const buscador = document.getElementById('buscador');
         const filtroCategoria = document.getElementById('filtro-categoria');
@@ -298,7 +264,7 @@
             let contadorVisibles = 0;
 
             productos.forEach(producto => {
-                const nombreProducto = producto.getAttribute('data-nombre');
+                const nombreProducto = producto.getAttribute('data-nombre').toLowerCase();
                 const categoriaProducto = producto.getAttribute('data-categoria');
 
                 const coincideTexto = nombreProducto.includes(textoBusqueda);
@@ -319,21 +285,9 @@
             }
         }
 
-        // FUNCIÓN CLAVE: Mantiene el número del carrito leyendo de localStorage
-        function actualizarContadorVisual() {
-            const cantidadActual = parseInt(localStorage.getItem('cartCount')) || 0;
-            const contadorBadge = document.getElementById('cart-count');
-            if (contadorBadge) {
-                contadorBadge.textContent = cantidadActual;
-            }
-        }
-
-        // Escuchar los eventos del usuario
+        // Escuchar los eventos del usuario para búsquedas en tiempo real
         buscador.addEventListener('input', filtrarProductos);
         filtroCategoria.addEventListener('change', filtrarProductos);
-        
-        // Carga la cantidad correcta al entrar al catálogo
-        document.addEventListener('DOMContentLoaded', actualizarContadorVisual);
     </script>
 </body>
 </html>

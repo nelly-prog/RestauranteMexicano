@@ -2,194 +2,135 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Iniciar Sesión - Sabor Mexicano</title>
-    <!-- Mantenemos tu archivo estilos.css -->
     <link rel="stylesheet" href="estilos.css">
+    <script src="componentes.js" defer></script>
     <style>
-        /* Estilos específicos para que el contenedor de login sea una tarjeta elegante, centrada e idéntica a registro */
+        /* Estructura para fijar el footer al fondo */
+        html, body { height: 100%; margin: 0; }
+        body { display: flex; flex-direction: column; }
+        main { flex: 1 0 auto; padding: 40px 20px; display: flex; align-items: center; justify-content: center; }
+        footer { flex-shrink: 0; }
+
+        /* Tarjeta de Login */
         .contenedor-tarjeta {
-            max-width: 500px;
-            margin: 50px auto;
+            width: 100%;
+            max-width: 400px;
             padding: 30px;
             background: #ffffff;
             border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            border-top: 5px solid #006847; /* Borde verde característico */
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border-top: 5px solid #006847;
         }
         
-        .contenedor-tarjeta h2 {
-            color: #006847;
-            text-align: center;
-            margin-bottom: 25px;
-            font-size: 1.8rem;
+        .contenedor-tarjeta h2 { color: #006847; text-align: center; margin-bottom: 20px; }
+
+        .campo-form { margin-bottom: 15px; }
+        .campo-form label { display: block; font-weight: bold; color: #005F73; margin-bottom: 5px; }
+        .campo-form input { 
+            width: 100%; padding: 12px; border: 1px solid #ccc; 
+            border-radius: 8px; box-sizing: border-box; 
         }
 
-        #formLogin {
-            max-width: 100%;
-            margin: 0;
-            padding: 0;
-            background: transparent;
-            box-shadow: none;
-            border-radius: 0;
+        .btn-entrar { 
+            background: #b71c1c; color: white; width: 100%; padding: 12px; 
+            border: none; border-radius: 8px; cursor: pointer; font-weight: bold; margin-top: 10px;
         }
+        .btn-entrar:hover { background: #9c1818; }
 
-        #formLogin label { 
-            display: block; 
-            margin-top: 15px; 
-            font-weight: bold; 
-            color: #005F73;
-        }
-
-        #formLogin input[type="email"],
-        #formLogin input[type="password"] { 
-            display: block;
-            width: 100%; 
-            padding: 12px; 
-            margin-top: 5px; 
-            border: 1px solid #ccc; 
-            border-radius: 8px; 
-            box-sizing: border-box; 
-            background-color: #fafafa;
-            font-size: 1rem;
-        }
-
-        #formLogin input[type="email"]:focus,
-        #formLogin input[type="password"]:focus {
-            outline: none;
-            border-color: #006847;
-            background-color: #ffffff;
-        }
-
-        .contenido-modal { 
-            background: white; 
-            padding: 30px; 
-            border-radius: 15px; 
-            text-align: center; 
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3); 
-            width: 80%; 
-            max-width: 350px; 
-        }
-
-        .redes-flotantes { 
-            position: fixed; 
-            top: 50%; 
-            right: 20px; 
-            transform: translateY(-50%);
-            display: flex; 
-            flex-direction: column; 
-            gap: 15px; 
-            z-index: 999; 
-        }
-
-        .redes-flotantes img { 
-            width: 45px; 
-            height: 45px;
+        /* Estilo para los modales personalizados */
+        .modal-overlay {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5); align-items: center; justify-content: center; z-index: 2000;
         }
     </style>
 </head>
 <body>
 
-<header>
-    <div class="logo-contenedor">
-        <!-- Mantenemos la ruta exacta que te funciona en tu carpeta para el Logo -->
-        <img src="img/logo.png.png" class="logo-img" alt="Logo">
-        <span>Sabor Mexicano</span>
-    </div>
-    <nav>
-        <ul>
-            <li><a href="index.html">Inicio</a></li>
-            <li><a href="catalogo.html">Catálogo</a></li>
-            <li><a href="comunidad.html">Comunidad</a></li>
-            <!-- Accesos directos de la página de inicio -->
-            <li><a href="index.html#promociones" style="color: #ffb300; font-weight: bold;">🔥 Promos</a></li>
-            <li><a href="index.html#escaparate">Especial</a></li>
-            <!-- Busca esta línea en tus menús y cámbiala si tiene un '#' delante -->
-<li><a href="mercadito.html">🏪 Mercadito</a></li>
-            <li><a href="index.html#nosotros">Nosotros</a></li>
-            <li><a href="index.html#contacto">Contacto</a></li>
-            <li><a href="login.html">Iniciar Sesión</a></li>
-            <!-- Icono del Carrito con su Badge -->
-            <li class="cart-item-container">
-                <a href="carrito.html" class="cart-link" title="Ver carrito">
-                    🛒 <span id="cart-count" class="cart-badge">0</span>
-                </a>
-            </li>
-        </ul>
-    </nav>
-</header>
+    <div id="banner-global"></div>
+    <header></header>
 
-<main class="seccion">
-    <div class="contenedor-tarjeta">
-        <h2>Iniciar Sesión</h2>
-        <form id="formLogin">
-            <label>Correo:</label>
-            <input type="email" id="loginEmail" required placeholder="tu@correo.com">
-            
-            <label>Contraseña:</label>
-            <input type="password" id="loginPassword" required placeholder="••••••••">
-            
-            <div style="margin: 15px 0; display: flex; align-items: center; gap: 8px;">
-                <input type="checkbox" id="recordarSesion" checked style="width: auto; margin: 0;">
-                <label for="recordarSesion" style="display: inline; margin: 0; font-size: 0.9rem; font-weight: normal; color: #555;">Recordar mis datos</label>
+    <main>
+        <div class="contenedor-tarjeta">
+            <h2>Iniciar Sesión</h2>
+            <form id="formLogin">
+                <div class="campo-form">
+                    <label>Correo:</label>
+                    <input type="email" id="loginEmail" required placeholder="tu@correo.com">
+                </div>
+                <div class="campo-form">
+                    <label>Contraseña:</label>
+                    <input type="password" id="loginPassword" required placeholder="••••••••">
+                </div>
+
+                <div style="margin: 15px 0; display: flex; align-items: center; gap: 8px;">
+                    <input type="checkbox" id="recordarSesion" style="width: auto; margin: 0;">
+                    <label for="recordarSesion" style="margin: 0; font-size: 0.9rem; font-weight: normal; color: #555;">Recordar mis datos</label>
+                </div>
+
+                <button type="submit" class="btn-entrar">Entrar</button>
+
+                <div style="margin-top: 20px; text-align: center;">
+                    <a href="#" onclick="abrirModal('modal-recuperacion')" style="color: #2140dd; text-decoration: none; font-size: 0.9rem;">
+                        ¿Olvidaste tu contraseña?
+                    </a>
+                </div>
+
+                <p style="text-align: center; margin-top: 15px; font-size: 0.9rem;">
+                    ¿No tienes cuenta? <a href="registro.html" style="color: #006847; font-weight: bold; text-decoration: none;">Regístrate</a>
+                </p>
+            </form>
+        </div>
+    </main>
+
+    <footer></footer>
+
+    <!-- Modal 1: Recuperar acceso -->
+    <div id="modal-recuperacion" class="modal-overlay">
+        <div class="contenedor-tarjeta" style="max-width: 350px;">
+            <h3 style="color:#006847; margin-top:0;">Recuperar acceso</h3>
+            <p>Ingresa tu correo o teléfono:</p>
+            <input type="text" id="input-recuperacion" style="width:100%; padding:10px; margin:10px 0; border:1px solid #ccc; border-radius:8px; box-sizing:border-box;">
+            <div style="display:flex; gap:10px;">
+                <button class="btn-entrar" onclick="cerrarModal('modal-recuperacion')" style="background:#666;">Cancelar</button>
+                <button class="btn-entrar" onclick="enviarRecuperacion()">Enviar</button>
             </div>
+        </div>
+    </div>
+
+    <!-- Modal 2: Confirmación de envío -->
+    <div id="modal-confirmacion" class="modal-overlay">
+        <div class="contenedor-tarjeta" style="max-width: 300px; text-align: center;">
+            <h3 style="color:#006847;">¡Enviado!</h3>
+            <p>Se ha enviado una liga de recuperación a tu cuenta.</p>
+            <button class="btn-entrar" onclick="cerrarModal('modal-confirmacion')">Aceptar</button>
+        </div>
+    </div>
+
+    <script>
+        function abrirModal(id) { document.getElementById(id).style.display = 'flex'; }
+        function cerrarModal(id) { document.getElementById(id).style.display = 'none'; }
+
+        function enviarRecuperacion() {
+            const dato = document.getElementById('input-recuperacion').value;
+            if (dato) {
+                cerrarModal('modal-recuperacion');
+                abrirModal('modal-confirmacion');
+            }
+        }
+
+        document.getElementById('formLogin').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = document.getElementById('loginEmail').value;
+            const recordar = document.getElementById('recordarSesion').checked;
             
-            <button type="submit" class="btn-rojo" style="width: 100%;">Entrar</button>
-
-            <div style="margin-top: 20px; text-align: center; font-size: 0.95rem;">
-                <p style="margin-bottom: 8px;"><a href="olvido.html" style="color: #2140dd; text-decoration: none;">¿Olvidaste tu contraseña?</a></p>
-                <p style="color: #555;">¿No tienes cuenta? <a href="registro.html" style="color: #006847; font-weight: bold; text-decoration: none;">Regístrate aquí</a></p>
-            </div>
-        </form>
-    </div>
-</main>
-
-<footer>
-    <p>&copy; 2026 Sabor Mexicano - Todos los derechos reservados.</p>
-    
-    <div style="margin: 8px 0; display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;">
-        <a href="terminos.html" style="color: #ccc; text-decoration: none; font-size: 0.85rem; transition: color 0.3s;">Términos del Servicio</a>
-        <span style="color: #666;">|</span>
-        <a href="politicas.html" style="color: #ccc; text-decoration: none; font-size: 0.85rem; transition: color 0.3s;">Política de Compraventa</a>
-    </div>
-
-    <p style="font-size: 0.8rem; opacity: 0.7; margin-top: 5px;">e-business + e-commerce - Negocios Electrónicos I</p>
-</footer>
-
-<div id="modal-mensaje" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); align-items:center; justify-content:center; z-index:1000;">
-    <div class="contenido-modal">
-        <h3 style="color:#006847; margin-bottom: 10px;">¡Bienvenido de nuevo!</h3>
-        <p style="margin-bottom: 20px;">Has iniciado sesión correctamente.</p>
-        <button class="btn-rojo" onclick="cerrarModal()" style="width: 100%;">Aceptar</button>
-    </div>
-</div>
-
-<div class="redes-flotantes">
-    <a href="https://facebook.com" target="_blank">
-        <img src="img/face.png" alt="Facebook">
-    </a>
-    <a href="https://instagram.com" target="_blank">
-        <img src="img/insta.jpg" alt="Instagram">
-    </a>
-</div>
-
-<script>
-    document.getElementById('formLogin').addEventListener('submit', function(e) {
-        e.preventDefault();
-        
-        const recordar = document.getElementById('recordarSesion').checked;
-        localStorage.setItem('recordarSesion', recordar);
-        
-        const email = document.getElementById('loginEmail').value;
-        localStorage.setItem('usuarioEmail', email);
-
-        document.getElementById('modal-mensaje').style.display = 'flex';
-    });
-
-    function cerrarModal() {
-        document.getElementById('modal-mensaje').style.display = 'none';
-        window.location.href = "perfil.html";
-    }
-</script>
-
+            localStorage.setItem('usuario_activo', email.split('@')[0]);
+            localStorage.setItem('recordar_sesion', recordar);
+            localStorage.setItem('sesionIniciada', 'true');
+            
+            window.location.href = "perfil.html";
+        });
+    </script>
 </body>
 </html>

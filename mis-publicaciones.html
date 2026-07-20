@@ -40,7 +40,7 @@
             <li><a href="index.html#promociones" style="color: #ffb300; font-weight: bold;">🔥 Promos</a></li>
             <li><a href="index.html#escaparate">Especial</a></li>
             <!-- Busca esta línea en tus menús y cámbiala si tiene un '#' delante -->
-<li><a href="mercadito.html">🏪 Mercadito</a></li>
+            <li><a href="mercadito.html">🏪 Mercadito</a></li>
             <li><a href="index.html#nosotros">Nosotros</a></li>
             <li><a href="index.html#contacto">Contacto</a></li>
             <li><a href="login.html">Iniciar Sesión</a></li>
@@ -68,7 +68,17 @@
     </div>
 </main>
 
-<!-- ... Tu estructura HTML de mis-publicaciones.html ... -->
+<footer>
+    <p>&copy; 2026 Sabor Mexicano - Todos los derechos reservados.</p>
+    
+    <div style="margin: 8px 0; display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;">
+        <a href="terminos.html" style="color: #ccc; text-decoration: none; font-size: 0.85rem; transition: color 0.3s;">Términos del Servicio</a>
+        <span style="color: #666;">|</span>
+        <a href="politicas.html" style="color: #ccc; text-decoration: none; font-size: 0.85rem; transition: color 0.3s;">Política de Compraventa</a>
+    </div>
+
+    <p style="font-size: 0.8rem; opacity: 0.7; margin-top: 5px;">e-business + e-commerce - Negocios Electrónicos I</p>
+</footer>
 
 <script>
     // Nombre de la clave unificada que usamos para los productos de los usuarios
@@ -76,43 +86,29 @@
 
     // Función para renderizar dinámicamente las publicaciones en pantalla
     function cargarMisPublicaciones() {
-        const listaContenedor = document.querySelector('.contenedor-perfil, .seccion, main'); // Ajusta al contenedor de tus tarjetas
-        if (!listaContenedor) return;
+        const contenedorPublicaciones = document.getElementById('listaPublicaciones');
+        if (!contenedorPublicaciones) return;
 
+        // Obtenemos los productos guardados en localStorage
         const publicaciones = JSON.parse(localStorage.getItem(CLAVE_LOCAL)) || [];
         
-        // Buscamos o creamos el contenedor específico de la lista
-        let contenedorPublicaciones = document.getElementById('lista-mis-publicaciones');
-        if (!contenedorPublicaciones) {
-            contenedorPublicaciones = document.createElement('div');
-            contenedorPublicaciones.id = 'lista-mis-publicaciones';
-            // Insertar después del título principal
-            listaContenedor.appendChild(contenedorPublicaciones);
-        }
-
+        // Si no hay productos, mostramos el mensaje por defecto y salimos de la función
         if (publicaciones.length === 0) {
             contenedorPublicaciones.innerHTML = `
-                <div style="text-align: center; padding: 40px; color: #888;">
-                    <p style="font-size: 1.1rem;">No tienes publicaciones activas actualmente.</p>
-                </div>
+                <p id="sinPubs" style="text-align: center; color: #999; padding: 20px;">
+                    No tienes publicaciones activas actualmente en el Mercadito.
+                </p>
             `;
             return;
         }
 
+        // Limpiamos el contenedor para pintar las tarjetas correspondientes
         contenedorPublicaciones.innerHTML = "";
 
+        // Recorremos el arreglo de productos y los inyectamos usando tus clases CSS
         publicaciones.forEach((pub, index) => {
             const item = document.createElement('div');
-            // Usamos las clases visuales idénticas a tu diseño
-            item.style.background = '#fff';
-            item.style.border = '1px solid #eee';
-            item.style.borderRadius = '12px';
-            item.style.padding = '20px';
-            item.style.marginBottom = '15px';
-            item.style.display = 'flex';
-            item.style.alignItems = 'center';
-            item.style.justifyContent = 'space-between';
-            item.style.boxShadow = '0 2px 8px rgba(0,0,0,0.02)';
+            item.className = 'tarjeta-publicacion'; // Tu clase de estilos
 
             const rutaImg = pub.imagen || 'img/pozole.jpg';
             const titulo = pub.titulo || 'Producto sin título';
@@ -120,17 +116,15 @@
             const precio = parseFloat(pub.precio) || 0;
 
             item.innerHTML = `
-                <div style="display: flex; align-items: center; gap: 20px;">
-                    <img src="${rutaImg}" alt="${titulo}" style="width: 80px; height: 80px; object-fit: cover; border-radius: 8px;" onerror="this.src='img/pozole.jpg'">
-                    <div>
-                        <h4 style="margin: 0 0 5px 0; font-size: 1.2rem; color: #333;">${titulo}</h4>
-                        <p style="margin: 0 0 8px 0; font-size: 0.9rem; color: #666;">${desc}</p>
-                        <span style="font-weight: bold; color: #d32f2f; font-size: 1.1rem;">$${precio.toFixed(2)} MXN</span>
-                    </div>
+                <img src="${rutaImg}" alt="${titulo}" onerror="this.src='img/pozole.jpg'">
+                <div class="info-pub">
+                    <h4>${titulo}</h4>
+                    <p>${desc}</p>
+                    <span class="precio">$${precio.toFixed(2)} MXN</span>
                 </div>
-                <div style="display: flex; flex-direction: column; gap: 10px;">
-                    <button onclick="editarPublicacion(${index})" style="background: #ffa000; color: white; border: none; padding: 8px 15px; border-radius: 6px; cursor: pointer; font-weight: bold;">Editar</button>
-                    <button onclick="eliminarPublicacion(${index})" style="background: #d32f2f; color: white; border: none; padding: 8px 15px; border-radius: 6px; cursor: pointer; font-weight: bold;">Eliminar</button>
+                <div class="acciones-pub">
+                    <button onclick="editarPublicacion(${index})" class="btn-accion btn-editar">Editar</button>
+                    <button onclick="eliminarPublicacion(${index})" class="btn-accion btn-eliminar">Eliminar</button>
                 </div>
             `;
             contenedorPublicaciones.appendChild(item);
@@ -175,7 +169,7 @@
         }
     }
 
-    // Arrancar la carga al iniciar la pantalla sin escribir nada en consola
+    // Arrancar la carga al iniciar la pantalla
     document.addEventListener('DOMContentLoaded', cargarMisPublicaciones);
 </script>
 
