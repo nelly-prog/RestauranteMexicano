@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Sabor Mexicano | Política de Compraventa</title>
+    <title>Sabor Mexicano | Política de Compraventa y Términos</title>
     <link rel="stylesheet" href="estilos.css">
     <style>
         .contenido-legal {
@@ -23,7 +23,7 @@
             padding-bottom: 10px;
         }
         .contenido-legal h3 {
-            color: #00843D; /* Un color verde mexicano para distinguir las secciones */
+            color: #00843D;
             margin-top: 25px;
             margin-bottom: 10px;
         }
@@ -36,77 +36,40 @@
             margin-bottom: 15px;
         }
     </style>
+    <!-- Script global que inyecta header, footer, banner, carrito y aviso de cookies -->
+    <script src="componentes.js" defer></script>
 </head>
 <body style="background-color: #fdfbf7;">
 
-<header>
-    <div class="logo-contenedor">
-        <!-- Mantenemos la ruta exacta que te funciona en tu carpeta para el Logo -->
-        <img src="img/logo.png.png" class="logo-img" alt="Logo">
-        <span>Sabor Mexicano</span>
-    </div>
-    <nav>
-        <ul>
-            <li><a href="index.html">Inicio</a></li>
-            <li><a href="catalogo.html">Catálogo</a></li>
-            <li><a href="comunidad.html">Comunidad</a></li>
-            <!-- Accesos directos de la página de inicio -->
-            <li><a href="index.html#promociones" style="color: #ffb300; font-weight: bold;">🔥 Promos</a></li>
-            <li><a href="index.html#escaparate">Especial</a></li>
-            <!-- Busca esta línea en tus menús y cámbiala si tiene un '#' delante -->
-<li><a href="mercadito.html">🏪 Mercadito</a></li>
-            <li><a href="index.html#nosotros">Nosotros</a></li>
-            <li><a href="index.html#contacto">Contacto</a></li>
-            <li><a href="login.html">Iniciar Sesión</a></li>
-            <!-- Icono del Carrito con su Badge -->
-            <li class="cart-item-container">
-                <a href="carrito.html" class="cart-link" title="Ver carrito">
-                    🛒 <span id="cart-count" class="cart-badge">0</span>
-                </a>
-            </li>
-        </ul>
-    </nav>
-</header>
+    <!-- Banner promocional superior inyectado -->
+    <div id="banner-global"></div>
 
-<main>
-    <div class="contenido-legal">
-        <h1>Política de Compraventa y Privacidad</h1>
-        
-        <h3>1. Proceso de Orden y Aceptación</h3>
-        <p>Al procesar un pedido de alimentos a través de nuestro módulo de checkout o carrito, el cliente acepta expresamente los precios correspondientes, los ingredientes descritos y las condiciones de entrega del platillo.</p>
-        
-        <h3>2. Precios y Moneda</h3>
-        <p>Todos los precios publicados dentro de nuestro catálogo digital están expresados en pesos mexicanos (MXN) e incluyen los impuestos de ley (IVA). Las tarifas de envío se desglosarán con claridad antes de dar clic a la confirmación de pago.</p>
+    <!-- Encabezado inyectado por componentes.js -->
+    <header></header>
 
-        <h3>3. Cancelaciones y Reembolsos</h3>
-        <p>Debido a la naturaleza perecedera de nuestros insumos y alimentos preparados al momento, <strong>no se admiten cancelaciones, modificaciones ni reembolsos</strong> una vez que la comanda ha sido enviada a cocina e iniciada su preparación.</p>
+    <main>
+        <div class="contenido-legal">
+            <h1>Política de Compraventa y Términos del Servicio</h1>
+            
+            <h3>1. Proceso de Orden y Aceptación</h3>
+            <p>Al procesar un pedido de alimentos a través de nuestro módulo de checkout o carrito, el cliente acepta expresamente los precios correspondientes, los ingredientes descritos y las condiciones de entrega del platillo.</p>
+            
+            <h3>2. Precios y Moneda</h3>
+            <p>Todos los precios publicados dentro de nuestro catálogo digital están expresados en pesos mexicanos (MXN) e incluyen los impuestos de ley (IVA). Las tarifas de envío se desglosarán con claridad antes de dar clic a la confirmación de pago.</p>
 
-        <h3>4. Condiciones de Entrega</h3>
-        <p>Es responsabilidad del usuario proporcionar información de domicilio exacta y un teléfono activo. Al llegar al destino, el repartidor esperará un lapso máximo de 10 minutos; transcurrido este tiempo sin contacto, la orden se dará por cancelada sin posibilidad de reembolso.</p>
+            <h3>3. Cancelaciones y Reembolsos</h3>
+            <p>Debido a la naturaleza perecedera de nuestros insumos y alimentos preparados al momento, <strong>no se admiten cancelaciones, modificaciones ni reembolsos</strong> una vez que la comanda ha sido enviada a cocina e iniciada su preparación.</p>
 
-        <h3>5. Tratamiento de Datos Personales</h3>
-        <p>En cumplimiento con las directrices de e-commerce, los datos de contacto recabados en nuestros formularios (nombre, correo y dirección) se usarán únicamente para la gestión logística del pedido y la comunicación directa del estatus de la orden. No compartimos bases de datos con terceros ni almacenamos credenciales bancarias.</p>
-    </div>
-</main>
+            <h3>4. Condiciones de Entrega</h3>
+            <p>Es responsabilidad del usuario proporcionar información de domicilio exacta y un teléfono activo. Al llegar al destino, el repartidor esperará un lapso máximo de 10 minutos; transcurrido este tiempo sin contacto, la orden se dará por cancelada sin posibilidad de reembolso.</p>
 
-<footer>
-    <p>&copy; 2026 Sabor Mexicano - Todos los derechos reservados.</p>
-    <div style="margin: 8px 0; display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;">
-        <a href="terminos.html" style="color: #ccc; text-decoration: none; font-size: 0.85rem; transition: color 0.3s;">Términos del Servicio</a>
-        <span style="color: #666;">|</span>
-        <a href="politicas.html" style="color: #ccc; text-decoration: none; font-size: 0.85rem; transition: color 0.3s;">Política de Compraventa</a>
-    </div>
-    <p style="font-size: 0.8rem; opacity: 0.7; margin-top: 5px;">e-business + e-commerce - Negocios Electrónicos I</p>
-</footer>
+            <h3>5. Tratamiento de Datos Personales</h3>
+            <p>En cumplimiento con las directrices de e-commerce, los datos de contacto recabados en nuestros formularios (nombre, correo y dirección) se usarán únicamente para la gestión logística del pedido y la comunicación directa del estatus de la orden. No compartimos bases de datos con terceros ni almacenamos credenciales bancarias.</p>
+        </div>
+    </main>
 
-<script>
-    function actualizarContadorVisual() {
-        const cantidadActual = parseInt(localStorage.getItem('cartCount')) || 0;
-        const contadorBadge = document.getElementById('cart-count');
-        if (contadorBadge) { contadorBadge.textContent = cantidadActual; }
-    }
-    document.addEventListener('DOMContentLoaded', actualizarContadorVisual);
-</script>
+    <!-- Pie de página inyectado por componentes.js -->
+    <footer></footer>
 
 </body>
 </html>

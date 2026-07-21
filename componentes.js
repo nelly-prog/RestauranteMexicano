@@ -4,30 +4,50 @@ function renderizarHeader() {
     const header = document.querySelector('header');
     if (!header) return;
 
-    const sesionIniciada = localStorage.getItem('sesionIniciada') === 'true';
-    const usuarioActivo = localStorage.getItem('usuario_activo'); 
-    
+    // Verificamos si hay una sesión activa real
+    const datosPerfil = localStorage.getItem("perfil_datos_usuario_libre");
+    let sesionIniciada = false;
+    let nombreUsuario = "Usuario";
+
+    if (datosPerfil) {
+        try {
+            const parsed = JSON.parse(datosPerfil);
+            if (parsed.usuario || parsed.correo || parsed.telefono) {
+                sesionIniciada = true;
+                if (parsed.usuario) nombreUsuario = parsed.usuario;
+            }
+        } catch(e) {}
+    }
+
+    if (!sesionIniciada && localStorage.getItem('sesionIniciada') === 'true') {
+        sesionIniciada = true;
+        const uActivo = localStorage.getItem('usuario_activo');
+        if (uActivo) nombreUsuario = uActivo;
+    }
+
     let accesoPerfilHTML = `<li><a href="login.html">Iniciar Sesión</a></li>`;
     
-    if (sesionIniciada && usuarioActivo) {
-        accesoPerfilHTML = `<li><a href="perfil.html" style="font-weight: bold; color: #ffca28 !important;">Mi Perfil (${usuarioActivo})</a></li>`;
+    if (sesionIniciada) {
+        accesoPerfilHTML = `<li><a href="perfil.html" style="font-weight: bold; color: #ffca28 !important;">Mi Perfil (${nombreUsuario})</a></li>`;
     }
 
     header.innerHTML = `
         <div class="logo-contenedor">
-            <img src="img/logo.png.png" class="logo-img" alt="Logo">
-            <span>Sabor Mexicano</span>
+            <a href="index.html" style="display: flex; align-items: center; text-decoration: none; color: inherit; gap: 10px;">
+                <img src="img/logo.png.png" class="logo-img" alt="Logo Sabor Mexicano" onerror="this.style.display='none'">
+                <span>Sabor Mexicano</span>
+            </a>
         </div>
         <nav>
             <ul>
                 <li><a href="index.html">Inicio</a></li>
                 <li><a href="catalogo.html">Catálogo</a></li>
                 <li><a href="comunidad.html">Comunidad</a></li>
-                <li><a href="index.html#promociones">🔥 Promos</a></li>
-                <li><a href="index.html#escaparate">Especial</a></li>
+                <li><a href="promos.html">🔥 Promos</a></li>
+                <li><a href="especial.html">Especial</a></li>
                 <li><a href="mercadito.html">🏪 Mercadito</a></li>
-                <li><a href="index.html#nosotros">Nosotros</a></li>
-                <li><a href="index.html#contacto">Contacto</a></li>
+                <li><a href="nosotros.html">Nosotros</a></li>
+                <li><a href="contacto.html">Contacto</a></li>
                 ${accesoPerfilHTML}
                 <li class="cart-item-container">
                     <a href="carrito.html" class="cart-link" title="Ver carrito">
@@ -91,16 +111,7 @@ window.addEventListener('storage', () => {
     renderizarHeader(); 
 });
 
-document.addEventListener('DOMContentLoaded', () => {
-    renderizarHeader();
-    renderizarFooter();
-    renderizarBannerGlobal();
-    actualizarContadorCarrito();
-});
-
-// --- AVISO DE COOKIES GLOBAL ---
 function renderizarAvisoCookies() {
-    // Si ya existe en el DOM, no lo dupliques
     if (document.getElementById('aviso-cookies')) return;
 
     const bannerCookies = document.createElement('div');
@@ -108,11 +119,10 @@ function renderizarAvisoCookies() {
     bannerCookies.innerHTML = `
         <div class="contenido-cookies">
             <span>🍪 Usamos cookies para mejorar tu experiencia en Sabor Mexicano y en las simulaciones de nuestra plataforma. ¿Aceptas su uso?</span>
-            <button onclick="aceptarCookies()" class="btn-rojo" style="padding: 8px 20px; font-size: 0.9rem; cursor: pointer;">Aceptar</button>
+            <button onclick="aceptarCookies()" class="btn-rojo" style="padding: 8px 20px; font-size: 0.9rem; cursor: pointer; background-color: #d32f2f; color: white; border: none; border-radius: 6px;">Aceptar</button>
         </div>
     `;
 
-    // Estilos inyectados directamente para que luzca profesional sin romper tu diseño
     bannerCookies.style.cssText = `
         position: fixed;
         bottom: 0;
@@ -129,26 +139,29 @@ function renderizarAvisoCookies() {
         align-items: center;
     `;
 
-    const estilosInternos = document.createElement('style');
-    estilosInternos.innerHTML = `
-        .contenido-cookies {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 1100px;
-            width: 100%;
-            gap: 20px;
-            flex-wrap: wrap;
-            font-size: 0.95rem;
-        }
-        @media (max-width: 768px) {
+    if (!document.getElementById('estilos-cookies')) {
+        const estilosInternos = document.createElement('style');
+        estilosInternos.id = 'estilos-cookies';
+        estilosInternos.innerHTML = `
             .contenido-cookies {
-                flex-direction: column;
-                text-align: center;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                max-width: 1100px;
+                width: 100%;
+                gap: 20px;
+                flex-wrap: wrap;
+                font-size: 0.95rem;
             }
-        }
-    `;
-    document.head.appendChild(estilosInternos);
+            @media (max-width: 768px) {
+                .contenido-cookies {
+                    flex-direction: column;
+                    text-align: center;
+                }
+            }
+        `;
+        document.head.appendChild(estilosInternos);
+    }
     document.body.appendChild(bannerCookies);
 }
 
@@ -159,11 +172,10 @@ function aceptarCookies() {
     }
 }
 
-// Asegurar que se ejecute al cargar cualquier página junto con el header y footer
 document.addEventListener('DOMContentLoaded', () => {
     renderizarHeader();
     renderizarFooter();
     renderizarBannerGlobal();
     actualizarContadorCarrito();
-    renderizarAvisoCookies(); // <-- Añadido aquí para que salga siempre
+    renderizarAvisoCookies();
 });
