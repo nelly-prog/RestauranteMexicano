@@ -43,11 +43,11 @@ function renderizarHeader() {
                 <li><a href="index.html">Inicio</a></li>
                 <li><a href="catalogo.html">Catálogo</a></li>
                 <li><a href="comunidad.html">Comunidad</a></li>
-                <li><a href="promos.html">🔥 Promos</a></li>
-                <li><a href="especial.html">Especial</a></li>
+                <li><a href="index.html#promociones">🔥 Promos</a></li>
+                <li><a href="index.html#escaparate">Especial</a></li>
                 <li><a href="mercadito.html">🏪 Mercadito</a></li>
-                <li><a href="nosotros.html">Nosotros</a></li>
-                <li><a href="contacto.html">Contacto</a></li>
+                <li><a href="index.html#nosotros">Nosotros</a></li>
+                <li><a href="index.html#contacto">Contacto</a></li>
                 ${accesoPerfilHTML}
                 <li class="cart-item-container">
                     <a href="carrito.html" class="cart-link" title="Ver carrito">

@@ -125,6 +125,7 @@
     function vaciarCarrito() {
         localStorage.removeItem('carritoApp');
         renderizarCarrito();
+        Swal.fire({ toast: true, position: 'top-end', icon: 'info', title: 'El carrito ha sido vaciado', showConfirmButton: false, timer: 2000 });
     }
 
     function actualizarContadorMenu(carrito) {
