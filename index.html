@@ -10,8 +10,8 @@
     <script src="componentes.js" defer></script>
     <style>
         /* ==========================================================================
-           ESTILOS ESPECÍFICOS PARA EL CONTENIDO INTERNO DE INDEX.HTML
-           ========================================================================== */
+            ESTILOS ESPECÍFICOS PARA EL CONTENIDO INTERNO DE INDEX.HTML
+            ========================================================================== */
         
         /* 1. Hero de ancho completo (Full Width) */
         .hero-contenedor-completo {
@@ -401,14 +401,10 @@
 
 <script>
     function agregarAlCarrito(nombre, precio) {
-        // CAMBIA 'carrito' por 'carritoApp' aquí
         let carrito = JSON.parse(localStorage.getItem('carritoApp')) || [];
         
-        // Ajuste: si tus productos en carrito.html tienen propiedades como 'img', 'titulo', etc., 
-        // asegúrate de que aquí también se guarden así:
         carrito.push({ titulo: nombre, precio: precio, img: 'img/producto_default.jpg' }); 
         
-        // CAMBIA 'carrito' por 'carritoApp' aquí
         localStorage.setItem('carritoApp', JSON.stringify(carrito));
         
         const contador = document.getElementById('contador-carrito');
@@ -419,9 +415,6 @@
         const mensaje = document.getElementById('mensaje-exito-compra');
         mensaje.style.display = 'block';
         setTimeout(() => { mensaje.style.display = 'none'; }, 3000);
-
-
-        
     }
 </script>
 
@@ -482,18 +475,18 @@
              ========================================== -->
         <section id="contacto" class="seccion-comunidad">
             <div class="contacto-wrapper-compacto">
-                <!-- Formulario -->
+                <!-- Formulario sin validación nativa (novalidate añadido y sin atributos required) -->
                 <div class="tarjeta-comunidad">
                     <h3>Envíanos un mensaje</h3>
                     <form id="form-contacto-inicio" class="form-comunidad" onsubmit="enviarMensajeContacto(event)">
                         <label for="nombre">Nombre Completo</label>
-                        <input type="text" id="nombre" placeholder="Ej. Juan Pérez" required>
+                        <input type="text" id="nombre" placeholder="Ej. Juan Pérez">
                         
                         <label for="contacto-user">Medio de Contacto (Correo o Teléfono)</label>
-                        <input type="text" id="contacto-user" placeholder="Ej. juan@correo.com o 4491234567" required>
+                        <input type="text" id="contacto-user" placeholder="Ej. juan@correo.com o 4491234567">
                         
                         <label for="mensaje">Mensaje</label>
-                        <textarea id="mensaje" rows="4" placeholder="Escribe aquí tu duda o pedido especial..." required></textarea>
+                        <textarea id="mensaje" rows="4" placeholder="Escribe aquí tu duda o pedido especial..."></textarea>
                         
                         <button type="submit" class="btn-rojo">Enviar Mensaje</button>
                     </form>
@@ -518,7 +511,7 @@
 
     <!-- Alerta Visual Dinámica flotante -->
     <div id="toast-notificacion" class="notificacion-exito">
-        <span>📩</span> ¡Mensaje enviado con éxito! Nos comunicaremos pronto contigo.
+        <span>📩</span> ¡Mensaje enviado con éxito! Nos pondremos en contacto contigo pronto.
     </div>
 
     <!-- Pie de página inyectado por componentes.js -->
@@ -561,15 +554,14 @@
             }
         });
 
-        // Simulación de envío de formulario de contacto
+        // Simulación de envío de formulario de contacto completamente libre de bloqueos nativos
         function enviarMensajeContacto(event) {
             event.preventDefault(); 
             
-            const nombre = document.getElementById('nombre').value;
-            const contacto = document.getElementById('contacto-user').value;
-            const mensaje = document.getElementById('mensaje').value;
-
             const toast = document.getElementById('toast-notificacion');
+            
+            toast.innerHTML = `<span>📩</span> ¡Mensaje enviado con éxito! Nos pondremos en contacto contigo pronto.`;
+            
             toast.classList.add('mostrar');
 
             document.getElementById('form-contacto-inicio').reset();
@@ -588,7 +580,6 @@
             carrito.push(producto);
             localStorage.setItem('carritoApp', JSON.stringify(carrito));
             
-            // Esto actualiza el número en el carrito del menú automáticamente
             if (typeof actualizarContadorVisual === 'function') {
                 actualizarContadorVisual();
             }
