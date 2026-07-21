@@ -56,12 +56,14 @@
             <h2>Iniciar Sesión</h2>
             <form id="formLogin">
                 <div class="campo-form">
-                    <label>Correo:</label>
-                    <input type="email" id="loginEmail" required placeholder="tu@correo.com">
+                    <!-- Se cambió el tipo de input a 'text' para que no exija el símbolo '@' ni validación estricta de correo -->
+                    <label>Correo o Usuario:</label>
+                    <input type="text" id="loginEmail" placeholder="Ingresa tu usuario o correo">
                 </div>
                 <div class="campo-form">
+                    <!-- Se removió el atributo required para que no valide campos obligatorios -->
                     <label>Contraseña:</label>
-                    <input type="password" id="loginPassword" required placeholder="••••••••">
+                    <input type="password" id="loginPassword" placeholder="••••••••">
                 </div>
 
                 <div style="margin: 15px 0; display: flex; align-items: center; gap: 8px;">
@@ -122,10 +124,15 @@
 
         document.getElementById('formLogin').addEventListener('submit', function(e) {
             e.preventDefault();
-            const email = document.getElementById('loginEmail').value;
+            const inputVal = document.getElementById('loginEmail').value.trim();
             const recordar = document.getElementById('recordarSesion').checked;
             
-            localStorage.setItem('usuario_activo', email.split('@')[0]);
+            // Si el campo está vacío, le asignamos un nombre genérico por defecto
+            const nombreUsuario = inputVal !== "" ? inputVal.split('@')[0] : "Usuario";
+
+            // Usamos localStorage para que la sesión persista de manera permanente al navegar por otras secciones,
+            // hasta que el usuario decida cerrarla manualmente desde su perfil.
+            localStorage.setItem('usuario_activo', nombreUsuario);
             localStorage.setItem('recordar_sesion', recordar);
             localStorage.setItem('sesionIniciada', 'true');
             

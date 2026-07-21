@@ -56,10 +56,12 @@
                 <form onsubmit="crearPostPrincipal(event)">
                     <div class="crear-header">
                         <div class="avatar-fijo">U</div>
-                        <input type="text" id="fb-input-texto" class="input-simulado-fb" placeholder="¿Qué estás pensando sobre nuestro menú o servicio?" required>
+                        <!-- Se eliminó el atributo required -->
+                        <input type="text" id="fb-input-texto" class="input-simulado-fb" placeholder="¿Qué estás pensando sobre nuestro menú o servicio?">
                     </div>
                     <div class="crear-footer">
-                        <input type="text" id="fb-input-nombre" class="input-nombre-fb" placeholder="Tu Nombre o Usuario" required>
+                        <!-- Se eliminó el atributo required -->
+                        <input type="text" id="fb-input-nombre" class="input-nombre-fb" placeholder="Tu Nombre o Usuario">
                         <button type="submit" class="btn-verde-accion">Publicar</button>
                     </div>
                     <div id="mensaje-exito">¡Publicado con éxito! 🎉</div>
@@ -118,7 +120,15 @@
 
     function crearPostPrincipal(event) {
         event.preventDefault();
-        posts.unshift({ id: Date.now(), autor: document.getElementById('fb-input-nombre').value, tiempo: "Justo ahora", texto: document.getElementById('fb-input-texto').value, likes: 0, liked: false });
+        
+        // Obtenemos los valores y asignamos textos por defecto en caso de que estén vacíos
+        const nombreInput = document.getElementById('fb-input-nombre').value.trim();
+        const textoInput = document.getElementById('fb-input-texto').value.trim();
+        
+        const autorFinal = nombreInput !== "" ? nombreInput : "Anónimo";
+        const textoFinal = textoInput !== "" ? textoInput : "Sin comentarios";
+
+        posts.unshift({ id: Date.now(), autor: autorFinal, tiempo: "Justo ahora", texto: textoFinal, likes: 0, liked: false });
         localStorage.setItem(CLAVE_MURO, JSON.stringify(posts));
         event.target.reset();
         renderizarMuro();

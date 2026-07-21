@@ -4,17 +4,15 @@ function renderizarHeader() {
     const header = document.querySelector('header');
     if (!header) return;
 
-    // Moví la constante adentro de la función para evitar el error de "variable ya declarada"
-    const claveSesionLocal = "usuario_activo";
-    const usuarioActivo = localStorage.getItem(claveSesionLocal); 
+    const sesionIniciada = localStorage.getItem('sesionIniciada') === 'true';
+    const usuarioActivo = localStorage.getItem('usuario_activo'); 
+    
     let accesoPerfilHTML = `<li><a href="login.html">Iniciar Sesión</a></li>`;
     
-    if (usuarioActivo) {
-        // Enlace al perfil con el nombre de usuario persistente
+    if (sesionIniciada && usuarioActivo) {
         accesoPerfilHTML = `<li><a href="perfil.html" style="font-weight: bold; color: #ffca28 !important;">Mi Perfil (${usuarioActivo})</a></li>`;
     }
 
-    // Inyección de la barra de navegación
     header.innerHTML = `
         <div class="logo-contenedor">
             <img src="img/logo.png.png" class="logo-img" alt="Logo">
@@ -40,7 +38,6 @@ function renderizarHeader() {
         </nav>
     `;
 
-    // Redes Sociales Flotantes
     let contenedorRedes = document.querySelector('.redes-flotantes');
     if (!contenedorRedes) {
         contenedorRedes = document.createElement('div');
@@ -83,24 +80,90 @@ function actualizarContadorCarrito() {
     const badge = document.getElementById('cart-count');
     if (!badge) return;
     
-    // Unificación de llaves para el carrito
     const carrito = JSON.parse(localStorage.getItem('carritoApp')) || [];
     badge.textContent = carrito.reduce((total, prod) => total + (prod.cantidad || 1), 0);
 }
 
-// Convertimos esta función en global para que mercadito.html la encuentre sin errores
 window.actualizarContadorVisual = actualizarContadorCarrito;
 
-// Escuchar cambios de almacenamiento entre pestañas
 window.addEventListener('storage', () => {
     actualizarContadorCarrito();
-    renderizarHeader(); // Refrescar header si la sesión cambia en otra pestaña
+    renderizarHeader(); 
 });
 
-// Listener unificado de carga
 document.addEventListener('DOMContentLoaded', () => {
     renderizarHeader();
     renderizarFooter();
     renderizarBannerGlobal();
     actualizarContadorCarrito();
+});
+
+// --- AVISO DE COOKIES GLOBAL ---
+function renderizarAvisoCookies() {
+    // Si ya existe en el DOM, no lo dupliques
+    if (document.getElementById('aviso-cookies')) return;
+
+    const bannerCookies = document.createElement('div');
+    bannerCookies.id = 'aviso-cookies';
+    bannerCookies.innerHTML = `
+        <div class="contenido-cookies">
+            <span>🍪 Usamos cookies para mejorar tu experiencia en Sabor Mexicano y en las simulaciones de nuestra plataforma. ¿Aceptas su uso?</span>
+            <button onclick="aceptarCookies()" class="btn-rojo" style="padding: 8px 20px; font-size: 0.9rem; cursor: pointer;">Aceptar</button>
+        </div>
+    `;
+
+    // Estilos inyectados directamente para que luzca profesional sin romper tu diseño
+    bannerCookies.style.cssText = `
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        background-color: #1a1a1a;
+        color: #ffffff;
+        padding: 15px 20px;
+        box-sizing: border-box;
+        box-shadow: 0 -4px 15px rgba(0,0,0,0.3);
+        z-index: 9999;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    `;
+
+    const estilosInternos = document.createElement('style');
+    estilosInternos.innerHTML = `
+        .contenido-cookies {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1100px;
+            width: 100%;
+            gap: 20px;
+            flex-wrap: wrap;
+            font-size: 0.95rem;
+        }
+        @media (max-width: 768px) {
+            .contenido-cookies {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    `;
+    document.head.appendChild(estilosInternos);
+    document.body.appendChild(bannerCookies);
+}
+
+function aceptarCookies() {
+    const banner = document.getElementById('aviso-cookies');
+    if (banner) {
+        banner.style.display = 'none';
+    }
+}
+
+// Asegurar que se ejecute al cargar cualquier página junto con el header y footer
+document.addEventListener('DOMContentLoaded', () => {
+    renderizarHeader();
+    renderizarFooter();
+    renderizarBannerGlobal();
+    actualizarContadorCarrito();
+    renderizarAvisoCookies(); // <-- Añadido aquí para que salga siempre
 });

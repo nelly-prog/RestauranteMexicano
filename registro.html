@@ -86,30 +86,9 @@
 </head>
 <body>
 
-<!-- HEADER CON MENÚ COMPLETO -->
-<header>
-    <div class="logo-contenedor">
-        <img src="img/logo.png.png" class="logo-img" alt="Logo">
-        <span>Sabor Mexicano</span>
-    </div>
-    <nav>
-        <ul>
-            <li><a href="index.html">Inicio</a></li>
-            <li><a href="catalogo.html">Catálogo</a></li>
-            <li><a href="comunidad.html">Comunidad</a></li>
-            <li><a href="index.html#promociones" style="color: #ffb300; font-weight: bold;">🔥 Promos</a></li>
-            <li><a href="index.html#escaparate">Especial</a></li>
-            <li><a href="index.html#nosotros">Nosotros</a></li>
-            <li><a href="index.html#contacto">Contacto</a></li>
-            <li><a href="login.html">Iniciar Sesión</a></li>
-            <li class="cart-item-container">
-                <a href="carrito.html" class="cart-link" title="Ver carrito">
-                    🛒 <span id="cart-count" class="cart-badge">0</span>
-                </a>
-            </li>
-        </ul>
-    </nav>
-</header>
+<!-- BANNER Y HEADER AUTOMÁTICOS -->
+<div id="banner-global"></div>
+<header></header>
 
 <main class="seccion">
     <div class="contenedor-tarjeta">
@@ -117,13 +96,13 @@
         
         <form id="formRegistro">
             <label>Nombre:</label>
-            <input type="text" id="nombreInput" required placeholder="Tu nombre">
+            <input type="text" id="nombreInput" placeholder="Tu nombre">
             
             <label>Correo:</label>
-            <input type="email" id="emailInput" required placeholder="tu@correo.com">
+            <input type="email" id="emailInput" placeholder="tu@correo.com">
             
             <label>Contraseña:</label>
-            <input type="password" id="passwordInput" required placeholder="••••••••">
+            <input type="password" id="passwordInput" placeholder="••••••••">
 
             <button type="submit" class="btn-rojo" style="width: 100%; margin-top: 25px;">Registrarme</button>
         </form>
@@ -134,17 +113,8 @@
     </div>
 </main>
 
-<footer>
-    <p>&copy; 2026 Sabor Mexicano - Todos los derechos reservados.</p>
-    
-    <div style="margin: 8px 0; display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;">
-        <a href="terminos.html" style="color: #ccc; text-decoration: none; font-size: 0.85rem; transition: color 0.3s;">Términos del Servicio</a>
-        <span style="color: #666;">|</span>
-        <a href="politicas.html" style="color: #ccc; text-decoration: none; font-size: 0.85rem; transition: color 0.3s;">Política de Compraventa</a>
-    </div>
-
-    <p style="font-size: 0.8rem; opacity: 0.7; margin-top: 5px;">e-business + e-commerce - Negocios Electrónicos I</p>
-</footer>
+<!-- FOOTER AUTOMÁTICO -->
+<footer></footer>
 
 <div id="modal-registro" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); align-items:center; justify-content:center; z-index:1000;">
     <div class="contenido-modal">
@@ -159,6 +129,9 @@
     <a href="https://instagram.com" target="_blank"><img src="img/insta.jpg" alt="Instagram"></a>
 </div>
 
+<!-- SCRIPT DE COMPONENTES PARA CARGAR HEADER Y FOOTER -->
+<script src="componentes.js"></script>
+
 <script>
     document.getElementById('formRegistro').addEventListener('submit', function(e) {
         e.preventDefault();
@@ -166,11 +139,17 @@
     });
 
     function guardarYRedirigir() {
-        const nombre = document.getElementById('nombreInput').value;
-        const email = document.getElementById('emailInput').value;
+        const nombreInput = document.getElementById('nombreInput').value.trim();
+        const emailInput = document.getElementById('emailInput').value.trim();
+
+        // Si están vacíos, asigna valores por defecto automáticamente
+        const nombre = nombreInput !== "" ? nombreInput : "Usuario_Invitado";
+        const email = emailInput !== "" ? emailInput : "invitado@sabormexicano.com";
         
         localStorage.setItem('usuarioNombre', nombre);
         localStorage.setItem('usuarioEmail', email);
+        localStorage.setItem('usuario_activo', nombre);
+        localStorage.setItem('sesionIniciada', 'true');
         
         window.location.href = "perfil.html";
     }
