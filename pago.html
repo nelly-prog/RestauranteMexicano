@@ -3,43 +3,154 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sabor Mexicano - Finalizar Pedido</title>
-    <!-- Enlace a tus estilos globales -->
+    <title>Sabor Mexicano - Finalizar Pedido y Checkout</title>
+    
     <link rel="stylesheet" href="estilos.css">
-    <!-- Carga del inyector de componentes dinámicos (Header / Footer / Banner) -->
     <script src="componentes.js" defer></script>
+
     <style>
-        /* Estilos específicos para la página de pago */
         .contenedor-pago {
-            max-width: 800px;
-            margin: 40px auto;
-            background: white;
+            max-width: 900px;
+            margin: 30px auto;
+            background: #ffffff;
             padding: 30px;
             border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            font-family: system-ui, -apple-system, sans-serif;
         }
+
         .titulo-pago {
-            color: var(--primary-color);
+            color: var(--primary-color, #c62828);
             margin-bottom: 10px;
             font-size: 1.8rem;
             display: flex;
             align-items: center;
             gap: 10px;
         }
+
+        .pasos-checkout {
+            display: flex;
+            justify-content: space-between;
+            margin: 25px 0 35px 0;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 15px;
+            position: relative;
+        }
+
+        .paso-item {
+            flex: 1;
+            text-align: center;
+            font-weight: bold;
+            color: #aaa;
+            font-size: 0.95rem;
+            position: relative;
+            padding: 5px;
+        }
+
+        .paso-item.activo {
+            color: var(--primary-color, #c62828);
+            border-bottom: 3px solid var(--primary-color, #c62828);
+        }
+
+        .paso-item.completado {
+            color: #2e7d32;
+        }
+
+        .seccion-paso {
+            display: none;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        .seccion-paso.activa {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .grupo-campo {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .grupo-campo label {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #444;
+        }
+
+        .grupo-campo input, .grupo-campo select, .grupo-campo textarea {
+            padding: 10px 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 0.95rem;
+        }
+
+        .opciones-pago {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .card-metodo {
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            background: #fdfdfd;
+        }
+
+        .card-metodo:hover {
+            border-color: var(--primary-color, #c62828);
+        }
+
+        .card-metodo.seleccionado {
+            border-color: var(--primary-color, #c62828);
+            background: #fff5f5;
+        }
+
+        .card-metodo input[type="radio"] {
+            display: none;
+        }
+
+        .detalles-metodo-panel {
+            background: #f9f9f9;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 15px;
+        }
+
         .tabla-resumen {
             width: 100%;
             border-collapse: collapse;
             margin: 20px 0;
         }
+
         .tabla-resumen th, .tabla-resumen td {
             padding: 12px;
             border-bottom: 1px solid #eee;
             text-align: left;
         }
+
         .tabla-resumen th {
             background-color: #f8f9fa;
             color: #333;
         }
+
         .seccion-cupon-pago {
             background: #fff3cd;
             border: 1px solid #ffeeba;
@@ -51,33 +162,29 @@
             align-items: center;
             flex-wrap: wrap;
         }
+
         .totales-caja {
             text-align: right;
             margin-top: 20px;
             font-size: 1.1rem;
         }
-        .totales-caja p {
-            margin: 6px 0;
-        }
+
+        .totales-caja p { margin: 6px 0; }
         .totales-caja h3 {
-            color: var(--btn-danger-color);
+            color: var(--btn-danger-color, #d32f2f);
             font-size: 1.5rem;
             margin-top: 10px;
         }
-        .bloque-politicas {
-            margin: 20px 0;
+
+        .botones-paso {
             display: flex;
-            align-items: center;
-            gap: 10px;
+            justify-content: space-between;
+            gap: 15px;
+            margin-top: 30px;
         }
-        .error-alerta {
-            color: #c62828;
-            font-size: 0.9rem;
-            margin-top: 5px;
-            display: none;
-        }
-        .btn-confirmar-pago {
-            background: var(--btn-danger-color);
+
+        .btn-principal {
+            background: var(--btn-danger-color, #d32f2f);
             color: white;
             border: none;
             padding: 12px 25px;
@@ -86,41 +193,249 @@
             border-radius: 6px;
             cursor: pointer;
             transition: background 0.2s;
-            width: 100%;
         }
-        .btn-confirmar-pago:hover {
-            background: #b71c1c;
+
+        .btn-principal:hover { background: #b71c1c; }
+
+        .btn-secundario {
+            background: #6c757d;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
         }
-        .mensaje-exito-pago {
-            display: none;
+
+        .bloque-politicas {
+            margin: 20px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* --- Ticket / Comprobante & Factura --- */
+        .ticket-contenedor {
+            background: #fffef0;
+            border: 2px dashed #ccc;
+            border-radius: 10px;
+            padding: 25px;
+            max-width: 600px;
+            margin: 20px auto;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        .ticket-header {
             text-align: center;
-            padding: 40px;
-            background: #e8f5e9;
-            border-radius: 8px;
-            color: #2e7d32;
+            border-bottom: 1px dashed #aaa;
+            padding-bottom: 15px;
+            margin-bottom: 15px;
         }
-        .mensaje-exito-pago h2 {
-            margin-bottom: 10px;
+
+        .ticket-linea {
+            display: flex;
+            justify-content: space-between;
+            margin: 6px 0;
+            font-size: 0.95rem;
+        }
+
+        .ticket-totales {
+            border-top: 1px dashed #aaa;
+            margin-top: 15px;
+            padding-top: 10px;
+        }
+
+        /* --- Factura Box --- */
+        .factura-contenedor {
+            background: #f0f7ff;
+            border: 2px solid #b6d4fe;
+            border-radius: 10px;
+            padding: 25px;
+            max-width: 650px;
+            margin: 20px auto;
+            font-family: system-ui, sans-serif;
+        }
+
+        .seccion-historial {
+            margin-top: 50px;
+            border-top: 2px solid #eee;
+            padding-top: 30px;
+        }
+
+        .tarjeta-pedido-historial {
+            background: #fdfdfd;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 15px 20px;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        @media print {
+            body * { visibility: hidden; }
+            #bloque-comprobante-exito, #bloque-comprobante-exito * { visibility: visible; }
+            #bloque-comprobante-exito { position: absolute; left: 0; top: 0; width: 100%; }
+            .no-print { display: none !important; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Banner promocional superior (Inyectado o estático) -->
     <div id="banner-global"></div>
-
-    <!-- Encabezado / Menú inyectado por componentes.js -->
     <header></header>
 
-    <main>
+<main>
         <div class="contenedor-pago">
             
-            <!-- Bloque del Formulario de Pago y Resumen -->
-            <div id="formulario-pago-bloque">
-                <h2 class="titulo-pago">💳 Finalizar Pedido</h2>
-                <p style="color: #666; margin-bottom: 20px;">Revisa el resumen de tus deliciosos platillos antes de confirmar la compra.</p>
+            <h2 class="titulo-pago">🇲🇽 Finalizar Pedido - Sabor Mexicano</h2>
 
-                <!-- Tabla resumen de productos -->
+            <!-- Indicador de Pasos del Checkout: 1. Dirección, 2. Pago, 3. Confirmación -->
+            <div class="pasos-checkout no-print" id="barra-pasos">
+                <div class="paso-item activo" id="indicador-paso-1">1. Dirección</div>
+                <div class="paso-item" id="indicador-paso-2">2. Método de Pago</div>
+                <div class="paso-item" id="indicador-paso-3">3. Confirmación</div>
+            </div>
+
+            <!-- ===================================================
+                 PASO 1: DIRECCIÓN DE ENTREGA
+                 =================================================== -->
+            <div id="paso-1" class="seccion-paso activa">
+                <h3>📍 Paso 1: Dirección de Entrega</h3>
+                <p style="color: #666; font-size: 0.95rem;">Puedes dejar los campos vacíos (se usarán datos por defecto) o personalizarlos.</p>
+                
+                <form id="form-direccion" onsubmit="event.preventDefault(); irAPaso(2);">
+                    <div class="form-grid">
+                        <div class="grupo-campo">
+                            <label for="dir-nombre">Nombre completo</label>
+                            <input type="text" id="dir-nombre" placeholder="Ej. Juan Pérez (Opcional)">
+                        </div>
+                        <div class="grupo-campo">
+                            <label for="dir-telefono">Teléfono</label>
+                            <input type="tel" id="dir-telefono" placeholder="Ej. 55 1234 5678 (Opcional)">
+                        </div>
+                        <div class="grupo-campo" style="grid-column: span 2;">
+                            <label for="dir-calle">Calle y Número</label>
+                            <input type="text" id="dir-calle" placeholder="Ej. Av. Insurgentes Sur 123 (Opcional)">
+                        </div>
+                        <div class="grupo-campo">
+                            <label for="dir-colonia">Colonia / Alcaldía</label>
+                            <input type="text" id="dir-colonia" placeholder="Ej. Roma Norte (Opcional)">
+                        </div>
+                        <div class="grupo-campo">
+                            <label for="dir-cp">Código Postal</label>
+                            <input type="text" id="dir-cp" maxlength="5" placeholder="Ej. 06700 (Opcional)">
+                        </div>
+                        <div class="grupo-campo" style="grid-column: span 2;">
+                            <label for="dir-notas">Referencias de entrega</label>
+                            <input type="text" id="dir-notas" placeholder="Ej. Fachada color azul (Opcional)">
+                        </div>
+                    </div>
+
+                    <div class="botones-paso">
+                        <a href="catalogo.html" class="btn-secundario">Volver al Catálogo</a>
+                        <button type="submit" class="btn-principal">Siguiente: Método de Pago ➔</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- ===================================================
+                 PASO 2: MÉTODO DE PAGO
+                 =================================================== -->
+            <div id="paso-2" class="seccion-paso">
+                <h3>💳 Paso 2: Selecciona tu Método de Pago</h3>
+                <p style="color: #666; font-size: 0.95rem;">Elige una opción. Los campos no son estrictos y puedes avanzar libremente.</p>
+
+                <div class="opciones-pago">
+                    <label class="card-metodo seleccionado" id="card-tarjeta" onclick="seleccionarMetodo('tarjeta')">
+                        <input type="radio" name="metodo_pago" value="tarjeta" checked>
+                        <div style="font-size: 1.5rem;">💳</div>
+                        <strong>Tarjeta Crédito/Débito</strong>
+                    </label>
+
+                    <label class="card-metodo" id="card-transferencia" onclick="seleccionarMetodo('transferencia')">
+                        <input type="radio" name="metodo_pago" value="transferencia">
+                        <div style="font-size: 1.5rem;">🏦</div>
+                        <strong>Transferencia SPEI</strong>
+                    </label>
+
+                    <label class="card-metodo" id="card-ewallet" onclick="seleccionarMetodo('ewallet')">
+                        <input type="radio" name="metodo_pago" value="ewallet">
+                        <div style="font-size: 1.5rem;">📱</div>
+                        <strong>Monedero Electrónico</strong>
+                    </label>
+                </div>
+
+                <!-- Detalle 1: Tarjeta (Llenar datos de tarjeta) -->
+                <div id="panel-tarjeta" class="detalles-metodo-panel">
+                    <h4>Datos de la Tarjeta</h4>
+                    <div class="form-grid">
+                        <div class="grupo-campo" style="grid-column: span 2;">
+                            <label>Nombre del Titular</label>
+                            <input type="text" id="pago-card-nombre" placeholder="Ej. Juan Pérez (Opcional)">
+                        </div>
+                        <div class="grupo-campo">
+                            <label>Número de Tarjeta</label>
+                            <input type="text" id="pago-card-num" placeholder="XXXX-XXXX-XXXX-XXXX (Opcional)">
+                        </div>
+                        <div class="grupo-campo">
+                            <label>Vencimiento</label>
+                            <input type="text" id="pago-card-exp" placeholder="MM/AA">
+                        </div>
+                        <div class="grupo-campo">
+                            <label>CVV</label>
+                            <input type="password" id="pago-card-cvv" maxlength="4" placeholder="123">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Detalle 2: Transferencia (Solo mostrar datos para transferir) -->
+                <div id="panel-transferencia" class="detalles-metodo-panel" style="display: none;">
+                    <h4>Datos para Transferir (SPEI)</h4>
+                    <p style="font-size: 0.9rem; color: #555;">Realiza tu transferencia con los siguientes datos:</p>
+                    <div style="background: #fff; padding: 15px; border-radius: 6px; border: 1px solid #ccc; font-family: monospace;">
+                        <p><strong>Banco:</strong> BBVA México</p>
+                        <p><strong>CLABE Interbancaria:</strong> 0121 8000 1234 5678 90</p>
+                        <p><strong>Beneficiario:</strong> Sabor Mexicano Restaurante S.A.</p>
+                        <p><strong>Concepto / Referencia:</strong> <span id="transf-concepto" style="color: #c62828; font-weight: bold;">SM-TEMP</span></p>
+                    </div>
+                </div>
+
+                <!-- Detalle 3: Monedero Electrónico (Mostrar saldo) -->
+                <div id="panel-ewallet" class="detalles-metodo-panel" style="display: none;">
+                    <h4>Monedero Electrónico SaborPay</h4>
+                    <div style="background: #fff; padding: 15px; border-radius: 6px; border: 1px solid #ccc;">
+                        <p style="margin: 0 0 5px 0;">Saldo disponible en tu cuenta:</p>
+                        <p style="color: #2e7d32; font-size: 1.4rem; font-weight: bold; margin: 0;">$1,250.00 MXN</p>
+                        <p style="font-size: 0.85rem; color: #666; margin-top: 5px;">El cobro se realizará de forma automática al confirmar tu pedido.</p>
+                    </div>
+                </div>
+
+                <div class="botones-paso">
+                    <button type="button" class="btn-secundario" onclick="irAPaso(1)">⬅ Anterior</button>
+                    <button type="button" class="btn-principal" onclick="irAPaso(3)">Siguiente: Confirmación ➔</button>
+                </div>
+            </div>
+
+            <!-- ===================================================
+                 PASO 3: CONFIRMACIÓN Y OPCIÓN DE FACTURA
+                 =================================================== -->
+            <div id="paso-3" class="seccion-paso">
+                <h3>📋 Paso 3: Confirmación y Facturación</h3>
+                <p style="color: #666; font-size: 0.95rem;">Revisa tu pedido e indica si requieres factura.</p>
+
+                <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 20px; font-size: 0.95rem;">
+                    <p><strong>Método de pago:</strong> <span id="resumen-metodo-pago">Tarjeta</span></p>
+                    <p><strong>Enviar a:</strong> <span id="resumen-cliente-dir">Cliente General (Sin dirección especificada)</span></p>
+                    <p><strong>Teléfono:</strong> <span id="resumen-cliente-tel">S/N</span></p>
+                </div>
+
                 <table class="tabla-resumen">
                     <thead>
                         <tr>
@@ -130,15 +445,15 @@
                         </tr>
                     </thead>
                     <tbody id="resumen-items">
-                        <!-- Aquí se inyectan dinámicamente los productos del carrito -->
+                        <!-- Items dinámicos -->
                     </tbody>
                 </table>
 
-                <!-- Input para cupones en la página de pago -->
+                <!-- Cupones -->
                 <div class="seccion-cupon-pago">
                     <span style="font-weight: 500; color: #856404;">¿Tienes un código de descuento?</span>
-                    <input type="text" id="input-cupon-pago" placeholder="EJ. DIEZ" style="padding: 8px 12px; border: 1px solid #ccc; border-radius: 4px; flex-grow: 1;">
-                    <button onclick="aplicarCuponEnPago()" style="padding: 8px 15px; background: var(--primary-color); color: white; border: none; border-radius: 4px; font-weight: bold; cursor: pointer;">Aplicar</button>
+                    <input type="text" id="input-cupon-pago" placeholder="EJ. DIEZ, SABOR10" style="padding: 8px 12px; border: 1px solid #ccc; border-radius: 4px; flex-grow: 1;">
+                    <button type="button" onclick="aplicarCuponEnPago()" style="padding: 8px 15px; background: var(--primary-color, #c62828); color: white; border: none; border-radius: 4px; font-weight: bold; cursor: pointer;">Aplicar</button>
                     <div id="feedback-cupon-pago" style="width: 100%; font-size: 0.9rem; font-weight: bold; display: none; margin-top: 5px;"></div>
                 </div>
 
@@ -146,87 +461,303 @@
                 <div class="totales-caja">
                     <p>Subtotal: <span id="resumen-subtotal">$0.00</span></p>
                     <p>IVA (16%): <span id="resumen-iva">$0.00</span></p>
+                    <p id="fila-descuento" style="display: none; color: #2e7d32;">Descuento: <span id="resumen-descuento">-$0.00</span></p>
                     <h3>Total a Pagar: <span id="resumen-total">$0.00</span></h3>
                 </div>
 
-                <!-- Políticas -->
+                <!-- PREGUNTA DE FACTURACIÓN -->
+                <div style="background: #fdfdfd; border: 1px solid #ddd; padding: 20px; border-radius: 8px; margin: 25px 0;">
+                    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 15px;">
+                        <input type="checkbox" id="check-requiere-factura" onchange="toggleFormularioFactura()" style="width: 20px; height: 20px; cursor: pointer;">
+                        <label for="check-requiere-factura" style="font-size: 1.05rem; font-weight: bold; color: #333; cursor: pointer;">
+                            ¿Requiere Factura Fiscal para este pedido?
+                        </label>
+                    </div>
+
+                    <!-- Formulario de Facturación -->
+                    <div id="panel-formulario-factura" style="display: none; border-top: 1px dashed #ccc; padding-top: 15px; margin-top: 10px;">
+                        <p style="font-size: 0.85rem; color: #666; margin-bottom: 12px;">Ingrese sus datos fiscales (el método de pago usado se incluirá automáticamente en la factura):</p>
+                        <div class="form-grid">
+                            <div class="grupo-campo">
+                                <label>RFC</label>
+                                <input type="text" id="fac-rfc" placeholder="XAXX010101000">
+                            </div>
+                            <div class="grupo-campo">
+                                <label>Razón Social / Nombre</label>
+                                <input type="text" id="fac-razon" placeholder="Nombre o Empresa S.A. de C.V.">
+                            </div>
+                            <div class="grupo-campo">
+                                <label>Régimen Fiscal</label>
+                                <select id="fac-regimen">
+                                    <option value="601">601 - General de Ley Personas Morales</option>
+                                    <option value="612" selected>612 - Personas Físicas con Actividades Empresariales</option>
+                                    <option value="625">625 - Régimen de las Actividades Empresariales con Ingresos a través de Plataformas Tecnológicas</option>
+                                    <option value="616">616 - Sin obligaciones fiscales</option>
+                                </select>
+                            </div>
+                            <div class="grupo-campo">
+                                <label>Uso de CFDI</label>
+                                <select id="fac-uso">
+                                    <option value="G03" selected>G03 - Gastos en general</option>
+                                    <option value="P01">P01 - Por definir</option>
+                                    <option value="A01">A01 - Adquisición de mercancías</option>
+                                </select>
+                            </div>
+                            <div class="grupo-campo" style="grid-column: span 2;">
+                                <label>Correo Electrónico para Factura</label>
+                                <input type="email" id="fac-correo" placeholder="correo@ejemplo.com">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="bloque-politicas">
-                    <input type="checkbox" id="check-politicas">
+                    <input type="checkbox" id="check-politicas" checked>
                     <label for="check-politicas" style="font-size: 0.95rem; color: #444;">
-                        He leído y acepto los <strong>Términos de Servicio</strong>, las <strong>Políticas de Compra-Venta</strong> y confirmo que mi orden de antojos es correcta.
+                        Acepto los Términos de Servicio y las Políticas de Privacidad.
                     </label>
                 </div>
-                <div id="error-politicas" class="error-alerta">⚠️ Debes aceptar los términos y políticas para continuar.</div>
 
-                <div style="display: flex; gap: 15px; margin-top: 25px;">
-                    <a href="catalogo.html" style="background: #6c757d; color: white; padding: 12px 20px; border-radius: 6px; text-decoration: none; font-weight: bold; display: inline-block; text-align: center;">Volver al Catálogo</a>
-                    <button class="btn-confirmar-pago" onclick="confirmarPagoFinal()" style="flex-grow: 1;">Confirmar y Pagar</button>
+                <div class="botones-paso">
+                    <button type="button" class="btn-secundario" onclick="irAPaso(2)">⬅ Anterior</button>
+                    <button type="button" class="btn-principal" onclick="confirmarPagoFinal()" style="background: #2e7d32; font-size: 1.1rem;">💳 Confirmar y Pagar Ahora</button>
                 </div>
             </div>
 
-            <!-- Bloque de Éxito al finalizar -->
-            <div id="mensaje-exito-bloque" class="mensaje-exito-pago">
-                <h2>🎉 ¡Pedido Exitoso!</h2>
-                <p>Tu orden ha sido registrada correctamente y ya se está preparando en la cocina con mucho sazón.</p>
-                <p style="margin-top: 15px; font-size: 0.9rem; color: #555;">Te hemos redirigido o puedes volver al inicio cuando gustes.</p>
-                <a href="index.html" style="display: inline-block; margin-top: 20px; background: var(--primary-color); color: white; padding: 10px 20px; border-radius: 6px; text-decoration: none; font-weight: bold;">Regresar al Inicio</a>
+            <!-- ===================================================
+                 COMPROBANTE / TICKET O FACTURA (POST-PAGO)
+                 =================================================== -->
+            <div id="bloque-comprobante-exito" style="display: none;">
+                <div style="text-align: center; margin-bottom: 20px;">
+                    <h2 style="color: #2e7d32; font-size: 2rem;">🎉 ¡Pago Aprobado con Éxito!</h2>
+                    <p style="color: #555;" id="mensaje-resultado-tipo">A continuación se muestra tu documento de compra.</p>
+                </div>
+
+                <!-- TICKET DE COMPRA VISUAL (Si NO requirió factura) -->
+                <div class="ticket-contenedor" id="ticket-visual" style="display: none;">
+                    <div class="ticket-header">
+                        <h3 style="margin: 0;">🌮 SABOR MEXICANO 🌮</h3>
+                        <p style="margin: 5px 0 0 0; font-size: 0.85rem;">Restaurante Tradicional</p>
+                        <p style="margin: 0; font-size: 0.8rem; color: #666;">RFC: SME-260722-HA8 | Tel: (55) 5555-7226</p>
+                    </div>
+
+                    <div class="ticket-linea">
+                        <span><strong>FOLIO:</strong></span>
+                        <span id="ticket-folio">#SM-0000</span>
+                    </div>
+                    <div class="ticket-linea">
+                        <span><strong>FECHA:</strong></span>
+                        <span id="ticket-fecha">22/07/2026</span>
+                    </div>
+                    <div class="ticket-linea">
+                        <span><strong>CLIENTE:</strong></span>
+                        <span id="ticket-cliente">Cliente General</span>
+                    </div>
+                    <div class="ticket-linea">
+                        <span><strong>MÉTODO DE PAGO:</strong></span>
+                        <span id="ticket-metodo" style="color: #c62828; font-weight: bold;">TARJETA</span>
+                    </div>
+
+                    <hr style="border: none; border-top: 1px dashed #aaa; margin: 10px 0;">
+
+                    <div id="ticket-items"></div>
+
+                    <div class="ticket-totales">
+                        <div class="ticket-linea">
+                            <span>Subtotal:</span>
+                            <span id="ticket-subtotal">$0.00</span>
+                        </div>
+                        <div class="ticket-linea">
+                            <span>IVA (16%):</span>
+                            <span id="ticket-iva">$0.00</span>
+                        </div>
+                        <div class="ticket-linea" id="ticket-fila-desc" style="display:none; color: #2e7d32;">
+                            <span>Descuento:</span>
+                            <span id="ticket-descuento">-$0.00</span>
+                        </div>
+                        <div class="ticket-linea" style="font-size: 1.1rem; font-weight: bold; margin-top: 5px;">
+                            <span>TOTAL:</span>
+                            <span id="ticket-total">$0.00</span>
+                        </div>
+                    </div>
+
+                    <div style="text-align: center; margin-top: 20px; font-size: 0.8rem; color: #666;">
+                        ¡Gracias por tu preferencia!<br>
+                        *** Comprobante Simulado de Compra ***
+                    </div>
+                </div>
+
+                <!-- FACTURA FISCAL VISUAL (Si SÍ requirió factura, con Método de Pago incluido) -->
+                <div class="factura-contenedor" id="factura-visual" style="display: none;">
+                    <div style="border-bottom: 2px solid #0056b3; padding-bottom: 10px; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <h3 style="margin: 0; color: #0056b3;">FACTURA ELECTRÓNICA (CFDI 4.0)</h3>
+                            <p style="margin: 3px 0 0 0; font-size: 0.85rem; color: #555;">Sabor Mexicano S.A. de C.V.</p>
+                        </div>
+                        <div style="text-align: right; font-size: 0.85rem;">
+                            <p style="margin:0;"><strong>Folio Fiscal:</strong> UUID-8923-ABCD</p>
+                            <p style="margin:0;"><strong>Fecha:</strong> <span id="fac-fecha">22/07/2026</span></p>
+                        </div>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; font-size: 0.9rem; margin-bottom: 15px; background: #fff; padding: 12px; border-radius: 6px;">
+                        <div>
+                            <strong>EMISOR:</strong><br>
+                            Sabor Mexicano S.A. de C.V.<br>
+                            RFC: SME260722HA8<br>
+                            Régimen: 601 General de Ley
+                        </div>
+                        <div>
+                            <strong>RECEPTOR:</strong><br>
+                            <span id="fac-res-nombre">PUBLICO EN GENERAL</span><br>
+                            RFC: <span id="fac-res-rfc">XAXX010101000</span><br>
+                            Uso CFDI: <span id="fac-res-uso">G03 Gastos en general</span>
+                        </div>
+                    </div>
+
+                    <div style="margin-bottom: 15px; font-size: 0.9rem; background: #fff; padding: 10px; border-radius: 6px; border-left: 4px solid #0056b3;">
+                        <p style="margin: 2px 0;"><strong>Método de Pago utilizado:</strong> <span id="fac-res-metodo" style="color: #c62828; font-weight: bold;">TARJETA</span></p>
+                        <p style="margin: 2px 0;"><strong>Forma de Pago:</strong> Pago en una sola exhibición (PUE)</p>
+                    </div>
+
+                    <table class="tabla-resumen" style="font-size: 0.9rem;">
+                        <thead>
+                            <tr>
+                                <th>Clave Prod/Serv</th>
+                                <th>Descripción</th>
+                                <th style="text-align: center;">Cant</th>
+                                <th style="text-align: right;">Importe</th>
+                            </tr>
+                        </thead>
+                        <tbody id="fac-items">
+                            <!-- Items de factura -->
+                        </tbody>
+                    </table>
+
+                    <div class="totales-caja" style="font-size: 1rem;">
+                        <p>Subtotal: <span id="fac-subtotal">$0.00</span></p>
+                        <p>IVA 16%: <span id="fac-iva">$0.00</span></p>
+                        <h3 style="color: #0056b3;">Total Facturado: <span id="fac-total">$0.00</span></h3>
+                    </div>
+
+                    <div style="text-align: center; margin-top: 15px; font-size: 0.75rem; color: #555;">
+                        Este documento es una representación impresa de un CFDI 4.0 | Sello digital generado correctamente.
+                    </div>
+                </div>
+
+                <div class="botones-paso no-print" style="justify-content: center; gap: 15px; flex-wrap: wrap;">
+                    <button class="btn-principal" onclick="imprimirOpdf()" style="background: #0288d1;">📄 Descargar Documento (PDF / Imprimir)</button>
+                    <a href="index.html" class="btn-secundario">Regresar al Inicio</a>
+                </div>
+            </div>
+
+            <!-- ===================================================
+                 HISTORIAL DE COMPRAS ("MIS COMPRAS" - PERFIL)
+                 =================================================== -->
+            <div class="seccion-historial no-print">
+                <h3>📜 Mis Compras (Historial / Perfil)</h3>
+                <p style="color: #666; font-size: 0.9rem;">Consulta tus pedidos anteriores. Si requieres factura de alguna compra pasada, puedes generarla aquí en cualquier momento.</p>
+
+                <div id="lista-historial-compras">
+                    <!-- Se carga dinámicamente -->
+                </div>
             </div>
 
         </div>
     </main>
 
-    <!-- Pie de página / Footer inyectado por componentes.js -->
     <footer></footer>
 
-    <!-- LÓGICA DE CÁLCULOS, CARRITO Y CUPONES BLINDADA CONTRA NAN -->
-   <script>
+    <script>
+    let pasoActual = 1;
     let sumaProductosOriginal = 0;
+    let descuentoAplicado = 0;
     let descuentoYaAplicado = false;
+    let metodoSeleccionado = 'tarjeta';
+    let carritoActual = [];
 
     document.addEventListener('DOMContentLoaded', () => {
         cargarResumen();
         verificarCuponGuardado();
+        cargarHistorialCompras();
+        document.getElementById('transf-concepto').textContent = 'SM-' + Math.floor(10000 + Math.random() * 90000);
     });
 
+    function irAPaso(paso) {
+        if (paso === 3) {
+            actualizarDatosResumenCliente();
+        }
+
+        pasoActual = paso;
+        
+        document.querySelectorAll('.seccion-paso').forEach(sec => sec.classList.remove('activa'));
+        document.getElementById(`paso-${paso}`).classList.add('activa');
+
+        for (let i = 1; i <= 3; i++) {
+            const ind = document.getElementById(`indicador-paso-${i}`);
+            ind.classList.remove('activo', 'completado');
+            if (i < paso) ind.classList.add('completado');
+            if (i === paso) ind.classList.add('activo');
+        }
+
+        window.scrollTo({ top: 100, behavior: 'smooth' });
+    }
+
+    function seleccionarMetodo(metodo) {
+        metodoSeleccionado = metodo;
+        document.querySelectorAll('.card-metodo').forEach(card => card.classList.remove('seleccionado'));
+        document.getElementById(`card-${metodo}`).classList.add('seleccionado');
+
+        document.getElementById('panel-tarjeta').style.display = (metodo === 'tarjeta') ? 'block' : 'none';
+        document.getElementById('panel-transferencia').style.display = (metodo === 'transferencia') ? 'block' : 'none';
+        document.getElementById('panel-ewallet').style.display = (metodo === 'ewallet') ? 'block' : 'none';
+
+        const textoMetodo = { tarjeta: 'Tarjeta de Crédito/Débito', transferencia: 'Transferencia SPEI', ewallet: 'Monedero Electrónico SaborPay' };
+        document.getElementById('resumen-metodo-pago').textContent = textoMetodo[metodo];
+    }
+
+    function actualizarDatosResumenCliente() {
+        const nombreVal = document.getElementById('dir-nombre').value.trim();
+        const calleVal = document.getElementById('dir-calle').value.trim();
+        const coloniaVal = document.getElementById('dir-colonia').value.trim();
+        const telVal = document.getElementById('dir-telefono').value.trim();
+
+        const nombreFinal = nombreVal !== '' ? nombreVal : 'Cliente General (Invitado)';
+        const direccionFinal = calleVal !== '' ? `${calleVal}, Col. ${coloniaVal || 'Centro'}` : 'Domicilio Genérico / Sucursal';
+        const telefonoFinal = telVal !== '' ? telVal : '55 0000 0000';
+
+        document.getElementById('resumen-cliente-dir').textContent = `${nombreFinal} - ${direccionFinal}`;
+        document.getElementById('resumen-cliente-tel').textContent = telefonoFinal;
+    }
+
+    function toggleFormularioFactura() {
+        const requiereFac = document.getElementById('check-requiere-factura').checked;
+        document.getElementById('panel-formulario-factura').style.display = requiereFac ? 'block' : 'none';
+    }
+
     function cargarResumen() {
-        let carrito = JSON.parse(localStorage.getItem('carritoApp')) || [];
+        carritoActual = JSON.parse(localStorage.getItem('carritoApp')) || [];
         const tbody = document.getElementById('resumen-items');
         
-        let totalItems = 0;
-        let html = '';
-
         if (!tbody) return;
 
-        if (carrito.length === 0) {
-            window.location.href = 'catalogo.html';
-            return;
+        if (carritoActual.length === 0) {
+            carritoActual = [{ titulo: 'Megapack Taquero Sabor Mexicano (Prueba)', cantidad: 1, precio: 299.00 }];
         }
 
         sumaProductosOriginal = 0;
+        let html = '';
+        let totalItems = 0;
         
-        carrito.forEach(item => {
-            // 1. Limpieza de precio por si viene con símbolos
-            let precioLimpio = 0;
-            const fuentePrecio = item.precio !== undefined ? item.precio : item.costo;
-            
-            if (typeof fuentePrecio === 'string') {
-                precioLimpio = parseFloat(fuentePrecio.replace('$', '').replace(/,/g, '').trim());
-            } else if (typeof fuentePrecio === 'number') {
-                precioLimpio = fuentePrecio;
-            }
-            if (isNaN(precioLimpio)) precioLimpio = 299.00; // Respaldo por si viene totalmente roto
-
-            // 2. Corrección automática si la cantidad está como 'undefined' o vacía
-            let cantidadNum = parseInt(item.cantidad);
-            if (isNaN(cantidadNum) || cantidadNum <= 0) {
-                cantidadNum = 1; 
-            }
-
+        carritoActual.forEach(item => {
+            let precioLimpio = parseFloat(item.precio || item.costo) || 299.00;
+            let cantidadNum = parseInt(item.cantidad) || 1;
             let subtotalItem = precioLimpio * cantidadNum;
+            
             sumaProductosOriginal += subtotalItem;
             totalItems += cantidadNum;
             
-            let nombreProducto = item.titulo || item.nombre || 'El Megapack Taquero Familiar';
+            let nombreProducto = item.titulo || item.nombre || 'Platillo Tradicional';
 
             html += `<tr>
                 <td><strong>${nombreProducto}</strong></td>
@@ -236,7 +767,7 @@
         });
 
         tbody.innerHTML = html;
-        actualizarTotalesVisuales(sumaProductosOriginal);
+        actualizarTotalesVisuales();
 
         const contadorBadge = document.getElementById('cart-count');
         if (contadorBadge) contadorBadge.textContent = totalItems;
@@ -247,18 +778,16 @@
         if (cuponGuardado && cuponGuardado.codigo) {
             const inputCupon = document.getElementById('input-cupon-pago');
             if(inputCupon) inputCupon.value = cuponGuardado.codigo;
-            aplicarDescuentoMatematico(cuponGuardado.codigo, cuponGuardado.descuento, `¡Código "${cuponGuardado.codigo}" aplicado desde tu sesión!`);
+            aplicarDescuentoMatematico(cuponGuardado.codigo, cuponGuardado.descuento, `¡Código "${cuponGuardado.codigo}" aplicado!`);
         }
     }
 
     function aplicarCuponEnPago() {
         const inputElem = document.getElementById('input-cupon-pago');
-        if (!inputElem) return;
+        const feedback = document.getElementById('feedback-cupon-pago');
+        if (!inputElem || !feedback) return;
         
         const inputVal = inputElem.value.trim().toUpperCase();
-        const feedback = document.getElementById('feedback-cupon-pago');
-        if (!feedback) return;
-        
         feedback.style.display = 'block';
 
         if (descuentoYaAplicado) {
@@ -267,21 +796,11 @@
             return;
         }
 
-        const listaCupones = {
-            'MARTESMAGIC': 0.50,
-            'ARRIBA': 'fijo_20', 
-            'DIEZ': 0.10,
-            'SABOR10': 0.10
-        };
+        const listaCupones = { 'MARTESMAGIC': 0.50, 'ARRIBA': 'fijo_20', 'DIEZ': 0.10, 'SABOR10': 0.10 };
 
         if (listaCupones[inputVal] !== undefined) {
             let valorDesc = listaCupones[inputVal];
-            
-            localStorage.setItem('cuponAplicado', JSON.stringify({
-                codigo: inputVal,
-                descuento: valorDesc
-            }));
-
+            localStorage.setItem('cuponAplicado', JSON.stringify({ codigo: inputVal, descuento: valorDesc }));
             aplicarDescuentoMatematico(inputVal, valorDesc, `✅ ¡Código "${inputVal}" aplicado con éxito!`);
         } else {
             feedback.style.color = '#c62828';
@@ -296,54 +815,245 @@
         feedback.style.display = 'block';
         descuentoYaAplicado = true;
 
-        let montoDescuento = 0;
         if (codigo === 'ARRIBA' || valorDescuento === 'fijo_20') {
-            montoDescuento = 20.00; 
+            descuentoAplicado = 20.00; 
         } else {
-            montoDescuento = sumaProductosOriginal * Number(valorDescuento); 
+            descuentoAplicado = sumaProductosOriginal * Number(valorDescuento); 
         }
 
-        let nuevoTotalFinal = Math.max(0, sumaProductosOriginal - montoDescuento);
-        actualizarTotalesVisuales(nuevoTotalFinal);
-
+        actualizarTotalesVisuales();
         feedback.style.color = '#2e7d32';
         feedback.innerHTML = mensajeExito;
     }
 
-    function actualizarTotalesVisuales(totalFinal) {
+    function actualizarTotalesVisuales() {
         const subtotalText = document.getElementById('resumen-subtotal');
         const ivaText = document.getElementById('resumen-iva');
         const totalText = document.getElementById('resumen-total');
+        const filaDesc = document.getElementById('fila-descuento');
+        const descText = document.getElementById('resumen-descuento');
 
-        let nuevoSubtotalNeto = totalFinal / 1.16;
-        let nuevoIvaCalculado = totalFinal - nuevoSubtotalNeto;
+        let totalPagar = Math.max(0, sumaProductosOriginal - descuentoAplicado);
+        let subtotalNeto = totalPagar / 1.16;
+        let ivaCalculado = totalPagar - subtotalNeto;
 
-        if (subtotalText) subtotalText.innerText = `$${nuevoSubtotalNeto.toFixed(2)}`;
-        if (ivaText) ivaText.innerText = `$${nuevoIvaCalculado.toFixed(2)}`;
-        if (totalText) totalText.innerText = `$${totalFinal.toFixed(2)}`;
+        if (subtotalText) subtotalText.innerText = `$${subtotalNeto.toFixed(2)}`;
+        if (ivaText) ivaText.innerText = `$${ivaCalculado.toFixed(2)}`;
+        if (totalText) totalText.innerText = `$${totalPagar.toFixed(2)}`;
+
+        if (descuentoAplicado > 0) {
+            filaDesc.style.display = 'block';
+            descText.innerText = `-$${descuentoAplicado.toFixed(2)}`;
+        }
     }
 
     function confirmarPagoFinal() {
-        const checkbox = document.getElementById('check-politicas');
-        const mensajeError = document.getElementById('error-politicas');
-        const formulario = document.getElementById('formulario-pago-bloque');
-        const exito = document.getElementById('mensaje-exito-bloque');
+        const folioNuevo = '#SM-' + Math.floor(100000 + Math.random() * 900000);
+        const fechaActual = new Date().toLocaleDateString('es-MX') + ' ' + new Date().toLocaleTimeString('es-MX', {hour: '2-digit', minute:'2-digit'});
+        
+        const nombreInput = document.getElementById('dir-nombre').value.trim();
+        const clienteFinal = nombreInput !== '' ? nombreInput : 'Cliente General (Invitado)';
+        
+        const totalFinal = Math.max(0, sumaProductosOriginal - descuentoAplicado);
+        const requiereFactura = document.getElementById('check-requiere-factura').checked;
 
-        if (checkbox && !checkbox.checked) {
-            if (mensajeError) mensajeError.style.display = 'block';
-            return;
-        }
+        const textoMetodoMap = { tarjeta: 'TARJETA DE CRÉDITO/DÉBITO', transferencia: 'TRANSFERENCIA SPEI', ewallet: 'MONEDERO ELECTRÓNICO' };
+        const metodoTextoLegible = textoMetodoMap[metodoSeleccionado] || 'TARJETA';
 
-        if (mensajeError) mensajeError.style.display = 'none';
-        if (formulario) formulario.style.display = 'none';
-        if (exito) exito.style.display = 'block';
+        const datosFactura = requiereFactura ? {
+            rfc: document.getElementById('fac-rfc').value.trim() || 'XAXX010101000',
+            razon: document.getElementById('fac-razon').value.trim() || clienteFinal,
+            regimen: document.getElementById('fac-regimen').value,
+            uso: document.getElementById('fac-uso').value,
+            correo: document.getElementById('fac-correo').value.trim() || 'cliente@correo.com'
+        } : null;
+
+        const pedidoFinal = {
+            folio: folioNuevo,
+            fecha: fechaActual,
+            cliente: clienteFinal,
+            metodoPago: metodoTextoLegible,
+            items: carritoActual,
+            subtotal: (totalFinal / 1.16).toFixed(2),
+            iva: (totalFinal - (totalFinal / 1.16)).toFixed(2),
+            descuento: descuentoAplicado.toFixed(2),
+            total: totalFinal.toFixed(2),
+            facturado: requiereFactura,
+            datosFactura: datosFactura
+        };
+
+        let historial = JSON.parse(localStorage.getItem('historialPedidos')) || [];
+        historial.unshift(pedidoFinal);
+        localStorage.setItem('historialPedidos', JSON.stringify(historial));
+
+        renderizarDocumentoPostPago(pedidoFinal);
+
+        document.getElementById('paso-3').style.display = 'none';
+        document.getElementById('barra-pasos').style.display = 'none';
+        document.getElementById('bloque-comprobante-exito').style.display = 'block';
 
         localStorage.removeItem('carritoApp');
         localStorage.removeItem('cuponAplicado');
-        
         const contadorBadge = document.getElementById('cart-count');
         if (contadorBadge) contadorBadge.textContent = '0';
+
+        cargarHistorialCompras();
     }
-</script>
+
+    function renderizarDocumentoPostPago(pedido) {
+        const esFactura = pedido.facturado;
+        
+        if (esFactura) {
+            document.getElementById('mensaje-resultado-tipo').textContent = 'Tu pedido ha sido procesado y tu factura fiscal ha sido generada correctamente.';
+            document.getElementById('ticket-visual').style.display = 'none';
+            document.getElementById('factura-visual').style.display = 'block';
+
+            document.getElementById('fac-fecha').textContent = pedido.fecha;
+            document.getElementById('fac-res-nombre').textContent = pedido.datosFactura.razon;
+            document.getElementById('fac-res-rfc').textContent = pedido.datosFactura.rfc;
+            document.getElementById('fac-res-uso').textContent = pedido.datosFactura.uso;
+            document.getElementById('fac-res-metodo').textContent = pedido.metodoPago; // ¡Método de pago incluido!
+
+            let itemsHtml = '';
+            pedido.items.forEach(item => {
+                let cant = item.cantidad || 1;
+                let prec = parseFloat(item.precio || item.costo) || 299.00;
+                let nom = item.titulo || item.nombre || 'Platillo';
+                itemsHtml += `
+                    <tr>
+                        <td>90101501</td>
+                        <td>${nom}</td>
+                        <td style="text-align: center;">${cant}</td>
+                        <td style="text-align: right;">$${(cant * prec).toFixed(2)}</td>
+                    </tr>
+                `;
+            });
+
+            document.getElementById('fac-items').innerHTML = itemsHtml;
+            document.getElementById('fac-subtotal').textContent = `$${pedido.subtotal}`;
+            document.getElementById('fac-iva').textContent = `$${pedido.iva}`;
+            document.getElementById('fac-total').textContent = `$${pedido.total}`;
+
+        } else {
+            document.getElementById('mensaje-resultado-tipo').textContent = 'Tu orden ha sido registrada correctamente. A continuación se muestra tu ticket de compra.';
+            document.getElementById('factura-visual').style.display = 'none';
+            document.getElementById('ticket-visual').style.display = 'block';
+
+            document.getElementById('ticket-folio').textContent = pedido.folio;
+            document.getElementById('ticket-fecha').textContent = pedido.fecha;
+            document.getElementById('ticket-cliente').textContent = pedido.cliente;
+            document.getElementById('ticket-metodo').textContent = pedido.metodoPago;
+
+            let itemsHtml = '';
+            pedido.items.forEach(item => {
+                let cant = item.cantidad || 1;
+                let prec = parseFloat(item.precio || item.costo) || 299.00;
+                let nom = item.titulo || item.nombre || 'Platillo';
+                itemsHtml += `
+                    <div class="ticket-linea">
+                        <span>${cant}x ${nom}</span>
+                        <span>$${(cant * prec).toFixed(2)}</span>
+                    </div>
+                `;
+            });
+
+            document.getElementById('ticket-items').innerHTML = itemsHtml;
+            document.getElementById('ticket-subtotal').textContent = `$${pedido.subtotal}`;
+            document.getElementById('ticket-iva').textContent = `$${pedido.iva}`;
+            
+            if (parseFloat(pedido.descuento) > 0) {
+                document.getElementById('ticket-fila-desc').style.display = 'flex';
+                document.getElementById('ticket-descuento').textContent = `-$${pedido.descuento}`;
+            } else {
+                document.getElementById('ticket-fila-desc').style.display = 'none';
+            }
+
+            document.getElementById('ticket-total').textContent = `$${pedido.total}`;
+        }
+    }
+
+    function imprimirOpdf() {
+        window.print();
+    }
+
+    // --- Historial de Compras ("Mis Compras" / Perfil con opción de facturar después) ---
+    function cargarHistorialCompras() {
+        const contenedor = document.getElementById('lista-historial-compras');
+        if (!contenedor) return;
+
+        let historial = JSON.parse(localStorage.getItem('historialPedidos')) || [];
+
+        if (historial.length === 0) {
+            historial = [
+                {
+                    folio: '#SM-108293',
+                    fecha: '22/07/2026 14:20',
+                    cliente: 'Cliente General',
+                    metodoPago: 'TARJETA DE CRÉDITO/DÉBITO',
+                    items: [{ titulo: 'Tacos al Pastor (Orden)', cantidad: 2, precio: 120 }],
+                    subtotal: '206.90',
+                    iva: '33.10',
+                    descuento: '0.00',
+                    total: '240.00',
+                    facturado: false
+                }
+            ];
+        }
+
+        let html = '';
+        historial.forEach((ped, index) => {
+            let estadoFacturaHtml = ped.facturado 
+                ? `<span style="color: #0056b3; font-weight: bold; font-size: 0.85rem;">✔ Facturado</span>` 
+                : `<button onclick="facturarPedidoHistorial(${index})" class="btn-secundario" style="padding: 5px 10px; font-size: 0.8rem; background: #0056b3;">📄 Facturar Pedido</button>`;
+
+            html += `
+                <div class="tarjeta-pedido-historial">
+                    <div>
+                        <strong>Folio: ${ped.folio}</strong> <small style="color: #666;">(${ped.fecha})</small><br>
+                        <span style="font-size: 0.9rem; color: #444;">Pago con: ${ped.metodoPago} | Total: <strong>$${ped.total} MXN</strong></span><br>
+                        <div style="margin-top: 5px;">${estadoFacturaHtml}</div>
+                    </div>
+                    <div style="display: flex; gap: 8px;">
+                        <button onclick='verDetalleHistorial(${JSON.stringify(ped)})' class="btn-secundario" style="padding: 6px 12px; font-size: 0.85rem;">Ver Ticket</button>
+                    </div>
+                </div>
+            `;
+        });
+
+        contenedor.innerHTML = html;
+    }
+
+    function verDetalleHistorial(pedidoObj) {
+        renderizarDocumentoPostPago(pedidoObj);
+        document.getElementById('paso-1').style.display = 'none';
+        document.getElementById('paso-2').style.display = 'none';
+        document.getElementById('paso-3').style.display = 'none';
+        document.getElementById('barra-pasos').style.display = 'none';
+        document.getElementById('bloque-comprobante-exito').style.display = 'block';
+        window.scrollTo({ top: 100, behavior: 'smooth' });
+    }
+
+    function facturarPedidoHistorial(index) {
+        let historial = JSON.parse(localStorage.getItem('historialPedidos')) || [];
+        if (historial[index]) {
+            let rfcInput = prompt("Ingrese su RFC para facturar esta compra anterior:", "XAXX010101000");
+            if (rfcInput !== null) {
+                let razonInput = prompt("Ingrese su Razón Social o Nombre:", historial[index].cliente);
+                
+                historial[index].facturado = true;
+                historial[index].datosFactura = {
+                    rfc: rfcInput.toUpperCase(),
+                    razon: razonInput || 'Público en General',
+                    uso: 'G03'
+                };
+                
+                localStorage.setItem('historialPedidos', JSON.stringify(historial));
+                alert("¡Factura generada exitosamente con el método de pago: " + historial[index].metodoPago + "!");
+                cargarHistorialCompras();
+                verDetalleHistorial(historial[index]);
+            }
+        }
+    }
+    </script>
 </body>
 </html>
