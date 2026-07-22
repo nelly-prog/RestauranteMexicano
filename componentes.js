@@ -172,6 +172,45 @@ function aceptarCookies() {
     }
 }
 
+/* ==========================================================================
+   AGREGADO: CONTROLADOR GLOBAL PARA TOASTS
+   Para usarlo en cualquier página, solo llama a: window.mostrarToast("Tu mensaje");
+   ========================================================================== */
+function mostrarToastGlobal(mensaje) {
+    let toast = document.getElementById('toast-global-unico');
+    
+    // Si no existe, lo creamos
+    if (!toast) {
+        toast = document.createElement('div');
+        toast.id = 'toast-global-unico';
+        toast.className = 'toast-notificacion';
+        document.body.appendChild(toast);
+    }
+
+    toast.textContent = mensaje;
+    
+    // Forzar el tamaño por línea para evitar interferencias de hojas de estilo
+    toast.style.cssText = `
+        display: inline-flex !important;
+        align-items: center !important;
+        width: max-content !important; 
+        max-width: 320px !important; 
+        height: auto !important;
+        z-index: 99999 !important;
+    `;
+    
+    toast.classList.add('mostrar');
+
+    // Ocultarlo después de 3 segundos
+    setTimeout(() => {
+        toast.classList.remove('mostrar');
+        toast.style.display = 'none'; // Forzar ocultamiento extra
+    }, 3000);
+}
+
+// Lo exponemos globalmente para que todas tus páginas lo tengan disponible
+window.mostrarToast = mostrarToastGlobal;
+
 document.addEventListener('DOMContentLoaded', () => {
     renderizarHeader();
     renderizarFooter();

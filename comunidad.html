@@ -37,6 +37,8 @@
         .subasta-info { display: flex; flex-direction: column; justify-content: center; }
         .temporizador { font-size: 1.6rem; color: #d32f2f; font-weight: bold; margin: 12px 0; }
         .btn-verde-accion { background-color: #006847; color: white; border: none; padding: 10px 24px; border-radius: 20px; font-weight: bold; cursor: pointer; }
+        /* Mensaje de éxito para la subasta */
+        #mensaje-subasta-exito { display: none; background: #d4edda; color: #155724; padding: 8px; border-radius: 6px; text-align: center; margin-top: 10px; font-weight: bold; border: 1px solid #c3e6cb; font-size: 0.9rem; }
     </style>
 </head>
 <body>
@@ -56,11 +58,9 @@
                 <form onsubmit="crearPostPrincipal(event)">
                     <div class="crear-header">
                         <div class="avatar-fijo">U</div>
-                        <!-- Se eliminó el atributo required -->
                         <input type="text" id="fb-input-texto" class="input-simulado-fb" placeholder="¿Qué estás pensando sobre nuestro menú o servicio?">
                     </div>
                     <div class="crear-footer">
-                        <!-- Se eliminó el atributo required -->
                         <input type="text" id="fb-input-nombre" class="input-nombre-fb" placeholder="Tu Nombre o Usuario">
                         <button type="submit" class="btn-verde-accion">Publicar</button>
                     </div>
@@ -77,8 +77,11 @@
             <div class="subasta-info">
                 <h3>Pozolera de Barro Tradicional</h3>
                 <div class="temporizador">⏱️ Cierra en: <span id="tiempo-reloj">00:49</span></div>
-                <div style="font-weight: bold;">Oferta actual: $<span id="oferta-maxima">450.00</span></div>
-                <button class="btn-verde-accion" onclick="alert('Oferta registrada')">🔨 Ofertar</button>
+                <div style="font-weight: bold; margin-bottom: 15px;">Oferta actual: $<span id="oferta-maxima">450.00</span></div>
+                
+                <button class="btn-verde-accion" onclick="realizarOferta()">🔨 Ofertar</button>
+                
+                <div id="mensaje-subasta-exito">¡Oferta registrada con éxito! 🎉</div>
             </div>
         </div>
     </section>
@@ -87,8 +90,16 @@
 <footer></footer>
 
 <script>
-    const CLAVE_MURO = 'fbMuroComunidad';
-    let posts = JSON.parse(localStorage.getItem(CLAVE_MURO)) || [{ id: 1, autor: "Karly Cast", tiempo: "15 h", texto: "¡Las mejores sin duda!", likes: 12, liked: false }];
+    // Cambiamos la clave para forzar la carga de los 5 comentarios iniciales
+    const CLAVE_MURO = 'fbMuroComunidad_v2';
+    
+    let posts = JSON.parse(localStorage.getItem(CLAVE_MURO)) || [
+        { id: 1, autor: "Karly Cast", tiempo: "15 h", texto: "¡Las mejores enchiladas sin duda! El sazón es increíble.", likes: 12, liked: false },
+        { id: 2, autor: "Alejandro Morales", tiempo: "1 día", texto: "El pozole de barro tradicional mantiene la comida caliente por más tiempo, excelente producto.", likes: 8, liked: false },
+        { id: 3, autor: "Sofia R.", tiempo: "2 días", texto: "Me encantó el servicio a domicilio, llegó súper rápido y calientito.", likes: 5, liked: false },
+        { id: 4, autor: "Carlos M.", tiempo: "3 días", texto: "¿Alguien sabe si habrá aguas frescas de sabor horchata este fin de semana?", likes: 3, liked: false },
+        { id: 5, autor: "Mariana G.", tiempo: "4 días", texto: "¡100% recomendado! Definitivamente volveré a pedir muy pronto.", likes: 19, liked: false }
+    ];
 
     function renderizarMuro() {
         const feed = document.getElementById('muro-posts-feed');
@@ -121,7 +132,6 @@
     function crearPostPrincipal(event) {
         event.preventDefault();
         
-        // Obtenemos los valores y asignamos textos por defecto en caso de que estén vacíos
         const nombreInput = document.getElementById('fb-input-nombre').value.trim();
         const textoInput = document.getElementById('fb-input-texto').value.trim();
         
@@ -142,6 +152,20 @@
         document.querySelectorAll('.seccion-contenido').forEach(sec => sec.classList.remove('activa'));
         document.querySelector(`[onclick="cambiarPestana('${idPestana}')"]`).classList.add('activa');
         document.getElementById(`sec-${idPestana}`).classList.add('activa');
+    }
+
+    function realizarOferta() {
+        const spanOferta = document.getElementById('oferta-maxima');
+        let ofertaActual = parseFloat(spanOferta.innerText);
+        let nuevaOferta = ofertaActual + 50.00;
+        spanOferta.innerText = nuevaOferta.toFixed(2);
+
+        const msgSubasta = document.getElementById('mensaje-subasta-exito');
+        msgSubasta.style.display = 'block';
+        
+        setTimeout(() => {
+            msgSubasta.style.display = 'none';
+        }, 3000);
     }
 
     document.addEventListener('DOMContentLoaded', renderizarMuro);

@@ -1,5 +1,5 @@
 /* ==========================================================================
-   1. VARIABLES Y RESET
+    1. VARIABLES Y RESET
    ========================================================================== */
 :root {
     --primary-color: #006847;    /* Verde Mexicano */
@@ -24,7 +24,7 @@ body {
 }
 
 /* ==========================================================================
-   2. BANNER GLOBAL Y CABECERA (Header)
+    2. BANNER GLOBAL Y CABECERA (Header)
    ========================================================================== */
 .banner-contenido {
     background: var(--btn-danger-color); 
@@ -115,7 +115,7 @@ nav a:hover, nav a.active {
 }
 
 /* ==========================================================================
-   3. SUB-MENÚ DE COMUNIDAD (Estructura interna opcional)
+    3. SUB-MENÚ DE COMUNIDAD (Estructura interna opcional)
    ========================================================================== */
 .sub-nav-comunidad {
     background: #eae3d2;
@@ -143,13 +143,13 @@ nav a:hover, nav a.active {
 }
 
 /* ==========================================================================
-   4. TARJETAS Y SECCIONES (Modificado para aprovechar toda la pantalla)
+    4. TARJETAS Y SECCIONES (Modificado para aprovechar toda la pantalla)
    ========================================================================== */
 .seccion-comunidad {
     width: 100%;
-    max-width: 1400px; /* Al cambiar de 800px a 1400px se expande en toda la pantalla */
+    max-width: 1400px;
     margin: 30px auto;
-    padding: 0 40px;   /* Un margen sutil a los lados para que no toque los bordes del monitor */
+    padding: 0 40px;
 }
 
 .tarjeta-comunidad {
@@ -234,7 +234,7 @@ nav a:hover, nav a.active {
 }
 
 /* ==========================================================================
-   5. BOTONES, INTERFAZ FLOTANTE Y FOOTER
+    5. BOTONES, INTERFAZ FLOTANTE Y FOOTER
    ========================================================================== */
 .btn-rojo { 
     background: var(--btn-danger-color); 
@@ -315,7 +315,7 @@ footer {
 }
 
 /* ==========================================================================
-   6. RESPONSIVIDAD (Media Query)
+    6. RESPONSIVIDAD (Media Query)
    ========================================================================== */
 @media (max-width: 650px) {
     header {
@@ -334,7 +334,7 @@ footer {
 }
 
 /* ==========================================================================
-   7. MODALES Y NOTIFICACIONES
+    7. MODALES Y NOTIFICACIONES
    ========================================================================== */
 .modal-overlay {
     display: none; 
@@ -343,11 +343,11 @@ footer {
     left: 0; 
     width: 100%; 
     height: 100%;
-    background: rgba(0, 0, 0, 0.6); /* Fondo oscuro semitransparente */
+    background: rgba(0, 0, 0, 0.6);
     justify-content: center; 
     align-items: center;
-    z-index: 2000; /* Por encima del header */
-    backdrop-filter: blur(3px); /* Efecto cristal */
+    z-index: 2000;
+    backdrop-filter: blur(3px);
 }
 
 .modal-caja {
@@ -377,28 +377,141 @@ footer {
     gap: 15px;
 }
 
+/* ==========================================================
+   NOTIFICACIONES TOAST
+   ========================================================== */
+
 .toast-notificacion {
-    position: fixed; 
-    bottom: 30px; 
-    right: 30px;
-    background: var(--primary-color); 
-    color: white; 
-    padding: 15px 25px;
-    border-radius: 8px; 
-    display: none; 
-    z-index: 3000;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-    font-weight: bold;
-    animation: slideIn 0.3s ease-out;
+    position: fixed !important;
+
+    bottom: 30px !important;
+    right: 30px !important;
+
+    /* TAMAÑO */
+    width: fit-content !important;
+    min-width: 0 !important;
+    max-width: 320px !important;
+
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: 60px !important;
+
+    /* APARIENCIA */
+    background: #333 !important;
+    color: white !important;
+
+    padding: 10px 16px !important;
+    margin: 0 !important;
+
+    border-radius: 8px !important;
+    border: none !important;
+
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    line-height: 1.2 !important;
+
+    /* CONTENIDO */
+    display: none !important;
+    align-items: center !important;
+    justify-content: center !important;
+
+    gap: 8px !important;
+
+    /* EVITA QUE SE ESTIRE */
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+
+    /* SOMBRA */
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3) !important;
+
+    /* CAPA */
+    z-index: 99999 !important;
 }
 
-@keyframes slideIn {
-    from { transform: translateX(100%); }
-    to { transform: translateX(0); }
+
+/* ==========================================================
+   TOAST VISIBLE
+   ========================================================== */
+
+.toast-notificacion.mostrar {
+    display: flex !important;
+
+    width: fit-content !important;
+    min-width: 0 !important;
+    max-width: 320px !important;
+
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: 60px !important;
+
+    align-items: center !important;
+    justify-content: center !important;
+
+    animation: slideInToast 0.3s ease-out !important;
 }
 
-.toast-notificacion.mostrar { 
-    display: flex; 
-    align-items: center; 
-    gap: 10px; 
+
+/* ==========================================================
+   ICONO DEL TOAST
+   ========================================================== */
+
+.toast-notificacion #toast-icono {
+    display: inline-block !important;
+
+    width: auto !important;
+    min-width: 0 !important;
+
+    height: auto !important;
+    min-height: 0 !important;
+
+    padding: 0 !important;
+    margin: 0 !important;
+
+    font-size: 16px !important;
+
+    flex: 0 0 auto !important;
+}
+
+
+/* ==========================================================
+   TEXTO DEL TOAST
+   ========================================================== */
+
+.toast-notificacion #toast-mensaje {
+    display: inline-block !important;
+
+    width: auto !important;
+    min-width: 0 !important;
+    max-width: 250px !important;
+
+    height: auto !important;
+
+    padding: 0 !important;
+    margin: 0 !important;
+
+    font-size: 14px !important;
+    line-height: 1.2 !important;
+
+    white-space: nowrap !important;
+
+    flex: 0 1 auto !important;
+}
+
+
+/* ==========================================================
+   ANIMACIÓN
+   ========================================================== */
+
+@keyframes slideInToast {
+
+    from {
+        transform: translateX(120%);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+
 }

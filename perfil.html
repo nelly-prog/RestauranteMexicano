@@ -4,487 +4,1744 @@
     <meta charset="UTF-8">
     <title>Sabor Mexicano - Mi Perfil</title>
     <link rel="stylesheet" href="estilos.css">
+
     <style>
-        .contenedor-perfil { max-width: 1000px; margin: 40px auto; padding: 0 20px; min-height: 70vh; }
-        .panel-usuario { display: block; }
-        .menu-perfil { display: flex; background: #f0ede5; padding: 8px; border-radius: 12px; margin-bottom: 30px; gap: 10px; justify-content: center; flex-wrap: wrap; }
-        .btn-pestana { background: none; border: none; padding: 12px 20px; font-weight: bold; color: #555; cursor: pointer; border-radius: 8px; }
-        .btn-pestana.activa { background: #006847; color: white; }
-        .seccion-perfil { display: none; background: white; padding: 30px; border-radius: 12px; border: 1px solid #eee; }
-        .seccion-perfil.activa { display: block; }
-        .btn-accion { background-color: #006847; color: white; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer; }
-        .btn-danger { background-color: #d32f2f; color: white; border: none; padding: 8px 14px; border-radius: 6px; cursor: pointer; }
-        .btn-editar { background-color: #f57c00; color: white; border: none; padding: 8px 14px; border-radius: 6px; cursor: pointer; }
-        .tarjeta-mi-prod { display: flex; gap: 15px; background: #fafafa; border: 1px solid #eee; border-radius: 8px; padding: 15px; margin-bottom: 15px; align-items: center; }
-        .tarjeta-mi-prod img { width: 100px; height: 80px; object-fit: cover; border-radius: 6px; }
-        .tarjeta-mi-prod-info { flex-grow: 1; display: flex; flex-direction: column; }
-        .controles-producto { display: flex; gap: 10px; margin-top: 5px; }
-        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; justify-content: center; align-items: center; }
-        .modal-caja { background: white; padding: 30px; border-radius: 12px; max-width: 400px; width: 90%; text-align: center; box-shadow: 0 4px 20px rgba(0,0,0,0.2); }
-        .modal-botones { display: flex; gap: 10px; margin-top: 20px; justify-content: center; }
-        .toast-notificacion { position: fixed; bottom: 20px; right: 20px; background: #333; color: white; padding: 12px 20px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); display: flex; align-items: center; gap: 10px; z-index: 1100; transform: translateY(100px); opacity: 0; transition: all 0.3s ease; }
-        .toast-notificacion.mostrar { transform: translateY(0); opacity: 1; }
+        .contenedor-perfil {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 0 20px;
+            min-height: 70vh;
+        }
+
+        .panel-usuario {
+            display: block;
+        }
+
+        .menu-perfil {
+            display: flex;
+            background: #f0ede5;
+            padding: 8px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-pestana {
+            background: none;
+            border: none;
+            padding: 12px 20px;
+            font-weight: bold;
+            color: #555;
+            cursor: pointer;
+            border-radius: 8px;
+        }
+
+        .btn-pestana.activa {
+            background: #006847;
+            color: white;
+        }
+
+        .seccion-perfil {
+            display: none;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            border: 1px solid #eee;
+        }
+
+        .seccion-perfil.activa {
+            display: block;
+        }
+
+        .btn-accion {
+            background-color: #006847;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .btn-danger {
+            background-color: #d32f2f;
+            color: white;
+            border: none;
+            padding: 8px 14px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .btn-editar {
+            background-color: #f57c00;
+            color: white;
+            border: none;
+            padding: 8px 14px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .tarjeta-mi-prod {
+            display: flex;
+            gap: 15px;
+            background: #fafafa;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            align-items: center;
+        }
+
+        .tarjeta-mi-prod img {
+            width: 100px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 6px;
+        }
+
+        .tarjeta-mi-prod-info {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .controles-producto {
+            display: flex;
+            gap: 10px;
+            margin-top: 5px;
+        }
+
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-caja {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+        }
+
+        .modal-botones {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+            justify-content: center;
+        }
+
+/* =====================================================
+            NOTIFICACIÓN TOAST COMPACTA (LIMPIA Y CORREGIDA)
+            ===================================================== */
+
+        .toast-notificacion {
+            position: fixed !important;
+            top: 90px !important;
+            right: 25px !important;
+
+            background: #333 !important;
+            color: white !important;
+
+            padding: 10px 16px !important;
+            border-radius: 8px !important;
+
+            font-size: 0.9rem !important;
+            font-weight: 600 !important;
+
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25) !important;
+
+            display: inline-flex !important;
+            align-items: center !important;
+            gap: 8px !important;
+
+            z-index: 99999 !important;
+
+            /* Control estricto del ancho */
+            width: max-content !important;
+            max-width: 320px !important;
+            min-width: 0 !important;
+            box-sizing: border-box !important;
+
+            /* Animación de entrada */
+            transform: translateX(120%);
+            opacity: 0;
+            visibility: hidden;
+
+            transition: all 0.3s ease;
+        }
+
+        .toast-notificacion.mostrar {
+            transform: translateX(0) !important;
+            opacity: 1 !important;
+            visibility: visible !important;
+        }
+
+        #toast-icono {
+            font-size: 1rem !important;
+            flex-shrink: 0 !important;
+        }
+
+        #toast-mensaje {
+            white-space: normal !important;
+            overflow: hidden !important;
+            text-overflow: ellipsis !important;
+            word-wrap: break-word !important;
+            word-break: break-word !important;
+        }
+
+        /* =====================================================
+            RESPONSIVE
+            ===================================================== */
+
+        @media (max-width: 700px) {
+
+            .toast-notificacion {
+                top: 80px;
+                right: 15px;
+                max-width: calc(100% - 30px);
+                font-size: 0.85rem;
+                padding: 9px 14px;
+            }
+
+            #toast-mensaje {
+                white-space: normal !important;
+            }
+
+            .tarjeta-mi-prod {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .tarjeta-mi-prod img {
+                width: 100%;
+                height: 180px;
+            }
+
+            .controles-producto {
+                width: 100%;
+            }
+
+            .controles-producto button {
+                flex: 1;
+            }
+        }
     </style>
+
     <script src="componentes.js" defer></script>
 </head>
+
 <body>
 
 <div id="banner-global"></div>
+
 <header></header>
 
 <main class="contenedor-perfil">
 
-    <!-- PANEL PRINCIPAL DE PERFIL DIRECTO -->
+    <!-- PANEL PRINCIPAL DE PERFIL -->
     <div id="panel-usuario" class="panel-usuario">
-        
+
+        <!-- ENCABEZADO -->
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+
             <div>
-                <h2 style="margin: 0; color: #006847;">Mi Perfil 👋</h2>
-                <p style="margin: 5px 0 0 0; color: #666;">Gestiona tus datos, publicaciones y el mercadito de forma libre.</p>
+                <h2 style="margin: 0; color: #006847;">
+                    Mi Perfil 👋
+                </h2>
+
+                <p style="margin: 5px 0 0 0; color: #666;">
+                    Gestiona tus datos, publicaciones y el mercadito de forma libre.
+                </p>
             </div>
-            <!-- Botón de Cerrar Sesión -->
-            <button class="btn-danger" onclick="cerrarSesion()" style="display: flex; align-items: center; gap: 6px; font-weight: bold;">🚪 Cerrar Sesión</button>
+
+            <!-- Cerrar sesión -->
+            <button
+                class="btn-danger"
+                onclick="cerrarSesion()"
+                style="display: flex; align-items: center; gap: 6px; font-weight: bold;"
+            >
+                🚪 Cerrar Sesión
+            </button>
+
         </div>
 
-        <!-- Menú de Pestañas -->
+        <!-- MENÚ DE PESTAÑAS -->
         <div class="menu-perfil">
-            <button class="btn-pestana activa" onclick="irAPestana('mi-perfil')">👤 Mi Perfil</button>
-            <button class="btn-pestana" onclick="irAPestana('publicar')">📤 Publica tu Producto</button>
-            <button class="btn-pestana" onclick="irAPestana('mis-publicaciones')">📦 Mis Publicaciones</button>
-            <button class="btn-pestana" onclick="irAPestana('subasta')">🔨 Subasta Simbólica</button>
+
+            <button
+                class="btn-pestana activa"
+                onclick="irAPestana('mi-perfil')"
+            >
+                👤 Mi Perfil
+            </button>
+
+            <button
+                class="btn-pestana"
+                onclick="irAPestana('publicar')"
+            >
+                📤 Publica tu Producto
+            </button>
+
+            <button
+                class="btn-pestana"
+                onclick="irAPestana('mis-publicaciones')"
+            >
+                📦 Mis Publicaciones
+            </button>
+
+            <button
+                class="btn-pestana"
+                onclick="irAPestana('subasta')"
+            >
+                🔨 Subasta Simbólica
+            </button>
+
         </div>
 
-        <!-- PESTAÑA PRINCIPAL: MI PERFIL -->
+
+        <!-- =====================================================
+             PESTAÑA MI PERFIL
+             ===================================================== -->
+
         <section id="sec-mi-perfil" class="seccion-perfil activa">
+
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; align-items: start;">
-                
-                <!-- Sección: Mis Datos -->
+
+                <!-- MIS DATOS -->
                 <div style="background: #fafafa; padding: 25px; border-radius: 12px; border: 1px solid #eee;">
-                    <h3 style="color: #006847; margin-top: 0; border-bottom: 2px solid #006847; padding-bottom: 10px;">📋 Mis Datos</h3>
-                    
+
+                    <h3 style="color: #006847; margin-top: 0; border-bottom: 2px solid #006847; padding-bottom: 10px;">
+                        📋 Mis Datos
+                    </h3>
+
                     <div id="datos-vista">
-                        <p style="font-size: 1.05rem; margin: 12px 0;"><strong>Usuario:</strong> <span id="perfil-usuario-texto">--</span></p>
-                        <p style="font-size: 1.05rem; margin: 12px 0;"><strong>Correo Electrónico:</strong> <span id="perfil-correo-texto">--</span></p>
-                        <p style="font-size: 1.05rem; margin: 12px 0;"><strong>Teléfono:</strong> <span id="perfil-telefono-texto">--</span></p>
-                        <button class="btn-editar" onclick="mostrarFormEditarPerfil()" style="margin-top: 15px; width: 100%;">✏️ Editar Datos del Perfil</button>
+
+                        <p style="font-size: 1.05rem; margin: 12px 0;">
+                            <strong>Usuario:</strong>
+                            <span id="perfil-usuario-texto">--</span>
+                        </p>
+
+                        <p style="font-size: 1.05rem; margin: 12px 0;">
+                            <strong>Correo Electrónico:</strong>
+                            <span id="perfil-correo-texto">--</span>
+                        </p>
+
+                        <p style="font-size: 1.05rem; margin: 12px 0;">
+                            <strong>Teléfono:</strong>
+                            <span id="perfil-telefono-texto">--</span>
+                        </p>
+
+                        <button
+                            class="btn-editar"
+                            onclick="mostrarFormEditarPerfil()"
+                            style="margin-top: 15px; width: 100%;"
+                        >
+                            ✏️ Editar Datos del Perfil
+                        </button>
+
                     </div>
 
-                    <!-- Formulario de edición flexible -->
+
+                    <!-- FORMULARIO EDITAR PERFIL -->
                     <div id="datos-edicion" style="display: none;">
+
                         <form onsubmit="guardarDatosPerfil(event)">
+
                             <div class="form-grupo" style="margin-bottom: 15px;">
+
                                 <label>Usuario</label>
-                                <input type="text" id="edit-perfil-usuario" placeholder="Puedes dejarlo vacío" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px;">
+
+                                <input
+                                    type="text"
+                                    id="edit-perfil-usuario"
+                                    placeholder="Puedes dejarlo vacío"
+                                    style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px;"
+                                >
+
                             </div>
+
+
                             <div class="form-grupo" style="margin-bottom: 15px;">
+
                                 <label>Correo Electrónico</label>
-                                <input type="text" id="edit-perfil-correo" placeholder="Puedes dejarlo vacío" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px;">
+
+                                <input
+                                    type="text"
+                                    id="edit-perfil-correo"
+                                    placeholder="Puedes dejarlo vacío"
+                                    style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px;"
+                                >
+
                             </div>
+
+
                             <div class="form-grupo" style="margin-bottom: 15px;">
+
                                 <label>Teléfono</label>
-                                <input type="text" id="edit-perfil-telefono" placeholder="Puedes dejarlo vacío" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px;">
+
+                                <input
+                                    type="text"
+                                    id="edit-perfil-telefono"
+                                    placeholder="Puedes dejarlo vacío"
+                                    style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px;"
+                                >
+
                             </div>
+
+
                             <div style="display: flex; gap: 10px; margin-top: 15px;">
-                                <button type="submit" class="btn-accion" style="flex: 1;">Guardar Cambios</button>
-                                <button type="button" class="btn-danger" style="background-color: #777; flex: 1;" onclick="cancelarEditarPerfil()">Cancelar</button>
+
+                                <button
+                                    type="submit"
+                                    class="btn-accion"
+                                    style="flex: 1;"
+                                >
+                                    Guardar Cambios
+                                </button>
+
+                                <button
+                                    type="button"
+                                    class="btn-danger"
+                                    style="background-color: #777; flex: 1;"
+                                    onclick="cancelarEditarPerfil()"
+                                >
+                                    Cancelar
+                                </button>
+
                             </div>
+
                         </form>
+
                     </div>
+
                 </div>
 
-                <!-- Sección: Mis Compras -->
+
+                <!-- MIS COMPRAS -->
                 <div style="background: #fafafa; padding: 25px; border-radius: 12px; border: 1px solid #eee;">
-                    <h3 style="color: #006847; margin-top: 0; border-bottom: 2px solid #006847; padding-bottom: 10px;">🛍️ Mis Compras</h3>
-                    <ul id="lista-compras" style="list-style: none; padding: 0; margin: 0;">
+
+                    <h3 style="color: #006847; margin-top: 0; border-bottom: 2px solid #006847; padding-bottom: 10px;">
+                        🛍️ Mis Compras
+                    </h3>
+
+                    <ul
+                        id="lista-compras"
+                        style="list-style: none; padding: 0; margin: 0;"
+                    >
+
                         <li style="padding: 12px; background: white; border: 1px solid #e0e0e0; border-radius: 8px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center;">
+
                             <div>
-                                <strong style="color: #333;">Mole Poblano Artesanal (Frasco 1kg)</strong>
-                                <div style="font-size: 0.8rem; color: #777; margin-top: 4px;">Fecha: 14/07/2026</div>
+
+                                <strong style="color: #333;">
+                                    Mole Poblano Artesanal (Frasco 1kg)
+                                </strong>
+
+                                <div style="font-size: 0.8rem; color: #777; margin-top: 4px;">
+                                    Fecha: 14/07/2026
+                                </div>
+
                             </div>
-                            <span style="font-weight: bold; color: #006847;">$240.00 MXN</span>
+
+                            <span style="font-weight: bold; color: #006847;">
+                                $240.00 MXN
+                            </span>
+
                         </li>
+
                     </ul>
+
                 </div>
 
             </div>
+
         </section>
 
-        <!-- PESTAÑA A: PUBLICAR PRODUCTO -->
+
+        <!-- =====================================================
+             PESTAÑA PUBLICAR
+             ===================================================== -->
+
         <section id="sec-publicar" class="seccion-perfil">
-            <h3 style="color: #006847; margin-top: 0;">Publicar un nuevo producto en el Mercadito</h3>
-            <p style="color: #666; margin-bottom: 25px;">Sube tus artículos libremente.</p>
-            
-            <form id="form-publicar-c2c" onsubmit="publicarProductoC2C(event)" style="display: flex; flex-direction: column; gap: 15px; max-width: 600px;">
+
+            <h3 style="color: #006847; margin-top: 0;">
+                Publicar un nuevo producto en el Mercadito
+            </h3>
+
+            <p style="color: #666; margin-bottom: 25px;">
+                Sube tus artículos libremente.
+            </p>
+
+
+            <form
+                id="form-publicar-c2c"
+                onsubmit="publicarProductoC2C(event)"
+                style="display: flex; flex-direction: column; gap: 15px; max-width: 600px;"
+            >
+
                 <div class="form-grupo">
+
                     <label>Nombre del Producto</label>
-                    <input type="text" id="c2c-nombre" placeholder="Ej. Taza de talavera" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px;">
+
+                    <input
+                        type="text"
+                        id="c2c-nombre"
+                        placeholder="Ej. Taza de talavera"
+                        style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px;"
+                    >
+
                 </div>
+
+
                 <div class="form-grupo">
+
                     <label>Precio ($ MXN)</label>
-                    <input type="number" id="c2c-precio" step="0.01" placeholder="Ej. 140" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px;">
+
+                    <input
+                        type="number"
+                        id="c2c-precio"
+                        step="0.01"
+                        placeholder="Ej. 140"
+                        style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px;"
+                    >
+
                 </div>
+
+
                 <div class="form-grupo">
+
                     <label>Descripción del Producto</label>
-                    <textarea id="c2c-descripcion" rows="3" placeholder="Taza tradicional hecha a mano..." style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px;"></textarea>
+
+                    <textarea
+                        id="c2c-descripcion"
+                        rows="3"
+                        placeholder="Taza tradicional hecha a mano..."
+                        style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px;"
+                    ></textarea>
+
                 </div>
+
+
                 <div class="form-grupo">
+
                     <label>Imagen del Producto (Opcional)</label>
-                    <input type="file" id="c2c-foto" accept="image/*" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px;">
+
+                    <input
+                        type="file"
+                        id="c2c-foto"
+                        accept="image/*"
+                        style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px;"
+                    >
+
                 </div>
-                <button type="submit" class="btn-accion">Publicar Producto</button>
+
+
+                <button
+                    type="submit"
+                    class="btn-accion"
+                >
+                    Publicar Producto
+                </button>
+
             </form>
+
         </section>
 
-        <!-- PESTAÑA B: MIS PUBLICACIONES -->
+
+        <!-- =====================================================
+             PESTAÑA MIS PUBLICACIONES
+             ===================================================== -->
+
         <section id="sec-mis-publicaciones" class="seccion-perfil">
-            <h3 style="color: #006847; margin-top: 0;">Mis Publicaciones Activas</h3>
-            <p style="color: #666;">Productos ofertados en el Mercadito.</p>
+
+            <h3 style="color: #006847; margin-top: 0;">
+                Mis Publicaciones Activas
+            </h3>
+
+            <p style="color: #666;">
+                Productos ofertados en el Mercadito.
+            </p>
+
             <div id="contenedor-mis-publicaciones">
-                <!-- Se llena automáticamente con al menos un producto por defecto -->
+                <!-- Se llena automáticamente -->
             </div>
+
         </section>
 
-        <!-- PESTAÑA C: SUBASTA -->
+
+        <!-- =====================================================
+             PESTAÑA SUBASTA
+             ===================================================== -->
+
         <section id="sec-subasta" class="seccion-perfil">
-            <h3 style="color: #006847; margin-top: 0; text-align: center;">🔨 Subasta de la Comunidad</h3>
-            <p style="text-align: center; color: #666; margin-bottom: 30px;">¡Oferta por piezas únicas en tiempo real!</p>
-            
+
+            <h3 style="color: #006847; margin-top: 0; text-align: center;">
+                🔨 Subasta de la Comunidad
+            </h3>
+
+            <p style="text-align: center; color: #666; margin-bottom: 30px;">
+                ¡Oferta por piezas únicas en tiempo real!
+            </p>
+
+
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+
                 <div>
-                    <img src="img/fondo-comida.jpg" style="width: 100%; height: 280px; object-fit: cover; border-radius: 8px;" onerror="this.src='https://via.placeholder.com/400x280'">
+
+                    <img
+                        src="img/fondo-comida.jpg"
+                        style="width: 100%; height: 280px; object-fit: cover; border-radius: 8px;"
+                        onerror="this.src='img/salsa.webp'"
+                    >
+
                 </div>
+
+
                 <div style="display: flex; flex-direction: column; justify-content: center;">
-                    <h4 style="margin: 0; font-size: 1.5rem; color: #222;">Comal Tradicional de Piedra Volcánica</h4>
-                    <p style="color: #666; margin: 10px 0; line-height: 1.5;">Ideal para tatemar tus chiles y cocer tortillas a mano.</p>
-                    <div style="font-size: 1.5rem; color: #d32f2f; font-weight: bold; margin: 10px 0;" id="subasta-reloj">⏱️ Tiempo restante: 04:59</div>
-                    <div style="font-size: 1.25rem; font-weight: bold; color: #006847; margin-bottom: 20px;">Oferta Líder: $<span id="monto-lider">380.00</span> MXN</div>
-                    
-                    <div style="display: flex; gap: 10px;">
-                        <input type="number" id="monto-oferta" placeholder="Monto" style="padding: 10px; width: 50%; border: 1px solid #ccc; border-radius: 6px;">
-                        <button class="btn-accion" onclick="registrarOferta()" style="background-color: #d32f2f;">🔨 Ofertar</button>
+
+                    <h4 style="margin: 0; font-size: 1.5rem; color: #222;">
+                        Comal Tradicional de Piedra Volcánica
+                    </h4>
+
+                    <p style="color: #666; margin: 10px 0; line-height: 1.5;">
+                        Ideal para tatemar tus chiles y cocer tortillas a mano.
+                    </p>
+
+                    <div
+                        style="font-size: 1.5rem; color: #d32f2f; font-weight: bold; margin: 10px 0;"
+                        id="subasta-reloj"
+                    >
+                        ⏱️ Tiempo restante: 04:59
                     </div>
+
+                    <div
+                        style="font-size: 1.25rem; font-weight: bold; color: #006847; margin-bottom: 20px;"
+                    >
+                        Oferta Líder: $<span id="monto-lider">380.00</span> MXN
+                    </div>
+
+
+                    <div style="display: flex; gap: 10px;">
+
+                        <input
+                            type="number"
+                            id="monto-oferta"
+                            placeholder="Monto (opcional)"
+                            style="padding: 10px; width: 50%; border: 1px solid #ccc; border-radius: 6px;"
+                        >
+
+                        <button
+                            class="btn-accion"
+                            onclick="registrarOferta()"
+                            style="background-color: #d32f2f;"
+                        >
+                            🔨 Ofertar
+                        </button>
+
+                    </div>
+
                 </div>
+
             </div>
+
         </section>
 
     </div>
 
 </main>
 
-<!-- TOAST -->
+
+<!-- =====================================================
+     TOAST DE NOTIFICACIONES
+     ===================================================== -->
+
 <div id="custom-toast" class="toast-notificacion">
-    <span id="toast-icono">🎉</span> <span id="toast-mensaje">Operación exitosa</span>
+
+    <span id="toast-icono">🎉</span>
+
+    <span id="toast-mensaje">
+        Operación exitosa
+    </span>
+
 </div>
 
-<!-- MODAL CONFIRMACIÓN -->
+
+<!-- =====================================================
+     MODAL CONFIRMACIÓN
+     ===================================================== -->
+
 <div id="modal-confirmar" class="modal-overlay">
+
     <div class="modal-caja">
-        <h3 style="color: #d32f2f; margin-top: 0;">¿Estás seguro?</h3>
-        <p id="modal-confirmar-texto" style="color: #666; line-height: 1.4;">Esta acción no se puede deshacer.</p>
+
+        <h3 style="color: #d32f2f; margin-top: 0;">
+            ¿Estás seguro?
+        </h3>
+
+        <p
+            id="modal-confirmar-texto"
+            style="color: #666; line-height: 1.4;"
+        >
+            Esta acción no se puede deshacer.
+        </p>
+
         <div class="modal-botones">
-            <button class="btn-danger" id="btn-modal-aceptar">Sí, eliminar</button>
-            <button class="btn-accion" style="background-color: #777;" onclick="cerrarConfirmar()">Cancelar</button>
+
+            <button
+                class="btn-danger"
+                id="btn-modal-aceptar"
+            >
+                Sí, eliminar
+            </button>
+
+            <button
+                class="btn-accion"
+                style="background-color: #777;"
+                onclick="cerrarConfirmar()"
+            >
+                Cancelar
+            </button>
+
         </div>
+
     </div>
+
 </div>
 
-<!-- MODAL EDICIÓN -->
+
+<!-- =====================================================
+     MODAL EDICIÓN
+     ===================================================== -->
+
 <div id="modal-editar" class="modal-overlay">
-    <div class="modal-caja" style="max-width: 500px; text-align: left;">
-        <h3 style="color: #006847; margin-top:0; text-align: center;">✏️ Editar mi Producto</h3>
-        <form id="form-editar-c2c" onsubmit="guardarEdicionC2C(event)">
-            <input type="hidden" id="edit-id">
-            <div class="form-grupo" style="margin-bottom: 15px;">
+
+    <div
+        class="modal-caja"
+        style="max-width: 500px; text-align: left;"
+    >
+
+        <h3
+            style="color: #006847; margin-top:0; text-align: center;"
+        >
+            ✏️ Editar mi Producto
+        </h3>
+
+
+        <form
+            id="form-editar-c2c"
+            onsubmit="guardarEdicionC2C(event)"
+        >
+
+            <input
+                type="hidden"
+                id="edit-id"
+            >
+
+
+            <div
+                class="form-grupo"
+                style="margin-bottom: 15px;"
+            >
+
                 <label>Nombre del Producto</label>
-                <input type="text" id="edit-nombre" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px;">
+
+                <input
+                    type="text"
+                    id="edit-nombre"
+                    style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px;"
+                >
+
             </div>
-            <div class="form-grupo" style="margin-bottom: 15px;">
+
+
+            <div
+                class="form-grupo"
+                style="margin-bottom: 15px;"
+            >
+
                 <label>Precio ($ MXN)</label>
-                <input type="number" id="edit-precio" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px;">
+
+                <input
+                    type="number"
+                    id="edit-precio"
+                    style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px;"
+                >
+
             </div>
-            <div class="form-grupo" style="margin-bottom: 15px;">
+
+
+            <div
+                class="form-grupo"
+                style="margin-bottom: 15px;"
+            >
+
                 <label>Descripción</label>
-                <textarea id="edit-descripcion" rows="3" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px;"></textarea>
+
+                <textarea
+                    id="edit-descripcion"
+                    rows="3"
+                    style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px;"
+                ></textarea>
+
             </div>
-            <div class="form-grupo" style="margin-bottom: 15px;">
+
+
+            <div
+                class="form-grupo"
+                style="margin-bottom: 15px;"
+            >
+
                 <label>Imagen (Opcional)</label>
-                <input type="file" id="edit-foto" accept="image/*" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px;">
+
+                <input
+                    type="file"
+                    id="edit-foto"
+                    accept="image/*"
+                    style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px;"
+                >
+
             </div>
+
+
             <div class="modal-botones">
-                <button type="submit" class="btn-accion">Guardar Cambios</button>
-                <button type="button" class="btn-danger" style="background-color: #777;" onclick="cerrarEditar()">Cancelar</button>
+
+                <button
+                    type="submit"
+                    class="btn-accion"
+                >
+                    Guardar Cambios
+                </button>
+
+                <button
+                    type="button"
+                    class="btn-danger"
+                    style="background-color: #777;"
+                    onclick="cerrarEditar()"
+                >
+                    Cancelar
+                </button>
+
             </div>
+
         </form>
+
     </div>
+
 </div>
+
 
 <footer></footer>
 
+
 <script>
+
+    /* =====================================================
+       CONFIGURACIÓN
+       ===================================================== */
+
     const KEY_PRODUCTOS = "productos_mercadito_libre";
     const KEY_DATOS_PERFIL = "perfil_datos_usuario_libre";
 
+
+    /* =====================================================
+       PRODUCTO POR DEFECTO
+       ===================================================== */
+
     if (!localStorage.getItem(KEY_PRODUCTOS)) {
-        const productoDefault = [{
-            id: 1785930000000,
-            nombre: "Salsa Macha Artesanal (Edición Especial)",
-            precio: 120.00,
-            descripcion: "Hecha con chiles secos selectos y aceite de oliva virgen.",
-            foto: "https://via.placeholder.com/250x150/006847/FFFFFF?text=Salsa+Macha"
-        }];
-        localStorage.setItem(KEY_PRODUCTOS, JSON.stringify(productoDefault));
-    }
 
-    function mostrarToast(mensaje, icono = "🎉") {
-        const toast = document.getElementById('custom-toast');
-        document.getElementById('toast-icono').textContent = icono;
-        document.getElementById('toast-mensaje').textContent = mensaje;
-        toast.classList.add('mostrar');
-        setTimeout(() => toast.classList.remove('mostrar'), 3000);
-    }
+        const productoDefault = [
 
-    let confirmacionCallback = null;
-    function abrirConfirmar(mensaje, callback) {
-        document.getElementById('modal-confirmar-texto').textContent = mensaje;
-        document.getElementById('modal-confirmar').style.display = 'flex';
-        confirmacionCallback = callback;
-    }
-    function cerrarConfirmar() {
-        document.getElementById('modal-confirmar').style.display = 'none';
-        confirmacionCallback = null;
-    }
-    document.getElementById('btn-modal-aceptar').onclick = function() {
-        if (confirmacionCallback) confirmacionCallback();
-        cerrarConfirmar();
-    };
-
-    function iniciarDirecto() {
-        cargarDatosPerfil();
-        cargarMisPublicaciones();
-        irAPestana('mi-perfil');
-    }
-
-    function cargarDatosPerfil() {
-        let datos = JSON.parse(localStorage.getItem(KEY_DATOS_PERFIL));
-
-        if (!datos) {
-            datos = { usuario: "", correo: "", telefono: "" };
-            localStorage.setItem(KEY_DATOS_PERFIL, JSON.stringify(datos));
-        }
-
-        document.getElementById('perfil-usuario-texto').textContent = datos.usuario || "--";
-        document.getElementById('perfil-correo-texto').textContent = datos.correo || "--";
-        document.getElementById('perfil-telefono-texto').textContent = datos.telefono || "--";
-    }
-
-    function mostrarFormEditarPerfil() {
-        const datos = JSON.parse(localStorage.getItem(KEY_DATOS_PERFIL)) || { usuario: "", correo: "", telefono: "" };
-
-        document.getElementById('edit-perfil-usuario').value = datos.usuario;
-        document.getElementById('edit-perfil-correo').value = datos.correo;
-        document.getElementById('edit-perfil-telefono').value = datos.telefono;
-
-        document.getElementById('datos-vista').style.display = 'none';
-        document.getElementById('datos-edicion').style.display = 'block';
-    }
-
-    function cancelarEditarPerfil() {
-        document.getElementById('datos-vista').style.display = 'block';
-        document.getElementById('datos-edicion').style.display = 'none';
-    }
-
-    function guardarDatosPerfil(event) {
-        event.preventDefault();
-        const nuevoUsuario = document.getElementById('edit-perfil-usuario').value.trim();
-        const nuevoCorreo = document.getElementById('edit-perfil-correo').value.trim();
-        const nuevoTelefono = document.getElementById('edit-perfil-telefono').value.trim();
-
-        const nuevosDatos = { usuario: nuevoUsuario, correo: nuevoCorreo, telefono: nuevoTelefono };
-        localStorage.setItem(KEY_DATOS_PERFIL, JSON.stringify(nuevosDatos));
-
-        cargarDatosPerfil();
-        cancelarEditarPerfil();
-        mostrarToast("¡Datos de perfil guardados!", "👤");
-    }
-
-    // Función para Cerrar Sesión y redirigir al inicio
-function cerrarSesion() {
-    // Borramos todas las posibles variables de sesión usadas en el sistema
-    localStorage.removeItem('sesionIniciada');
-    localStorage.removeItem('usuario_activo');
-    localStorage.removeItem('perfil_datos_usuario_libre');
-    
-    // Opcional: si quieres limpiar todo rastro del navegador de golpe, puedes usar:
-    // localStorage.clear();
-
-    // Redirigimos al inicio
-    window.location.href = "index.html";
-}
-
-    function irAPestana(idPestana) {
-        document.querySelectorAll('.btn-pestana').forEach(btn => btn.classList.remove('activa'));
-        document.querySelectorAll('.seccion-perfil').forEach(sec => sec.classList.remove('activa'));
-
-        const botonActivo = document.querySelector(`[onclick="irAPestana('${idPestana}')"]`);
-        if (botonActivo) botonActivo.classList.add('activa');
-
-        const seccionActiva = document.getElementById(`sec-${idPestana}`);
-        if (seccionActiva) seccionActiva.classList.add('activa');
-    }
-
-    function publicarProductoC2C(event) {
-        event.preventDefault();
-        const nombre = document.getElementById('c2c-nombre').value.trim() || "Producto sin nombre";
-        const precio = parseFloat(document.getElementById('c2c-precio').value) || 0.00;
-        const descripcion = document.getElementById('c2c-descripcion').value.trim() || "Sin descripción";
-        const fotoInput = document.getElementById('c2c-foto');
-
-        if (fotoInput.files.length === 0) {
-            guardarYPublicarFinal(nombre, precio, descripcion, "https://via.placeholder.com/250x150/006847/FFFFFF?text=Sabor+Mexicano");
-            return;
-        }
-
-        const lector = new FileReader();
-        lector.onload = function(e) {
-            guardarYPublicarFinal(nombre, precio, descripcion, e.target.result);
-        };
-        lector.readAsDataURL(fotoInput.files[0]);
-    }
-
-    function guardarYPublicarFinal(nombre, precio, descripcion, foto) {
-        const nuevosProductos = JSON.parse(localStorage.getItem(KEY_PRODUCTOS)) || [];
-        nuevosProductos.push({
-            id: Date.now(),
-            nombre,
-            precio,
-            descripcion,
-            foto
-        });
-        localStorage.setItem(KEY_PRODUCTOS, JSON.stringify(nuevosProductos));
-        document.getElementById('form-publicar-c2c').reset();
-        cargarMisPublicaciones();
-        irAPestana('mis-publicaciones');
-        mostrarToast("¡Publicación creada con éxito!", "🚀");
-    }
-
-    function cargarMisPublicaciones() {
-        const contenedor = document.getElementById('contenedor-mis-publicaciones');
-        contenedor.innerHTML = "";
-        let misProductos = JSON.parse(localStorage.getItem(KEY_PRODUCTOS)) || [];
-
-        if (misProductos.length === 0) {
-            misProductos = [{
-                id: Date.now(),
+            {
+                id: 1785930000000,
                 nombre: "Salsa Macha Artesanal (Edición Especial)",
                 precio: 120.00,
                 descripcion: "Hecha con chiles secos selectos y aceite de oliva virgen.",
-                foto: "https://via.placeholder.com/250x150/006847/FFFFFF?text=Salsa+Macha"
-            }];
-            localStorage.setItem(KEY_PRODUCTOS, JSON.stringify(misProductos));
+                foto: "img/salsa.webp"
+            }
+
+        ];
+
+        localStorage.setItem(
+            KEY_PRODUCTOS,
+            JSON.stringify(productoDefault)
+        );
+
+    }
+
+
+    /* =====================================================
+       MOSTRAR NOTIFICACIÓN TOAST
+       ===================================================== */
+
+    function mostrarToast(mensaje, icono = "🎉") {
+
+        const toast = document.getElementById('custom-toast');
+
+        document.getElementById('toast-icono').textContent = icono;
+
+        document.getElementById('toast-mensaje').textContent = mensaje;
+
+        toast.classList.add('mostrar');
+
+        setTimeout(() => {
+
+            toast.classList.remove('mostrar');
+
+        }, 3000);
+
+    }
+
+
+    /* =====================================================
+       MODAL CONFIRMACIÓN
+       ===================================================== */
+
+    let confirmacionCallback = null;
+
+
+    function abrirConfirmar(mensaje, callback) {
+
+        document.getElementById(
+            'modal-confirmar-texto'
+        ).textContent = mensaje;
+
+        document.getElementById(
+            'modal-confirmar'
+        ).style.display = 'flex';
+
+        confirmacionCallback = callback;
+
+    }
+
+
+    function cerrarConfirmar() {
+
+        document.getElementById(
+            'modal-confirmar'
+        ).style.display = 'none';
+
+        confirmacionCallback = null;
+
+    }
+
+
+    document.getElementById(
+        'btn-modal-aceptar'
+    ).onclick = function() {
+
+        if (confirmacionCallback) {
+
+            confirmacionCallback();
+
         }
 
-        misProductos.forEach(p => {
-            const div = document.createElement('div');
-            div.className = 'tarjeta-mi-prod';
-            div.innerHTML = `
-                <img src="${p.foto}" alt="${p.nombre}" onerror="this.src='https://via.placeholder.com/250x150'">
-                <div class="tarjeta-mi-prod-info">
-                    <h4 style="margin: 0 0 5px 0; font-size:1.15rem;">${p.nombre}</h4>
-                    <span style="color: #006847; font-weight: bold; margin-bottom: 8px;">$${p.precio.toFixed(2)} MXN</span>
-                    <p style="font-size: 0.85rem; color: #666; margin: 0 0 15px 0; flex-grow:1;">${p.descripcion}</p>
-                    <div class="controles-producto">
-                        <button class="btn-editar" onclick="abrirEditar(${p.id})">Editar</button>
-                        <button class="btn-danger" onclick="confirmarEliminar(${p.id})">Eliminar</button>
-                    </div>
-                </div>
-            `;
-            contenedor.appendChild(div);
-        });
+        cerrarConfirmar();
+
+    };
+
+
+    /* =====================================================
+       INICIAR PERFIL
+       ===================================================== */
+
+    function iniciarDirecto() {
+
+        cargarDatosPerfil();
+
+        cargarMisPublicaciones();
+
+        irAPestana('mi-perfil');
+
     }
 
-    function confirmarEliminar(id) {
-        abrirConfirmar("¿Seguro que quieres eliminar este producto?", () => {
-            let todosLosProductos = JSON.parse(localStorage.getItem(KEY_PRODUCTOS)) || [];
-            todosLosProductos = todosLosProductos.filter(p => p.id !== id);
-            localStorage.setItem(KEY_PRODUCTOS, JSON.stringify(todosLosProductos));
-            cargarMisPublicaciones();
-            mostrarToast("Producto eliminado.", "🗑️");
-        });
-    }
 
-    function abrirEditar(id) {
-        const todosLosProductos = JSON.parse(localStorage.getItem(KEY_PRODUCTOS)) || [];
-        const producto = todosLosProductos.find(p => p.id === id);
-        if (producto) {
-            document.getElementById('edit-id').value = producto.id;
-            document.getElementById('edit-nombre').value = producto.nombre;
-            document.getElementById('edit-precio').value = producto.precio;
-            document.getElementById('edit-descripcion').value = producto.descripcion;
-            document.getElementById('edit-foto').value = "";
-            document.getElementById('modal-editar').style.display = 'flex';
-        }
-    }
+    /* =====================================================
+       CARGAR DATOS DEL PERFIL
+       ===================================================== */
 
-    function cerrarEditar() {
-        document.getElementById('modal-editar').style.display = 'none';
-    }
+    function cargarDatosPerfil() {
 
-    function guardarEdicionC2C(event) {
-        event.preventDefault();
-        const id = parseInt(document.getElementById('edit-id').value);
-        let todosLosProductos = JSON.parse(localStorage.getItem(KEY_PRODUCTOS)) || [];
-        const index = todosLosProductos.findIndex(p => p.id === id);
+        let datos = JSON.parse(
+            localStorage.getItem(KEY_DATOS_PERFIL)
+        );
 
-        if (index !== -1) {
-            cerrarEditar();
-            todosLosProductos[index].nombre = document.getElementById('edit-nombre').value.trim() || "Sin nombre";
-            todosLosProductos[index].precio = parseFloat(document.getElementById('edit-precio').value) || 0.00;
-            todosLosProductos[index].descripcion = document.getElementById('edit-descripcion').value.trim() || "Sin descripción";
 
-            const finalizar = () => {
-                localStorage.setItem(KEY_PRODUCTOS, JSON.stringify(todosLosProductos));
-                cargarMisPublicaciones();
-                mostrarToast("¡Guardado con éxito!", "✏️");
+        if (!datos) {
+
+            datos = {
+                usuario: "",
+                correo: "",
+                telefono: ""
             };
 
-            const fotoInput = document.getElementById('edit-foto');
-            if (fotoInput.files.length > 0) {
-                const lector = new FileReader();
-                lector.onload = function(e) {
-                    todosLosProductos[index].foto = e.target.result;
-                    finalizar();
-                };
-                lector.readAsDataURL(fotoInput.files[0]);
-            } else {
-                finalizar();
-            }
+            localStorage.setItem(
+                KEY_DATOS_PERFIL,
+                JSON.stringify(datos)
+            );
+
         }
+
+
+        document.getElementById(
+            'perfil-usuario-texto'
+        ).textContent = datos.usuario || "--";
+
+
+        document.getElementById(
+            'perfil-correo-texto'
+        ).textContent = datos.correo || "--";
+
+
+        document.getElementById(
+            'perfil-telefono-texto'
+        ).textContent = datos.telefono || "--";
+
     }
+
+
+    /* =====================================================
+       EDITAR PERFIL
+       ===================================================== */
+
+    function mostrarFormEditarPerfil() {
+
+        const datos = JSON.parse(
+            localStorage.getItem(KEY_DATOS_PERFIL)
+        ) || {
+            usuario: "",
+            correo: "",
+            telefono: ""
+        };
+
+
+        document.getElementById(
+            'edit-perfil-usuario'
+        ).value = datos.usuario;
+
+
+        document.getElementById(
+            'edit-perfil-correo'
+        ).value = datos.correo;
+
+
+        document.getElementById(
+            'edit-perfil-telefono'
+        ).value = datos.telefono;
+
+
+        document.getElementById(
+            'datos-vista'
+        ).style.display = 'none';
+
+
+        document.getElementById(
+            'datos-edicion'
+        ).style.display = 'block';
+
+    }
+
+
+    function cancelarEditarPerfil() {
+
+        document.getElementById(
+            'datos-vista'
+        ).style.display = 'block';
+
+
+        document.getElementById(
+            'datos-edicion'
+        ).style.display = 'none';
+
+    }
+
+
+    function guardarDatosPerfil(event) {
+
+        event.preventDefault();
+
+
+        const nuevoUsuario = document.getElementById(
+            'edit-perfil-usuario'
+        ).value.trim();
+
+
+        const nuevoCorreo = document.getElementById(
+            'edit-perfil-correo'
+        ).value.trim();
+
+
+        const nuevoTelefono = document.getElementById(
+            'edit-perfil-telefono'
+        ).value.trim();
+
+
+        const nuevosDatos = {
+
+            usuario: nuevoUsuario,
+
+            correo: nuevoCorreo,
+
+            telefono: nuevoTelefono
+
+        };
+
+
+        localStorage.setItem(
+            KEY_DATOS_PERFIL,
+            JSON.stringify(nuevosDatos)
+        );
+
+
+        cargarDatosPerfil();
+
+        cancelarEditarPerfil();
+
+
+        mostrarToast(
+            "¡Datos de perfil guardados!",
+            "👤"
+        );
+
+    }
+
+
+    /* =====================================================
+       CERRAR SESIÓN
+       ===================================================== */
+
+    function cerrarSesion() {
+
+        localStorage.removeItem(
+            'sesionIniciada'
+        );
+
+        localStorage.removeItem(
+            'usuario_activo'
+        );
+
+        localStorage.removeItem(
+            'perfil_datos_usuario_libre'
+        );
+
+
+        window.location.href = "index.html";
+
+    }
+
+
+    /* =====================================================
+       CAMBIAR PESTAÑA
+       ===================================================== */
+
+    function irAPestana(idPestana) {
+
+        document.querySelectorAll(
+            '.btn-pestana'
+        ).forEach(btn => {
+
+            btn.classList.remove('activa');
+
+        });
+
+
+        document.querySelectorAll(
+            '.seccion-perfil'
+        ).forEach(sec => {
+
+            sec.classList.remove('activa');
+
+        });
+
+
+        const botonActivo = document.querySelector(
+            `[onclick="irAPestana('${idPestana}')"]`
+        );
+
+
+        if (botonActivo) {
+
+            botonActivo.classList.add('activa');
+
+        }
+
+
+        const seccionActiva = document.getElementById(
+            `sec-${idPestana}`
+        );
+
+
+        if (seccionActiva) {
+
+            seccionActiva.classList.add('activa');
+
+        }
+
+    }
+
+
+    /* =====================================================
+       PUBLICAR PRODUCTO
+       ===================================================== */
+
+    function publicarProductoC2C(event) {
+
+        event.preventDefault();
+
+
+        const nombre = document.getElementById(
+            'c2c-nombre'
+        ).value.trim() || "Producto sin nombre";
+
+
+        const precio = parseFloat(
+            document.getElementById(
+                'c2c-precio'
+            ).value
+        ) || 0.00;
+
+
+        const descripcion = document.getElementById(
+            'c2c-descripcion'
+        ).value.trim() || "Sin descripción";
+
+
+        const fotoInput = document.getElementById(
+            'c2c-foto'
+        );
+
+
+        if (fotoInput.files.length === 0) {
+
+            guardarYPublicarFinal(
+                nombre,
+                precio,
+                descripcion,
+                "img/taza.webp"
+            );
+
+            return;
+
+        }
+
+
+        const lector = new FileReader();
+
+
+        lector.onload = function(e) {
+
+            guardarYPublicarFinal(
+                nombre,
+                precio,
+                descripcion,
+                e.target.result
+            );
+
+        };
+
+
+        lector.readAsDataURL(
+            fotoInput.files[0]
+        );
+
+    }
+
+
+    function guardarYPublicarFinal(
+        nombre,
+        precio,
+        descripcion,
+        foto
+    ) {
+
+        const nuevosProductos = JSON.parse(
+            localStorage.getItem(KEY_PRODUCTOS)
+        ) || [];
+
+
+        nuevosProductos.push({
+
+            id: Date.now(),
+
+            nombre,
+
+            precio,
+
+            descripcion,
+
+            foto
+
+        });
+
+
+        localStorage.setItem(
+            KEY_PRODUCTOS,
+            JSON.stringify(nuevosProductos)
+        );
+
+
+        document.getElementById(
+            'form-publicar-c2c'
+        ).reset();
+
+
+        cargarMisPublicaciones();
+
+        irAPestana(
+            'mis-publicaciones'
+        );
+
+
+        mostrarToast(
+            "¡Publicación creada con éxito!",
+            "🚀"
+        );
+
+    }
+
+
+    /* =====================================================
+       CARGAR MIS PUBLICACIONES
+       ===================================================== */
+
+    function cargarMisPublicaciones() {
+
+        const contenedor = document.getElementById(
+            'contenedor-mis-publicaciones'
+        );
+
+
+        contenedor.innerHTML = "";
+
+
+        let misProductos = JSON.parse(
+            localStorage.getItem(KEY_PRODUCTOS)
+        ) || [];
+
+
+        if (misProductos.length === 0) {
+
+            misProductos = [
+
+                {
+                    id: Date.now(),
+
+                    nombre: "Salsa Macha Artesanal (Edición Especial)",
+
+                    precio: 120.00,
+
+                    descripcion: "Hecha con chiles secos selectos y aceite de oliva virgen.",
+
+                    foto: "img/salsa.webp"
+                }
+
+            ];
+
+
+            localStorage.setItem(
+                KEY_PRODUCTOS,
+                JSON.stringify(misProductos)
+            );
+
+        }
+
+
+        misProductos.forEach(p => {
+
+            const div = document.createElement(
+                'div'
+            );
+
+
+            div.className = 'tarjeta-mi-prod';
+
+
+            div.innerHTML = `
+
+                <img
+                    src="${p.foto}"
+                    alt="${p.nombre}"
+                    onerror="this.src='img/taza.webp'"
+                >
+
+                <div class="tarjeta-mi-prod-info">
+
+                    <h4 style="margin: 0 0 5px 0; font-size:1.15rem;">
+                        ${p.nombre}
+                    </h4>
+
+                    <span style="color: #006847; font-weight: bold; margin-bottom: 8px;">
+                        $${p.precio.toFixed(2)} MXN
+                    </span>
+
+                    <p style="font-size: 0.85rem; color: #666; margin: 0 0 15px 0; flex-grow:1;">
+                        ${p.descripcion}
+                    </p>
+
+                    <div class="controles-producto">
+
+                        <button
+                            class="btn-editar"
+                            onclick="abrirEditar(${p.id})"
+                        >
+                            Editar
+                        </button>
+
+                        <button
+                            class="btn-danger"
+                            onclick="confirmarEliminar(${p.id})"
+                        >
+                            Eliminar
+                        </button>
+
+                    </div>
+
+                </div>
+
+            `;
+
+
+            contenedor.appendChild(div);
+
+        });
+
+    }
+
+
+    /* =====================================================
+       ELIMINAR PRODUCTO
+       ===================================================== */
+
+    function confirmarEliminar(id) {
+
+        abrirConfirmar(
+            "¿Seguro que quieres eliminar este producto?",
+            () => {
+
+                let todosLosProductos = JSON.parse(
+                    localStorage.getItem(KEY_PRODUCTOS)
+                ) || [];
+
+
+                todosLosProductos =
+                    todosLosProductos.filter(
+                        p => p.id !== id
+                    );
+
+
+                localStorage.setItem(
+                    KEY_PRODUCTOS,
+                    JSON.stringify(
+                        todosLosProductos
+                    )
+                );
+
+
+                cargarMisPublicaciones();
+
+
+                mostrarToast(
+                    "Producto eliminado.",
+                    "🗑️"
+                );
+
+            }
+        );
+
+    }
+
+
+    /* =====================================================
+       ABRIR EDICIÓN
+       ===================================================== */
+
+    function abrirEditar(id) {
+
+        const todosLosProductos = JSON.parse(
+            localStorage.getItem(KEY_PRODUCTOS)
+        ) || [];
+
+
+        const producto = todosLosProductos.find(
+            p => p.id === id
+        );
+
+
+        if (producto) {
+
+            document.getElementById(
+                'edit-id'
+            ).value = producto.id;
+
+
+            document.getElementById(
+                'edit-nombre'
+            ).value = producto.nombre;
+
+
+            document.getElementById(
+                'edit-precio'
+            ).value = producto.precio;
+
+
+            document.getElementById(
+                'edit-descripcion'
+            ).value = producto.descripcion;
+
+
+            document.getElementById(
+                'edit-foto'
+            ).value = "";
+
+
+            document.getElementById(
+                'modal-editar'
+            ).style.display = 'flex';
+
+        }
+
+    }
+
+
+    /* =====================================================
+       CERRAR EDICIÓN
+       ===================================================== */
+
+    function cerrarEditar() {
+
+        document.getElementById(
+            'modal-editar'
+        ).style.display = 'none';
+
+    }
+
+
+    /* =====================================================
+       GUARDAR EDICIÓN
+       ===================================================== */
+
+    function guardarEdicionC2C(event) {
+
+        event.preventDefault();
+
+
+        const id = parseInt(
+            document.getElementById(
+                'edit-id'
+            ).value
+        );
+
+
+        let todosLosProductos = JSON.parse(
+            localStorage.getItem(KEY_PRODUCTOS)
+        ) || [];
+
+
+        const index = todosLosProductos.findIndex(
+            p => p.id === id
+        );
+
+
+        if (index !== -1) {
+
+            cerrarEditar();
+
+
+            todosLosProductos[index].nombre =
+                document.getElementById(
+                    'edit-nombre'
+                ).value.trim() || "Sin nombre";
+
+
+            todosLosProductos[index].precio =
+                parseFloat(
+                    document.getElementById(
+                        'edit-precio'
+                    ).value
+                ) || 0.00;
+
+
+            todosLosProductos[index].descripcion =
+                document.getElementById(
+                    'edit-descripcion'
+                ).value.trim() || "Sin descripción";
+
+
+            const finalizar = () => {
+
+                localStorage.setItem(
+                    KEY_PRODUCTOS,
+                    JSON.stringify(
+                        todosLosProductos
+                    )
+                );
+
+
+                cargarMisPublicaciones();
+
+
+                mostrarToast(
+                    "¡Guardado con éxito!",
+                    "✏️"
+                );
+
+            };
+
+
+            const fotoInput = document.getElementById(
+                'edit-foto'
+            );
+
+
+            if (fotoInput.files.length > 0) {
+
+                const lector = new FileReader();
+
+
+                lector.onload = function(e) {
+
+                    todosLosProductos[index].foto =
+                        e.target.result;
+
+
+                    finalizar();
+
+                };
+
+
+                lector.readAsDataURL(
+                    fotoInput.files[0]
+                );
+
+            } else {
+
+                if (!todosLosProductos[index].foto) {
+
+                    todosLosProductos[index].foto =
+                        "img/taza.webp";
+
+                }
+
+                finalizar();
+
+            }
+
+        }
+
+    }
+
+
+    /* =====================================================
+       REGISTRAR OFERTA
+       ===================================================== */
 
     function registrarOferta() {
-        const inputMonto = document.getElementById('monto-oferta');
-        const liderSpan = document.getElementById('monto-lider');
-        const monto = parseFloat(inputMonto.value);
-        const actual = parseFloat(liderSpan.textContent);
 
-        if (!monto || monto <= actual) {
-            mostrarToast("Tu oferta debe ser mayor al monto actual.", "⚠️");
-            return;
+        const inputMonto = document.getElementById(
+            'monto-oferta'
+        );
+
+
+        const liderSpan = document.getElementById(
+            'monto-lider'
+        );
+
+
+        const actual = parseFloat(
+            liderSpan.textContent
+        );
+
+
+        let monto = parseFloat(
+            inputMonto.value
+        );
+
+
+        if (
+            isNaN(monto) ||
+            monto <= actual
+        ) {
+
+            monto = actual + 20.00;
+
         }
-        liderSpan.textContent = monto.toFixed(2);
-        mostrarToast("Oferta registrada correctamente.", "🔨");
+
+
+        liderSpan.textContent =
+            monto.toFixed(2);
+
+
+        mostrarToast(
+            "¡Oferta registrada con éxito!",
+            "🔨"
+        );
+
+
         inputMonto.value = "";
+
     }
 
-    let min = 4, seg = 59;
+
+    /* =====================================================
+       TEMPORIZADOR DE SUBASTA
+       ===================================================== */
+
+    let min = 4;
+    let seg = 59;
+
+
     setInterval(() => {
+
         if (seg === 0) {
-            if (min === 0) { min = 5; seg = 0; } else { min--; seg = 59; }
-        } else { seg--; }
-        document.getElementById('subasta-reloj').textContent = `⏱️ Tiempo restante: ${min.toString().padStart(2, '0')}:${seg.toString().padStart(2, '0')}`;
+
+            if (min === 0) {
+
+                min = 5;
+                seg = 0;
+
+            } else {
+
+                min--;
+                seg = 59;
+
+            }
+
+        } else {
+
+            seg--;
+
+        }
+
+
+        document.getElementById(
+            'subasta-reloj'
+        ).textContent =
+            `⏱️ Tiempo restante: ${min.toString().padStart(2, '0')}:${seg.toString().padStart(2, '0')}`;
+
     }, 1000);
 
-    document.addEventListener('DOMContentLoaded', iniciarDirecto);
+
+    /* =====================================================
+       INICIAR AL CARGAR
+       ===================================================== */
+
+    document.addEventListener(
+        'DOMContentLoaded',
+        iniciarDirecto
+    );
+
 </script>
+
 </body>
 </html>

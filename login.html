@@ -115,11 +115,12 @@
         function cerrarModal(id) { document.getElementById(id).style.display = 'none'; }
 
         function enviarRecuperacion() {
-            const dato = document.getElementById('input-recuperacion').value;
-            if (dato) {
-                cerrarModal('modal-recuperacion');
-                abrirModal('modal-confirmacion');
-            }
+            // Se eliminó la validación 'if (dato)' para que no valide nada si está vacío
+            cerrarModal('modal-recuperacion');
+            abrirModal('modal-confirmacion');
+            
+            // Limpiamos opcionalmente el input para la próxima vez
+            document.getElementById('input-recuperacion').value = '';
         }
 
         document.getElementById('formLogin').addEventListener('submit', function(e) {

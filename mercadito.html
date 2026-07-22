@@ -21,14 +21,16 @@
         .info-producto { padding: 20px; display: flex; flex-direction: column; flex-grow: 1; }
         .precio-producto { font-size: 1.3rem; color: #2e7d32; font-weight: bold; }
         .btn-agregar { background: #2e7d32; color: white; border: none; padding: 10px 18px; border-radius: 25px; cursor: pointer; }
-        .toast { visibility: hidden; min-width: 280px; background-color: #333; color: #fff; text-align: center; border-radius: 8px; padding: 16px; position: fixed; z-index: 3000; left: 50%; bottom: 30px; transform: translateX(-50%); opacity: 0; transition: opacity 0.5s; }
+        
+        /* Notificación Toast arriba para que las cookies no la tapen */
+        .toast { visibility: hidden; min-width: 280px; background-color: #333; color: #fff; text-align: center; border-radius: 8px; padding: 16px; position: fixed; z-index: 99999; left: 50%; top: 30px; transform: translateX(-50%); opacity: 0; transition: opacity 0.5s; box-shadow: 0 4px 12px rgba(0,0,0,0.3); }
         .toast.mostrar { visibility: visible; opacity: 1; }
     </style>
 </head>
 <body>
 
     <div id="banner-global"></div>
-<header id="header-container"></header>
+    <header id="header-container"></header>
 
     <main class="seccion-mercadito">
         <h1 class="titulo-mercadito">🏪 Mercadito de la Comunidad</h1>
@@ -36,16 +38,23 @@
         <div id="contenedor-productos" class="grid-mercadito"></div>
     </main>
 
-<footer id="footer-container"></footer>
+    <footer id="footer-container"></footer>
     <div id="toast-mercadito" class="toast">¡Agregado al carrito con éxito! 🛒</div>
 
     <script>
         const KEY_PRODUCTOS = "productos_mercadito";
         const KEY_SESION = "usuario_activo";
 
+        // Productos configurados utilizando imágenes que sí existen en tu carpeta img/
         const productosPredefinidos = [
             { id: 101, nombre: "Taza de Talavera", precio: 100.00, descripcion: "Taza tradicional pintada a mano.", foto: "img/taza.webp", usuario: "kbezuko" },
-            { id: 102, nombre: "Salsa Macha", precio: 85.00, descripcion: "Salsa artesanal de chile.", foto: "img/salsa.webp", usuario: "renegul" }
+            { id: 102, nombre: "Salsa Macha", precio: 85.00, descripcion: "Salsa artesanal de chile.", foto: "img/salsa.webp", usuario: "renegul" },
+            { id: 103, nombre: "Tortillero de ixtle", precio: 120.00, descripcion: "Tejido artesanal para mantener las tortillas calientes.", foto: "img/taza.webp", usuario: "martha_art" },
+            { id: 104, nombre: "Dulces Típicos Mexicanos", precio: 65.00, descripcion: "Surtido tradicional de jamoncillo y palanquetas.", foto: "img/dulce.jpg", usuario: "dulce_mex" },
+            { id: 105, nombre: "Servilletero Bordado", precio: 90.00, descripcion: "Diseño floral hecho a mano por artesanos locales.", foto: "img/servilletero.webp", usuario: "rosita_h" },
+            { id: 106, nombre: "Chocolate de metate", precio: 110.00, descripcion: "Barra de chocolate artesanal con canela.", foto: "img/chocolate.webp", usuario: "cacao_real" },
+            { id: 107, nombre: "Morral de ixtle", precio: 150.00, descripcion: "Bolsa ecológica y tradicional resistente.", foto: "img/morral.jpg", usuario: "don_chayo" },
+            { id: 108, nombre: "Jarra de Barro Redonda", precio: 220.00, descripcion: "Ideal para agua fresca o ponche tradicional.", foto: "img/jarra.webp", usuario: "alfonso_barro" }
         ];
 
         function renderizarProductos(lista) {
@@ -95,7 +104,6 @@
             setTimeout(() => toast.classList.remove('mostrar'), 2500);
         }
 
-        // CORRECCIÓN: Damos un breve margen de tiempo para asegurar que componentes.js inyecte el header/footer antes de cargar
         document.addEventListener('DOMContentLoaded', () => {
             setTimeout(inicializarMercadito, 150);
         });
