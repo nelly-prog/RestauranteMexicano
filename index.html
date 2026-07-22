@@ -354,87 +354,70 @@
 
             </div>
 
-            <!-- Caja Validadora Modificada con IDs y Mensaje en Pantalla -->
+            <!-- Caja Validador de cupones interactivo -->
             <div class="input-cupon-contenedor" style="padding: 20px; border-radius: 12px; background: #fff3cd; border: 1px solid #ffeeba; display: flex; flex-direction: column; align-items: center; gap: 15px;">
                 <div style="display: flex; justify-content: center; align-items: center; gap: 15px; flex-wrap: wrap; width: 100%;">
                     <span style="font-size: 1rem; font-weight: bold; color: #856404;">
                         ¿Tienes un código promocional? <span style="font-size: 0.9rem; display: block; font-weight: normal; color: #666; margin-top: 4px;">Usa el código visible de la temporada: <strong style="background: var(--btn-danger-color); color: white; padding: 3px 8px; border-radius: 4px; font-size: 0.95rem;">SABOR10</strong></span>
                     </span>
+
                     <div style="display: flex; gap: 8px; align-items: center;">
                         <input type="text" id="cupon-input" placeholder="Introduce el código" style="padding: 10px 15px; border: 1px solid #ccc; border-radius: 6px; margin-bottom: 0; width: 190px; font-size: 0.95rem;">
                         <button id="btn-aplicar-cupon" class="btn-rojo" style="padding: 10px 20px; font-size: 0.95rem; background: var(--primary-color); font-weight: bold; color: white; border: none; border-radius: 6px; cursor: pointer;">Aplicar</button>
                     </div>
                 </div>
-                <!-- Aquí se pintará el mensaje dinámicamente -->
+                <!-- Mensaje dinámico del cupón -->
                 <div id="cupon-mensaje" style="font-size: 0.95rem; font-weight: bold; display: none; padding: 8px 15px; border-radius: 6px; width: fit-content; text-align: center; margin-top: 5px;"></div>
             </div>
         </section>
 
-<!-- ==========================================
-     SECCIÓN: ESCAPARATE ESPECIAL
-     ========================================== -->
-<section id="escaparate" class="seccion-comunidad">
-    <h2 class="seccion-titulo-icono">✨ Especial de la Semana</h2>
-    
-    <div class="megapack-bloque">
-        <div>
-            <img src="https://images.unsplash.com/photo-1565299585323-38d6b0865b47?q=80&w=600&auto=format&fit=crop" class="megapack-img" alt="Megapack Taquero">
-        </div>
-        <div class="megapack-info">
-            <span class="badge-vendido">🔥 EL MÁS VENDIDO</span>
-            <h3>El Megapack Taquero Familiar</h3>
-            <p style="font-size: 0.9rem; line-height: 1.5; color: #ccc;">
-                Un festín tradicional directo a tu hogar. Incluye 20 tacos surtidos (Pastor, Suadero y Campechanos), 2 litros de nuestras emblemáticas aguas frescas naturales y un set de salsas artesanales.
-            </p>
-            <div class="precio-tag">$299.00 MXN</div>
+        <!-- ==========================================
+             SECCIÓN: ESCAPARATE ESPECIAL (MEGAPACK)
+             ========================================== -->
+        <section id="escaparate" class="seccion-comunidad">
+            <h2 class="seccion-titulo-icono">✨ Especial de la Semana</h2>
             
-            <!-- Botón y mensaje de éxito -->
-<button class="btn-comprar" onclick="agregarAlCarrito({titulo: 'Megapack Taquero Familiar', precio: 299.00})">
-    ⚡ ¡Comprar ahora!
-</button>
-            <div id="mensaje-exito-compra" style="display: none; color: #4CAF50; font-weight: bold; margin-top: 10px; padding: 5px; border: 1px solid #4CAF50; border-radius: 4px; background: #e8f5e9;">
-                ✅ ¡Agregado al carrito con éxito!
+            <div class="megapack-bloque">
+                <div>
+                    <img src="https://images.unsplash.com/photo-1565299585323-38d6b0865b47?q=80&w=600&auto=format&fit=crop" class="megapack-img" alt="Megapack Taquero">
+                </div>
+                <div class="megapack-info">
+                    <span class="badge-vendido">🔥 EL MÁS VENDIDO</span>
+                    <h3>El Megapack Taquero Familiar</h3>
+                    <p style="font-size: 0.9rem; line-height: 1.5; color: #ccc;">
+                        Un festín tradicional directo a tu hogar. Incluye 20 tacos surtidos (Pastor, Suadero y Campechanos), 2 litros de nuestras emblemáticas aguas frescas naturales y un set de salsas artesanales.
+                    </p>
+                    <div class="precio-tag">$299.00 MXN</div>
+                    
+                    <!-- Botón para agregar al carrito -->
+                    <button class="btn-comprar" onclick="agregarAlCarrito({titulo: 'El Megapack Taquero Familiar', precio: 299.00, cantidad: 1})">
+                        ⚡ ¡Comprar ahora!
+                    </button>
+                    <div id="mensaje-exito-compra" style="display: none; color: #4CAF50; font-weight: bold; margin-top: 10px; padding: 5px; border: 1px solid #4CAF50; border-radius: 4px; background: #e8f5e9;">
+                        ✅ ¡Agregado al carrito con éxito!
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
-</section>
+        </section>
 
-<script>
-    function agregarAlCarrito(nombre, precio) {
-        let carrito = JSON.parse(localStorage.getItem('carritoApp')) || [];
-        
-        carrito.push({ titulo: nombre, precio: precio, img: 'img/producto_default.jpg' }); 
-        
-        localStorage.setItem('carritoApp', JSON.stringify(carrito));
-        
-        const contador = document.getElementById('contador-carrito');
-        if (contador) {
-            contador.textContent = carrito.length;
-        }
-        
-        const mensaje = document.getElementById('mensaje-exito-compra');
-        mensaje.style.display = 'block';
-        setTimeout(() => { mensaje.style.display = 'none'; }, 3000);
-    }
-</script>
-
-            <!-- Reseñas de clientes -->
+        <!-- Reseñas de clientes -->
+        <section style="width: 95%; max-width: 1400px; margin: 40px auto; padding: 20px;">
             <p style="text-align: center; font-weight: bold; margin-bottom: 15px; color: var(--secondary-color);">Lo que opinan nuestros clientes habituales 💬</p>
             <div class="grid-opiniones">
-                <div class="opinion-card">
-                    <div class="opinion-estrellas">★★★★★</div>
-                    <p class="opinion-texto">"El Megapack Taquero es una delicia absoluta. Las salsas pican en su punto exacto y la carne al pastor viene muy jugosa."</p>
-                    <div class="opinion-usuario">— Carlos Mendoza</div>
+                <div class="opinion-card" style="background: white; padding: 20px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.03);">
+                    <div class="opinion-estrellas" style="color: #f39c12; margin-bottom: 8px;">★★★★★</div>
+                    <p class="opinion-texto" style="font-size: 0.95rem; color: #555; margin-bottom: 10px;">"El Megapack Taquero es una delicia absoluta. Las salsas pican en su punto exacto y la carne al pastor viene muy jugosa."</p>
+                    <div class="opinion-usuario" style="font-weight: bold; font-size: 0.9rem; color: #333;">— Carlos Mendoza</div>
                 </div>
-                <div class="opinion-card">
-                    <div class="opinion-estrellas">★★★★★</div>
-                    <p class="opinion-texto">"Pedimos el combo para la cena familiar del sábado y llegó volando. La horchata es completamente natural. 100% recomendado."</p>
-                    <div class="opinion-usuario">— Sofia Rodriguez</div>
+                <div class="opinion-card" style="background: white; padding: 20px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.03);">
+                    <div class="opinion-estrellas" style="color: #f39c12; margin-bottom: 8px;">★★★★★</div>
+                    <p class="opinion-texto" style="font-size: 0.95rem; color: #555; margin-bottom: 10px;">"Pedimos el combo para la cena familiar del sábado y llegó volando. La horchata es completamente natural. 100% recomendado."</p>
+                    <div class="opinion-usuario" style="font-weight: bold; font-size: 0.9rem; color: #333;">— Sofia Rodriguez</div>
                 </div>
-                <div class="opinion-card">
-                    <div class="opinion-estrellas">★★★★★</div>
-                    <p class="opinion-texto">"Excelente relación calidad-precio. Un negocio que verdaderamente respeta y resalta el auténtico sabor casero de México."</p>
-                    <div class="opinion-usuario">— Alejandro Gómez</div>
+                <div class="opinion-card" style="background: white; padding: 20px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.03);">
+                    <div class="opinion-estrellas" style="color: #f39c12; margin-bottom: 8px;">★★★★★</div>
+                    <p class="opinion-texto" style="font-size: 0.95rem; color: #555; margin-bottom: 10px;">"Excelente relación calidad-precio. Un negocio que verdaderamente respeta y resalta el auténtico sabor casero de México."</p>
+                    <div class="opinion-usuario" style="font-weight: bold; font-size: 0.9rem; color: #333;">— Alejandro Gómez</div>
                 </div>
             </div>
         </section>
@@ -442,7 +425,7 @@
         <!-- ==========================================
              SECCIÓN: NUESTRA HISTORIA / MISIÓN / VISIÓN
              ========================================== -->
-        <section id="nosotros" class="seccion-comunidad">
+        <section id="nosotros" class="seccion-comunidad" style="width: 95%; max-width: 1400px; margin: 50px auto; padding: 20px;">
             <h2 class="seccion-titulo-icono" style="font-size: 2.2rem; margin-bottom: 15px;">Nuestra Historia</h2>
             
             <p class="texto-historia-principal">
@@ -450,16 +433,16 @@
             </p>
 
             <div class="mision-vision-grid">
-                <!-- Tarjeta Misión: Enlace Corregido y Estable de Ingredientes Frescos -->
+                <!-- Tarjeta Misión -->
                 <div class="tarjeta-mv">
-                    <img src="https://images.unsplash.com/photo-1498837167922-ddd27525d352?q=80&w=500&auto=format&fit=crop" alt="Ingredientes tradicionales preparados con pasión">
+                    <img src="https://images.unsplash.com/photo-1498837167922-ddd27525d352?q=80&w=500&auto=format&fit=crop" alt="Ingredientes tradicionales">
                     <div class="tarjeta-mv-cuerpo">
                         <h4>Nuestra Misión</h4>
                         <p>Cautivar los paladares de nuestros invitados mediante platillos tradicionales extraordinarios, elaborados con el alma y con los ingredientes más frescos del campo, creando momentos de felicidad compartida en un ambiente cálido y familiar.</p>
                     </div>
                 </div>
 
-                <!-- Tarjeta Visión: Tradición, herencia y nuevas generaciones -->
+                <!-- Tarjeta Visión -->
                 <div class="tarjeta-mv">
                     <img src="https://images.unsplash.com/photo-1564758564527-b97d79cb27c1?q=80&w=500&auto=format&fit=crop" alt="Mesa familiar mexicana">
                     <div class="tarjeta-mv-cuerpo">
@@ -471,29 +454,29 @@
         </section>
 
         <!-- ==========================================
-             SECCIÓN: CONTACTO Y UBICACIÓN (Modificada para ser más compacta)
+             SECCIÓN: CONTACTO Y UBICACIÓN
              ========================================== -->
-        <section id="contacto" class="seccion-comunidad">
+        <section id="contacto" class="seccion-comunidad" style="width: 95%; max-width: 1400px; margin: 50px auto; padding: 20px;">
             <div class="contacto-wrapper-compacto">
-                <!-- Formulario sin validación nativa (novalidate añadido y sin atributos required) -->
-                <div class="tarjeta-comunidad">
-                    <h3>Envíanos un mensaje</h3>
+                <!-- Formulario de contacto -->
+                <div class="tarjeta-comunidad" style="background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.06);">
+                    <h3 style="color: var(--primary-color); margin-bottom: 15px;">Envíanos un mensaje</h3>
                     <form id="form-contacto-inicio" class="form-comunidad" onsubmit="enviarMensajeContacto(event)">
-                        <label for="nombre">Nombre Completo</label>
-                        <input type="text" id="nombre" placeholder="Ej. Juan Pérez">
+                        <label for="nombre" style="display: block; margin-bottom: 5px; font-weight: 500;">Nombre Completo</label>
+                        <input type="text" id="nombre" placeholder="Ej. Juan Pérez" style="width: 100%; padding: 10px; margin-bottom: 12px; border: 1px solid #ccc; border-radius: 6px;">
                         
-                        <label for="contacto-user">Medio de Contacto (Correo o Teléfono)</label>
-                        <input type="text" id="contacto-user" placeholder="Ej. juan@correo.com o 4491234567">
+                        <label for="contacto-user" style="display: block; margin-bottom: 5px; font-weight: 500;">Medio de Contacto (Correo o Teléfono)</label>
+                        <input type="text" id="contacto-user" placeholder="Ej. juan@correo.com o 4491234567" style="width: 100%; padding: 10px; margin-bottom: 12px; border: 1px solid #ccc; border-radius: 6px;">
                         
-                        <label for="mensaje">Mensaje</label>
-                        <textarea id="mensaje" rows="4" placeholder="Escribe aquí tu duda o pedido especial..."></textarea>
+                        <label for="mensaje" style="display: block; margin-bottom: 5px; font-weight: 500;">Mensaje</label>
+                        <textarea id="mensaje" rows="4" placeholder="Escribe aquí tu duda o pedido especial..." style="width: 100%; padding: 10px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 6px;"></textarea>
                         
-                        <button type="submit" class="btn-rojo">Enviar Mensaje</button>
+                        <button type="submit" class="btn-rojo" style="background: var(--primary-color); color: white; border: none; padding: 12px 20px; border-radius: 6px; font-weight: bold; cursor: pointer; width: 100%;">Enviar Mensaje</button>
                     </form>
                 </div>
 
-                <!-- Mapa -->
-                <div class="tarjeta-comunidad" style="text-align: center; border-top: 5px solid var(--btn-danger-color); display: flex; flex-direction: column; justify-content: space-between;">
+                <!-- Mapa y Ubicación -->
+                <div class="tarjeta-comunidad" style="background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.06); text-align: center; border-top: 5px solid var(--btn-danger-color); display: flex; flex-direction: column; justify-content: space-between;">
                     <div>
                         <h3 style="color: var(--btn-danger-color); font-size: 1.4rem; margin-bottom: 10px;">¿Dónde encontrarnos?</h3>
                         <p style="font-weight: 500; color: #333; margin-bottom: 15px;">
@@ -519,13 +502,19 @@
 
     <!-- Lógica de validación de cupones y mensajes -->
     <script>
-        // Validación interactiva de cupones en pantalla
+        // Validación interactiva de cupones en pantalla guardándolos para el carrito/pago
         document.getElementById('btn-aplicar-cupon').addEventListener('click', function() {
             const input = document.getElementById('cupon-input');
             const mensaje = document.getElementById('cupon-mensaje');
-            const codigoIngresado = input.value.trim();
+            const codigoIngresado = input.value.trim().toUpperCase();
 
-            const codigosValidos = ['SABOR10', 'MartesMagic', 'Arriba', 'Diez'];
+            // Diccionario oficial con sus descuentos equivalentes
+            const listaCupones = {
+                'MARTESMAGIC': 0.50,
+                'ARRIBA': 'fijo_20', 
+                'DIEZ': 0.10,
+                'SABOR10': 0.10
+            };
 
             if (codigoIngresado === '') {
                 mensaje.style.display = 'block';
@@ -536,14 +525,20 @@
                 return;
             }
 
-            const codigoEncontrado = codigosValidos.find(c => c.toLowerCase() === codigoIngresado.toLowerCase());
+            if (listaCupones[codigoIngresado] !== undefined) {
+                let valorDesc = listaCupones[codigoIngresado];
+                
+                // Guardamos en localStorage para que la página de pago lo reconozca automáticamente
+                localStorage.setItem('cuponAplicado', JSON.stringify({
+                    codigo: codigoIngresado,
+                    descuento: valorDesc
+                }));
 
-            if (codigoEncontrado) {
                 mensaje.style.display = 'block';
                 mensaje.style.backgroundColor = '#d4edda';
                 mensaje.style.color = '#155724';
                 mensaje.style.border = '1px solid #c3e6cb';
-                mensaje.textContent = `🎉 ¡Código "${codigoEncontrado}" aplicado con éxito! Tu descuento ha sido simulado.`;
+                mensaje.textContent = `🎉 ¡Código "${codigoIngresado}" aplicado con éxito! Se aplicará en tu resumen de pago.`;
                 input.value = ''; 
             } else {
                 mensaje.style.display = 'block';
@@ -554,25 +549,19 @@
             }
         });
 
-        // Simulación de envío de formulario de contacto completamente libre de bloqueos nativos
+        // Simulación de envío de formulario de contacto
         function enviarMensajeContacto(event) {
             event.preventDefault(); 
-            
             const toast = document.getElementById('toast-notificacion');
-            
-            toast.innerHTML = `<span>📩</span> ¡Mensaje enviado con éxito! Nos pondremos en contacto contigo pronto.`;
-            
             toast.classList.add('mostrar');
-
             document.getElementById('form-contacto-inicio').reset();
-
             setTimeout(() => {
                 toast.classList.remove('mostrar');
             }, 3500);
         }
     </script>
 
-    <!-- SECCIÓN DE LÓGICA DEL CARRITO -->
+    <!-- LÓGICA DEL CARRITO CON SWEETALERT2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         function agregarAlCarrito(producto) {
@@ -584,6 +573,12 @@
                 actualizarContadorVisual();
             }
             
+            const mensaje = document.getElementById('mensaje-exito-compra');
+            if(mensaje) {
+                mensaje.style.display = 'block';
+                setTimeout(() => { mensaje.style.display = 'none'; }, 3000);
+            }
+
             Swal.fire({
                 toast: true,
                 position: 'top-end',
@@ -594,6 +589,5 @@
             });
         }
     </script>
-    <!-- FIN DE LA LÓGICA -->
 </body>
 </html>

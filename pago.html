@@ -2,233 +2,200 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Resumen de Pago - Sabor Mexicano</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sabor Mexicano - Finalizar Pedido</title>
+    <!-- Enlace a tus estilos globales -->
     <link rel="stylesheet" href="estilos.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Carga del inyector de componentes dinámicos (Header / Footer / Banner) -->
+    <script src="componentes.js" defer></script>
     <style>
-        .pago-container {
-            max-width: 700px;
-            margin: 0 auto;
-            background: #fff;
-            padding: 35px;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        /* Estilos específicos para la página de pago */
+        .contenedor-pago {
+            max-width: 800px;
+            margin: 40px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
         }
-        .resumen-tabla {
+        .titulo-pago {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .tabla-resumen {
             width: 100%;
             border-collapse: collapse;
             margin: 20px 0;
         }
-        .resumen-tabla th, .resumen-tabla td {
+        .tabla-resumen th, .tabla-resumen td {
             padding: 12px;
-            text-align: left;
             border-bottom: 1px solid #eee;
+            text-align: left;
         }
-        .resumen-tabla th {
-            background-color: #fcfcfc;
-            color: #555;
-            font-size: 0.95rem;
-        }
-        .politicas-bloque {
-            background: #f9f9f9;
-            padding: 15px;
-            border-radius: 6px;
-            border-left: 4px solid #ce1126;
-            margin: 25px 0;
-        }
-        .politicas-label {
-            display: flex;
-            align-items: flex-start;
-            gap: 10px;
-            cursor: pointer;
-            font-size: 0.95rem;
-            color: #444;
-            user-select: none;
-        }
-        .politicas-label input {
-            margin-top: 3px;
-            transform: scale(1.2);
-            accent-color: #ce1126;
-        }
-        .total-pago {
-            text-align: right;
-            font-size: 1.1rem;
+        .tabla-resumen th {
+            background-color: #f8f9fa;
             color: #333;
-            margin: 20px 0;
-            line-height: 1.8;
         }
-        .total-pago span {
-            font-weight: normal;
-        }
-        .total-pago .monto-final {
-            color: #ce1126;
-            font-size: 1.5rem;
-            font-weight: bold;
-        }
-        .alerta-exito {
-            display: none;
-            background: #d4edda;
-            color: #155724;
-            padding: 20px;
+        .seccion-cupon-pago {
+            background: #fff3cd;
+            border: 1px solid #ffeeba;
+            padding: 15px;
             border-radius: 8px;
-            border: 1px solid #c3e6cb;
-            text-align: center;
-            margin-top: 20px;
+            margin: 20px 0;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            flex-wrap: wrap;
         }
-        .alerta-exito i {
-            font-size: 2.5rem;
-            color: #28a745;
-            margin-bottom: 10px;
-            display: block;
-        }
-        .cupon-pago-box {
-            margin: 20px 0; 
-            padding: 15px; 
-            background: #fff8e1; 
-            border: 1px solid #ffe082; 
-            border-radius: 8px; 
+        .totales-caja {
             text-align: right;
+            margin-top: 20px;
+            font-size: 1.1rem;
         }
-        .cupon-pago-input {
-            padding: 8px 12px; 
-            border: 1px solid #ffe082; 
-            border-radius: 4px; 
-            text-transform: uppercase;
-            font-weight: bold;
-            outline: none;
+        .totales-caja p {
+            margin: 6px 0;
         }
-        .cupon-pago-btn {
-            padding: 8px 15px; 
-            background: #2e7d32; 
-            color: white; 
-            border: none; 
-            border-radius: 4px; 
-            font-weight: bold; 
-            cursor: pointer; 
-            transition: background 0.2s;
+        .totales-caja h3 {
+            color: var(--btn-danger-color);
+            font-size: 1.5rem;
+            margin-top: 10px;
         }
-        .cupon-pago-btn:hover {
-            background: #1b5e20;
+        .bloque-politicas {
+            margin: 20px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
-        .feedback-cupon-pago {
-            font-size: 0.9rem; 
-            font-weight: bold; 
-            margin-top: 8px; 
+        .error-alerta {
+            color: #c62828;
+            font-size: 0.9rem;
+            margin-top: 5px;
             display: none;
+        }
+        .btn-confirmar-pago {
+            background: var(--btn-danger-color);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 1rem;
+            font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.2s;
+            width: 100%;
+        }
+        .btn-confirmar-pago:hover {
+            background: #b71c1c;
+        }
+        .mensaje-exito-pago {
+            display: none;
+            text-align: center;
+            padding: 40px;
+            background: #e8f5e9;
+            border-radius: 8px;
+            color: #2e7d32;
+        }
+        .mensaje-exito-pago h2 {
+            margin-bottom: 10px;
         }
     </style>
 </head>
 <body>
 
-<header>
-    <div class="logo-contenedor">
-        <img src="img/logo.png.png" class="logo-img" alt="Logo">
-        <span>Sabor Mexicano</span>
-    </div>
-    <nav>
-        <ul>
-            <li><a href="index.html">Inicio</a></li>
-            <li><a href="catalogo.html">Catálogo</a></li>
-            <li><a href="comunidad.html">Comunidad</a></li>
-            <li><a href="index.html#promociones" style="color: #ffb300; font-weight: bold;">🔥 Promos</a></li>
-            <li><a href="index.html#escaparate">Especial</a></li>
-            <li><a href="mercadito.html">🏪 Mercadito</a></li>
-            <li><a href="index.html#nosotros">Nosotros</a></li>
-            <li><a href="index.html#contacto">Contacto</a></li>
-            <li><a href="login.html">Iniciar Sesión</a></li>
-            <li class="cart-item-container">
-                <a href="carrito.html" class="cart-link" title="Ver carrito">
-                    🛒 <span id="cart-count" class="cart-badge">0</span>
-                </a>
-            </li>
-        </ul>
-    </nav>
-</header>
+    <!-- Banner promocional superior (Inyectado o estático) -->
+    <div id="banner-global"></div>
 
-<main class="seccion">
-    <div class="pago-container" id="formulario-pago-bloque">
-        <h2 style="border-bottom: 2px solid #eee; padding-bottom: 10px; color: #333;">
-            <i class="fa-solid fa-credit-card" style="color: #ce1126; margin-right: 8px;"></i> Finalizar Pedido
-        </h2>
-        
-        <p style="color: #666; margin-top: 10px;">Revisa el resumen de tus deliciosos platillos antes de confirmar la compra.</p>
+    <!-- Encabezado / Menú inyectado por componentes.js -->
+    <header></header>
 
-        <table class="resumen-tabla">
-            <thead>
-                <tr>
-                    <th>Platillo</th>
-                    <th style="text-align: center;">Cantidad</th>
-                    <th style="text-align: right;">Subtotal</th>
-                </tr>
-            </thead>
-            <tbody id="resumen-items"></tbody>
-        </table>
+    <main>
+        <div class="contenedor-pago">
+            
+            <!-- Bloque del Formulario de Pago y Resumen -->
+            <div id="formulario-pago-bloque">
+                <h2 class="titulo-pago">💳 Finalizar Pedido</h2>
+                <p style="color: #666; margin-bottom: 20px;">Revisa el resumen de tus deliciosos platillos antes de confirmar la compra.</p>
 
-        <div class="cupon-pago-box">
-            <span style="font-size: 0.95rem; color: #5d4037; margin-right: 10px;">¿Tienes un código de descuento?</span>
-            <div style="display: inline-flex; gap: 8px;">
-                <input type="text" id="input-cupon-pago" placeholder="Ej: DIEZ" class="cupon-pago-input">
-                <button type="button" onclick="aplicarCuponEnPago()" class="cupon-pago-btn">Aplicar</button>
+                <!-- Tabla resumen de productos -->
+                <table class="tabla-resumen">
+                    <thead>
+                        <tr>
+                            <th>Platillo</th>
+                            <th style="text-align: center;">Cantidad</th>
+                            <th style="text-align: right;">Subtotal</th>
+                        </tr>
+                    </thead>
+                    <tbody id="resumen-items">
+                        <!-- Aquí se inyectan dinámicamente los productos del carrito -->
+                    </tbody>
+                </table>
+
+                <!-- Input para cupones en la página de pago -->
+                <div class="seccion-cupon-pago">
+                    <span style="font-weight: 500; color: #856404;">¿Tienes un código de descuento?</span>
+                    <input type="text" id="input-cupon-pago" placeholder="EJ. DIEZ" style="padding: 8px 12px; border: 1px solid #ccc; border-radius: 4px; flex-grow: 1;">
+                    <button onclick="aplicarCuponEnPago()" style="padding: 8px 15px; background: var(--primary-color); color: white; border: none; border-radius: 4px; font-weight: bold; cursor: pointer;">Aplicar</button>
+                    <div id="feedback-cupon-pago" style="width: 100%; font-size: 0.9rem; font-weight: bold; display: none; margin-top: 5px;"></div>
+                </div>
+
+                <!-- Totales -->
+                <div class="totales-caja">
+                    <p>Subtotal: <span id="resumen-subtotal">$0.00</span></p>
+                    <p>IVA (16%): <span id="resumen-iva">$0.00</span></p>
+                    <h3>Total a Pagar: <span id="resumen-total">$0.00</span></h3>
+                </div>
+
+                <!-- Políticas -->
+                <div class="bloque-politicas">
+                    <input type="checkbox" id="check-politicas">
+                    <label for="check-politicas" style="font-size: 0.95rem; color: #444;">
+                        He leído y acepto los <strong>Términos de Servicio</strong>, las <strong>Políticas de Compra-Venta</strong> y confirmo que mi orden de antojos es correcta.
+                    </label>
+                </div>
+                <div id="error-politicas" class="error-alerta">⚠️ Debes aceptar los términos y políticas para continuar.</div>
+
+                <div style="display: flex; gap: 15px; margin-top: 25px;">
+                    <a href="catalogo.html" style="background: #6c757d; color: white; padding: 12px 20px; border-radius: 6px; text-decoration: none; font-weight: bold; display: inline-block; text-align: center;">Volver al Catálogo</a>
+                    <button class="btn-confirmar-pago" onclick="confirmarPagoFinal()" style="flex-grow: 1;">Confirmar y Pagar</button>
+                </div>
             </div>
-            <div id="feedback-cupon-pago" class="feedback-cupon-pago"></div>
-        </div>
 
-        <div class="total-pago">
-            <div>Subtotal: <span id="resumen-subtotal">$0.00</span></div>
-            <div>IVA (16%): <span id="resumen-iva">$0.00</span></div>
-            <div style="margin-top: 5px;">
-                Total a Pagar: <span id="resumen-total" class="monto-final">$0.00</span>
+            <!-- Bloque de Éxito al finalizar -->
+            <div id="mensaje-exito-bloque" class="mensaje-exito-pago">
+                <h2>🎉 ¡Pedido Exitoso!</h2>
+                <p>Tu orden ha sido registrada correctamente y ya se está preparando en la cocina con mucho sazón.</p>
+                <p style="margin-top: 15px; font-size: 0.9rem; color: #555;">Te hemos redirigido o puedes volver al inicio cuando gustes.</p>
+                <a href="index.html" style="display: inline-block; margin-top: 20px; background: var(--primary-color); color: white; padding: 10px 20px; border-radius: 6px; text-decoration: none; font-weight: bold;">Regresar al Inicio</a>
             </div>
+
         </div>
+    </main>
 
-        <div class="politicas-bloque">
-            <label class="politicas-label">
-                <input type="checkbox" id="check-politicas">
-                <span>He leído y acepto los <strong>Términos de Servicio</strong>, las <strong>Políticas de Compra-Venta</strong> y confirmo que mi orden de antojos es correcta.</span>
-            </label>
-        </div>
+    <!-- Pie de página / Footer inyectado por componentes.js -->
+    <footer></footer>
 
-        <!-- Mensaje de error visual -->
-        <div id="error-politicas" style="color: #ce1126; font-weight: bold; margin-bottom: 15px; display: none; text-align: center;">
-            ⚠️ Por favor, acepta los términos y condiciones para proceder.
-        </div>
-
-        <div class="acciones-carrito" style="margin-top: 10px; display: flex; justify-content: space-between;">
-            <a href="carrito.html" class="btn-rojo" style="background: #666; text-decoration: none; padding: 10px 20px; border-radius: 5px; color: white;">Volver al Carrito</a>
-            <button class="btn-rojo" onclick="confirmarPagoFinal()" style="padding: 10px 25px; font-weight: bold; font-size: 1rem;">
-                Confirmar y Pagar
-            </button>
-        </div>
-    </div>
-
-    <div class="pago-container alerta-exito" id="mensaje-exito-bloque">
-        <i class="fa-solid fa-circle-check"></i>
-        <h2 style="color: #155724; margin-bottom: 10px;">¡Pedido Recibido con Éxito!</h2>
-        <p style="margin-bottom: 20px;">Tu orden ha sido enviada directamente a la cocina de <strong>Sabor Mexicano</strong>. Tus platillos empezarán a prepararse de inmediato.</p>
-        <a href="catalogo.html" class="btn-rojo" style="text-decoration: none; padding: 10px 20px; border-radius: 5px; color: white; display: inline-block;">
-            Volver al Catálogo / Inicio
-        </a>
-    </div>
-</main>
-
-<script>
+    <!-- LÓGICA DE CÁLCULOS, CARRITO Y CUPONES BLINDADA CONTRA NAN -->
+   <script>
     let sumaProductosOriginal = 0;
     let descuentoYaAplicado = false;
 
     document.addEventListener('DOMContentLoaded', () => {
         cargarResumen();
+        verificarCuponGuardado();
     });
 
     function cargarResumen() {
         let carrito = JSON.parse(localStorage.getItem('carritoApp')) || [];
         const tbody = document.getElementById('resumen-items');
-        const subtotalText = document.getElementById('resumen-subtotal');
-        const ivaText = document.getElementById('resumen-iva');
-        const totalText = document.getElementById('resumen-total');
-        const contadorBadge = document.getElementById('cart-count');
         
         let totalItems = 0;
         let html = '';
+
+        if (!tbody) return;
 
         if (carrito.length === 0) {
             window.location.href = 'catalogo.html';
@@ -236,38 +203,62 @@
         }
 
         sumaProductosOriginal = 0;
+        
         carrito.forEach(item => {
-            let subtotalItem = item.precio * item.cantidad;
+            // 1. Limpieza de precio por si viene con símbolos
+            let precioLimpio = 0;
+            const fuentePrecio = item.precio !== undefined ? item.precio : item.costo;
+            
+            if (typeof fuentePrecio === 'string') {
+                precioLimpio = parseFloat(fuentePrecio.replace('$', '').replace(/,/g, '').trim());
+            } else if (typeof fuentePrecio === 'number') {
+                precioLimpio = fuentePrecio;
+            }
+            if (isNaN(precioLimpio)) precioLimpio = 299.00; // Respaldo por si viene totalmente roto
+
+            // 2. Corrección automática si la cantidad está como 'undefined' o vacía
+            let cantidadNum = parseInt(item.cantidad);
+            if (isNaN(cantidadNum) || cantidadNum <= 0) {
+                cantidadNum = 1; 
+            }
+
+            let subtotalItem = precioLimpio * cantidadNum;
             sumaProductosOriginal += subtotalItem;
-            totalItems += item.cantidad;
-            html += `<tr><td><strong>${item.titulo}</strong></td><td style="text-align: center;">${item.cantidad}</td><td style="text-align: right;">$${subtotalItem.toFixed(2)}</td></tr>`;
+            totalItems += cantidadNum;
+            
+            let nombreProducto = item.titulo || item.nombre || 'El Megapack Taquero Familiar';
+
+            html += `<tr>
+                <td><strong>${nombreProducto}</strong></td>
+                <td style="text-align: center;">${cantidadNum}</td>
+                <td style="text-align: right;">$${subtotalItem.toFixed(2)}</td>
+            </tr>`;
         });
 
         tbody.innerHTML = html;
-        let subtotalNeto = sumaProductosOriginal / 1.16;
-        let ivaCalculado = sumaProductosOriginal - subtotalNeto;
+        actualizarTotalesVisuales(sumaProductosOriginal);
 
-        subtotalText.innerText = `$${subtotalNeto.toFixed(2)}`;
-        ivaText.innerText = `$${ivaCalculado.toFixed(2)}`;
-        totalText.innerText = `$${sumaProductosOriginal.toFixed(2)}`;
-
+        const contadorBadge = document.getElementById('cart-count');
         if (contadorBadge) contadorBadge.textContent = totalItems;
     }
 
+    function verificarCuponGuardado() {
+        const cuponGuardado = JSON.parse(localStorage.getItem('cuponAplicado'));
+        if (cuponGuardado && cuponGuardado.codigo) {
+            const inputCupon = document.getElementById('input-cupon-pago');
+            if(inputCupon) inputCupon.value = cuponGuardado.codigo;
+            aplicarDescuentoMatematico(cuponGuardado.codigo, cuponGuardado.descuento, `¡Código "${cuponGuardado.codigo}" aplicado desde tu sesión!`);
+        }
+    }
+
     function aplicarCuponEnPago() {
-        const inputVal = document.getElementById('input-cupon-pago').value.trim().toUpperCase();
+        const inputElem = document.getElementById('input-cupon-pago');
+        if (!inputElem) return;
+        
+        const inputVal = inputElem.value.trim().toUpperCase();
         const feedback = document.getElementById('feedback-cupon-pago');
-        const subtotalText = document.getElementById('resumen-subtotal');
-        const ivaText = document.getElementById('resumen-iva');
-        const totalText = document.getElementById('resumen-total');
-
-        const listaCupones = {
-            'MARTESMAGIC': { tipo: 'porcentaje', valor: 0.50, msg: '¡Código MartesMagic aplicado!' },
-            'ARRIBA': { tipo: 'fijo', valor: 20.00, msg: '¡Código Arriba aplicado!' },
-            'DIEZ': { tipo: 'porcentaje', valor: 0.10, msg: '¡Código Diez aplicado!' },
-            'SABOR10': { tipo: 'porcentaje', valor: 0.10, msg: '¡Código SABOR10 aplicado!' }
-        };
-
+        if (!feedback) return;
+        
         feedback.style.display = 'block';
 
         if (descuentoYaAplicado) {
@@ -276,24 +267,60 @@
             return;
         }
 
-        if (listaCupones[inputVal]) {
-            descuentoYaAplicado = true;
-            const cupon = listaCupones[inputVal];
-            let montoDescuento = (cupon.tipo === 'porcentaje') ? (sumaProductosOriginal * cupon.valor) : cupon.valor;
-            let nuevoTotalFinal = Math.max(0, sumaProductosOriginal - montoDescuento);
-            let nuevoSubtotalNeto = nuevoTotalFinal / 1.16;
-            let nuevoIvaCalculado = nuevoTotalFinal - nuevoSubtotalNeto;
+        const listaCupones = {
+            'MARTESMAGIC': 0.50,
+            'ARRIBA': 'fijo_20', 
+            'DIEZ': 0.10,
+            'SABOR10': 0.10
+        };
 
-            subtotalText.innerText = `$${nuevoSubtotalNeto.toFixed(2)}`;
-            ivaText.innerText = `$${nuevoIvaCalculado.toFixed(2)}`;
-            totalText.innerText = `$${nuevoTotalFinal.toFixed(2)}`;
+        if (listaCupones[inputVal] !== undefined) {
+            let valorDesc = listaCupones[inputVal];
+            
+            localStorage.setItem('cuponAplicado', JSON.stringify({
+                codigo: inputVal,
+                descuento: valorDesc
+            }));
 
-            feedback.style.color = '#2e7d32';
-            feedback.innerHTML = `✅ ${cupon.msg} Descuento aplicado.`;
+            aplicarDescuentoMatematico(inputVal, valorDesc, `✅ ¡Código "${inputVal}" aplicado con éxito!`);
         } else {
             feedback.style.color = '#c62828';
             feedback.innerHTML = '❌ Código no válido.';
         }
+    }
+
+    function aplicarDescuentoMatematico(codigo, valorDescuento, mensajeExito) {
+        const feedback = document.getElementById('feedback-cupon-pago');
+        if (!feedback) return;
+        
+        feedback.style.display = 'block';
+        descuentoYaAplicado = true;
+
+        let montoDescuento = 0;
+        if (codigo === 'ARRIBA' || valorDescuento === 'fijo_20') {
+            montoDescuento = 20.00; 
+        } else {
+            montoDescuento = sumaProductosOriginal * Number(valorDescuento); 
+        }
+
+        let nuevoTotalFinal = Math.max(0, sumaProductosOriginal - montoDescuento);
+        actualizarTotalesVisuales(nuevoTotalFinal);
+
+        feedback.style.color = '#2e7d32';
+        feedback.innerHTML = mensajeExito;
+    }
+
+    function actualizarTotalesVisuales(totalFinal) {
+        const subtotalText = document.getElementById('resumen-subtotal');
+        const ivaText = document.getElementById('resumen-iva');
+        const totalText = document.getElementById('resumen-total');
+
+        let nuevoSubtotalNeto = totalFinal / 1.16;
+        let nuevoIvaCalculado = totalFinal - nuevoSubtotalNeto;
+
+        if (subtotalText) subtotalText.innerText = `$${nuevoSubtotalNeto.toFixed(2)}`;
+        if (ivaText) ivaText.innerText = `$${nuevoIvaCalculado.toFixed(2)}`;
+        if (totalText) totalText.innerText = `$${totalFinal.toFixed(2)}`;
     }
 
     function confirmarPagoFinal() {
@@ -302,20 +329,21 @@
         const formulario = document.getElementById('formulario-pago-bloque');
         const exito = document.getElementById('mensaje-exito-bloque');
 
-        if (!checkbox.checked) {
-            mensajeError.style.display = 'block';
+        if (checkbox && !checkbox.checked) {
+            if (mensajeError) mensajeError.style.display = 'block';
             return;
         }
 
-        mensajeError.style.display = 'none';
-        if(formulario) formulario.style.display = 'none';
-        if(exito) exito.style.display = 'block';
+        if (mensajeError) mensajeError.style.display = 'none';
+        if (formulario) formulario.style.display = 'none';
+        if (exito) exito.style.display = 'block';
 
         localStorage.removeItem('carritoApp');
+        localStorage.removeItem('cuponAplicado');
+        
         const contadorBadge = document.getElementById('cart-count');
         if (contadorBadge) contadorBadge.textContent = '0';
     }
 </script>
-
 </body>
 </html>
