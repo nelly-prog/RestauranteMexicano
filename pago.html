@@ -668,19 +668,23 @@
 
     <footer></footer>
 
-    <script>
+<script>
     let pasoActual = 1;
     let sumaProductosOriginal = 0;
     let descuentoAplicado = 0;
     let descuentoYaAplicado = false;
     let metodoSeleccionado = 'tarjeta';
     let carritoActual = [];
+    let indicePedidoTemporal = null;
 
     document.addEventListener('DOMContentLoaded', () => {
         cargarResumen();
         verificarCuponGuardado();
         cargarHistorialCompras();
-        document.getElementById('transf-concepto').textContent = 'SM-' + Math.floor(10000 + Math.random() * 90000);
+        const transConcepto = document.getElementById('transf-concepto');
+        if (transConcepto) {
+            transConcepto.textContent = 'SM-' + Math.floor(10000 + Math.random() * 90000);
+        }
     });
 
     function irAPaso(paso) {
@@ -691,13 +695,16 @@
         pasoActual = paso;
         
         document.querySelectorAll('.seccion-paso').forEach(sec => sec.classList.remove('activa'));
-        document.getElementById(`paso-${paso}`).classList.add('activa');
+        const pasoElem = document.getElementById(`paso-${paso}`);
+        if (pasoElem) pasoElem.classList.add('activa');
 
         for (let i = 1; i <= 3; i++) {
             const ind = document.getElementById(`indicador-paso-${i}`);
-            ind.classList.remove('activo', 'completado');
-            if (i < paso) ind.classList.add('completado');
-            if (i === paso) ind.classList.add('activo');
+            if (ind) {
+                ind.classList.remove('activo', 'completado');
+                if (i < paso) ind.classList.add('completado');
+                if (i === paso) ind.classList.add('activo');
+            }
         }
 
         window.scrollTo({ top: 100, behavior: 'smooth' });
@@ -706,33 +713,45 @@
     function seleccionarMetodo(metodo) {
         metodoSeleccionado = metodo;
         document.querySelectorAll('.card-metodo').forEach(card => card.classList.remove('seleccionado'));
-        document.getElementById(`card-${metodo}`).classList.add('seleccionado');
+        const cardMetodo = document.getElementById(`card-${metodo}`);
+        if (cardMetodo) cardMetodo.classList.add('seleccionado');
 
-        document.getElementById('panel-tarjeta').style.display = (metodo === 'tarjeta') ? 'block' : 'none';
-        document.getElementById('panel-transferencia').style.display = (metodo === 'transferencia') ? 'block' : 'none';
-        document.getElementById('panel-ewallet').style.display = (metodo === 'ewallet') ? 'block' : 'none';
+        const panelTarjeta = document.getElementById('panel-tarjeta');
+        const panelTransferencia = document.getElementById('panel-transferencia');
+        const panelEwallet = document.getElementById('panel-ewallet');
+
+        if (panelTarjeta) panelTarjeta.style.display = (metodo === 'tarjeta') ? 'block' : 'none';
+        if (panelTransferencia) panelTransferencia.style.display = (metodo === 'transferencia') ? 'block' : 'none';
+        if (panelEwallet) panelEwallet.style.display = (metodo === 'ewallet') ? 'block' : 'none';
 
         const textoMetodo = { tarjeta: 'Tarjeta de Crédito/Débito', transferencia: 'Transferencia SPEI', ewallet: 'Monedero Electrónico SaborPay' };
-        document.getElementById('resumen-metodo-pago').textContent = textoMetodo[metodo];
+        const resumenMetodoPago = document.getElementById('resumen-metodo-pago');
+        if (resumenMetodoPago) resumenMetodoPago.textContent = textoMetodo[metodo];
     }
 
     function actualizarDatosResumenCliente() {
-        const nombreVal = document.getElementById('dir-nombre').value.trim();
-        const calleVal = document.getElementById('dir-calle').value.trim();
-        const coloniaVal = document.getElementById('dir-colonia').value.trim();
-        const telVal = document.getElementById('dir-telefono').value.trim();
+        const nombreVal = document.getElementById('dir-nombre')?.value.trim() || '';
+        const calleVal = document.getElementById('dir-calle')?.value.trim() || '';
+        const coloniaVal = document.getElementById('dir-colonia')?.value.trim() || '';
+        const telVal = document.getElementById('dir-telefono')?.value.trim() || '';
 
         const nombreFinal = nombreVal !== '' ? nombreVal : 'Cliente General (Invitado)';
         const direccionFinal = calleVal !== '' ? `${calleVal}, Col. ${coloniaVal || 'Centro'}` : 'Domicilio Genérico / Sucursal';
         const telefonoFinal = telVal !== '' ? telVal : '55 0000 0000';
 
-        document.getElementById('resumen-cliente-dir').textContent = `${nombreFinal} - ${direccionFinal}`;
-        document.getElementById('resumen-cliente-tel').textContent = telefonoFinal;
+        const resClienteDir = document.getElementById('resumen-cliente-dir');
+        const resClienteTel = document.getElementById('resumen-cliente-tel');
+
+        if (resClienteDir) resClienteDir.textContent = `${nombreFinal} - ${direccionFinal}`;
+        if (resClienteTel) resClienteTel.textContent = telefonoFinal;
     }
 
     function toggleFormularioFactura() {
-        const requiereFac = document.getElementById('check-requiere-factura').checked;
-        document.getElementById('panel-formulario-factura').style.display = requiereFac ? 'block' : 'none';
+        const checkReq = document.getElementById('check-requiere-factura');
+        const panelFac = document.getElementById('panel-formulario-factura');
+        if (checkReq && panelFac) {
+            panelFac.style.display = checkReq.checked ? 'block' : 'none';
+        }
     }
 
     function cargarResumen() {
@@ -841,7 +860,7 @@
         if (ivaText) ivaText.innerText = `$${ivaCalculado.toFixed(2)}`;
         if (totalText) totalText.innerText = `$${totalPagar.toFixed(2)}`;
 
-        if (descuentoAplicado > 0) {
+        if (descuentoAplicado > 0 && filaDesc && descText) {
             filaDesc.style.display = 'block';
             descText.innerText = `-$${descuentoAplicado.toFixed(2)}`;
         }
@@ -851,21 +870,21 @@
         const folioNuevo = '#SM-' + Math.floor(100000 + Math.random() * 900000);
         const fechaActual = new Date().toLocaleDateString('es-MX') + ' ' + new Date().toLocaleTimeString('es-MX', {hour: '2-digit', minute:'2-digit'});
         
-        const nombreInput = document.getElementById('dir-nombre').value.trim();
+        const nombreInput = document.getElementById('dir-nombre')?.value.trim() || '';
         const clienteFinal = nombreInput !== '' ? nombreInput : 'Cliente General (Invitado)';
         
         const totalFinal = Math.max(0, sumaProductosOriginal - descuentoAplicado);
-        const requiereFactura = document.getElementById('check-requiere-factura').checked;
+        const requiereFactura = document.getElementById('check-requiere-factura')?.checked || false;
 
         const textoMetodoMap = { tarjeta: 'TARJETA DE CRÉDITO/DÉBITO', transferencia: 'TRANSFERENCIA SPEI', ewallet: 'MONEDERO ELECTRÓNICO' };
         const metodoTextoLegible = textoMetodoMap[metodoSeleccionado] || 'TARJETA';
 
         const datosFactura = requiereFactura ? {
-            rfc: document.getElementById('fac-rfc').value.trim() || 'XAXX010101000',
-            razon: document.getElementById('fac-razon').value.trim() || clienteFinal,
-            regimen: document.getElementById('fac-regimen').value,
-            uso: document.getElementById('fac-uso').value,
-            correo: document.getElementById('fac-correo').value.trim() || 'cliente@correo.com'
+            rfc: document.getElementById('fac-rfc')?.value.trim() || 'XAXX010101000',
+            razon: document.getElementById('fac-razon')?.value.trim() || clienteFinal,
+            regimen: document.getElementById('fac-regimen')?.value || '612 - Personas Físicas con Actividades Empresariales',
+            uso: document.getElementById('fac-uso')?.value || 'G03 - Gastos en general',
+            correo: document.getElementById('fac-correo')?.value.trim() || 'cliente@correo.com'
         } : null;
 
         const pedidoFinal = {
@@ -878,7 +897,7 @@
             iva: (totalFinal - (totalFinal / 1.16)).toFixed(2),
             descuento: descuentoAplicado.toFixed(2),
             total: totalFinal.toFixed(2),
-            facturado: requiereFactura,
+            facturado: Boolean(requiereFactura),
             datosFactura: datosFactura
         };
 
@@ -888,9 +907,13 @@
 
         renderizarDocumentoPostPago(pedidoFinal);
 
-        document.getElementById('paso-3').style.display = 'none';
-        document.getElementById('barra-pasos').style.display = 'none';
-        document.getElementById('bloque-comprobante-exito').style.display = 'block';
+        const paso3 = document.getElementById('paso-3');
+        const barraPasos = document.getElementById('barra-pasos');
+        const bloqueExito = document.getElementById('bloque-comprobante-exito');
+
+        if (paso3) paso3.style.display = 'none';
+        if (barraPasos) barraPasos.style.display = 'none';
+        if (bloqueExito) bloqueExito.style.display = 'block';
 
         localStorage.removeItem('carritoApp');
         localStorage.removeItem('cuponAplicado');
@@ -901,18 +924,28 @@
     }
 
     function renderizarDocumentoPostPago(pedido) {
-        const esFactura = pedido.facturado;
+        const esFactura = Boolean(pedido.facturado);
         
-        if (esFactura) {
-            document.getElementById('mensaje-resultado-tipo').textContent = 'Tu pedido ha sido procesado y tu factura fiscal ha sido generada correctamente.';
-            document.getElementById('ticket-visual').style.display = 'none';
-            document.getElementById('factura-visual').style.display = 'block';
+        const ticketVisual = document.getElementById('ticket-visual');
+        const facturaVisual = document.getElementById('factura-visual');
+        const mensajeTipo = document.getElementById('mensaje-resultado-tipo');
 
-            document.getElementById('fac-fecha').textContent = pedido.fecha;
-            document.getElementById('fac-res-nombre').textContent = pedido.datosFactura.razon;
-            document.getElementById('fac-res-rfc').textContent = pedido.datosFactura.rfc;
-            document.getElementById('fac-res-uso').textContent = pedido.datosFactura.uso;
-            document.getElementById('fac-res-metodo').textContent = pedido.metodoPago; // ¡Método de pago incluido!
+        if (esFactura) {
+            if (mensajeTipo) mensajeTipo.textContent = 'Tu pedido ha sido procesado y tu factura fiscal ha sido generada correctamente.';
+            if (ticketVisual) ticketVisual.style.display = 'none';
+            if (facturaVisual) facturaVisual.style.display = 'block';
+
+            const facFecha = document.getElementById('fac-fecha');
+            const facResNombre = document.getElementById('fac-res-nombre');
+            const facResRfc = document.getElementById('fac-res-rfc');
+            const facResUso = document.getElementById('fac-res-uso');
+            const facResMetodo = document.getElementById('fac-res-metodo');
+
+            if (facFecha) facFecha.textContent = pedido.fecha;
+            if (facResNombre) facResNombre.textContent = pedido.datosFactura ? pedido.datosFactura.razon : pedido.cliente;
+            if (facResRfc) facResRfc.textContent = pedido.datosFactura ? pedido.datosFactura.rfc : 'XAXX010101000';
+            if (facResUso) facResUso.textContent = pedido.datosFactura ? pedido.datosFactura.uso : 'G03';
+            if (facResMetodo) facResMetodo.textContent = pedido.metodoPago;
 
             let itemsHtml = '';
             pedido.items.forEach(item => {
@@ -929,20 +962,30 @@
                 `;
             });
 
-            document.getElementById('fac-items').innerHTML = itemsHtml;
-            document.getElementById('fac-subtotal').textContent = `$${pedido.subtotal}`;
-            document.getElementById('fac-iva').textContent = `$${pedido.iva}`;
-            document.getElementById('fac-total').textContent = `$${pedido.total}`;
+            const facItems = document.getElementById('fac-items');
+            const facSubtotal = document.getElementById('fac-subtotal');
+            const facIva = document.getElementById('fac-iva');
+            const facTotal = document.getElementById('fac-total');
+
+            if (facItems) facItems.innerHTML = itemsHtml;
+            if (facSubtotal) facSubtotal.textContent = `$${pedido.subtotal}`;
+            if (facIva) facIva.textContent = `$${pedido.iva}`;
+            if (facTotal) facTotal.textContent = `$${pedido.total}`;
 
         } else {
-            document.getElementById('mensaje-resultado-tipo').textContent = 'Tu orden ha sido registrada correctamente. A continuación se muestra tu ticket de compra.';
-            document.getElementById('factura-visual').style.display = 'none';
-            document.getElementById('ticket-visual').style.display = 'block';
+            if (mensajeTipo) mensajeTipo.textContent = 'Tu orden ha sido registrada correctamente. A continuación se muestra tu ticket de compra.';
+            if (facturaVisual) facturaVisual.style.display = 'none';
+            if (ticketVisual) ticketVisual.style.display = 'block';
 
-            document.getElementById('ticket-folio').textContent = pedido.folio;
-            document.getElementById('ticket-fecha').textContent = pedido.fecha;
-            document.getElementById('ticket-cliente').textContent = pedido.cliente;
-            document.getElementById('ticket-metodo').textContent = pedido.metodoPago;
+            const ticketFolio = document.getElementById('ticket-folio');
+            const ticketFecha = document.getElementById('ticket-fecha');
+            const ticketCliente = document.getElementById('ticket-cliente');
+            const ticketMetodo = document.getElementById('ticket-metodo');
+
+            if (ticketFolio) ticketFolio.textContent = pedido.folio;
+            if (ticketFecha) ticketFecha.textContent = pedido.fecha;
+            if (ticketCliente) ticketCliente.textContent = pedido.cliente;
+            if (ticketMetodo) ticketMetodo.textContent = pedido.metodoPago;
 
             let itemsHtml = '';
             pedido.items.forEach(item => {
@@ -957,18 +1000,27 @@
                 `;
             });
 
-            document.getElementById('ticket-items').innerHTML = itemsHtml;
-            document.getElementById('ticket-subtotal').textContent = `$${pedido.subtotal}`;
-            document.getElementById('ticket-iva').textContent = `$${pedido.iva}`;
+            const ticketItems = document.getElementById('ticket-items');
+            const ticketSubtotal = document.getElementById('ticket-subtotal');
+            const ticketIva = document.getElementById('ticket-iva');
+            const ticketFilaDesc = document.getElementById('ticket-fila-desc');
+            const ticketDescuento = document.getElementById('ticket-descuento');
+            const ticketTotal = document.getElementById('ticket-total');
+
+            if (ticketItems) ticketItems.innerHTML = itemsHtml;
+            if (ticketSubtotal) ticketSubtotal.textContent = `$${pedido.subtotal}`;
+            if (ticketIva) ticketIva.textContent = `$${pedido.iva}`;
             
-            if (parseFloat(pedido.descuento) > 0) {
-                document.getElementById('ticket-fila-desc').style.display = 'flex';
-                document.getElementById('ticket-descuento').textContent = `-$${pedido.descuento}`;
-            } else {
-                document.getElementById('ticket-fila-desc').style.display = 'none';
+            if (ticketFilaDesc && ticketDescuento) {
+                if (parseFloat(pedido.descuento) > 0) {
+                    ticketFilaDesc.style.display = 'flex';
+                    ticketDescuento.textContent = `-$${pedido.descuento}`;
+                } else {
+                    ticketFilaDesc.style.display = 'none';
+                }
             }
 
-            document.getElementById('ticket-total').textContent = `$${pedido.total}`;
+            if (ticketTotal) ticketTotal.textContent = `$${pedido.total}`;
         }
     }
 
@@ -976,7 +1028,6 @@
         window.print();
     }
 
-    // --- Historial de Compras ("Mis Compras" / Perfil con opción de facturar después) ---
     function cargarHistorialCompras() {
         const contenedor = document.getElementById('lista-historial-compras');
         if (!contenedor) return;
@@ -1004,17 +1055,17 @@
         historial.forEach((ped, index) => {
             let estadoFacturaHtml = ped.facturado 
                 ? `<span style="color: #0056b3; font-weight: bold; font-size: 0.85rem;">✔ Facturado</span>` 
-                : `<button onclick="facturarPedidoHistorial(${index})" class="btn-secundario" style="padding: 5px 10px; font-size: 0.8rem; background: #0056b3;">📄 Facturar Pedido</button>`;
+                : `<button type="button" onclick="facturarPedidoHistorial(${index})" class="btn-secundario" style="padding: 5px 10px; font-size: 0.8rem; background: #0056b3; color: white; border: none; border-radius: 4px; cursor: pointer;">📄 Facturar Pedido</button>`;
 
             html += `
-                <div class="tarjeta-pedido-historial">
+                <div class="tarjeta-pedido-historial" style="border: 1px solid #ddd; padding: 12px; margin-bottom: 10px; border-radius: 6px; display: flex; justify-content: space-between; align-items: center;">
                     <div>
                         <strong>Folio: ${ped.folio}</strong> <small style="color: #666;">(${ped.fecha})</small><br>
                         <span style="font-size: 0.9rem; color: #444;">Pago con: ${ped.metodoPago} | Total: <strong>$${ped.total} MXN</strong></span><br>
                         <div style="margin-top: 5px;">${estadoFacturaHtml}</div>
                     </div>
                     <div style="display: flex; gap: 8px;">
-                        <button onclick='verDetalleHistorial(${JSON.stringify(ped)})' class="btn-secundario" style="padding: 6px 12px; font-size: 0.85rem;">Ver Ticket</button>
+                        <button type="button" onclick='verDetalleHistorial(${JSON.stringify(ped)})' class="btn-secundario" style="padding: 6px 12px; font-size: 0.85rem; cursor: pointer;">Ver Ticket</button>
                     </div>
                 </div>
             `;
@@ -1025,35 +1076,154 @@
 
     function verDetalleHistorial(pedidoObj) {
         renderizarDocumentoPostPago(pedidoObj);
-        document.getElementById('paso-1').style.display = 'none';
-        document.getElementById('paso-2').style.display = 'none';
-        document.getElementById('paso-3').style.display = 'none';
-        document.getElementById('barra-pasos').style.display = 'none';
-        document.getElementById('bloque-comprobante-exito').style.display = 'block';
+        const paso1 = document.getElementById('paso-1');
+        const paso2 = document.getElementById('paso-2');
+        const paso3 = document.getElementById('paso-3');
+        const barraPasos = document.getElementById('barra-pasos');
+        const bloqueExito = document.getElementById('bloque-comprobante-exito');
+
+        if (paso1) paso1.style.display = 'none';
+        if (paso2) paso2.style.display = 'none';
+        if (paso3) paso3.style.display = 'none';
+        if (barraPasos) barraPasos.style.display = 'none';
+        if (bloqueExito) bloqueExito.style.display = 'block';
         window.scrollTo({ top: 100, behavior: 'smooth' });
     }
 
     function facturarPedidoHistorial(index) {
         let historial = JSON.parse(localStorage.getItem('historialPedidos')) || [];
         if (historial[index]) {
-            let rfcInput = prompt("Ingrese su RFC para facturar esta compra anterior:", "XAXX010101000");
-            if (rfcInput !== null) {
-                let razonInput = prompt("Ingrese su Razón Social o Nombre:", historial[index].cliente);
-                
-                historial[index].facturado = true;
-                historial[index].datosFactura = {
-                    rfc: rfcInput.toUpperCase(),
-                    razon: razonInput || 'Público en General',
-                    uso: 'G03'
-                };
-                
-                localStorage.setItem('historialPedidos', JSON.stringify(historial));
-                alert("¡Factura generada exitosamente con el método de pago: " + historial[index].metodoPago + "!");
-                cargarHistorialCompras();
-                verDetalleHistorial(historial[index]);
-            }
+            indicePedidoTemporal = index;
+            
+            const inputRazon = document.getElementById('modal-input-razon');
+            const inputRfc = document.getElementById('modal-input-rfc');
+            const inputCorreo = document.getElementById('modal-input-correo');
+            const modalFactura = document.getElementById('modal-factura');
+
+            if (inputRazon) inputRazon.value = historial[index].cliente || '';
+            if (inputRfc) inputRfc.value = historial[index].datosFactura?.rfc || 'XAXX010101000';
+            if (inputCorreo) inputCorreo.value = historial[index].datosFactura?.correo || '';
+            
+            if (modalFactura) modalFactura.style.display = 'flex';
         }
     }
-    </script>
+
+    function cerrarModalFactura() {
+        const modalFactura = document.getElementById('modal-factura');
+        if (modalFactura) modalFactura.style.display = 'none';
+        indicePedidoTemporal = null;
+    }
+
+    function procesarFacturaModal() {
+        if (indicePedidoTemporal === null) return;
+        
+        let rfcInput = document.getElementById('modal-input-rfc')?.value.trim() || '';
+        let razonInput = document.getElementById('modal-input-razon')?.value.trim() || '';
+        let regimenInput = document.getElementById('modal-input-regimen')?.value || '612 - Personas Físicas con Actividades Empresariales';
+        let usoInput = document.getElementById('modal-input-uso')?.value || 'G03 - Gastos en general';
+        let correoInput = document.getElementById('modal-input-correo')?.value.trim() || '';
+
+        let historial = JSON.parse(localStorage.getItem('historialPedidos')) || [];
+        if (historial[indicePedidoTemporal]) {
+            historial[indicePedidoTemporal].facturado = true;
+            historial[indicePedidoTemporal].datosFactura = {
+                rfc: rfcInput !== '' ? rfcInput.toUpperCase() : 'XAXX010101000',
+                razon: razonInput !== '' ? razonInput : 'Cliente General (Invitado)',
+                regimen: regimenInput,
+                uso: usoInput,
+                correo: correoInput !== '' ? correoInput : 'cliente@correo.com'
+            };
+
+            localStorage.setItem('historialPedidos', JSON.stringify(historial));
+            
+            let pedidoGenerado = historial[indicePedidoTemporal]; 
+            
+            // 1. Cerramos el modal de inputs fiscales
+            cerrarModalFactura();
+            
+            // 2. Renderizamos y mostramos la factura arriba inmediatamente
+            renderizarDocumentoPostPago(pedidoGenerado);
+            
+            const paso1 = document.getElementById('paso-1');
+            const paso2 = document.getElementById('paso-2');
+            const paso3 = document.getElementById('paso-3');
+            const barraPasos = document.getElementById('barra-pasos');
+            const bloqueExito = document.getElementById('bloque-comprobante-exito');
+
+            if (paso1) paso1.style.display = 'none';
+            if (paso2) paso2.style.display = 'none';
+            if (paso3) paso3.style.display = 'none';
+            if (barraPasos) barraPasos.style.display = 'none';
+            if (bloqueExito) bloqueExito.style.display = 'block';
+            
+            window.scrollTo({ top: 100, behavior: 'smooth' });
+
+            // 3. Recargamos el historial por si acaso
+            cargarHistorialCompras();
+        }
+    }
+
+    function mostrarAlertaPersonalizada(titulo, mensaje) {
+        const tituloElem = document.getElementById('modal-alerta-titulo');
+        const textoElem = document.getElementById('modal-alerta-texto');
+        const modalAlerta = document.getElementById('modal-alerta');
+
+        if (tituloElem) tituloElem.textContent = titulo;
+        if (textoElem) textoElem.textContent = mensaje;
+        if (modalAlerta) modalAlerta.style.display = 'flex';
+    }
+
+function cerrarModalAlerta() {
+        const modalAlerta = document.getElementById('modal-alerta');
+        if (modalAlerta) modalAlerta.style.display = 'none';
+    }
+</script>
+
+<!-- MODAL PERSONALIZADO PARA FACTURACIÓN -->
+<div id="modal-factura" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 9999; justify-content: center; align-items: center;">
+    <div style="background: white; padding: 25px; border-radius: 8px; width: 90%; max-width: 500px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); text-align: left;">
+        <h3 style="margin-top: 0; color: #333; font-size: 1.2rem;">📄 Facturar Pedido Anterior</h3>
+        <p style="font-size: 0.9rem; color: #666; margin-bottom: 15px;">Ingresa tus datos fiscales para generar la factura:</p>
+        
+        <div style="margin-bottom: 10px;">
+            <label style="display: block; font-size: 0.85rem; font-weight: bold; margin-bottom: 4px;">RFC:</label>
+            <input type="text" id="modal-input-rfc" value="XAXX010101000" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
+        </div>
+
+        <div style="margin-bottom: 10px;">
+            <label style="display: block; font-size: 0.85rem; font-weight: bold; margin-bottom: 4px;">Razón Social o Nombre:</label>
+            <input type="text" id="modal-input-razon" placeholder="Cliente General (Invitado)" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
+        </div>
+
+        <div style="display: flex; gap: 10px; margin-bottom: 10px;">
+            <div style="flex: 1;">
+                <label style="display: block; font-size: 0.85rem; font-weight: bold; margin-bottom: 4px;">Régimen Fiscal:</label>
+                <select id="modal-input-regimen" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
+                    <option value="612 - Personas Físicas con Actividades Empresariales">612 - Personas Físicas con Actividades</option>
+                    <option value="601 - General de Ley Personas Morales">601 - General de Ley Personas Morales</option>
+                    <option value="625 - Régimen Simplificado de Confianza">625 - Régimen Simplificado de Confianza</option>
+                </select>
+            </div>
+            <div style="flex: 1;">
+                <label style="display: block; font-size: 0.85rem; font-weight: bold; margin-bottom: 4px;">Uso de CFDI:</label>
+                <select id="modal-input-uso" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
+                    <option value="G03 - Gastos en general">G03 - Gastos en general</option>
+                    <option value="G01 - Adquisición de mercancías">G01 - Adquisición de mercancías</option>
+                    <option value="P01 - Por definir">P01 - Por definir</option>
+                </select>
+            </div>
+        </div>
+
+        <div style="margin-bottom: 20px;">
+            <label style="display: block; font-size: 0.85rem; font-weight: bold; margin-bottom: 4px;">Correo Electrónico para Factura:</label>
+            <input type="email" id="modal-input-correo" placeholder="correo@ejemplo.com" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
+        </div>
+
+        <div style="display: flex; justify-content: flex-end; gap: 10px;">
+            <button type="button" onclick="cerrarModalFactura()" style="padding: 8px 15px; background: #ccc; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;">Cancelar</button>
+            <button type="button" onclick="procesarFacturaModal()" style="padding: 8px 15px; background: #0056b3; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;">Generar Factura</button>
+        </div>
+    </div>
+</div>
 </body>
 </html>
